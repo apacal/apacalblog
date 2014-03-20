@@ -1,0 +1,26 @@
+
+<div class="view-footer">
+    <div class="container marketing">
+        <div class="row view-summary-list">
+            <div class="read-next">
+                    <h2 style="margin-left: 16px;">Read Next</h2>
+            <notempty name="articleList">
+                    <include file="Public:articleList" />
+
+            <else />
+                <div class="alert alert-info alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong>温馨提示</strong> 暂无上一篇和下两篇
+                </div>
+            </notempty>
+            </div> <!-- end  read-next  -->
+            <div class="view-comment">
+                <include file="Comment:index" />
+                           
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

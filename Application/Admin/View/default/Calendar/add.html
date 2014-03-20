@@ -1,0 +1,114 @@
+﻿        <include file="Public:header" />
+        <include file="Advert:add-left" />
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="__MODULE__">首页</a>
+							</li>
+							<li class="active">广告管理</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								广告管理
+								<small>
+									<i class="icon-double-angle-right"></i>
+									 广告列表
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+                                <form class="form-horizontal" role="form" enctype="multipart/form-data" action="__MODULE__/Advert/insert" method="post">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 标题 </label>
+										<div class="col-sm-9">
+											<input type="text" placeholder="标题" name="title" class="col-xs-10 col-sm-5" required />
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 描述 </label>
+										<div class="col-sm-9">
+											<input type="text" placeholder="描述" name="description" class="col-xs-10 col-sm-5" required />
+										</div>
+									</div>
+									<div class="space-4"></div>
+                                    
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 链接 </label>
+										<div class="col-sm-9">
+											<textarea type="text" placeholder="链接" name="url" value="{$vo.url}" class="autosize-transition col-xs-10 col-sm-5" ></textarea>
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 排序值 </label>
+										<div class="col-sm-9">
+											<input type="text" value="0" name="sort" class="col-xs-10 col-sm-5" required />
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 图片 </label>
+										<div class="col-sm-9">
+                                                <input type="file"  name="image" style="margin-top: 5px; padding-left: 0px; " class="col-xs-10 col-sm-5" />
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 是否显示 </label>
+										<div class="col-sm-9">
+                                            <label>
+                                                <input name="status" class="ace ace-switch ace-switch-7" type="checkbox">
+											    <span class="lbl"></span>
+										    </label>
+										</div>
+									</div>
+									<div class="space-4"></div> 
+                                    
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												提交
+											</button>
+
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="icon-undo bigger-110"></i>
+												清除
+											</button>
+										</div>
+									</div>
+
+								</form>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+
+                <include file="Public:footer" />

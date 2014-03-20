@@ -1,0 +1,5 @@
+[ 2014-02-26T01:57:39+08:00 ] 127.0.0.1 /ApacalBlog/index.php/__IM__/default.jpg
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000074s ]
+

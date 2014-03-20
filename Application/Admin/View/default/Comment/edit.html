@@ -1,0 +1,153 @@
+﻿        <include file="Public:header" />
+        <include file="Comment:manage-left" />
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="__MODULE__">首页</a>
+							</li>
+							<li class="active"><a href="__CONTROLLER__/manage">评论管理</a></li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+							    <a href="__CONTROLLER__/manage">评论管理</a>
+								<small>
+									<i class="icon-double-angle-right"></i>
+									 评论编辑
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+                                <form class="form-horizontal" role="form" action="__CONTROLLER__/update/id/{$vo.id}" method="post">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 评论者 </label>
+										<div class="col-sm-9">
+											<input readonly="true" type="text" placeholder="评论者" value="{$vo.author}" class="col-xs-10 col-sm-5"  />
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 内容 </label>
+										<div class="col-sm-9">
+											<textarea readonly="true" type="text" placeholder="内容" class="col-xs-10 col-sm-5"  />{$vo.content}</textarea>
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right">父ID </label>
+										<div class="col-sm-9">
+											<input readonly="true" type="text" placeholder="父ID" value="{$vo.pid}" class="col-xs-10 col-sm-5"  />
+                                        </div>
+                                    </div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > IP </label>
+										<div class="col-sm-9">
+											<input readonly="true" type="text" placeholder="IP" value="{$vo.ip}"  class="col-xs-10 col-sm-5"  />
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 来源 </label>
+										<div class="col-sm-9">
+											<input type="text" readonly="true" value="{$vo.oid}" placeholder="来源 " class="col-xs-10 col-sm-5"  />
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 同意 </label>
+										<div class="col-sm-9">
+											<input readonly="true" type="text" placeholder="同意 " value="{$vo.agree}" class="col-xs-10 col-sm-5"  />
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 不同意 </label>
+										<div class="col-sm-9">
+											<input readonly="true" type="text" placeholder="不同意 " value="{$vo.disagree}" class="col-xs-10 col-sm-5"  />
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 是否显示 </label>
+										<div class="col-sm-9 switch-btn">
+                                            <label>
+                                                <input type="checkbox" class="ace ace-switch ace-switch-7" name="status">
+											    <span class="lbl"></span>
+										    </label>
+										</div>
+									</div>
+									<div class="space-4"></div> 
+                                    
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												提交
+											</button>
+
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="icon-undo bigger-110"></i>
+												清除
+											</button>
+										</div>
+									</div>
+
+								</form>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+
+<script type="text/javascript">
+	$(function() { 
+		$('.mwui-switch-btn').each(function() {
+			$(this).bind("click", function() { 
+				var btn = $(this).find("span");
+				var change = btn.attr("change");
+				btn.toggleClass('off'); 
+
+				if(btn.attr("class") == 'off') { 
+					$(this).find("input").val("0");
+					btn.attr("change", btn.html()); 
+					btn.html(change);
+				} else { 
+					$(this).find("input").val("1");
+					btn.attr("change", btn.html()); 
+					btn.html(change);
+				}  
+
+				return false;
+			});
+		});
+
+	});
+</script> 
+                <include file="Public:footer" />

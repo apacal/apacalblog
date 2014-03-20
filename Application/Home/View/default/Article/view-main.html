@@ -1,0 +1,74 @@
+
+    
+<div class="container marketing">
+
+    <div class="row view-summary-list">
+        <div class="col-lg-9" style=" padding-right: 30px;  margin-bottom: 30px;">
+            <h1 class="article-view-h1">{$article.title}<a class="btn btn-default pull-right" style="margin-right: 50px;margin-top: 8px;"href="{:U('Home/Article/index', array('cid' => $article['cid']))}" role="button">{$article.cname} »</a></h1>
+            <div class="meta-author" style="margin-left:20%;" >
+                <span class="avatar" style=" margin-left: 50px; ">
+                    <empty name="article.adminimage">
+                        <img style="width:30px;height:30px" class="img-circle" src="__IMG__/admin.png" alt="{$article.adminname}" >
+                    <else />
+                        <img style="width:30px;height:30px" class="img-circle" src="__UPLOAD__{$article.adminimage|getThunmName}" alt="{$article.adminname}" >
+                    </empty>
+                </span>
+                <span class="author"><span class="dt">Author:</span> <span class="dd" ><a href="{:U('Home/User/admin', array('id' => $article['adminid']))}" style="color:black">{$article.adminname}</a> · </span></span>
+                <span class="publishdate"><span class="dt">Publish date:</span> <span class="dd" >{$article.createtime|date='F d, Y', ###}</span></span>
+                <span >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人气：{$article.click}次&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-comment"></i><a href="#checkComment">评论（{$article.commentCount}）</a></span>
+            </div>
+            <div id="content">
+                {$article.content}
+            </div>
+
+            <!--           文章标签　＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+            <ul class="article-tags unstyled">
+                <li><a class="btn btn-default" href="#" role="button">#Linux</a></li>
+                <li><a class="btn btn-default" href="#" role="button">#C++</a></li>
+                <li><a class="btn btn-default" href="#" role="button">#PHP</a></li>
+                <li><a class="btn btn-default" href="#" role="button">#Python</a></li>
+            </ul>
+            -->
+        </div>
+
+        <div class="col-lg-3">
+                <h3 style=" margin-top: 40px; ">热门文章<span class="hot-count">{$hotCount}</span></h3>
+                <volist name="hotArticle" id="vo">
+                    <div class="hot-summary">
+                            <span><a href=":U('Home/Article/view', array('id' => $vo['id']))}" class="hot-img-a">
+                            <empty name="vo.image">
+                                <img alt="暂无图片"  class="img-rounded" src="__IMG__/default.jpg"></a>
+                            <else />
+                                <img alt="{$vo.title}"  class="img-rounded" src="__UPLOAD__{$vo.image|getThunmName}"></a>
+                            </empty>
+                            </span>
+                            <span class="hot-interaction-count"><span class="dt">Interaction count:</span>{$vo.click}<span class="glyphicon glyphicon-share"></span></span>
+                            <span class="hot-header"><a href="{:U('Home/Article/view', array('id' => $vo['id']))}">{$vo.title}</a></span>
+                    </div>
+                </volist>
+                <!--      文章分类　=========================================
+                <div class="article-seprate">
+                <h3>文章分类<span class="hot-count">4</span></h3>
+                <ul class="article-class unstyled">
+                    <li><a href="#" >Linux<span class="article-span">(12)</span></a></li>
+                    <li><a href="#" >Linux<span class="article-span">(12)</span></a></li>
+                    <li><a href="#" >Linux<span class="article-span">(12)</span></a></li>
+                    <li><a href="#" >Linux<span class="article-span">(12)</span></a></li>
+                </ul>
+                </div>
+                -->
+                <div class="article-seprate">
+                <h3>文章归档<span class="hot-count">4</span></h3>
+                <ul class="article-class unstyled">
+                    <volist name="dataArticle" id="vo">
+                        <li><a href="{:U('Home/Article/dataArc', array('cid' => $vo['cid'], 'time' => $vo['time']))}">{$vo.time}<span class="article-span">({$vo.count})</span></a></li>
+                    </volist>
+                </ul>
+                </div>
+        </div>
+
+
+
+    </div>
+</div>
+

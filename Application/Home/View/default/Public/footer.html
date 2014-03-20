@@ -1,0 +1,50 @@
+
+    <!-- FOOTER -->
+    <div class="container marketing" id="footer">
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        // 到底部
+                        $('a.scrollToBottom').click(function(){
+                            $('html, body, .content').animate({scrollTop: $(document).height()}, 300);
+                            return false;
+                        });
+                        // 到顶部
+                       $('a.scrollToTop').click(function(){
+                            $('html, body').animate({scrollTop:0}, 'slow');
+                            return false;
+                        });
+                        $('#friendlink').change(function(){
+                        if(this.value)
+                            window.open(this.value);
+                     });
+                    })
+                </script> 
+                <div id="scrollBtn"> <!-- 滚动屏幕 -->
+                    <a href="#" class="scrollToTop" title="顶部" ><p class="scrollBtn-top"></p></a>
+                    <a  href="#" class="scrollToCenter" title="留言反馈"><p class="scrollBtn-SNS"></p></a>
+                    <a href="#" class="scrollToBottom" title="底部"><p class="scrollBtn-bottom"></p></a>
+                </div>
+            
+                <div class="col-md-7">
+                    <div class="footerInfo">
+                        <p>Copyright © 2014 Apacal All rights reserved</p>	
+                        <p>技术支持: Apacal &nbsp; <a href="__WEB_URL__/index.php/Admin"> 管理入口</a></p>	
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="friendLink">
+                        <select  id="friendlink" class="seo_links">
+                            <option value="">友情链接</option>
+                            <volist name="linkList" id="vo">
+                            <option value="{$vo.url}">{$vo.title}</option>              		        
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+    </div> <!-- end footer -->
+        
+
+
+
+  </body>
+</html>

@@ -1,0 +1,195 @@
+﻿        <include file="Public:header" />
+        <include file="Category:manage-left" />
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="__MODULE__">首页</a>
+							</li>
+							<li class="active"><a href="__CONTROLLER__/manage">栏目管理</a></li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+							    <a href="__CONTROLLER__/manage">栏目管理</a>
+								<small>
+									<i class="icon-double-angle-right"></i>
+									 栏目编辑
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+                                <form class="form-horizontal" role="form" enctype="multipart/form-data" action="__CONTROLLER__/update/id/{$vo.id}" method="post">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 标题 </label>
+										<div class="col-sm-9">
+											<input type="text" placeholder="标题" value="{$vo.cname}" name="cname" class="col-xs-10 col-sm-5" required />
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 模型 </label>
+										<div class="col-sm-9">
+                                                <select class="col-xs-10 col-sm-5" name="mid"  id="form-field-select-1" required>
+                                                    <option value="{$vo.mid}">{$modelNow}</option>
+                                                    <volist name="modelList" id="mvo">
+                                                        <option value="{$mvo.id}">【{$mvo.mname}-{$mvo.mcontroller}】</option>
+                                                    </volist>
+												</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right">父栏目 </label>
+										<div class="col-sm-9">
+                                                <select class="col-xs-10 col-sm-5" name="pid"  id="form-field-select-1" required>
+                                                    <option value="{$vo.pid}">{$categoryNow}</option>
+                                                    <option value="0">根栏目</option>
+                                                    {$categoryTree}
+												</select>
+                                        </div>
+                                    </div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 关键字 </label>
+										<div class="col-sm-9">
+											<input type="text" value="{$vo.keywords}" placeholder="关键字" name="keywords" class="col-xs-10 col-sm-5" required />
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 描述 </label>
+										<div class="col-sm-9">
+                                            <textarea row="10" placeholder="描述" style="height:100px" name="description" class="autosize-transition col-xs-10 col-sm-5" required >{$vo.description}</textarea>
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 链接 </label>
+										<div class="col-sm-9">
+											<input type="text" placeholder="链接" name="url" value="{$vo.url}" class="col-xs-10 col-sm-5" />
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 排序值 </label>
+										<div class="col-sm-9">
+											<input type="text" value="{$vo.sort}" name="sort" class="col-xs-10 col-sm-5" required / >
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 图片 </label>
+										<div class="col-sm-9">
+                                                <a href=""><img data-toggle="modal" data-target="#modal-{$vo.id}" src="__UPLOAD__{$vo.image}" alt="暂无图片" width="100px" class="img-thumbnail"></a></br>
+                                                <input type="hidden"  name="old-image" value="{$vo.image}" />
+										</div>
+									    <div class="space-4"></div>
+                                        <div class="col-sm-3"></div>
+										<div class="col-sm-9">
+                                                <input type="text" readonly="true" id="viewfile" onmouseout="document.getElementById('upload').style.display='none';" class="inputstyle"> 
+                                                <label for="unload" class="btn btn-xs btn-info"  onmouseover="document.getElementById('upload').style.display='block';" class="file1">点击上传新图片...</label> 
+                                                <input type="file" name="image" onchange="document.getElementById('viewfile').value=this.value;this.style.display='none';" class="file" id="upload" style="display: block;left: 220px; width: 110px;"> 
+                                        </div>
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="modal-{$vo.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                              <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                  <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                    <h4 class="modal-title" id="myModalLabel">查看图片</h4>
+                                                                  </div>
+                                                                  <div class="modal-body">
+                                                                        <img data-toggle="modal" data-target="#modal-{$vo.id}" src="__UPLOAD__{$vo.image}" alt="暂无图片" class="img-thumbnail">
+                                                                  </div>
+                                                                  <div class="modal-footer">
+                                                                    <a><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    <a><button type="button" class="btn btn-primary" data-dismiss="modal">确定</button></a>
+                                                                  </div>
+                                                                </div><!-- /.modal-content -->
+                                                              </div><!-- /.modal-dialog -->
+                                                            </div><!-- /.mod -->
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 是否显示 </label>
+										<div class="col-sm-9 switch-btn">
+                                            <label>
+                                                <input type="checkbox" class="ace ace-switch ace-switch-7" name="status">
+											    <span class="lbl"></span>
+										    </label>
+										</div>
+									</div>
+									<div class="space-4"></div> 
+                                    
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												提交
+											</button>
+
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="icon-undo bigger-110"></i>
+												清除
+											</button>
+										</div>
+									</div>
+
+								</form>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+
+<script type="text/javascript">
+	$(function() { 
+		$('.mwui-switch-btn').each(function() {
+			$(this).bind("click", function() { 
+				var btn = $(this).find("span");
+				var change = btn.attr("change");
+				btn.toggleClass('off'); 
+
+				if(btn.attr("class") == 'off') { 
+					$(this).find("input").val("0");
+					btn.attr("change", btn.html()); 
+					btn.html(change);
+				} else { 
+					$(this).find("input").val("1");
+					btn.attr("change", btn.html()); 
+					btn.html(change);
+				}  
+
+				return false;
+			});
+		});
+
+	});
+</script> 
+                <include file="Public:footer" />
