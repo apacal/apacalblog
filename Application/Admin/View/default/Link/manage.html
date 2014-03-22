@@ -38,6 +38,7 @@
 						<div class="row">
 							<div class="col-xs-12">
 
+                                <include file="Public:selectbtn" />
                                 <div class="table-responsive">
                                     <table id="sample-table-2" class="table table-striped table-bordered table-hover">
                                         <thead>
@@ -70,7 +71,7 @@
                                                 <tr>
                                                     <td class="center">
                                                         <label>
-                                                            <input type="checkbox" class="ace" />
+                                                            <input type="checkbox" class="ace" name="checkid" value="{$vo.id}" />
                                                             <span class="lbl"></span>
                                                         </label>
                                                     </td>
@@ -82,10 +83,14 @@
                                                     <td>{$vo.sort}</td>
                                                     <td>{$vo.createtime|date="Y-m-d H:i", ###}</td>
 
-                                                    <td class="hidden-480">
-                                                        <span class="label label-sm label-warning">{$vo.status}</span>
-                                                    </td>
 
+                                                    <td >
+                                                        <if condition="$vo.status eq 1">
+                                                            <span class="label label-success arrowed">允许</span>
+                                                        <else />
+                                                            <span class="label label-info arrowed-right">禁止</span>
+                                                        </if>
+                                                    </td>
                                                     <td>
                                                         <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
                                                             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -153,7 +158,6 @@
 
 		<script src="__ACE__/js/jquery.dataTables.min.js"></script>
 		<script src="__ACE__/js/jquery.dataTables.bootstrap.js"></script>
-		<script src="__ACE__/js/FixedColumns.min.js"></script>
 		<script type="text/javascript">
 			jQuery(function($) {
 				var oTable1 = $('#sample-table-2').dataTable( {
@@ -162,14 +166,7 @@
 			             null,null, null, null,null,null,
 				        { "bSortable": false }
 				        ],
-                    "sScrollXInner": "150%",
-                    "bPaginate": false,
-                    "bAutoWidth": false,
                 } );
-				var oFC = new FixedColumns( oTable1, {
-                    "iLeftColumns": 4
-                } );
-                oTable1.fnAdjustColumnSizing();
 				
 				$('table th input:checkbox').on('click' , function(){
 					var that = this;
@@ -197,4 +194,5 @@
 				}
 			})
 		</script>
+                <include file="Public:select" />
                 <include file="Public:footer" />

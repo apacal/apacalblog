@@ -1,4 +1,6 @@
 
+                    </div>
+			    </div><!-- /.main-container-inner -->
 				<div class="ace-settings-container" id="ace-settings-container">
 					<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
 						<i class="icon-cog bigger-150"></i>
@@ -46,12 +48,29 @@
 						</div>
 					</div>
 				</div><!-- /#ace-settings-container -->
-			</div><!-- /.main-container-inner -->
-
-			<a href="#" style="position: fixed;" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-				<i class="icon-double-angle-up icon-only bigger-110"></i>
-			</a>
-		</div><!-- /.main-container -->
+            <!--        TOP and bottom ==================== -->
+			<div style="position: fixed;bottom: 40%;right: 10px;background-color: #555!important;" >
+				<i class="icon-double-angle-up  bigger-310 btn btn-sm btn-inverse" id="btn-scroll-up"></i><br />
+				<i class="icon-double-angle-down  bigger-310 btn btn-sm btn-inverse" id="btn-scroll-down"></i>
+			</div>
+	</div><!-- /.main-container -->
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        // 到底部
+                        $('#btn-scroll-down').click(function(){
+                            $('html, body, .content').animate({scrollTop: $(document).height()}, 300);
+                            return false;
+                        });
+                        // 到顶部
+                        /*
+                       $('a.scrollToTop').click(function(){
+                            $('html, body').animate({scrollTop:0}, 'slow');
+                            return false;
+                        });
+                       */
+                     });
+                </script> 
+                <script src="__ACE__/js/fuelux/fuelux.spinner.min.js"></script>
 
 </body>
 </html>

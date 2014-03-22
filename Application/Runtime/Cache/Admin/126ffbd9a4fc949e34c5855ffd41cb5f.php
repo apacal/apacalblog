@@ -6,6 +6,7 @@
 		<meta name="keywords" content="ApacalBlog-后台管理系统<?php echo ($keywords); ?>" />
 		<meta name="description" content="ApacalBlog-后台管理系统<?php echo ($description); ?>" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="http://218.244.140.70/Public/images/log3.png">
 		<!-- basic styles -->
 		<link href="http://218.244.140.70/Public/css/admin.css" rel="stylesheet" />
 		<link href="http://218.244.140.70/Public/ace/css/bootstrap.min.css" rel="stylesheet" />
@@ -33,6 +34,7 @@
 		<![endif]-->
 
 		<!-- inline styles related to this page -->
+		<script src="http://218.244.140.70/Public/js/admin.js"></script>
 
 		<!-- ace settings handler -->
 
@@ -51,9 +53,8 @@
 
 
 		<!-- <![endif]-->
-		<script src="http://218.244.140.70/Public/ace/js/jquery-2.0.3.min.js"></script> 
-		<!-- <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-        -->
+
+		<script src="http://218.244.140.70/Public/ace/js/jquery-2.1.0.min.js"></script> 
 
 		<!--[if IE]>
             <script src="http://218.244.140.70/Public/ace/js/jquery-1.10.2.min.js"></script>
@@ -179,70 +180,53 @@
 							</ul>
 						</li>
 
-						<li class="purple">
+                        -->
+						<li class="grey">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-								<i class="icon-bell-alt icon-animated-bell"></i>
-								<span class="badge badge-important">8</span>
+								<i class="icon-trash "></i>
+								<span class="badge badge-important"></span>
 							</a>
 
-							<ul class="pull-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+							<ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close" style="width:150px;">
 								<li class="dropdown-header">
-									<i class="icon-warning-sign"></i>
-									8条通知
+									<i class="icon-trash"></i>
+								    清除缓存
 								</li>
 
 								<li>
-									<a href="#">
+									<a href="<?php echo U('Admin/Del/delAllRuntime');?>">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-pink icon-comment"></i>
-												新闻评论
+										        <i class="btn btn-xs btn-primary  icon-trash "></i>
+												清除全部缓存
 											</span>
-											<span class="pull-right badge badge-info">+12</span>
 										</div>
 									</a>
 								</li>
 
 								<li>
-									<a href="#">
-										<i class="btn btn-xs btn-primary icon-user"></i>
-										切换为编辑登录..
-									</a>
-								</li>
-
-								<li>
-									<a href="#">
+									<a href="<?php echo U('Admin/Del/delHomeRuntime');?>">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-success icon-shopping-cart"></i>
-												新订单
+												<i class="btn btn-xs btn-info icon-trash"></i>
+												清除前台缓存
 											</span>
-											<span class="pull-right badge badge-success">+8</span>
 										</div>
 									</a>
 								</li>
 
 								<li>
-									<a href="#">
+									<a href="<?php echo U('Admin/Del/delAdminRuntime');?>">
 										<div class="clearfix">
 											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-info icon-twitter"></i>
-												粉丝
+												<i class="btn btn-xs btn-purple icon-trash "></i>
+												清除后台缓存
 											</span>
-											<span class="pull-right badge badge-info">+11</span>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a href="#">
-										查看所有通知
-										<i class="icon-arrow-right"></i>
+                                        </div>
 									</a>
 								</li>
 							</ul>
 						</li>
-                        -->
 						<li class="light-blue">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 								<img class="nav-user-photo" src="http://218.244.140.70/Uploads<?php echo ($_SESSION['image']); ?>" alt="<?php echo ($_SESSION['adminname']); ?>" />
@@ -628,7 +612,7 @@
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" > 排序值 </label>
 										<div class="col-sm-9">
-											<input type="text" value="0" name="sort" value="<?php echo ($vo["sort"]); ?>" class="col-xs-10 col-sm-5" required />
+                                            <input id="sort" type="text" class="input-mini" name="sort" maxlength="3">
 										</div>
 									</div>
 									<div class="space-4"></div>
@@ -666,8 +650,18 @@
 					</div><!-- /.page-content -->
 				</div><!-- /.main-content -->
 
+        <script>
+        $(document).ready(function(){
+            //排序值加减按钮
+            var sortstr = "<?php echo ($vo["sort"]); ?>";
+            var sort = Number(sortstr);
+            $('#sort').ace_spinner({value: sort ,min:-500,max:500,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
+        });
+        </script>
 
                 
+                    </div>
+			    </div><!-- /.main-container-inner -->
 				<div class="ace-settings-container" id="ace-settings-container">
 					<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
 						<i class="icon-cog bigger-150"></i>
@@ -715,12 +709,29 @@
 						</div>
 					</div>
 				</div><!-- /#ace-settings-container -->
-			</div><!-- /.main-container-inner -->
-
-			<a href="#" style="position: fixed;" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-				<i class="icon-double-angle-up icon-only bigger-110"></i>
-			</a>
-		</div><!-- /.main-container -->
+            <!--        TOP and bottom ==================== -->
+			<div style="position: fixed;bottom: 40%;right: 10px;background-color: #555!important;" >
+				<i class="icon-double-angle-up  bigger-310 btn btn-sm btn-inverse" id="btn-scroll-up"></i><br />
+				<i class="icon-double-angle-down  bigger-310 btn btn-sm btn-inverse" id="btn-scroll-down"></i>
+			</div>
+	</div><!-- /.main-container -->
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        // 到底部
+                        $('#btn-scroll-down').click(function(){
+                            $('html, body, .content').animate({scrollTop: $(document).height()}, 300);
+                            return false;
+                        });
+                        // 到顶部
+                        /*
+                       $('a.scrollToTop').click(function(){
+                            $('html, body').animate({scrollTop:0}, 'slow');
+                            return false;
+                        });
+                       */
+                     });
+                </script> 
+                <script src="http://218.244.140.70/Public/ace/js/fuelux/fuelux.spinner.min.js"></script>
 
 </body>
 </html>

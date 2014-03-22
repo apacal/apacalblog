@@ -48,6 +48,8 @@ class ArticleModel extends RelationModel {
         $where['id'] = $id;
         $where['status'] = 1;
         $article = $this->where($where)->relation(true)->find();
+        if(empty($article))
+            return false;
         $article['commentCount'] =  (int)D('Comment')->getCommentCount($article['id'], $article['cid']);
         $admin = M('Admin')->where(array('adminid' => $article['adminid']))->find();
         $article['adminname'] = $admin['adminname'];

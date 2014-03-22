@@ -38,6 +38,7 @@
 						<div class="row">
 							<div class="col-xs-12">
 
+                                    <include file="Public:selectbtn" />
                                 <div class="table-responsive">
                                     <table id="sample-table-2" class="table table-striped table-bordered table-hover">
                                         <thead>
@@ -59,9 +60,9 @@
                                                     <i class="icon-time bigger-110 hidden-480"></i>
                                                     添加时间
                                                 </th>
-                                                <th class="hidden-480">状态</th>
+                                                <th width="8%">状态</th>
 
-                                                <th>操作</th>
+                                                <th width="20%">操作</th>
                                             </tr>
                                         </thead>
 
@@ -71,7 +72,7 @@
                                                 <tr>
                                                     <td class="center">
                                                         <label>
-                                                            <input type="checkbox" class="ace" />
+                                                            <input type="checkbox" class="ace" name="checkid" value="{$vo.id}" />
                                                             <span class="lbl"></span>
                                                         </label>
                                                     </td>
@@ -84,10 +85,14 @@
                                                     <td>{$vo.sort}</td>
                                                     <td>{$vo.createtime|date="Y-m-d H:i", ###}</td>
 
-                                                    <td class="hidden-480">
-                                                        <span class="label label-sm label-warning">{$vo.status}</span>
-                                                    </td>
 
+                                                    <td >
+                                                        <if condition="$vo.status eq 1">
+                                                            <span class="label label-success arrowed">允许</span>
+                                                        <else />
+                                                            <span class="label label-info arrowed-right">禁止</span>
+                                                        </if>
+                                                    </td>
                                                     <td>
                                                         <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
                                                             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -191,4 +196,5 @@
 				}
 			})
 		</script>
+                <include file="Public:select" />
                 <include file="Public:footer" />

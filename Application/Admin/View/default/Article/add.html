@@ -11,7 +11,7 @@
 								<i class="icon-home home-icon"></i>
 								<a href="__MODULE__">首页</a>
 							</li>
-							<li class="active">博客管理</li>
+							<li class="active"><a href="__CONTROLLER__/manage">博客管理</a></li>
 						</ul><!-- .breadcrumb -->
 
 						<div class="nav-search" id="nav-search">
@@ -27,7 +27,7 @@
 					<div class="page-content">
 						<div class="page-header">
 							<h1>
-								博客管理
+								<a href="__CONTROLLER__/manage">博客管理</a>
 								<small>
 									<i class="icon-double-angle-right"></i>
 									 添加博文
@@ -79,7 +79,7 @@
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" > 排序值 </label>
 										<div class="col-sm-9">
-											<input type="text" value="0" name="sort" class="col-xs-10 col-sm-5">
+                                            <input id="sort" type="text" class="input-mini" name="sort" maxlength="3">
 										</div>
 									</div>
 									<div class="space-4"></div>

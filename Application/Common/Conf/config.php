@@ -2,6 +2,7 @@
 if(!defined('THINK_PATH')) exit();
 define(ROOT_URL,'http://218.244.140.70');
 return array(
+    'RUNTIMESRC' => APP_PATH.'Runtime/',
     'URL_HTML_SUFFIX'=>'',  //网站静态后缀
     'WEBADMIN' => 'Apacal', //网站管理员
     'UPLOAD' => './Uploads',

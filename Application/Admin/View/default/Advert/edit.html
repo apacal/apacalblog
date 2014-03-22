@@ -65,7 +65,7 @@
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" > 排序值 </label>
 										<div class="col-sm-9">
-											<input type="text" value="{$vo.sort}" name="sort" class="col-xs-10 col-sm-5" required / >
+                                            <input id="sort" type="text" class="input-mini" name="sort" maxlength="3">
 										</div>
 									</div>
 									<div class="space-4"></div>
@@ -104,10 +104,10 @@
 									<div class="space-4"></div>
 
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" > 是否显示 </label>
-										<div class="col-sm-9 switch-btn">
+										<label class="col-sm-3 control-label no-padding-right" > 状态 </label>
+										<div class="col-sm-9">
                                             <label>
-                                                <input type="checkbox" class="ace ace-switch ace-switch-7" name="status">
+                                                <input name="status" id="status" class="ace ace-switch ace-switch-7" type="checkbox">
 											    <span class="lbl"></span>
 										    </label>
 										</div>
@@ -137,28 +137,16 @@
 				</div><!-- /.main-content -->
 
 
-<script type="text/javascript">
-	$(function() { 
-		$('.mwui-switch-btn').each(function() {
-			$(this).bind("click", function() { 
-				var btn = $(this).find("span");
-				var change = btn.attr("change");
-				btn.toggleClass('off'); 
-
-				if(btn.attr("class") == 'off') { 
-					$(this).find("input").val("0");
-					btn.attr("change", btn.html()); 
-					btn.html(change);
-				} else { 
-					$(this).find("input").val("1");
-					btn.attr("change", btn.html()); 
-					btn.html(change);
-				}  
-
-				return false;
-			});
-		});
-
-	});
-</script> 
+        <script> //初始状态js
+        $(document).ready(function(){
+            var status = {$vo.status}; //设置初始状态
+            if (status == 1) { //状态位一
+                document.getElementById("status").checked=true
+            }
+            //排序值加减按钮
+            var sortstr = "{$vo.sort}";
+            var sort = Number(sortstr);
+            $('#sort').ace_spinner({value: sort ,min:-500,max:500,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
+        });
+        </script>
                 <include file="Public:footer" />

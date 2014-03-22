@@ -79,16 +79,16 @@ class UploadModel extends Model {
     }
 
     //删除文件
-        public function del($src){
+    public function del($src){
 		if(!empty($src)){
 			if(is_file($src)){
-				@unlink($src);
+				unlink($src);
                 $src = getThunmName($src);
 			    if(is_file($src))
-				    @unlink($src);
+				    unlink($src);
 				return true;				
 			}
-		}
+	    }
 		return false;
     }
 }

@@ -8,7 +8,7 @@
     <meta name="description" content="<?php echo ($description); ?>" />
     <meta name="author" content="apacal">
 
-    <link rel="shortcut icon" href="http://218.244.140.70/Public/images/favicon.ico">
+    <link rel="shortcut icon" href="http://218.244.140.70/Public/images/log2.png">
 
     <!-- Bootstrap core CSS -->
     <link href="http://218.244.140.70/Public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -118,7 +118,7 @@
                 <ol class="carousel-indicators">
                 
                     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                    <?php $__FOR_START_1870897252__=1;$__FOR_END_1870897252__=$advertListCount;for($i=$__FOR_START_1870897252__;$i < $__FOR_END_1870897252__;$i+=1){ ?><li data-target="#myCarousel" data-slide-to="<?php echo ($i); ?>"></li><?php } ?>
+                    <?php $__FOR_START_1741203735__=1;$__FOR_END_1741203735__=$advertListCount;for($i=$__FOR_START_1741203735__;$i < $__FOR_END_1741203735__;$i+=1){ ?><li data-target="#myCarousel" data-slide-to="<?php echo ($i); ?>"></li><?php } ?>
                 </ol>
                 <div class="carousel-inner">
                     <?php if(is_array($advertList)): $i = 0; $__LIST__ = $advertList;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><div class='item <?php if(($i) == "1"): ?>active<?php endif; ?>'>
@@ -226,7 +226,7 @@
                         $('#friendlink').change(function(){
                         if(this.value)
                             window.open(this.value);
-                     });
+                        });
                     })
                 </script> 
                 <div id="scrollBtn"> <!-- 滚动屏幕 -->

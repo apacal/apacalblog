@@ -44,7 +44,7 @@ class CommonController extends Controller {
         $where['status'] = 1;
         if($cid != 0)
             $where['cid'] = array('in', D('Category')->getChild($cid)); //得到属于$cid的所有栏目的id
-        $list = D('Article')->where($where)->relation(true)->order('click DESC')->limit($limit)->select();
+        $list = D('Article')->where($where)->relation(true)->order('sort DESC, click DESC')->limit($limit)->select();
         $this->assign('hotArticleCount', count($list));
         return $list;
     }

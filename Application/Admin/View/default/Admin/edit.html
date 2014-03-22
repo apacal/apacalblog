@@ -116,10 +116,10 @@
 									<div class="space-4"></div>
 
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right" > 是否显示 </label>
+										<label class="col-sm-3 control-label no-padding-right" > 状态 </label>
 										<div class="col-sm-9">
                                             <label>
-                                                <input name="status" class="ace ace-switch ace-switch-7" type="checkbox">
+                                                <input name="status" id="status" class="ace ace-switch ace-switch-7" type="checkbox">
 											    <span class="lbl"></span>
 										    </label>
 										</div>
@@ -148,5 +148,22 @@
 					</div><!-- /.page-content -->
 				</div><!-- /.main-content -->
 
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 状态 </label>
+										<div class="col-sm-9">
+                                            <label>
+                                                <input name="status" id="status" class="ace ace-switch ace-switch-7" type="checkbox">
+											    <span class="lbl"></span>
+										    </label>
+										</div>
+									</div>
 
+        <script> //初始状态js
+        $(document).ready(function(){
+            var status = {$vo.status}; //设置初始状态
+            if (status == 1) { //状态位一
+                document.getElementById("status").checked=true
+            }
+        });
+        </script>
                 <include file="Public:footer" />

@@ -1,11 +1,10 @@
 <?php
 /**
- * 广告控制器
+ * Article控制器
  **/
 namespace Admin\Controller;
 use Think\Controller;
 class ArticleController extends CommonController {
-
 
     /**
      * 管理界面
@@ -22,7 +21,6 @@ class ArticleController extends CommonController {
             $val['cname'] = M('Category')->where($where)->getField('cname');
         }
         $this->assign('list', $list);
-        $this->display();
     }
     /**
      * 添加博客

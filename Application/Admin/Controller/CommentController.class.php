@@ -6,7 +6,6 @@ namespace Admin\Controller;
 use Think\Controller;
 class CommentController extends CommonController {
     public function update() {
-        $model = M('Comment');
         $id = I('request.id');
         if(empty($id) || !is_numeric($id))
             $this->error('参数错误！');

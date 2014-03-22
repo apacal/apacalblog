@@ -8,6 +8,9 @@ class ArticleController extends CommonController {
         $cid = I('request.cid');
         if(empty($cid) || !is_numeric($cid))
             $this->error("参数错误！");
+        $dataId = (M('Category')->where(array('id' => $cid, 'status' => 1))->field('id')->find());
+        if(empty($dataId))
+            $this->error("没有该分类！");
         $this->assign('articleList', D('Article')->getArticleList($cid));
         $this->assign('cid', $cid);
         $this->assign('categoryInfo', ($info = $this->getCategoryInfo($cid)));
@@ -24,7 +27,7 @@ class ArticleController extends CommonController {
      * 获取当前分类的信息
      * @param $cid
      **/
-    public function getCategoryInfo($cid) {
+    protected function getCategoryInfo($cid) {
         $info = M('Category')->where(array('id' => $cid))->find();
         $admin = M('Admin')->where(array('adminid' => $info['adminid']))->find();
         $info['adminname'] = $admin['adminname'];
@@ -37,7 +40,7 @@ class ArticleController extends CommonController {
         if(empty($id) || !is_numeric($id))
             $this->error("参数错误!");
         $article = $model->getArticle($id);
-        if($article) {
+        if(!empty($article)) {
             //热门文章
             $hotArticle = $model->getHotArticle($article['cid']);
             $this->assign('dataArticle',D('Article')->getDataArticle($article['cid']));
@@ -57,14 +60,14 @@ class ArticleController extends CommonController {
 
             $this->display();
         }else{
-            $this->error("没有这篇文章!");
+            $this->error("没有该文章!");
         }
     }
     /**
      * 获取评论信息
      * @param $id-来源文章id　$cid 分类id
      **/
-    private function setComment($id, $cid) {
+    protected function setComment($id, $cid) {
         $model = D('Comment');
         //评论数
         $where['oid&status&pid&cid'] = array($id,'1','0',$cid,'_multi' => true);
@@ -110,6 +113,8 @@ class ArticleController extends CommonController {
             if($temp == $time)
                 $list[] = $value;
         }
+        if(empty($list))
+            $this->error("没有该分类！");
         $this->assign('articleCount', count($list));
         $this->assign('articleList', $list);
         $this->display('dataArc');
@@ -122,6 +127,8 @@ class ArticleController extends CommonController {
         if(!empty($cid) || is_numeric($cid)) {
             $this->assign('articleAddList', D('Article')->getArticleList($cid));
             $this->display();
+        }else{
+            $this->error("参数错误！");
         }
     }
 }

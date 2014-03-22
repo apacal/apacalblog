@@ -11,7 +11,7 @@
     <meta name="description" content="<?php echo ($description); ?>" />
     <meta name="author" content="apacal">
 
-    <link rel="shortcut icon" href="http://218.244.140.70/Public/images/favicon.ico">
+    <link rel="shortcut icon" href="http://218.244.140.70/Public/images/log2.png">
 
     <!-- Bootstrap core CSS -->
     <link href="http://218.244.140.70/Public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -222,7 +222,7 @@
 			$('#pid').attr('value',$(this).attr('pid'));
 			$('#rid').attr('value',$(this).attr('rid'));
 			$('#publish_comment').html('&nbsp;&nbsp;回复评论给：'+$(this).attr('author'));
-			$('#msgcontent').focus();
+			$('#commentcontent').focus();
 		})
       });  
       
@@ -230,21 +230,22 @@
        *判断提交的评论
        */
       function addComment(){
-		if($('#adder_name').val()==''){
+		if($('#author').val()==''){
 			showTip(false, '请填您的名字！');
-			$('#adder_name').focus();
+			$('#author').focus();
 			return false;
 		}
-		if($('#msgcontent').val()==''){
+		if($('#commentcontent').val()==''){
 			showTip(false, '请填写评论内容！');
-			$('#msgcontent').focus();
+			$('#commentcontent').focus();
 			return false;
 		}
 		showTip(true, '正在提交，请稍等...');
 		$.post("<?php echo U('Home/Comment/add');?>", {"content":$("#commentcontent").val(),"author":$("#author").val(),"oid":$("#aid").val(),"pid":$("#pid").val(),"author_id":$("#author_id").val(),"cid":$("#cid").val(),"rid":$("#rid").val()}, function(msg) {
 			if(msg.ret == 0){
+			    $('#commentcontent').val('');
 				showTip(true, '评论成功！');
-                location.reload(true);
+              //  location.reload(true);
 			}else{
 				showTip(false, '评论失败，' + msg.error);
 			}
@@ -519,7 +520,7 @@
                         $('#friendlink').change(function(){
                         if(this.value)
                             window.open(this.value);
-                     });
+                        });
                     })
                 </script> 
                 <div id="scrollBtn"> <!-- 滚动屏幕 -->

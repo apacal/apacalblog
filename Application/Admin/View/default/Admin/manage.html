@@ -39,6 +39,7 @@
 							<div class="col-xs-12">
 
                                 <div class="table-responsive">
+                                    <include file="Public:selectbtn" />
                                     <table id="sample-table-2" class="table table-striped table-bordered table-hover">
                                         <thead>
                                             <tr>
@@ -72,7 +73,7 @@
                                                 <tr>
                                                     <td class="center">
                                                         <label>
-                                                            <input type="checkbox" class="ace" />
+                                                            <input type="checkbox" class="ace" name="checkid" value="{$vo.adminid}" />
                                                             <span class="lbl"></span>
                                                         </label>
                                                     </td>
@@ -85,8 +86,12 @@
                                                     <td>{$vo.logintime|date="Y-m-d H:i", ###}</td>
                                                     <td>{$vo.createtime|date="Y-m-d H:i", ###}</td>
 
-                                                    <td class="hidden-480">
-                                                        <span class="label label-sm label-warning">{$vo.status}</span>
+                                                    <td >
+                                                        <if condition="$vo.status eq 1">
+                                                            <span class="label label-success arrowed">允许</span>
+                                                        <else />
+                                                            <span class="label label-info arrowed-right">禁止</span>
+                                                        </if>
                                                     </td>
 
                                                     <td>
@@ -153,7 +158,6 @@
 				</div><!-- /.main-content -->
 
 		<!-- page specific plugin scripts -->
-
 		<script src="__ACE__/js/jquery.dataTables.min.js"></script>
 		<script src="__ACE__/js/jquery.dataTables.bootstrap.js"></script>
 		<script type="text/javascript">
@@ -192,4 +196,5 @@
 				}
 			})
 		</script>
+                <include file="Public:select" />
                 <include file="Public:footer" />

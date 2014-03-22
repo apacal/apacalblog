@@ -58,7 +58,7 @@
               <div class="modal-body form-horizontal">
                 <div class="form-group">                               
 				    <div class="col-sm-12">
-                        <textarea rows="16" cols="63" id="addCode" placeholder="写入代码" style="" ></textarea>
+                        <textarea rows="16" cols="63" id="addCode" placeholder="写入代码" style=" width: 610px; " ></textarea>
                     </div>
                 </div>
               </div>
@@ -114,6 +114,17 @@
         </div><!-- /.mod -->
         <script> //插入文件js
         $(document).ready(function(){
+            //排序值加减按钮
+            var sortstr = "{$vo.sort}";
+            var sort = Number(sortstr);
+            $('#sort').ace_spinner({value: sort ,min:-500,max:500,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
+            //$('#sort').val(sort);
+            
+            var status = "{$vo.status}"; //设置初始状态
+            if (status == 1) { //状态位一
+                document.getElementById("status").checked=true
+            }
+
             $(".insertFile").on('click', function(){ //添加文件
 			    $('#insertFile').attr('value',$(this).attr('insertFile'));//文件链接
 			    $('#fileint').attr('value',$(this).attr('fileint')); //文件说明

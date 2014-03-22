@@ -5,6 +5,21 @@
 namespace Admin\Controller;
 use Think\Controller;
 class CommonController extends Controller {
+    /**
+     * 重置排序
+     **/
+    public function resetAllSort() {
+        $model = D(CONTROLLER_NAME);
+        $pk = $model->getPk();
+        $list = $model->field($pk)->select();
+        foreach($list as $val) {
+            $where[$pk] = $val[$pk];
+            $data['sort'] = 0;
+            $model->where($where)->save($data);
+        }
+        $this->success("重置成功！");
+
+    }
     public function index() {
         $this->display();
     }
@@ -19,7 +34,35 @@ class CommonController extends Controller {
     public function _before_edit() {
         $this->setNavList();
     }
+    public function _after_manage() {
+        $this->display();
+    }
     protected $field = '*';
+    /**
+     * 删除多条记录
+     **/
+    public function foreverDel() {
+        $ids = $_POST['ids'];
+        if($ids == '' || !$ids)
+            $this->error('参数错误!');
+        $model = D(CONTROLLER_NAME);
+        if (!empty($model)) {
+            $pk = $model->getPk();
+            $allid = (explode(',', $ids));
+            array_pop($allid);
+            foreach ($allid as $val) {
+                $where[$pk] = $val;
+                //var_dump($where);
+                $model->where($where)->delete();
+            }
+            echo 1;
+            /*
+            $this->manage();
+            $this->display(CONTROLLER_NAME.':manage');
+            echo 1;
+            */
+        }
+    }
     /**
      * 添加，展示页面
      **/
@@ -86,7 +129,6 @@ class CommonController extends Controller {
         $model = M(CONTROLLER_NAME);
         $list = $model->field($this->field)->order('createtime DESC')->select();
         $this->assign('list', $list);
-        $this->display();
     }
     /**
      * 检查验证码
