@@ -24,7 +24,7 @@ return array(
     'DEFAULT_THEME'    =>    'default',// 设置默认的模板主题
 
 	'DB_TYPE'		=>	'mysql',// 数据库类型	
-    'DB_DSN' => 'mysql://root:ApacalBlog2014@localhost:3306/apacalblog#utf8',
+    'DB_DSN' => 'mysql://root:@)!$Apacalblog@localhost:3306/apacalblog#utf8',
 	'DB_PREFIX'		=>	'ablg_',// 数据表前缀
 
     'THUMB_PREFIX'  =>  'ablg_',  //缩略图的前缀

@@ -1,0 +1,74 @@
+<include file="Public:index_header" />
+<include file="Public:navigation_menu" />
+<include file="menu_left" />
+<div id="templatemo_right">
+<div id="content">
+        <div id="daohang">
+            <span>
+            <a href="__URL__/index">前台用户</a>
+            <span> > </span>
+            <a href="__URL__/editor">前台用户管理</a>
+            > 修改<h2>前台用户&nbsp;&nbsp;{$vo.name}&nbsp;&nbsp;修改</h2><br><br>
+            </span>
+        </div>
+        
+        <form method="post" action="__URL__/update">
+           <table id="login_table">
+               <tr><td></td><br></tr>
+               <tr><td></td><br></tr>
+        <tr>
+            <td class="right">账号：</td>
+            <td>
+                <input type="text" size="30" name="name" value="{$vo.name}">
+            </td>
+        </tr>
+        <tr>
+            <td class="right">真实名字：</td>
+            <td>
+                <input type="text" size="30" name="name" value="{$vo.user_name}">
+            </td>
+        </tr>
+        <tr>
+            <td class="right">密码：</td>
+            <td>
+                <input type="password" size="30" name="password" >
+            </td>
+        </tr>
+        <tr>
+            <td class="right">确认密码：</td>
+            <td>
+                <input type="password" size="30" name="repassword">
+            </td>
+        </tr>
+        <tr>
+            <td class="right">邮箱：</td>
+            <td>
+                <input type="text" size="30" name="email" value="{$vo.email}">
+            </td>
+        </tr>
+         <tr>
+            <td class="right">介绍：</td>
+        </tr>
+       
+    </table>
+    <textarea style="width: 600px; height: 250px; display: none;" name="content" value="{$vo.conten}"></textarea>
+    <table class="login_table">
+         <tr>
+            <td class="right">验证码：</td>
+            <td><input type="text" size="15" name="verify"></td>
+            <td><img src="__URL__/verify" /></td>
+
+        </tr>
+        <tr>
+            <td>
+             <input type="hidden" value="{$vo.id}" name="id">
+            <td><input type="submit" value="更新"> </td>
+        </tr>
+    </table>
+        </form>
+
+
+</div>
+</div>
+
+<include file="Public:footer" />

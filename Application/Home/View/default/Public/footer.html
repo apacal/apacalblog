@@ -2,29 +2,48 @@
     <!-- FOOTER -->
     <div class="container marketing" id="footer">
                 <script type="text/javascript">
+                    window.onload=function(){ 
+                    document.onkeydown = showKeyDown 
+                    //document.onkeypress = showKeyPress 
+                    } 
+                    /**
+                     * 键盘按下J和K分别翻页
+                     */
+                    function showKeyDown(e) { 
+                        e = e || window.event; 
+                        var keycode = e.which ? e.which : e.keyCode; 
+                        var current = document.body.scrollTop;
+                        var height = document.body.clientHeight;
+                        if(keycode == 74 || keycode == 8){ //如果按下J或者space 
+                            $('html, body').animate({scrollTop: current + height - 40}, 'slow');
+                            //在这里设置你想绑定的事件 
+                        } 
+                        if(keycode == 75 ){ //如果按下K键 
+                            $('html, body').animate({scrollTop: current - height + 40}, 'slow');
+                        }
+                    } 
                     $(document).ready(function(){
                         // 到底部
                         $('a.scrollToBottom').click(function(){
-                            $('html, body, .content').animate({scrollTop: $(document).height()}, 300);
+                            $('html, body').animate({scrollTop: $(document).height()}, 'slow');
                             return false;
                         });
                         // 到顶部
-                       $('a.scrollToTop').click(function(){
+                        $('a.scrollToTop').click(function(){
                             $('html, body').animate({scrollTop:0}, 'slow');
                             return false;
                         });
                         $('#friendlink').change(function(){
-                        if(this.value)
-                            window.open(this.value);
+                            if(this.value)
+                                window.open(this.value);
                         });
-                    })
+                    });
                 </script> 
                 <div id="scrollBtn"> <!-- 滚动屏幕 -->
-                    <a href="#" class="scrollToTop" title="顶部" ><p class="scrollBtn-top"></p></a>
-                    <a  href="#" class="scrollToCenter" title="留言反馈"><p class="scrollBtn-SNS"></p></a>
-                    <a href="#" class="scrollToBottom" title="底部"><p class="scrollBtn-bottom"></p></a>
+                    <a href="" class="scrollToTop" title="顶部" ><p class="scrollBtn-top"></p></a>
+                    <a  href="" class="scrollToCenter" title="留言反馈"><p class="scrollBtn-SNS"></p></a>
+                    <a href="" class="scrollToBottom" title="底部"><p class="scrollBtn-bottom"></p></a>
                 </div>
-            
                 <div class="col-md-7">
                     <div class="footerInfo">
                         <p>Copyright © 2014 Apacal All rights reserved</p>	

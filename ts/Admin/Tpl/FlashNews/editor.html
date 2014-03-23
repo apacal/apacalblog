@@ -1,0 +1,61 @@
+<include file="Public:index_header" />
+<include file="Public:navigation_menu" />
+<include file="menu_left" />
+<div id="templatemo_right">
+<div id="content">
+        <div id="daohang">
+            <span>
+            <a href="__URL__/index">主页管理</a>
+            <span> > </span>
+            <a href="__URL__/manager">广告管理</a>
+            > 广告修改
+            </span>
+        </div>
+        <h2>{$vo.title}</h2>
+        <form method="post" action="__URL__/save"  enctype="multipart/form-data">
+            <table class="login_table">
+                    <tr>
+                        <td class="right">位置：</td>
+                        <td><input type="text" name="position" size="35" value="{$vo.position}"></td>
+                    </tr>
+                    <tr>
+                        <td class="right">标题：</td>
+                        <td><input type="text" name="title" size="35" value="{$vo.title}"></td>
+                    </tr>
+                    <tr>
+                        <td class="right">文章链接：</td>
+                        <td><input type="text" name="article_url" size="35" value="{$vo.article_url}"></td>
+                    </tr>
+                    <tr>
+                        <td class="right">图片预览：</td>
+                    </tr>
+                    <tr>
+                        
+                        <td colspan=10><img width="570" height="270" alt="{$vo.title}" src="{$vo.img_url}"></td>
+                    </tr>
+                    <tr>
+                        <td class="right">上传图片：</td>
+                        <td><input type="file" name="photo"></td>
+                        <td class="tLeft" colspan="3">
+                            <div class="result" style="background:#E9E9F3">上传允许文件大小：570 * 270，类型：gif png jpg jpeg图像文件；<font color=red>上传图片后，新的图片会替换久的图片！</font></div>
+</td>
+                        
+                    </tr>
+                    <tr>
+                        <td class=right>是否显示：</td>
+                        <td><input  type="checkbox" checked="true" name="open" value="显示"></td>
+                    </tr>
+                    <tr>
+                        
+                        <td class=right><input type="hidden" value="{$vo.id}" name="id"></td>
+                        <td><input type="submit" value="提交"></td>
+                    </tr>
+                </table>
+        </form>
+        
+
+
+</div>
+</div>
+
+<include file="Public:footer" />

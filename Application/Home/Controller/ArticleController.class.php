@@ -43,13 +43,22 @@ class ArticleController extends CommonController {
         if(!empty($article)) {
             //热门文章
             $hotArticle = $model->getHotArticle($article['cid']);
-            $this->assign('dataArticle',D('Article')->getDataArticle($article['cid']));
+            $dateCount = 0; $dateAllCount = 0;
+            $this->assign('dateArticle',D('Article')->getDateArticle($dateCount, $article['cid']));
+            $this->assign('dateAllArticle',D('Article')->getDateArticle($dateAllCount));
+            $this->assign('dateCount', $dateCount);
+            $this->assign('dateAllCount', $dateAllCount);
             $hotCount = count($hotArticle);
             $this->assign('hotCount', $hotCount);
             $this->assign('hotArticle', $hotArticle);
             $this->assign('article', $article);
+            // readNext
             $readNext = $model->getReadNext($article['cid'], $article['createtime']);
             $this->assign('articleList', $readNext);
+            // 随机文章
+            $this->assign('randArticle', $this->getRandArticle(5));
+            $this->assign('randCount', 5);
+            // 评论
             M('Article')->where('id='.$id)->setInc('click');
             $this->setComment($article['id'], $article['cid']);
             
@@ -62,6 +71,19 @@ class ArticleController extends CommonController {
         }else{
             $this->error("没有该文章!");
         }
+    }
+    /**
+     * 随机文章
+     **/
+    protected function getRandArticle($limit = 15) {
+        $model = M('Article');
+        $list = $model->where(array('status' => 1))->field('click, id, image, title')->select();
+        $rand = array_rand($list, $limit);
+        $randArticle = array();
+        foreach($rand as $val) {
+            $randArticle[] = $list[$val];
+        }
+        return $randArticle;
     }
     /**
      * 获取评论信息
@@ -100,10 +122,10 @@ class ArticleController extends CommonController {
     /**
      * 时间归类
      **/
-    public function dataArc() {
+    public function dateArc() {
         $cid = I('request.cid');
         $time = I('request.time');
-        if(!empty($cid))
+        if(!empty($cid) && $cid != 0) //0表示所有文章归档
             $where['cid'] = array('in', D('Category')->getChild($cid)); //得到属于$cid的所有栏目的id
         $where['status'] = 1;
         $allList = D('Article')->where($where)->relation(true)->order("sort DESC, createtime DESC")->select();

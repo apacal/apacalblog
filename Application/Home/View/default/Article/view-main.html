@@ -4,7 +4,11 @@
 
     <div class="row view-summary-list">
         <div class="col-lg-9" style=" padding-right: 30px;  margin-bottom: 30px;">
-            <h1 class="article-view-h1">{$article.title}<a class="btn btn-default pull-right" style="margin-right: 50px;margin-top: 8px;"href="{:U('Home/Article/index', array('cid' => $article['cid']))}" role="button">{$article.cname} »</a></h1>
+            <h1 class="article-view-h1">
+                <neq name="article.source" value="0"><a class="btn btn-default pull-left" style="margin-right: 50px;margin-top: 8px;" target="_blank" href="{$article.source_link}">转载</a></neq>
+                {$article.title}
+                <a class="btn btn-default pull-right" style="margin-right: 50px;margin-top: 8px;"href="{:U('Home/Article/index', array('cid' => $article['cid']))}" role="button">{$article.cname} »</a>
+            </h1>
             <div class="meta-author" style="margin-left:20%;" >
                 <span class="avatar" style=" margin-left: 50px; ">
                     <empty name="article.adminimage">
@@ -20,6 +24,29 @@
             <div id="content">
                 {$article.content}
             </div>
+            <div style="margin-top: 50px; font-size: 16px;color: #cc0000;">
+                <p align="center">
+                <neq name="article.source" value="0">
+                    <strong>（本文非原创，转载自 <a href="{$article.source_link}">{$article.source}</a> ，请勿用于任何商业用途）</strong>
+                <else />
+                    <strong>（转载本站文章请注明作者和出处 <a href="__APP__">Apacal –apacal.cn</a> ，请勿用于任何商业用途）</strong>
+                </neq>
+                </p>
+            </div>
+            <div style="text-align:center;padding:0px;font-size: 14px;margin-bottom: 50px;">
+                =^_^=<b>访问<a href="__ROOT__/404/" target="_blank">ApacalBlog–404页面</a>寻找遗失儿童</b>=^_^=
+            </div>
+            <!-- JiaThis Button BEGIN -->
+            <div class="jiathis_style">
+                <span class="jiathis_txt">分享到：</span>
+                <a class="jiathis_button_tools_1"></a>
+                <a class="jiathis_button_tools_2"></a>
+                <a class="jiathis_button_tools_3"></a>
+                <a class="jiathis_button_tools_4"></a>
+                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+            </div>
+            <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=1395160639763929" charset="utf-8"></script>
+            <!-- JiaThis Button END -->
 
             <!--           文章标签　＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
             <ul class="article-tags unstyled">
@@ -46,6 +73,20 @@
                             <span class="hot-header"><a href="{:U('Home/Article/view', array('id' => $vo['id']))}">{$vo.title}</a></span>
                     </div>
                 </volist>
+                <h3 style=" margin-top: 40px; ">随机文章<span class="hot-count">{$randCount}</span></h3>
+                <volist name="randArticle" id="vo">
+                    <div class="hot-summary">
+                            <span><a href=":U('Home/Article/view', array('id' => $vo['id']))}" class="hot-img-a">
+                            <empty name="vo.image">
+                                <img alt="暂无图片"  class="img-rounded" src="__IMG__/default.jpg"></a>
+                            <else />
+                                <img alt="{$vo.title}"  class="img-rounded" src="__UPLOAD__{$vo.image|getThunmName}"></a>
+                            </empty>
+                            </span>
+                            <span class="hot-interaction-count"><span class="dt">Interaction count:</span>{$vo.click}<span class="glyphicon glyphicon-share"></span></span>
+                            <span class="hot-header"><a href="{:U('Home/Article/view', array('id' => $vo['id']))}">{$vo.title}</a></span>
+                    </div>
+                </volist>
                 <!--      文章分类　=========================================
                 <div class="article-seprate">
                 <h3>文章分类<span class="hot-count">4</span></h3>
@@ -58,10 +99,18 @@
                 </div>
                 -->
                 <div class="article-seprate">
-                <h3>文章归档<span class="hot-count">4</span></h3>
+                <h3>文章归档<span class="hot-count">{$dateCount}</span></h3>
                 <ul class="article-class unstyled">
-                    <volist name="dataArticle" id="vo">
-                        <li><a href="{:U('Home/Article/dataArc', array('cid' => $vo['cid'], 'time' => $vo['time']))}">{$vo.time}<span class="article-span">({$vo.count})</span></a></li>
+                    <volist name="dateArticle" id="vo">
+                        <li><a href="{:U('Home/Article/dateArc', array('cid' => $vo['cid'], 'time' => $vo['time']))}">{$vo.time}<span class="article-span">({$vo.count})</span></a></li>
+                    </volist>
+                </ul>
+                </div>
+                <div class="article-seprate">
+                <h3>全站归档<span class="hot-count">{$dateAllCount}</span></h3>
+                <ul class="article-class unstyled">
+                    <volist name="dateAllArticle" id="vo">
+                        <li><a href="{:U('Home/Article/dateArc', array('cid' => $vo['cid'], 'time' => $vo['time']))}">{$vo.time}<span class="article-span">({$vo.count})</span></a></li>
                     </volist>
                 </ul>
                 </div>

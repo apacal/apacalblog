@@ -9,7 +9,10 @@
                         <div class="view-content">
                             <span class="tags" ><a href="{:U('Home/Category/index', array('cid' => $vo['cid']))}" class="parsed" >{$vo.cname}</a></span>
                             <a href="{:U('Home/Article/view',array('id' => $vo['id']))}"><h5 class="view-h2">{$vo.title}</h5></a>
-                            <p class="article-description">{$vo.description|msubstr=0,80}</p>
+                            <p class="article-description">
+                                {$vo.description|msubstr=0,80}
+                                &nbsp;&nbsp;&nbsp;<neq name="vo.source" value="0"><a target="_blank" href="{$vo.source_link}">转载</a></neq>
+                            </p>
                         </div>
                     </div>
                     <div class="meta">

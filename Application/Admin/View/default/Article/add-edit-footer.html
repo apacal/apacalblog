@@ -159,7 +159,7 @@
                     alert("图片必须!");
                     return false;
                 }
-                add = '<img src="__UPLOAD__' + add + '">';
+                add = '<img src="__UPLOAD__' + add + '">' + '<div><font face="Comic Sans MS" size="3">apacal image</font></div>';
 				$("#editor1").append(add);
 			    $('#insertImage').val("");//文件链接
 			    $('#arimage').val("");//文件链接
@@ -167,7 +167,7 @@
             });
             $(".insertCode").on('click',function(){  //插入代码
                 var add = $("#addCode").val();
-                add = '<pre>' + add + '</pre>' + '<font face="Comic Sans MS" size="3">apacal</font>';
+                add = '<pre>' + add + '</pre>' + '<font face="Comic Sans MS" size="3">apacal code</font>';
 			    $('#addCode').val("");
 				$("#editor1").append(add);
                 $('#modal-insertCode').modal('hide');

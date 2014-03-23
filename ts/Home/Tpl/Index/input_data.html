@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<title>空气质量收集系统</title>
+<link type="text/css" rel="stylesheet" href="__ROOT__/statics/css/templatemo_style.css">
+<load href="__ROOT__/statics/js/Base.js" />
+<load href="__ROOT__/statics/js/prototype.js" />
+<load href="__ROOT__/statics/js/mootools.js" />
+<load href="__ROOT__/statics/js/Think/ThinkAjax.js" />
+<load href="__ROOT__/statics/js/Form/CheckForm.js" />
+<load href="__ROOT__/statics/js/common.js" />
+<style>
+			form {
+				margin: 0;
+			}
+			textarea {
+				display: block;
+			}
+</style>
+
+
+</head>
+<body>
+<include file="Public:navigation_menu" />
+<include file="Public:navigation_menu_left" />
+<div id="templatemo_right">
+    <div id="content">
+     <div id="daohang">
+            <span>
+            <a href="__ROOT__">首页</a>
+            <span> > </span>
+            <a href="__URL__/input_data">上报数据</a>
+            > 正文
+            </span>
+    </div>
+    <form action="__URL__/out_data" method="post">
+            
+            <font color="black">监测点：</font><br>
+            <input type="text" name="title" size="36"><br>
+            <font color="black">提交代码：</font><br>
+            <textarea name="content" id="textarea" cols="100" rows="8"></textarea><br>
+            <input type="submit" value="提交">
+        </form>
+    <div>
+</div>
+</div>
+
+<include file="Public:footer" />

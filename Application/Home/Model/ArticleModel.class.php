@@ -3,6 +3,7 @@ namespace Home\Model;
 use Think\Model\RelationModel;
 class ArticleModel extends RelationModel {
 
+
     /**
      * 定义关联模型，每篇文章属于一个栏目和关联到用户名
      **/
@@ -69,15 +70,19 @@ class ArticleModel extends RelationModel {
     /**
      * 按时间分类
      **/
-     public function getDataArticle($cid) {
-        $where['cid'] = $cid;
-        $allCid =  D('Category')->getChild($cid); //得到属于$cid的所有栏目的id
-        $allcid = implode(",", $allCid);
-        $where['status'] = 1;
-        $list = $this->query("SELECT COUNT(FROM_UNIXTIME(createtime,'%Y-%m')) AS count,FROM_UNIXTIME(createtime,'%Y-%m') AS time FROM `".C('DB_PREFIX')."article`  where status=1 and cid in (".$allcid.") GROUP BY time ORDER BY time DESC");
+     public function getDateArticle(&$count, $cid = 0) {
+        if ($cid == 0) { //全部文章
+            $list = $this->query("SELECT COUNT(FROM_UNIXTIME(createtime,'%Y-%m')) AS count,FROM_UNIXTIME(createtime,'%Y-%m') AS time FROM `".C('DB_PREFIX')."article`  where status=1 GROUP BY time ORDER BY time DESC");
+        } else {
+            $where['cid'] = $cid;
+            $allCid =  D('Category')->getChild($cid); //得到属于$cid的所有栏目的id
+            $allcid = implode(",", $allCid);
+            $list = $this->query("SELECT COUNT(FROM_UNIXTIME(createtime,'%Y-%m')) AS count,FROM_UNIXTIME(createtime,'%Y-%m') AS time FROM `".C('DB_PREFIX')."article`  where status=1 and cid in (".$allcid.") GROUP BY time ORDER BY time DESC");
+        }
         foreach($list as &$value) {
             $value['cid'] = $cid;
         }
+        $count = count($list);
         return $list;
     }
     /**

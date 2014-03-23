@@ -1,0 +1,63 @@
+<include file="Public:index_header" />
+<include file="Public:navigation_menu" />
+<include file="menu_left" />
+<div id="templatemo_right">
+<div id="content">
+        <div id="daohang">
+            <span>
+            <a href="__URL__/index">数据管理</a>
+            <span> > </span>
+            <a href="__URL__/manager">已处理数据管理</a>
+            > 列表
+            </span></br>
+            </br>
+            <form method="post" action="__URL__/manager">
+                
+				按
+				<select name="searchKind">
+				    <option value="1">数据编号</option>
+					<option value="2">监测点</option>
+				</select>
+                <input type="text"  value="" size="20" id="searchKey" name="searchKey">
+                <label>搜索：</label>
+                <input type="submit"  value="提交" >  
+            </form>
+            
+        </div>
+        </br>
+        </br>
+        <table class="manager_table">
+            <thead>
+                <tr>
+                   
+                   <td width=5%><a href="__URL__/manager/family/id/way/<?php if($_REQUEST['way']=='asc') echo'desc';else echo 'asc'; ?>/searchKind/{$_REQUEST['searchKind']}/searchKey/{$_REQUEST['searchKey']}">编号</a></td>
+                   <td width=30%><a href="__URL__/manager/family/title/way/<?php if($_REQUEST['way']=='asc') echo'desc';else echo 'asc'; ?>/searchKind/{$_REQUEST['searchKind']}/searchKey/{$_REQUEST['searchKey']}">监测点</a></td>
+                        <td width=12%><a href="__URL__/manager/family/publish_time/way/<?php if($_REQUEST['way']=='asc') echo'desc';else echo 'asc'; ?>/searchKind/{$_REQUEST['searchKind']}/searchKey/{$_REQUEST['searchKey']}">添加时间</a></td>
+                    <td width=10%>审核状态</td>
+                    <td width=15%>作者</td>
+                    <td width=15%>审核</td>
+                    <td width=13%>操作</td>
+                </tr>
+            </thead>
+            <tbody>
+                <volist name="list" id="vo">
+                <tr>
+                    
+                    <td>{$vo.id}</td><td><a href="__URL__/details/id/{$vo.id}">{$vo.title}</a></td><td><span>{$vo.publish_time|date='Y-m-d',###}</span> </td>
+                    <td><if condition="$vo.open eq 1">通过<else />不通过</if></td>
+                    <td>{$vo.publish_name}</td>
+                    <td><a href="javascript:void(0);" onclick="checkPass('__URL__','{$vo.id}','处理的数据')">通过</a>/<a href="javascript:void(0);" onclick="checkUnpass('__URL__','{$vo.id}','处理的数据')">不通过</a></td>
+                    <td><a href="__URL__/editor/id/{$vo.id}">修改</a>/<a href="javascript:void(0);" onclick="checkDel('__URL__','{$vo.id}','处理的数据')">删除</a></td>
+                    
+                </tr>
+                </volist>
+            </tbody>
+        </table>
+        </br>
+        <div class="result_page">{$page}</div>
+
+
+</div>
+</div>
+
+<include file="Public:footer" />

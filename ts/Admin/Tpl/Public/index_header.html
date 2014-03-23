@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<title>空气质量收集系统-后台管理</title>
+<link type="text/css" rel="stylesheet" href="__ROOT__/statics/css/templatemo_style.css">
+<load href="__ROOT__/statics/js/ie.js" />
+<load href="__ROOT__/statics/js/admin.js" />
+
+<style>
+			form {
+				margin: 0;
+			}
+			textarea {
+				display: block;
+			}
+</style>
+<link rel="stylesheet" href="__ROOT__/statics/js/kindeditor/themes/default/default.css" />
+<script charset="utf-8" src="__ROOT__/statics/js/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="__ROOT__/statics/js/kindeditor/lang/zh_CN.js"></script>
+<script>
+  
+	KindEditor.ready(function(K) {
+		K.create('textarea[name="content"]', {
+			autoHeightMode : true,
+			afterCreate : function() {
+				this.loadPlugin('autoheight');
+			}
+		});
+	});
+</script>
+<script type="text/javascript" language="javascript">
+function clearText(field){
+
+    if (field.defaultValue == field.value) field.value = '';
+    else if (field.value == '') field.value = field.defaultValue;
+
+}
+</script>
+</head>
+<body>

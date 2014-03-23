@@ -1,0 +1,42 @@
+<include file="Public:index_header" />
+<include file="Public:navigation_menu" />
+<include file="menu_left" />
+<div id="templatemo_right">
+<div id="content">
+        <div id="daohang">
+            <span>
+            <a href="__ROOT__/admin.php">后台首页</a>
+            <span> > </span>
+            <a href="__URL__/manager">前台用户管理</a>
+            > 列表
+            </span>
+        </div>
+        <table class="manager_table">
+            <thead>
+                <tr>
+                    <td width=10%>编号</td>
+                    <td width=20%>账号</td>
+                    <td width=20%>真实姓名</td>
+                    <td width=20%>邮箱</td>
+                    <td width=30%>操作</td>
+                </tr>
+            </thead>
+            <tbody>
+                <volist name="list" id="vo">
+                <tr id="{$vo.id}">
+                    <td>{$vo.id}</td><td><a href="__URL__/details/id/{$vo.id}">{$vo.name}</a></td>
+                    <td>{$vo.user_name}</td>
+                    <td><span>{$vo.email}</span> </td>
+                    <td><a href="__URL__/editor/id/{$vo.id}">修改</a>/<a href="javascript:void(0);" onclick="checkDel('__URL__','{$vo.id}','{$vo.name}')">删除</a></td>
+                    
+                </tr>
+                </volist>
+            </tbody>
+        </table>
+        <div class="result_page">{$page}</div>
+
+
+</div>
+</div>
+
+<include file="Public:footer" />
