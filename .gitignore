@@ -1,5 +1,6 @@
-./Application/Common/Conf/config.php
-./weixin/Application/Common/Conf/config.php
-./ts/
-*/Runtime/
-
+Application/Common/Conf/config.php
+weixin/Application/Common/Conf/config.php
+weixin/Application/User/Conf/config.php
+ts/*
+*/Runtime/*
+.gitignore

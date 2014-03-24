@@ -72,5 +72,37 @@
                 </script> 
                 <script src="__ACE__/js/fuelux/fuelux.spinner.min.js"></script>
 
+<!-- ========================================= 图片预览modal　=======================-->
+
+    <div class="modal fade" id="modal-{$vo.id}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" style=" width:80%;left:0px;" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 align="center" class="modal-title" >图片预览
+                        <button type="button" class="pull-right btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="pull-left btn btn-default" data-dismiss="modal">关闭</button>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <h4 align="center" ></h4>
+                    <img  alt="正在载入图片" src="__UPLOAD__{$vo.image}" class="aligncenter img-thumbnail">
+                </div> 
+                <div class="modal-footer">
+                    <div style="font-size: 16px;color: #cc0000;">
+                        <p align="center">
+                            <strong>（转载本站文章请注明作者和出处 <a href="/index.php">Apacal &ndash;apacal.cn</a> ，请勿用于任何商业用途）</strong>          
+                        </p>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <style>
+        .aligncenter {
+            clear: both;
+            display: block;
+            margin:auto;
+        }
+    </style>
 </body>
 </html>

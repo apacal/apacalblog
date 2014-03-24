@@ -113,24 +113,6 @@
                                                 <label for="unload" class="btn btn-xs btn-info"  onmouseover="document.getElementById('upload').style.display='block';" class="file1">点击上传新图片...</label> 
                                                 <input type="file" name="image" onchange="document.getElementById('viewfile').value=this.value;this.style.display='none';" class="file" id="upload" style="display: block;left: 220px; width: 110px;"> 
                                         </div>
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="modal-{$vo.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                              <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                  <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                    <h4 class="modal-title" id="myModalLabel">查看图片</h4>
-                                                                  </div>
-                                                                  <div class="modal-body">
-                                                                        <img data-toggle="modal" data-target="#modal-{$vo.id}" src="__UPLOAD__{$vo.image}" alt="暂无图片" class="img-thumbnail">
-                                                                  </div>
-                                                                  <div class="modal-footer">
-                                                                    <a><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                    <a><button type="button" class="btn btn-primary" data-dismiss="modal">确定</button></a>
-                                                                  </div>
-                                                                </div><!-- /.modal-content -->
-                                                              </div><!-- /.modal-dialog -->
-                                                            </div><!-- /.mod -->
 									</div>
 									<div class="space-4"></div>
 
