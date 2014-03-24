@@ -10,10 +10,10 @@
                 <div id="myCarousel" class="carousel slide " data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="item active">
-                            <img src="__UPLOAD__{$categoryInfo.image|getThunmName}" class="advertImg"></a>
-                            <div class="carousel-caption" style="padding-bottom: 150px">
+                            <img data-toggle="modal"  imageurl="__UPLOAD__{$categoryInfo.image}" src="__UPLOAD__{$categoryInfo.image|getThunmName}" class="advertImg view-image">
+                            <div class="carousel-caption view-image" imageurl="__UPLOAD__{$categoryInfo.image}" style="padding-bottom: 150px">
                                 <h1>{$categoryInfo.cname}</h1>
-                                <p>{$categoryInfo.description}</p>
+                                <p id="categoryDesc">{$categoryInfo.description}</p>
 
                                 <div class="meta-author">
                                     <empty name="categoryInfo.adminimage">
@@ -40,7 +40,6 @@
         </div>
     </div>
 
-    
-    <!-- main -->
+
     <include file="Public:articleMain" />
 <include file="Public:footer" />

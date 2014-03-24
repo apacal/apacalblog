@@ -5,7 +5,7 @@ return array(
 	'DB_HOST'=> 'localhost',	// 数据库服务器地址
 	'DB_NAME'=>'ts_airsystem',		// 数据库名称
 	'DB_USER'=>'root',			// 数据库用户名
-	'DB_PWD'=>'dev2013',			// 数据库密码
+	'DB_PWD'=>'@)!$Apacalblog',			// 数据库密码
 	'DB_PORT'=>'3306',			// 数据库端口
 	'DB_PREFIX'=>'ts_',			// 数据表前缀
 	'DB_SUFFIX'				=> '',			// 数据库表后缀

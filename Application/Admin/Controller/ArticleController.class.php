@@ -39,6 +39,9 @@ class ArticleController extends CommonController {
         $data['image'] = $image;
         $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
         $data['content'] = $_REQUEST['content'];
+        if(empty($data['source'])){
+            $data['source'] = $data['source_url'] =0;
+        }
         //$data['content'] = str_replace(array('<div>','</div>'), '', $data['content']);
         if(!$model->add($data))
             $this->error($model->getError());

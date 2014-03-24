@@ -4,7 +4,11 @@
             <div class="col-lg-4 view-summary-div">
                 <div class="view-summary">
                     <div class="view-summary-1">
-                        <a href="{:U('Home/Article/view',array('id' => $vo['id']))}" class="view-img-a"><empty name="vo.image"><img alt="{$vo.title}"  class="img-thumbnail" src="__IMG__/default.jpg"><else /><img alt="{$vo.title}"  src="__UPLOAD__{$vo.image|getThunmName}"></empty></a>
+                        <empty name="vo.image">
+                            <img class="article-view-image" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('Home/Article/view',array('id' => $vo['id']))}" alt="{$vo.title}"  class="img-thumbnail" src="__IMG__/default.jpg">
+                        <else />
+                            <img alt="{$vo.title}" class="article-view-image" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('Home/Article/view',array('id' => $vo['id']))}" src="__UPLOAD__{$vo.image|getThunmName}">
+                        </empty>
                         <span class="interaction-count"><span class="dt">Interaction count:</span>{$vo.click}<span class="glyphicon glyphicon-share-alt"></span></span>
                         <div class="view-content">
                             <span class="tags" ><a href="{:U('Home/Category/index', array('cid' => $vo['cid']))}" class="parsed" >{$vo.cname}</a></span>

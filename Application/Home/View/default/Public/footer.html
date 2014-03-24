@@ -1,4 +1,122 @@
 
+    <!-- ====================================== view-image　　要显示的图片添加　view-image类，　添加imageUrl属性图片链接,在栏目展示时会加如，否则不需要加入　==================================-->
+    <div class="modal fade" id="modal-view-image" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" id="modal-category-view-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 align="center" class="modal-title" ><eq name="ACTION_NAME" value="index">栏目【{$categoryInfo.cname}】<else/>文章【{$article.title}】</eq>图片查看
+                        <button type="button" class="pull-right btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="pull-left btn btn-default" data-dismiss="modal">关闭</button>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <h4 align="center" id="modal-desc"></h4>
+                    <img src="" id="image-src" alt="正在载入图片" class="aligncenter img-thumbnail">
+                </div> 
+                <div class="modal-footer">
+                    <div style="font-size: 16px;color: #cc0000;">
+                        <p align="center">
+                            <strong>（转载本站文章请注明作者和出处 <a href="/index.php">Apacal &ndash;apacal.cn</a> ，请勿用于任何商业用途）</strong>          
+                        </p>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <style>
+        #modal-category-view-dialog , #modal-article-image-dialog{
+            width:70%; left:0%; right:0%;
+        }
+        .aligncenter {
+            clear: both;
+            display: block;
+            margin:auto;
+        }
+    </style>
+    <!-- ====================================== aeticle-list-and-advert-view-image　　要显示的图片添加　article-view-image类，　添加articleUrl属性，储存文章的多URL 添加title属性，存储标题　==================================-->
+    <div class="modal fade" id="modal-article-image" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" id="modal-article-image-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 align="center" class="modal-title" ><span id="article-image-title"></span>
+                        <button type="button" class="pull-right btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="pull-left btn btn-default" data-dismiss="modal">关闭</button>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <p id="modal-article-image-desc" style="margin-bottom: 30px"></p>
+                    <img src="" id="article-image-src" alt="正在载入图片" class="aligncenter img-thumbnail">
+                </div> 
+                <div class="modal-footer">
+                    <div style="font-size: 16px;color: #cc0000;">
+                        <p align="center">
+                            <strong>（转载本站文章请注明作者和出处 <a href="/index.php">Apacal &ndash;apacal.cn</a> ，请勿用于任何商业用途）</strong>          
+                        </p>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //　文章列表的图片预览
+            $('.article-view-image').click(function(){
+                    $('#modal-article-image').modal('show');
+                    // 判断imageUrl的属性
+                    var src = $(this).attr('src');
+                    var prefix = "{:C('THUMB_PREFIX')}"; //缩略图前缀
+                    if(src != undefined) {
+                        src = src.replace(prefix, '');
+                        var title = $(this).attr('title');
+                        var url = $(this).attr('articleUrl');
+                        var desc = $(this).attr('articledesc');
+                        if(desc != undefined) {
+                            desc = '【描述】' + desc;
+                            $('#modal-article-image-desc').html(desc);
+                        }
+                        if(url != undefined) {
+                            var modalTitle = '文章图片预览【<a href="' + url + '">' + title + '</a>】';
+                        }else{
+                            var modalTitle = title;
+                        }
+                        $('#article-image-title').html(modalTitle);
+                        $('#article-image-src').attr('src', src);
+                        return true;
+                    }
+                    var src = $(this).attr('src');
+                    if(src != undefined) {
+                        src = src.replace(prefix, '');
+                    //alert (src);
+                   // var originSrc = $(this).attr('imageUrl');
+                        $('#image-src').attr('src', src);
+                    }
+                        
+                });
+            // 文章内部的图片预览
+            $('.view-image').click(function(){
+                    $('#modal-view-image').modal('show');
+                    // 判断imageUrl的属性
+                    var originSrc = $(this).attr('imageUrl');
+                    if(originSrc != undefined) {
+                        
+                        var desc = $('#categoryDesc').html();
+                        $('#modal-desc').html(desc);
+                        $('#image-src').attr('src', originSrc);
+                        return true;
+                    }
+                    var src = $(this).attr('src');
+                    var prefix = "{:C('THUMB_PREFIX')}"; //缩略图前缀
+                    if(src != undefined) {
+                        src = src.replace(prefix, '');
+                    //alert (src);
+                   // var originSrc = $(this).attr('imageUrl');
+                        $('#image-src').attr('src', src);
+                    }
+                        
+                });
+        });
+    </script> 
+
     <!-- FOOTER -->
     <div class="container marketing" id="footer">
                 <script type="text/javascript">
@@ -7,21 +125,42 @@
                     //document.onkeypress = showKeyPress 
                     } 
                     /**
-                     * 键盘按下J和K分别翻页
+                     * 键盘按下J和K分别翻页 ,H, L到底部和顶部
                      */
                     function showKeyDown(e) { 
                         e = e || window.event; 
                         var keycode = e.which ? e.which : e.keyCode; 
                         var current = document.body.scrollTop;
-                        var height = document.body.clientHeight;
-                        if(keycode == 74 || keycode == 8){ //如果按下J或者space 
-                            $('html, body').animate({scrollTop: current + height - 40}, 'slow');
-                            //在这里设置你想绑定的事件 
-                        } 
-                        if(keycode == 75 ){ //如果按下K键 
-                            $('html, body').animate({scrollTop: current - height + 40}, 'slow');
+                        var actionName = '<?php echo ACTION_NAME ?>';
+                        if (actionName == "view") {
+                            var height = document.body.clientHeight;
+                        }else {
+                            var height = 540;
+                        }
+                        switch (keycode) {
+                            case 74:
+                          //  case 8:   //如果按下J或者space 
+                                $('html, body').animate({scrollTop: current + height - 40}, 'slow');
+                                break;
+                            case 75: //如果按下K键 
+                                $('html, body').animate({scrollTop: current - height + 40}, 'slow');
+                                break;
+                            case 72: // H
+                                $('html, body').animate({scrollTop: $(document).height()}, 'slow');
+                                break;
+                            case 76: // L
+                                $('html, body').animate({scrollTop:0},'slow');
+                                break;
+                            default:
+                                break;
                         }
                     } 
+                    function unsetVIM() {
+                         document.onkeydown = null;
+                    }
+                    function setVIM() {
+                         document.onkeydown = showKeyDown;
+                    }
                     $(document).ready(function(){
                         // 到底部
                         $('a.scrollToBottom').click(function(){

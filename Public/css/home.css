@@ -248,7 +248,7 @@ background: rgba(0, 0, 0, 0.75);
     color: #f4f6f8;
     -webkit-font-smoothing: antialiased;
 }
-.hot-img-a img {
+.hot-summary img {
     width: 60px;
     height: 60px;
 }

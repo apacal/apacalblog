@@ -121,6 +121,13 @@ class WeixinController extends HomeController {
 		$model = D ( 'Addons://' . $addons [$key] . '/WeixinAddon' );
 		$model->reply ( $data, $keywordArr );
 	}
+    public function test() {
+        echo "rrrrrrrr";
+		require_once ONETHINK_ADDON_PATH . 'Library/Model/WeixinAddonModel.class.php';
+		$model = D ( 'Addons://Library/WeixinAddon' );
+        var_dump($model->getBook());
+        echo "rrrrrrrr";
+    }
 	
 	// 处理关键词包含的算法
 	private function _contain_keyword($keywordInfo, $key, &$addons, &$keywordArr) {

@@ -16,14 +16,14 @@
                 <div class="carousel-inner">
                     <volist name="advertList" id="vo">
                         <div class='item <eq name="i" value="1">active</eq>'>
-                            <img src="__UPLOAD__{$vo.image|getThunmName}" class="advertImg" lt="{$vo.title}">
+                            <img src="__UPLOAD__{$vo.image|getThunmName}" class="advertImg"  lt="{$vo.title}">
                             <div class="container">
                                 <div class="carousel-caption" id="mycarousel-caption">
                                 <empty name="vo.url">
                                     <h3>{$vo.title}</h3>
                                 <else />
                                     <a href="{$vo.url}">
-                                    <h3>{$vo.title}</h3>
+                                        <h3>{$vo.title}</h3>
                                     </a>
                                 </empty>
                                 </div>

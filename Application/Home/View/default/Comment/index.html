@@ -11,11 +11,11 @@
         <p style="padding-top: 10px;">愿您的每句评论，都能给大家的生活添色彩，带来共鸣，带来思索，带来快乐。</p>
             <div class="add_comm">
 
-                    <textarea class="form-control" rows="5" cols="60" id="commentcontent" placeholder="（必须）请说几句吧，200字以内..."></textarea>
+                    <textarea class="form-control" rows="5" cols="60" id="commentcontent" placeholder="（必须）请说几句吧，200字以内..." onblur="setVIM();" onfocus="unsetVIM()"></textarea>
                     <div class="comm-con">
                     <empty name="CURUSER.name">
                     <strong style="color: #BA141D;">署名：</strong>
-                    <input type="text" onblur="if(this.value=='')this.value='匿名';" onfocus="if(this.value=='匿名')this.value='';" value="匿名" class="ipt-txt" size="36" id="author" name="author">
+                    <input type="text" onblur="if(this.value=='')this.value='匿名';setVIM();" onfocus="if(this.value=='匿名')this.value='';unsetVIM();" value="匿名" class="ipt-txt" size="36" id="author" name="author">
                     </ else>
 					<input type="hidden" name="author" id="author" value="{$CURUSER.name}" />
 					<input type="hidden" name="author_id" id="author_id" value="{$CURUSER.id}" />

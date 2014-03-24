@@ -14,6 +14,6 @@
 
 define('UC_APP_ID', 1); //应用ID
 define('UC_API_TYPE', 'Model'); //可选值 Model / Service
-define('UC_AUTH_KEY', '{F>-7M#8HW03CU|5Km"*B=seEwIg1:Q?]kZYVu9b'); //加密KEY
-define('UC_DB_DSN', 'mysql://root:ApacalBlog2014@127.0.0.1:3306/wexin'); // 数据库连接，使用Model方式调用API必须配置此项
+define('UC_AUTH_KEY', '{yk.F:1!~HQ*LfT6@#mbh`vG5>4U[,AcqV&(p_|B'); //加密KEY
+define('UC_DB_DSN', 'mysql://root:@)!$Apacalblog@127.0.0.1:3306/weixin'); // 数据库连接，使用Model方式调用API必须配置此项
 define('UC_TABLE_PREFIX', 'wx_'); // 数据表前缀，使用Model方式调用API必须配置此项

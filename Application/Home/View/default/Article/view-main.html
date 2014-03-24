@@ -8,6 +8,7 @@
                 <neq name="article.source" value="0"><a class="btn btn-default pull-left" style="margin-right: 50px;margin-top: 8px;" target="_blank" href="{$article.source_link}">转载</a></neq>
                 {$article.title}
                 <a class="btn btn-default pull-right" style="margin-right: 50px;margin-top: 8px;"href="{:U('Home/Article/index', array('cid' => $article['cid']))}" role="button">{$article.cname} »</a>
+                <a class="btn btn-default pull-right view-image" style="margin-right: 50px;margin-top: 8px;" imageUrl="__UPLOAD__{$article.image}" >查看图片</a>
             </h1>
             <div class="meta-author" style="margin-left:20%;" >
                 <span class="avatar" style=" margin-left: 50px; ">
@@ -62,12 +63,13 @@
                 <h3 style=" margin-top: 40px; ">热门文章<span class="hot-count">{$hotCount}</span></h3>
                 <volist name="hotArticle" id="vo">
                     <div class="hot-summary">
-                            <span><a href=":U('Home/Article/view', array('id' => $vo['id']))}" class="hot-img-a">
+                            <span>
                             <empty name="vo.image">
-                                <img alt="暂无图片"  class="img-rounded" src="__IMG__/default.jpg"></a>
+                                <img alt="暂无图片"  class="article-view-image" src="__IMG__/default.jpg" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('Home/Article/view',array('id' => $vo['id']))}">
                             <else />
-                                <img alt="{$vo.title}"  class="img-rounded" src="__UPLOAD__{$vo.image|getThunmName}"></a>
+                                <img alt="{$vo.title}"  class="article-view-image" src="__UPLOAD__{$vo.image|getThunmName}" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('Home/Article/view',array('id' => $vo['id']))}">
                             </empty>
+                              
                             </span>
                             <span class="hot-interaction-count"><span class="dt">Interaction count:</span>{$vo.click}<span class="glyphicon glyphicon-share"></span></span>
                             <span class="hot-header"><a href="{:U('Home/Article/view', array('id' => $vo['id']))}">{$vo.title}</a></span>
@@ -76,11 +78,11 @@
                 <h3 style=" margin-top: 40px; ">随机文章<span class="hot-count">{$randCount}</span></h3>
                 <volist name="randArticle" id="vo">
                     <div class="hot-summary">
-                            <span><a href=":U('Home/Article/view', array('id' => $vo['id']))}" class="hot-img-a">
+                            <span>
                             <empty name="vo.image">
-                                <img alt="暂无图片"  class="img-rounded" src="__IMG__/default.jpg"></a>
+                                <img alt="暂无图片"  class="article-view-image" src="__IMG__/default.jpg" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('Home/Article/view',array('id' => $vo['id']))}">
                             <else />
-                                <img alt="{$vo.title}"  class="img-rounded" src="__UPLOAD__{$vo.image|getThunmName}"></a>
+                                <img alt="{$vo.title}"  class="article-view-image" src="__UPLOAD__{$vo.image|getThunmName}" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('Home/Article/view',array('id' => $vo['id']))}">
                             </empty>
                             </span>
                             <span class="hot-interaction-count"><span class="dt">Interaction count:</span>{$vo.click}<span class="glyphicon glyphicon-share"></span></span>

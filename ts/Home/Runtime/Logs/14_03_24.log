@@ -1,0 +1,62 @@
+[ 2014-03-24T00:28:25+08:00 ] 183.60.70.30 /ts/
+INFO: [ app_begin ] --START--
+INFO: Run ReadHtmlCache Behavior [ RunTime:0.000873s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `ts_about_us` [ RunTime:0.001097s ]
+SQL: SELECT * FROM `ts_about_us` WHERE open=1 ORDER BY id desc LIMIT 3   [ RunTime:0.000226s ]
+SQL: SHOW COLUMNS FROM `ts_progress` [ RunTime:0.000834s ]
+SQL: SELECT * FROM `ts_progress` WHERE open=1 ORDER BY id desc LIMIT 3   [ RunTime:0.000204s ]
+SQL: SHOW COLUMNS FROM `ts_data` [ RunTime:0.000848s ]
+SQL: SELECT * FROM `ts_data` WHERE open=1 ORDER BY id desc LIMIT 12   [ RunTime:0.000253s ]
+SQL: SHOW COLUMNS FROM `ts_flash_news` [ RunTime:0.000391s ]
+SQL: SELECT * FROM `ts_flash_news` WHERE open=1 ORDER BY position asc  [ RunTime:0.000061s ]
+SQL: SELECT * FROM `ts_data` ORDER BY id desc LIMIT 10   [ RunTime:0.000157s ]
+SQL: SHOW COLUMNS FROM `ts_home` [ RunTime:0.000389s ]
+SQL: SELECT * FROM `ts_home` WHERE open=1 ORDER BY id desc LIMIT 1   [ RunTime:0.000059s ]
+INFO: [ view_template ] --START--
+INFO: Run LocationTemplate Behavior [ RunTime:0.000837s ]
+INFO: [ view_template ] --END-- [ RunTime:0.000895s ]
+INFO: [ view_parse ] --START--
+INFO: Run ParseTemplate Behavior [ RunTime:0.014223s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014289s ]
+INFO: [ view_filter ] --START--
+INFO: Run ContentReplace Behavior [ RunTime:0.000809s ]
+INFO: Run TokenBuild Behavior [ RunTime:0.000808s ]
+INFO: Run WriteHtmlCache Behavior [ RunTime:0.000717s ]
+INFO: Run ShowRuntime Behavior [ RunTime:0.000866s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.003344s ]
+INFO: [ view_end ] --START--
+INFO: Run ShowPageTrace Behavior [ RunTime:0.001006s ]
+INFO: [ view_end ] --END-- [ RunTime:0.001055s ]
+
+[ 2014-03-24T00:28:30+08:00 ] 121.8.171.169 /ts/
+INFO: [ app_begin ] --START--
+INFO: Run ReadHtmlCache Behavior [ RunTime:0.000873s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001003s ]
+SQL: SHOW COLUMNS FROM `ts_about_us` [ RunTime:0.000631s ]
+SQL: SELECT * FROM `ts_about_us` WHERE open=1 ORDER BY id desc LIMIT 3   [ RunTime:0.000079s ]
+SQL: SHOW COLUMNS FROM `ts_progress` [ RunTime:0.000808s ]
+SQL: SELECT * FROM `ts_progress` WHERE open=1 ORDER BY id desc LIMIT 3   [ RunTime:0.000349s ]
+SQL: SHOW COLUMNS FROM `ts_data` [ RunTime:0.001072s ]
+SQL: SELECT * FROM `ts_data` WHERE open=1 ORDER BY id desc LIMIT 12   [ RunTime:0.000128s ]
+SQL: SHOW COLUMNS FROM `ts_flash_news` [ RunTime:0.000516s ]
+SQL: SELECT * FROM `ts_flash_news` WHERE open=1 ORDER BY position asc  [ RunTime:0.000071s ]
+SQL: SELECT * FROM `ts_data` ORDER BY id desc LIMIT 10   [ RunTime:0.000067s ]
+SQL: SHOW COLUMNS FROM `ts_home` [ RunTime:0.000457s ]
+SQL: SELECT * FROM `ts_home` WHERE open=1 ORDER BY id desc LIMIT 1   [ RunTime:0.000099s ]
+INFO: [ view_template ] --START--
+INFO: Run LocationTemplate Behavior [ RunTime:0.000997s ]
+INFO: [ view_template ] --END-- [ RunTime:0.001055s ]
+INFO: [ view_parse ] --START--
+INFO: Run ParseTemplate Behavior [ RunTime:0.017326s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017433s ]
+INFO: [ view_filter ] --START--
+INFO: Run ContentReplace Behavior [ RunTime:0.001362s ]
+INFO: Run TokenBuild Behavior [ RunTime:0.000859s ]
+INFO: Run WriteHtmlCache Behavior [ RunTime:0.000828s ]
+INFO: Run ShowRuntime Behavior [ RunTime:0.001050s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.004276s ]
+INFO: [ view_end ] --START--
+INFO: Run ShowPageTrace Behavior [ RunTime:0.001117s ]
+INFO: [ view_end ] --END-- [ RunTime:0.001167s ]
+
