@@ -21,7 +21,6 @@ class AdminController extends CommonController {
         $this->display();
     }
     /**
-     * 添加栏目
      **/
     public function insert() {
         $model= D('Admin');
@@ -37,7 +36,8 @@ class AdminController extends CommonController {
             $this->error('图片不能为空！');
         $data['image'] = $image;
         $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
-        $data['pwd'] = md5($data['password']);
+        //$data['pwd'] = md5($data['password']);
+        $data['pwd'] = $this->createHash($data['password']);
         if(!$model->add($data))
             $this->error($model->getError());
         else
@@ -52,10 +52,9 @@ class AdminController extends CommonController {
             $this->error($model->getError());
     }
     /**
-     * 更新栏目
      **/
     public function update() {
-        $model= D('Admin');
+        $model= M('Admin');
         if(I('request.password') != '' && I('request.password')) { //有提交密码
             if(!($data = $model->create())) {
                 $this->error($model->getError());
@@ -85,8 +84,10 @@ class AdminController extends CommonController {
         $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
         unset($data['createtime']);//unset createtime
         $where['adminid'] = $id;
-        if($data['password'])
-            $data['pwd'] = md5($data['password']);
+        if(!empty($data['password'])) {
+            //$data['pwd'] = md5($data['password']);
+            $data['pwd'] = $this->createHash($data['password']);
+        }
         if(!$model->where($where)->save($data))
             $this->error($model->getError());
         else

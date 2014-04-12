@@ -5,6 +5,29 @@
 namespace Admin\Controller;
 use Think\Controller;
 class CommonController extends Controller {
+	public function _initialize(){
+        if (!$_SESSION [C('ADMIN_AUTH_KEY')]) {
+	        redirect(__MODULE__ . C('ADMIN_AUTH_GATEWAY'));
+        }
+    }
+    /* ===========================================================================*/
+    /**
+        * @brief createHash 产生一个加盐的hash
+        *
+        * @param    $passwd
+        *
+        * @returns  
+     */
+    /* ===========================================================================*/
+    protected function createHash($passwd) {
+        $SaltByteSize = 64;
+        $salt = mcrypt_create_iv($SaltByteSize, MCRYPT_DEV_URANDOM);
+        $passwd = $salt .$passwd .C('SALT');
+        $passwd = hash('sha256', $passwd);
+        $salt = base64_encode($salt);
+        return $passwd .':' .$salt;
+        
+    }
     /**
      * 重置排序
      **/
@@ -22,11 +45,6 @@ class CommonController extends Controller {
     }
     public function index() {
         $this->display();
-    }
-	public function _initialize(){
-        if (!$_SESSION [C('ADMIN_AUTH_KEY')]) {
-	        redirect(__MODULE__ . C('ADMIN_AUTH_GATEWAY'));
-        }
     }
     public function _before_add() {
         $this->setNavList();
@@ -127,7 +145,7 @@ class CommonController extends Controller {
      **/
     public function manage() {
         $model = M(CONTROLLER_NAME);
-        $list = $model->field($this->field)->order('createtime DESC')->select();
+        $list = $model->field($this->field)->order('updatetime DESC')->select();
         $this->assign('list', $list);
     }
     /**

@@ -6,8 +6,11 @@ namespace Home\Controller;
 use Think\Controller;
 class CommonController extends Controller {
     public function _empty() {
-        $admin = C('WEBADMIN');
-        $this->error("操作失败，请联系管理员".$admin,U('Home/Index/index'), 1);
+       // $admin = C('WEBADMIN');
+        //$this->error("操作失败，请联系管理员".$admin,U('Home/Index/index'), 1);
+        //$this->error("操作失败，请联系管理员".$admin);
+   //     var_dump(C('FORBIDDEN'));
+        redirect(C('FORBIDDEN'));
     }
 
     /**
@@ -23,8 +26,8 @@ class CommonController extends Controller {
     public function seo($title,$keywords,$description,$position){
         $title = C('SITE_ROOT_NAME').$title;
         $this->assign('title',$title);
-        $this->assign('keywords',C('SITE_KEYWORDS').$keywords);
-        $this->assign('description',C('SITE_DESCRIPTION').$description);
+        $this->assign('keywords', $keywords.' | '.C('SITE_KEYWORDS'));
+        $this->assign('description', $description.' | '.C('SITE_DESCRIPTION'));
         $this->assign('position',$position);
     }
     /**

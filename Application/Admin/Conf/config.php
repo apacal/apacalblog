@@ -1,6 +1,7 @@
 <?php
 $config	=	require './Application/Common/Conf/config.php';
 $admin_config	= array(
+    'SALT'                      => 'ApacalBlogAdmin',
     'SITE_NAME'			=>  'ApacalBlog后台管理系统',//网站名字，后台的和前台不一样
 
     'URL_MODEL'					=>1, 				// 如果你的环境不支持PATHINFO 请设置为3

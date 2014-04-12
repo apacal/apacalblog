@@ -9,11 +9,9 @@ class CommentController extends CommonController {
 	 **/
 	public function add(){
 		$result = array('ret' => -1, 'error' => '');
-		$data = $_POST;
-	    $data['ip'] = get_client_ip(); 
-        $data['createtime'] = time();
-        $data['status'] = 1;
-        if(!empty($_POST) && M('Comment')->add($data)){
+        $model = D('Comment');
+        $data = $model->create();
+        if($model->add($data)){
 			$result['ret'] = 0;
 		}else{
 			$result['error'] = '发表失败！';
@@ -25,8 +23,8 @@ class CommentController extends CommonController {
 	 * 支持或者反对
 	 **/
     public function vote() {
-        $id = $_POST['id'];
-        $type = $_POST['typeid'];
+        $id = I('post.id');
+        $type = I('post.typeid');
         $where['id'] = $id;
         $Comment = M('Comment');
         if($type == 1) {

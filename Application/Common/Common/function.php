@@ -27,7 +27,7 @@ function getThunmName($str) {
  */
 function msubstr($str, $start=0, $length, $charset="utf-8") {
     //$str = preg_replace('/\s*/', '', $str); 
-    $str = strip_tags($str);
+  //  $str = strip_tags($str);
     $slice = mb_substr($str, $start, $length, $charset);
     $len = strlen($str);
     if($len > $length + 10)

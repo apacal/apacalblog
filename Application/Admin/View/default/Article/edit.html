@@ -40,10 +40,10 @@
 							<div class="col-xs-12">
                                 <form id="myform" class="form-horizontal" role="form" enctype="multipart/form-data" action="__MODULE__/Article/update/id/{$vo.id}" method="post">
 									<div class="form-group">
-										<label class="col-sm-3 control-label no-padding-right">分类 </label>
+										<label class="col-sm-3 control-label no-padding-right">栏目 </label>
 										<div class="col-sm-9">
                                                 <select class="col-xs-10 col-sm-5" name="cid"  id="form-field-select-1" required>
-                                                    <option value="{$vo.cid}" >当前分类({$vo.cname})</option>
+                                                    <option value="{$vo.cid}" >当前栏目({$vo.cname})</option>
                                                     {$categoryTree}
 												</select>
 										</div>
@@ -145,7 +145,7 @@
 
 								        <div class="wysiwyg-editor autosize-transition" id="editor1">{$vo['content']}</div>
 
-                                        <div style='visibility: hidden;'><textarea name="content" id="content"></textarea></div>
+                                        <div style='visibility: hidden; height:10px;'><textarea name="content" id="content"></textarea></div>
 										</div>
 									</div>
 									<div class="space-4"></div>

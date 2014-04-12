@@ -1,7 +1,21 @@
 <?php
 if(!defined('THINK_PATH')) exit();
-define(ROOT_URL,'http://218.244.140.70');
+define(ROOT_URL,'');
 return array(
+    'FORBIDDEN'   => ROOT_URL .'/404',
+    'SERACHTABLE' => array(         //查询的table
+        'Article'
+        ),
+    'SEARCHCOL' => array(           //like的字段
+        'title',
+        'keywords',
+        'description',
+        'content'
+        ),
+    'SEARCHSETCOL'  => array(       //标记的字段
+            'title',
+            'description',
+        ),
     'RUNTIMESRC' => APP_PATH.'Runtime/',
     'URL_HTML_SUFFIX'=>'',  //网站静态后缀
     'WEBADMIN' => 'Apacal', //网站管理员
@@ -36,11 +50,11 @@ return array(
     'WEB_URL'           =>  ROOT_URL,//网站地址
 	'SITE_URL'     		=>  ROOT_URL,//网站地址
 	
-    'SITE_ROOT_NAME'    =>  'ApacalBlog-', //网站首页名称
-	'SITE_KEYWORDS'		=>  'apacalblog,PHP,ThinkPHP,Bootstrap,',
-	'SITE_DESCRIPTION'	=>  'apacalblog是一个基于thinkphp的博客,',
-	'EMAIL'				=>	'apacalblog@126.com',
+    'SITE_ROOT_NAME'    =>  'Apacal个人日志 | ', //网站首页名称
+    'SITE_KEYWORDS'		=>  'Apacal Apacal个人日志 apacalblog Apacal Apacal个人博客 激情 奋斗 技术的乐趣、快乐',
+	'SITE_DESCRIPTION'	=>  '分享一些对技术的思考，扯一些生活的感悟，享受技术带来的乐趣、快乐，享受编程带的乐趣、快乐。',
+	'EMAIL'				=>	'apacal@126.com',
 	'OFFLINEMESSAGE'	=>	'本站正在维护中，暂不能访问。<br /> 请稍后再访问本站。',
-	'ICP_NUM'			=>	'蜀ICP备00000000号',
+	'ICP_NUM'			=>	'粤ICP备14021869号',
 	
 );

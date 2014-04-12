@@ -167,7 +167,8 @@
             });
             $(".insertCode").on('click',function(){  //插入代码
                 var add = $("#addCode").val();
-                add = '<pre>' + add + '</pre>' + '<font face="Comic Sans MS" size="3">apacal code</font>';
+                add = htmlspecialchars(add);
+                add = '<pre class="highlight"> <font size="3">' + add + '</font></pre>' + '<font face="Comic Sans MS" size="3">apacal code</font>';
 			    $('#addCode').val("");
 				$("#editor1").append(add);
                 $('#modal-insertCode').modal('hide');
@@ -180,6 +181,12 @@
                 articleupload(url, 'imageupload', 'insertImage');
             });
         });
+        function htmlspecialchars(str)  {  
+            str = str.replace(/&/g, '&amp;');
+            str = str.replace(/</g, '&lt;');
+            str = str.replace(/>/g, '&gt;');
+            return str;
+        }
         </script>
 
     <!-- insertFile modal -->
@@ -203,6 +210,9 @@
         } 
     $(document).ready(function(){
         $("form").submit(function(e){
+            $('pre').each(function() {
+                $(this).html(htmlspecialchars($(this).html()));
+            });
             $("#content").html($("#editor1").html()); 
         });
     });

@@ -2,6 +2,7 @@
 return array(
 	//'配置项'=>'配置值'
     'DB_TYPE'=> 'mysql',		// 数据库类型
+    //'URL_MODEL' => 0,
 	'DB_HOST'=> 'localhost',	// 数据库服务器地址
 	'DB_NAME'=>'ts_airsystem',		// 数据库名称
 	'DB_USER'=>'root',			// 数据库用户名

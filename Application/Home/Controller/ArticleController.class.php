@@ -6,6 +6,7 @@ class ArticleController extends CommonController {
 
     public function index(){
         $cid = I('request.cid');
+        //var_dump($cid);
         if(empty($cid) || !is_numeric($cid))
             $this->error("参数错误！");
         $dataId = (M('Category')->where(array('id' => $cid, 'status' => 1))->field('id')->find());
@@ -124,6 +125,7 @@ class ArticleController extends CommonController {
      **/
     public function dateArc() {
         $cid = I('request.cid');
+        var_dump($cid);
         $time = I('request.time');
         if(!empty($cid) && $cid != 0) //0表示所有文章归档
             $where['cid'] = array('in', D('Category')->getChild($cid)); //得到属于$cid的所有栏目的id

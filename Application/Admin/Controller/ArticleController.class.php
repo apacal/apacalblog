@@ -12,10 +12,11 @@ class ArticleController extends CommonController {
     public function manage() {
         $model = M('Article');
         $cid = I('request.cid');
-        if(!empty($cid))
-            $list = $model->field($this->field)->where(array('cid' => $cid))->order('createtime DESC')->select();
-        else
-            $list = $model->field($this->field)->order('createtime DESC')->select();
+        if(!empty($cid)) {
+            $list = $model->field($this->field)->where(array('cid' => $cid))->order('updatetime DESC')->select();
+        }else{
+            $list = $model->field($this->field)->order('updatetime DESC')->select();
+        }
         foreach($list as &$val) {
             $where['id'] = $val['cid'];
             $val['cname'] = M('Category')->where($where)->getField('cname');

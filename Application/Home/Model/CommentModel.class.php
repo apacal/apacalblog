@@ -7,9 +7,13 @@ use Think\Model;
 class CommentModel extends Model {
     //自动完成，必须调用create()方法，才会进行
     protected $_auto = array(
-        array('is_check', '0'),
+        array('status', '1'),
         array('createtime', 'time', 1, 'function'),
         array('ip', 'get_client_ip', 1, 'function'),
+    );
+    protected $_validate = array(
+        array('content', 'require', 'content必须!'),
+        array('author', 'require', 'author必须!'),
     );
     /**
      * 获取评论的次数

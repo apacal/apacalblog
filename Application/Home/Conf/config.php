@@ -1,24 +1,41 @@
 <?php
 $config	=	require './Application/Common/Conf/config.php';
 $home_config =  array(
-    'URL_HTML_SUFFIX'=>'html',  //网站静态后缀
-    'ARTICLE_SHOWNUM' => 12,       //初始文章显示数目 
-    'ARTICLE_PAGE_NUM' => '9',  //每次加载的文章的数目
-    'COMMENT_SHOWNUM' => 5,       //初始显示comment数目 
-    'COMMENT_PAGE_NUM' => 5,  //每次加载的comment的数目
-    'SITE_NAME'			=>  'ApacalBlog',   //网站名字
-	'TMPL_CACHE_ON'			=> true, 		//开启模板缓存
-	'URL_MODEL'             => 1,           //服务器开启Rewrite模块时，可去除URL中的index.php 参数模式1,2,3
+    'SEARCHTABLE'       =>     array(
+                    'Article',
+                ),
+    'SEARCHCOL'         =>     array(
+                    'title',
+                  //  'keywords',
+                    'descriotion',
+                    'content',
+                ),
+    'URL_HTML_SUFFIX'   =>          'html',  //网站静态后缀
+    'ARTICLE_SHOWNUM'   =>          12,       //初始文章显示数目 
+    'ARTICLE_PAGE_NUM'  =>          9,  //每次加载的文章的数目
+    'COMMENT_SHOWNUM'   =>          5,       //初始显示comment数目 
+    'COMMENT_PAGE_NUM'  =>          5,  //每次加载的comment的数目
+    'SITE_NAME'			=>          'ApacalBlog',   //网站名字
+	'TMPL_CACHE_ON'	    =>          true, 		//开启模板缓存
+	'URL_MODEL'         =>          2,           //服务器开启Rewrite模块时，可去除URL中的index.php 参数模式1,2,3
 	
 	'USER_AUTH_KEY'			=> 'homeAuthId',			// 用户认证SESSION标记
 	'DB_LIKE_FIELDS'		=> 'title|remark|content',	//搜索Like匹配字段
-
-	
+    'URL_ROUTER_ON'         => true, 
+    'URL_ROUTE_RULES'       => array(
+            'catearticle/:cid\d'        =>      'Article/index', //文章栏目
+            'article/:id\d'             =>      'Article/view', // article/id => Article/view/id/$id
+            'category/:cid\d'           =>      'Category/index', 
+            'date/:cid/:time'           =>      'Article/dateArc', 
+            'admin/:adminid\d'          =>      'User/admin',
+            'search/Ap'                 =>      'Index/search',
+    ),
 
     /* 模版变量设置 */
 	'TMPL_PARSE_STRING' => array(
 		'__WEB_URL__'			=> $config['WEB_URL'],
-		'__PUBLIC__' 			=> $config['WEB_URL'].'/Public',
+		'__PUBLIC__' 			=> $config['WEB_URL'].'/Public',    
+		'__CODE__' 				=> $config['WEB_URL'].'/Public/code',
 		'__CSS__' 				=> $config['WEB_URL'].'/Public/css',
 		'__IMG__' 				=> $config['WEB_URL'].'/Public/images',
 		'__JS__' 				=> $config['WEB_URL'].'/Public/js',

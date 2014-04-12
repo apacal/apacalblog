@@ -1,7 +1,11 @@
 <?php
 /**
- * 上传模型
- **/
+* @file UploadModel.class.php
+* @brief 上传文件和图片MODEL
+* @author Apacal, apacal@126.com
+* @version 1
+* @date 2014-03-31
+ */
 namespace Admin\Model;
 use Think\Model;
 class UploadModel extends Model {

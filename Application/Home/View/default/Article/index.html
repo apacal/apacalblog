@@ -12,8 +12,9 @@
                         <div class="item active">
                             <img data-toggle="modal"  imageurl="__UPLOAD__{$categoryInfo.image}" src="__UPLOAD__{$categoryInfo.image|getThunmName}" class="advertImg view-image">
                             <div class="carousel-caption view-image" imageurl="__UPLOAD__{$categoryInfo.image}" style="padding-bottom: 150px">
-                                <h1>{$categoryInfo.cname}</h1>
-                                <p id="categoryDesc">{$categoryInfo.description}</p>
+                                
+                                <h1><code>{$categoryInfo.cname}</code></h1>
+                                <p id="categoryDesc"><code>{$categoryInfo.description}</code></p>
 
                                 <div class="meta-author">
                                     <empty name="categoryInfo.adminimage">
@@ -21,8 +22,8 @@
                                     <else />
                                     <span class="avatar"><img style="width:30px;height:30px" class="img-circle" src="__UPLOAD__{$categoryInfo.adminimage|getThunmName}" ></span>
                                     </empty>
-                                    <span class="author"><span class="dt">Author:</span> <span class="dd" ><a href="{:U('Home/User/admin', array('id' => $categoryInfo['adminid']))}" style="color:white">{$categoryInfo.adminname}</a> · </span></span>
-                                    <span class="publish-date"><span class="dt">Publish date:</span> <span class="dd" >{$categoryInfo.createtime|date='F d, Y', ###}</span></span>
+                                    <span class="author"><span class="dt">Author:</span> <span class="dd" ><a href="{:U('admin/'.$categoryInfo['adminid'])}" style="color:white"><code>{$categoryInfo.adminname}</code></a> · </span></span>
+                                    <span class="publish-date"><span class="dt">Publish date:</span> <span class="dd" ><code>{$categoryInfo.createtime|date='F d, Y', ###}</code></span></span>
                                 </div>
                             </div>
                         </div>
@@ -33,7 +34,7 @@
                 <h3 style=" margin-top: 0px; ">热门文章<span class="hot-count">{$hotArticleCount}</span></h3>
                 <ul class="unstyled">
                     <volist name="hotArticleList" id="vo">
-                        <li><span class="pull-right">[{$vo.createtime|date='m-d',###}]</span><a data-toggle="tooltip"  title="{$vo.cname}" href="{:U('Home/Article/view', array('id' => $vo['id']))}">{$vo.title|msubstr=0,15}【{$vo.click}】</a></li>
+                        <li><span class="pull-right">[{$vo.createtime|date='m-d',###}]</span><a data-toggle="tooltip"  title="{$vo.cname}" href="{:U('article/'.$vo['id'])}">{$vo.title|msubstr=0,15}【{$vo.click}】</a></li>
                     </volist>
                 </ul>
             </div>

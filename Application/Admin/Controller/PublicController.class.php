@@ -8,8 +8,29 @@ class PublicController extends Controller {
     public function login(){
         $this->display();
     }
+    /* ===========================================================================*/
+    /**
+        * @brief checkPasswd 判断密密码
+        *
+        * @param    $passwd
+        * @param    $hash
+        *
+        * @returns  
+     */
+    /* ===========================================================================*/
+    protected function checkPasswd($passwd, $hash) {
+        $params = explode(":", $hash);
+        if(count($params) < 2)
+            return false;
+        $salt = $params[1];
+        $passwd = base64_decode($salt) .$passwd .C('SALT');
+        if(hash('sha256', $passwd) == $params[0])
+            return true;
+        else
+            return false;
+    }
 	public function checkLogin(){
-        $this->checkVerify();
+        //$this->checkVerify();
         $username = I('post.username');
         $password = I('post.password');
 		if(empty($username)) {
@@ -25,10 +46,10 @@ class PublicController extends Controller {
 		$authInfo = M('Admin')->where($where)->find();
 		//使用用户名、密码和状态的方式进行认证
 		if(false === $authInfo) {
-			$this->error('帐号不存在！');
+			$this->error('帐号或密码错误！');
 		}else {
-			if($authInfo['pwd'] != md5($password)) {
-				$this->error('密码错误！');
+			if(!$this->checkPasswd($password, $authInfo['pwd'])) {
+				$this->error('账号或密码错误！');
 			}
 			//是否禁用
 			if($authInfo['status'] == 0){

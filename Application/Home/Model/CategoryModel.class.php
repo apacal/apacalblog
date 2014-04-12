@@ -14,11 +14,11 @@ class CategoryModel extends RelationModel {
     );
     public function getPosition($cid, &$position) {
         $cate = $this->where(array('id' => $cid))->find();
-        $cate['url'] = U('Home/Category/index', array('cid' => $cate['id']));
+        $cate['url'] = U('category/'.$cate['id']);
         $position[] = $cate;
         while($cate['pid'] != 0) {
             $cate = $this->where(array('id' => $cate['pid']))->find();
-            $cate['url'] = U('Home/Category/index', array('cid' => $cate['id']));
+            $cate['url'] = U('category/'.$cate['id']);
             $position [] = $cate;
         }
         $new = array();
@@ -46,7 +46,7 @@ class CategoryModel extends RelationModel {
         foreach($list as &$value) {
             $where['status'] = 1;
             $where['pid'] = $value['id'];
-            $value['url'] = U('Home/'.$value['mcontroller'].'/index', array('cid' => $value['id']));
+            $value['url'] = U('category/'.$value['id']);
             if(($subNav = $this->where($where)->order('sort DESC')->relation(true)->select())) {
                 $value['subNav'] = $subNav;
                 $this->getSubNav($value['subNav']);

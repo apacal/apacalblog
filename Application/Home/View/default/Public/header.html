@@ -4,11 +4,17 @@
     <title>{$title}</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="baidu-site-verification" content="7wm8h4HH7a" />
+    <meta name="google-site-verification" content="guD3Sz59BGqypw23UHNoo7IxOoUJy9R_xvs2LscKrGA" />
     <meta name="keywords" content="{$keywords}" />
     <meta name="description" content="{$description}" />
     <meta name="author" content="apacal">
 
+
     <link rel="shortcut icon" href="__IMG__/log2.png">
+    <!-- google-core-prettify  -->
+    <link href="__CODE__/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="__CODE__/prettify.js"></script>
 
     <!-- Bootstrap core CSS -->
     <link href="__BS__/css/bootstrap.min.css" rel="stylesheet">
@@ -49,12 +55,12 @@
           <div class="container">
             <div class="navbar-header">
               <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
-                <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">激情 程序 奋斗</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-            <a class="navbar-brand" href="__ROOT__/">ApacalBlog</a>
+              <a class="navbar-brand" href="__ROOT__/">Apacal个人日志</a>
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
@@ -82,9 +88,9 @@
             </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li>
-                <form class="navbar-form" role="search">
+                <form class="navbar-form" action="{:U('search/Ap')}" method="post" role="search">
                     <div class="form-group">
-                        <input onblur="setVIM();" onfocus="unsetVIM();" type="text" class="form-control" placeholder="Search">
+                        <input onblur="setVIM();" onfocus="unsetVIM();" type="text" class="form-control" placeholder="Search" name="content"  require />
                     </div>
                      <button type="submit" class="btn btn-default">Submit</button>
                 </form>
