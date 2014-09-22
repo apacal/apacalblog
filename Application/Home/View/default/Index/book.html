@@ -1,0 +1,34 @@
+<include file="Public/header" />
+            <div style="height:70px"></div>
+<script language="javascript" type="text/javascript">window.onload = function(){ 
+    var oTable = document.getElementById("myTab"); 
+    for(var i=0;i<oTable.rows.length;i++){ 
+        oTable.rows[i].cells[0].innerHTML = (i+1); 
+        if(i%2==0)    //偶数行 
+            oTable.rows[i].className = "warning"; 
+        else
+            oTable.rows[i].className = "active"; 
+    } 
+}</script>
+
+<div class="container marketing" >
+    <div class="row">
+
+        <table class="table table-bordered ">
+            <thead>
+              <tr class="success">
+                <th>#</th>
+                <th>书籍</th>
+                <th>时间</th>
+                <th>感想</th>
+              </tr>
+            </thead>
+            <tbody id="myTab">
+                <include file="Index/mybook" />
+            </tbody>
+        </table>
+
+        <include file="Public/disqus" />
+    </div>
+</div>
+<include file="Public:footer" />

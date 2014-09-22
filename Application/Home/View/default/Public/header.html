@@ -9,6 +9,7 @@
     <meta name="keywords" content="{$keywords}" />
     <meta name="description" content="{$description}" />
     <meta name="author" content="apacal">
+    <meta property="qc:admins" content="1252700301314636" />
 
 
     <link rel="shortcut icon" href="__IMG__/log2.png">
@@ -72,7 +73,7 @@
                     -->
                 <volist name="navList" id="vo">
                     <empty name="vo['subNav']">
-                    <li><a href="{$vo.url}">{$vo.cname}</a>
+                    <li><a href="{$vo.url}">{$vo.cname}</a><li>
                     <else />
                         <li class="dropdown">
                         <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="{$vo.url}">{$vo.cname}</a>
@@ -81,16 +82,17 @@
                                 <li><a href="{$vo2.url}">{$vo2['cname']}</a></li>
                             </volist>
                         </ul>
+                        </li>
                     </empty>
-                    </li>
                 </volist>
+                <li><a href="{:U('book/my')}">书籍</a></li>
               </ul>
             </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li>
-                <form class="navbar-form" action="{:U('search/Ap')}" method="post" role="search">
+                <form class="navbar-form" action="{:U('search/my')}" method="post" role="search">
                     <div class="form-group">
-                        <input onblur="setVIM();" onfocus="unsetVIM();" type="text" class="form-control" placeholder="Search" name="content"  require />
+                        <input type="text" class="form-control" placeholder="Search" name="content"  require />
                     </div>
                      <button type="submit" class="btn btn-default">Submit</button>
                 </form>

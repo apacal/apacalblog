@@ -60,10 +60,10 @@ class ArticleModel extends RelationModel {
     /**
      * 获取热门文章
      **/
-    public function getHotArticle($cid) {
+    public function getHotArticle($cid, $order = 'sort DESC, click DESC', $limit = 5) {
         $where['cid'] = $cid;
         $where['status'] = 1;
-        $list = $this->where($where)->order("sort DESC, click DESC")->field('content', true)->limit(5)->select();
+        $list = $this->where($where)->order($order)->field('content', true)->limit($limit)->select();
         return $list;
 
     }

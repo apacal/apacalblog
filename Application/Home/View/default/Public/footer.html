@@ -115,47 +115,6 @@
     <!-- FOOTER -->
     <div class="container marketing" id="footer">
                 <script type="text/javascript">
-                    window.onload=function(){ 
-                    document.onkeydown = showKeyDown 
-                    //document.onkeypress = showKeyPress 
-                    } 
-                    /**
-                     * 键盘按下J和K分别翻页 ,H, L到底部和顶部
-                     */
-                    function showKeyDown(e) { 
-                        e = e || window.event; 
-                        var keycode = e.which ? e.which : e.keyCode; 
-                        var current = document.body.scrollTop;
-                        var actionName = '<?php echo ACTION_NAME ?>';
-                        if (actionName == "view") {
-                            var height = document.body.clientHeight;
-                        }else {
-                            var height = 540;
-                        }
-                        switch (keycode) {
-                            case 74:
-                          //  case 8:   //如果按下J或者space 
-                                $('html, body').animate({scrollTop: current + height - 40}, 'slow');
-                                break;
-                            case 75: //如果按下K键 
-                                $('html, body').animate({scrollTop: current - height + 40}, 'slow');
-                                break;
-                            case 72: // H
-                                $('html, body').animate({scrollTop: $(document).height()}, 'slow');
-                                break;
-                            case 76: // L
-                                $('html, body').animate({scrollTop:0},'slow');
-                                break;
-                            default:
-                                break;
-                        }
-                    } 
-                    function unsetVIM() {
-                         document.onkeydown = null;
-                    }
-                    function setVIM() {
-                         document.onkeydown = showKeyDown;
-                    }
                     $(document).ready(function(){
                         //$('pre').addClass('prettyprint linenums');
 
@@ -185,7 +144,7 @@
                 <div class="col-md-7">
                     <div class="footerInfo">
                         <p>Copyright © 2014 Apacal All rights reserved <a href="http://www.miitbeian.gov.cn/" target="_blank" >粤ICP备14021869号</a></p>	
-                        <p>技术支持: Apacal &nbsp; <a href="__WEB_URL__/index.php/Admin" target="_blank"> 管理入口</a>&nbsp;&nbsp;
+                        <p>技术支持: Apacal &nbsp; <a href="__WEB_URL__/Admin" target="_blank"> 管理入口</a>&nbsp;&nbsp;
                         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_5860608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s5.cnzz.com/stat.php%3Fid%3D5860608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
                         </p>	
                     </div>

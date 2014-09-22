@@ -8,6 +8,7 @@
  */
 
 var $data_a;
+var prevScrollX = 0, fixedTop;
 
 /**
  * decode a string URL_encoded
@@ -46,10 +47,22 @@ function getFieldName($this_field)
     var left_action_exist = !$('#table_results').find('th:first').hasClass('draggable');
     // number of column span for checkbox and Actions
     var left_action_skip = left_action_exist ? $('#table_results').find('th:first').attr('colspan') - 1 : 0;
-    var field_name = $('#table_results').find('thead').find('th:eq('+ (this_field_index - left_action_skip) + ') a').text();
+
+    // If this column was sorted, the text of the a element contains something
+    // like <small>1</small> that is useful to indicate the order in case
+    // of a sort on multiple columns; however, we dont want this as part
+    // of the column name so we strip it ( .clone() to .end() )
+    var field_name = $('#table_results')
+        .find('thead')
+        .find('th:eq(' + (this_field_index - left_action_skip) + ') a')
+        .clone()    // clone the element
+        .children() // select all the children
+        .remove()   // remove all of them
+        .end()      // go back to the selected element
+        .text();    // grab the text
     // happens when just one row (headings contain no a)
-    if ("" == field_name) {
-        var $heading = $('#table_results').find('thead').find('th:eq('+ (this_field_index - left_action_skip) + ')').children('span');
+    if (field_name === '') {
+        var $heading = $('#table_results').find('thead').find('th:eq(' + (this_field_index - left_action_skip) + ')').children('span');
         // may contain column comment enclosed in a span - detach it temporarily to read the column name
         var $tempColComment = $heading.children().detach();
         field_name = $heading.text();
@@ -65,11 +78,12 @@ function getFieldName($this_field)
 /**
  * Unbind all event handlers before tearing down a page
  */
-AJAX.registerTeardown('sql.js', function() {
-    $('a.delete_row.ajax').unbind('click');
+AJAX.registerTeardown('sql.js', function () {
+    $('a.delete_row.ajax').die('click');
     $('#bookmarkQueryForm').die('submit');
     $('input#bkm_label').unbind('keyup');
     $("#sqlqueryresults").die('makegrid');
+    $("#sqlqueryresults").die('stickycolumns');
     $("#togglequerybox").unbind('click');
     $("#button_submit_query").die('click');
     $("input[name=bookmark_variable]").unbind("keypress");
@@ -78,12 +92,11 @@ AJAX.registerTeardown('sql.js', function() {
     $("#pageselector").die('change');
     $("#table_results.ajax").find("a[title=Sort]").die('click');
     $("#displayOptionsForm.ajax").die('submit');
-    $("#resultsForm.ajax .mult_submit[value=edit]").die('click');
-    $("#insertForm .insertRowTable.ajax input[type=submit]").die('click');
-    $("#buttonYes.ajax").die('click');
     $('a.browse_foreign').die('click');
     $('th.column_heading.pointer').die('hover');
     $('th.column_heading.marker').die('click');
+    $(window).unbind('scroll');
+    $(".filter_rows").die("keyup");
 });
 
 /**
@@ -102,22 +115,22 @@ AJAX.registerTeardown('sql.js', function() {
  * @name        document.ready
  * @memberOf    jQuery
  */
-AJAX.registerOnload('sql.js', function() {
+AJAX.registerOnload('sql.js', function () {
     // Delete row from SQL results
-    $('a.delete_row.ajax').click(function (e) {
+    $('a.delete_row.ajax').live('click', function (e) {
         e.preventDefault();
-        var question = $.sprintf(PMA_messages['strDoYouReally'], $(this).closest('td').find('div').text());
+        var question = $.sprintf(PMA_messages.strDoYouReally, escapeHtml($(this).closest('td').find('div').text()));
         var $link = $(this);
         $link.PMA_confirm(question, $link.attr('href'), function (url) {
             $msgbox = PMA_ajaxShowMessage();
-            $.get(url, {'ajax_request':true, 'is_js_confirmed': true}, function (data) {
+            $.get(url, {'ajax_request': true, 'is_js_confirmed': true}, function (data) {
                 if (data.success) {
                     PMA_ajaxShowMessage(data.message);
                     $link.closest('tr').remove();
                 } else {
                     PMA_ajaxShowMessage(data.error, false);
                 }
-            })
+            });
         });
     });
 
@@ -135,7 +148,7 @@ AJAX.registerOnload('sql.js', function() {
     });
 
     /* Hides the bookmarkoptions checkboxes when the bookmark label is empty */
-    $('input#bkm_label').keyup(function() {
+    $('input#bkm_label').keyup(function () {
         $('input#id_bkm_all_users, input#id_bkm_replace')
             .parent()
             .toggle($(this).val().length > 0);
@@ -146,8 +159,26 @@ AJAX.registerOnload('sql.js', function() {
      * triggered manually everytime the table of results is reloaded
      * @memberOf    jQuery
      */
-    $("#sqlqueryresults").live('makegrid', function() {
+    $("#sqlqueryresults").live('makegrid', function () {
         PMA_makegrid($('#table_results')[0]);
+    });
+
+    /*
+     * Attach a custom event for sticky column headings which will be
+     * triggered manually everytime the table of results is reloaded
+     * @memberOf    jQuery
+     */
+    $("#sqlqueryresults").live('stickycolumns', function () {
+        if ($("#table_results").length === 0) {
+            return;
+        }
+        //add sticky columns div
+        initStickyColumns();
+        rearrangeStickyColumns();
+        //adjust sticky columns on scroll
+        $(window).bind('scroll', function() {
+            handleStickyColumns();
+        });
     });
 
     /**
@@ -159,24 +190,24 @@ AJAX.registerOnload('sql.js', function() {
     // do not add this link more than once
     if (! $('#sqlqueryform').find('a').is('#togglequerybox')) {
         $('<a id="togglequerybox"></a>')
-        .html(PMA_messages['strHideQueryBox'])
+        .html(PMA_messages.strHideQueryBox)
         .appendTo("#sqlqueryform")
         // initially hidden because at this point, nothing else
         // appears under the link
         .hide();
 
         // Attach the toggling of the query box visibility to a click
-        $("#togglequerybox").bind('click', function() {
+        $("#togglequerybox").bind('click', function () {
             var $link = $(this);
             $link.siblings().slideToggle("fast");
-            if ($link.text() == PMA_messages['strHideQueryBox']) {
-                $link.text(PMA_messages['strShowQueryBox']);
+            if ($link.text() == PMA_messages.strHideQueryBox) {
+                $link.text(PMA_messages.strShowQueryBox);
                 // cheap trick to add a spacer between the menu tabs
                 // and "Show query box"; feel free to improve!
                 $('#togglequerybox_spacer').remove();
                 $link.before('<br id="togglequerybox_spacer" />');
             } else {
-                $link.text(PMA_messages['strHideQueryBox']);
+                $link.text(PMA_messages.strHideQueryBox);
             }
             // avoid default click action
             return false;
@@ -189,7 +220,9 @@ AJAX.registerOnload('sql.js', function() {
      *
      * @memberOf    jQuery
      */
-    $("#button_submit_query").live('click', function(event) {
+    $("#button_submit_query").live('click', function (event) {
+        $(".success,.error").hide();
+        //hide already existing error or success message
         var $form = $(this).closest("form");
         // the Go button related to query submission was clicked,
         // instead of the one related to Bookmarks, so empty the
@@ -205,7 +238,7 @@ AJAX.registerOnload('sql.js', function() {
      *
      * @memberOf    jQuery
      */
-    $("input[name=bookmark_variable]").bind("keypress", function(event) {
+    $("input[name=bookmark_variable]").bind("keypress", function (event) {
         // force the 'Enter Key' to implicitly click the #button_submit_bookmark
         var keycode = (event.keyCode ? event.keyCode : (event.which ? event.which : event.charCode));
         if (keycode == 13) { // keycode for enter key
@@ -218,9 +251,9 @@ AJAX.registerOnload('sql.js', function() {
             // section and hit enter, you expect it to do the
             // same action as the Go button in that section.
             $("#button_submit_bookmark").click();
-           return false;
+            return false;
         } else  {
-           return true;
+            return true;
         }
     });
 
@@ -231,10 +264,13 @@ AJAX.registerOnload('sql.js', function() {
      * @memberOf    jQuery
      * @name        sqlqueryform_submit
      */
-    $("#sqlqueryform.ajax").live('submit', function(event) {
+    $("#sqlqueryform.ajax").live('submit', function (event) {
         event.preventDefault();
 
         var $form = $(this);
+        if (codemirror_editor) {
+            $form[0].elements['sql_query'].value = codemirror_editor.getValue();
+        }
         if (! checkSqlQuery($form[0])) {
             return false;
         }
@@ -247,8 +283,8 @@ AJAX.registerOnload('sql.js', function() {
 
         PMA_prepareForAjaxRequest($form);
 
-        $.post($form.attr('action'), $form.serialize() , function(data) {
-            if (data.success == true) {
+        $.post($form.attr('action'), $form.serialize(), function (data) {
+            if (typeof data !== 'undefined' && data.success === true) {
                 // success happens if the query returns rows or not
                 //
                 // fade out previous messages, if any
@@ -268,6 +304,12 @@ AJAX.registerOnload('sql.js', function() {
                     // delete
                     if ('2' == data.action_bookmark) {
                         $("#id_bookmark option[value='" + data.id_bookmark + "']").remove();
+                        // if there are no bookmarked queries now (only the empty option),
+                        // remove the bookmark section
+                        if ($('#id_bookmark option').length == 1) {
+                            $('#fieldsetBookmarkOptions').hide();
+                            $('#fieldsetBookmarkOptionsFooter').hide();
+                        }
                     }
                     $sqlqueryresults
                      .show()
@@ -283,6 +325,7 @@ AJAX.registerOnload('sql.js', function() {
                      .show()
                      .html(data.message);
                 }
+                PMA_highlightSQL($('#result_query'));
 
                 if (typeof data.ajax_reload != 'undefined') {
                     if (data.ajax_reload.reload) {
@@ -296,7 +339,17 @@ AJAX.registerOnload('sql.js', function() {
                 } else if (typeof data.reload != 'undefined') {
                     // this happens if a USE or DROP command was typed
                     PMA_commonActions.setDb(data.db);
-                    PMA_commonActions.refreshMain(false, function () {
+                    var url;
+                    if (data.db) {
+                        if (data.table) {
+                            url = 'table_sql.php';
+                        } else {
+                            url = 'db_sql.php';
+                        }
+                    } else {
+                        url = 'server_sql.php';
+                    }
+                    PMA_commonActions.refreshMain(url, function () {
                         if ($('#result_query').length) {
                             $('#result_query').remove();
                         }
@@ -304,23 +357,23 @@ AJAX.registerOnload('sql.js', function() {
                             $('<div id="result_query"></div>')
                                 .html(data.sql_query)
                                 .prependTo('#page_content');
+                            PMA_highlightSQL($('#page_content'));
                         }
                     });
-                    PMA_reloadNavigation();
                 }
-                
-                $sqlqueryresults.show().trigger('makegrid');
+
+                $sqlqueryresults.show().trigger('makegrid').trigger('stickycolumns');
                 $('#togglequerybox').show();
                 PMA_init_slider();
 
                 if (typeof data.action_bookmark == 'undefined') {
-                    if ( $('#sqlqueryform input[name="retain_query_box"]').is(':checked') != true ) {
+                    if ($('#sqlqueryform input[name="retain_query_box"]').is(':checked') !== true) {
                         if ($("#togglequerybox").siblings(":visible").length > 0) {
                             $("#togglequerybox").trigger('click');
                         }
                     }
                 }
-            } else if (data.success == false ) {
+            } else if (typeof data !== 'undefined' && data.success === false) {
                 // show an error message that stays on screen
                 $('#sqlqueryform').before(data.error);
                 $sqlqueryresults.hide();
@@ -334,7 +387,7 @@ AJAX.registerOnload('sql.js', function() {
      * @memberOf    jQuery
      * @name        paginate_dropdown_change
      */
-    $("#pageselector").live('change', function(event) {
+    $("#pageselector").live('change', function (event) {
         var $form = $(this).parent("form");
         $form.submit();
     }); // end Paginate results with Page Selector
@@ -344,12 +397,12 @@ AJAX.registerOnload('sql.js', function() {
      * @memberOf    jQuery
      * @name        displayOptionsForm_submit
      */
-    $("#displayOptionsForm.ajax").live('submit', function(event) {
+    $("#displayOptionsForm.ajax").live('submit', function (event) {
         event.preventDefault();
 
         $form = $(this);
 
-        $.post($form.attr('action'), $form.serialize() + '&ajax_request=true' , function(data) {
+        $.post($form.attr('action'), $form.serialize() + '&ajax_request=true', function (data) {
             $("#sqlqueryresults")
              .html(data.message)
              .trigger('makegrid');
@@ -357,170 +410,30 @@ AJAX.registerOnload('sql.js', function() {
         }); // end $.post()
     }); //end displayOptionsForm handler
 
-/**
- * Ajax Event for table row change
- * */
-    $("#resultsForm.ajax .mult_submit[value=edit]").live('click', function(event){
-        event.preventDefault();
+    // Filter row handling. --STARTS--
+    $(".filter_rows").live("keyup", function () {
+        var $target_table = $("#table_results");
+        var $header_cells = $target_table.find("th[data-column]");
+        var target_columns = Array();
+        // To handle colspan=4, in case of edit,copy etc options.
+        var dummy_th = ($(".edit_row_anchor").length !== 0 ?
+            '<th class="hide dummy_th"></th><th class="hide dummy_th"></th><th class="hide dummy_th"></th>'
+            : '');
+        // Selecting columns that will be considered for filtering and searching.
+        $header_cells.each(function () {
+            target_columns.push($.trim($(this).text()));
+        });
 
-        /*Check whether atleast one row is selected for change*/
-        if ($("#table_results tbody tr, #table_results tbody tr td").hasClass("marked")) {
-            var $div = $('<div id="change_row_dialog"></div>');
-
-            /**
-             * @var    button_options  Object that stores the options passed to jQueryUI
-             *                          dialog
-             */
-            var button_options = {};
-            // in the following function we need to use $(this)
-            button_options[PMA_messages['strCancel']] = function() {
-                $(this).dialog('close');
-            };
-
-            var button_options_error = {};
-            button_options_error[PMA_messages['strOK']] = function() {
-                $(this).dialog('close');
-            };
-            var $form = $("#resultsForm");
-            var $msgbox = PMA_ajaxShowMessage();
-
-            $.get($form.attr('action'), $form.serialize()+"&ajax_request=true&submit_mult=row_edit", function(data) {
-                //in the case of an error, show the error message returned.
-                if (data.success != undefined && data.success == false) {
-                    $div
-                    .append(data.error)
-                    .dialog({
-                        title: PMA_messages['strChangeTbl'],
-                        height: 230,
-                        width: 900,
-                        open: PMA_verifyColumnsProperties,
-                        close: function(event, ui) {
-                            $(this).remove();
-                        },
-                        buttons : button_options_error
-                    }); // end dialog options
-                } else {
-                    $div
-                    .append(data.message)
-                    .dialog({
-                        title: PMA_messages['strChangeTbl'],
-                        height: 600,
-                        width: 900,
-                        open: PMA_verifyColumnsProperties,
-                        close: function(event, ui) {
-                            $(this).remove();
-                        },
-                        buttons : button_options
-                    })
-                    //Remove the top menu container from the dialog
-                    .find("#topmenucontainer").hide()
-                    ; // end dialog options
-                    $("table.insertRowTable").addClass("ajax");
-                    $("#buttonYes").addClass("ajax");
-                }
-                PMA_ajaxRemoveMessage($msgbox);
-            }); // end $.get()
-        } else {
-            PMA_ajaxShowMessage(PMA_messages['strNoRowSelected']);
-        }
+        var phrase = $(this).val();
+        // Set same value to both Filter rows fields.
+        $(".filter_rows").val(phrase);
+        // Handle colspan.
+        $target_table.find("thead > tr").prepend(dummy_th);
+        $.uiTableFilter($target_table, phrase, target_columns);
+        $target_table.find("th.dummy_th").remove();
     });
-
-/**
- * Click action for "Go" button in ajax dialog insertForm -> insertRowTable
- */
-    $("#insertForm .insertRowTable.ajax input[type=submit]").live('click', function(event) {
-        event.preventDefault();
-        /**
-         * @var    the_form    object referring to the insert form
-         */
-        var $form = $("#insertForm");
-        PMA_prepareForAjaxRequest($form);
-        //User wants to submit the form
-        $.post($form.attr('action'), $form.serialize(), function(data) {
-            if (data.success == true) {
-                PMA_ajaxShowMessage(data.message);
-                if ($("#pageselector").length != 0) {
-                    $("#pageselector").trigger('change');
-                } else {
-                    $("input[name=navig].ajax").trigger('click');
-                }
-
-            } else {
-                PMA_ajaxShowMessage(data.error, false);
-                $("#table_results tbody tr.marked .multi_checkbox " +
-                        ", #table_results tbody tr td.marked .multi_checkbox").prop("checked", false);
-                $("#table_results tbody tr.marked .multi_checkbox " +
-                        ", #table_results tbody tr td.marked .multi_checkbox").removeClass("last_clicked");
-                $("#table_results tbody tr" +
-                        ", #table_results tbody tr td").removeClass("marked");
-            }
-            if ($("#change_row_dialog").length > 0) {
-                $("#change_row_dialog").dialog("close").remove();
-            }
-            /**Update the row count at the tableForm*/
-            $("#result_query").remove();
-            $("#sqlqueryresults").prepend(data.sql_query);
-            $("#result_query .notice").remove();
-            $("#result_query").prepend((data.message));
-        }); // end $.post()
-    }); // end insert table button "Go"
-
-/**$("#buttonYes.ajax").live('click'
- * Click action for #buttonYes button in ajax dialog insertForm
- */
-
-    $("#buttonYes.ajax").live('click', function(event){
-        event.preventDefault();
-        /**
-         * @var    the_form    object referring to the insert form
-         */
-        var $form = $("#insertForm");
-        /**Get the submit type in the form*/
-        var selected_submit_type = $("#insertForm").find("#actions_panel .control_at_footer option:selected").val();
-        $("#result_query").remove();
-        PMA_prepareForAjaxRequest($form);
-        //User wants to submit the form
-        $.post($form.attr('action'), $form.serialize() , function(data) {
-            if (data.success == true) {
-                PMA_ajaxShowMessage(data.message);
-                if (selected_submit_type == "showinsert") {
-                    $("#sqlqueryresults").prepend(data.sql_query);
-                    $("#result_query .notice").remove();
-                    $("#result_query").prepend(data.message);
-                    $("#table_results tbody tr.marked .multi_checkbox " +
-                        ", #table_results tbody tr td.marked .multi_checkbox").prop("checked", false);
-                    $("#table_results tbody tr.marked .multi_checkbox " +
-                        ", #table_results tbody tr td.marked .multi_checkbox").removeClass("last_clicked");
-                    $("#table_results tbody tr" +
-                        ", #table_results tbody tr td").removeClass("marked");
-                } else {
-                    if ($("#pageselector").length != 0) {
-                        $("#pageselector").trigger('change');
-                    } else {
-                        $("input[name=navig].ajax").trigger('click');
-                    }
-                    $("#result_query").remove();
-                    $("#sqlqueryresults").prepend(data.sql_query);
-                    $("#result_query .notice").remove();
-                    $("#result_query").prepend((data.message));
-                }
-            } else {
-                PMA_ajaxShowMessage(data.error, false);
-                $("#table_results tbody tr.marked .multi_checkbox " +
-                    ", #table_results tbody tr td.marked .multi_checkbox").prop("checked", false);
-                $("#table_results tbody tr.marked .multi_checkbox " +
-                    ", #table_results tbody tr td.marked .multi_checkbox").removeClass("last_clicked");
-                $("#table_results tbody tr" +
-                    ", #table_results tbody tr td").removeClass("marked");
-            }
-            if ($("#change_row_dialog").length > 0) {
-                $("#change_row_dialog").dialog("close").remove();
-            }
-        }); // end $.post()
-    });
-
+    // Filter row handling. --ENDS--
 }); // end $()
-
 
 /**
  * Starting from some th, change the class of all td under it.
@@ -535,17 +448,17 @@ function PMA_changeClassForColumn($this_th, newclass, isAddClass)
     if (has_big_t) {
         th_index--;
     }
-    var $tds = $this_th.closest('table').find('tbody tr').find('td.data:eq('+th_index+')');
-    if (isAddClass == undefined) {
+    var $tds = $("#table_results").find('tbody tr').find('td.data:eq(' + th_index + ')');
+    if (isAddClass === undefined) {
         $tds.toggleClass(newclass);
     } else {
         $tds.toggleClass(newclass, isAddClass);
     }
 }
 
-AJAX.registerOnload('sql.js', function() {
+AJAX.registerOnload('sql.js', function () {
 
-    $('a.browse_foreign').live('click', function(e) {
+    $('a.browse_foreign').live('click', function (e) {
         e.preventDefault();
         window.open(this.href, 'foreigners', 'width=640,height=240,scrollbars=yes,resizable=yes');
         $anchor = $(this);
@@ -555,21 +468,21 @@ AJAX.registerOnload('sql.js', function() {
     /**
      * vertical column highlighting in horizontal mode when hovering over the column header
      */
-    $('th.column_heading.pointer').live('hover', function(e) {
+    $('th.column_heading.pointer').live('hover', function (e) {
         PMA_changeClassForColumn($(this), 'hover', e.type == 'mouseenter');
-        });
+    });
 
     /**
      * vertical column marking in horizontal mode when clicking the column header
      */
-    $('th.column_heading.marker').live('click', function() {
+    $('th.column_heading.marker').live('click', function () {
         PMA_changeClassForColumn($(this), 'marked');
-        });
+    });
 
     /**
      * create resizable table
      */
-    $("#sqlqueryresults").trigger('makegrid');
+    $("#sqlqueryresults").trigger('makegrid').trigger('stickycolumns');
 });
 
 /*
@@ -577,15 +490,16 @@ AJAX.registerOnload('sql.js', function() {
  */
 function makeProfilingChart()
 {
-    if ($('#profilingchart').length == 0
-        || $('#profilingchart').html().length != 0
+    if ($('#profilingchart').length === 0 ||
+        $('#profilingchart').html().length !== 0 ||
+        !$.jqplot || !$.jqplot.Highlighter || !$.jqplot.PieRenderer
     ) {
         return;
     }
-    
+
     var data = [];
-    $.each(jQuery.parseJSON($('#profilingChartData').html()),function(key,value) {
-        data.push([key,parseFloat(value)]);
+    $.each(jQuery.parseJSON($('#profilingChartData').html()), function (key, value) {
+        data.push([key, parseFloat(value)]);
     });
 
     // Remove chart and data divs contents
@@ -594,3 +508,114 @@ function makeProfilingChart()
 
     PMA_createProfilingChartJqplot('profilingchart', data);
 }
+
+/*
+ * initialize profiling data tables
+ */
+function initProfilingTables()
+{
+    if (!$.tablesorter) {
+        return;
+    }
+
+    $('#profiletable').tablesorter({
+        widgets: ['zebra'],
+        sortList: [[0, 0]],
+        textExtraction: function (node) {
+            if (node.children.length > 0) {
+                return node.children[0].innerHTML;
+            } else {
+                return node.innerHTML;
+            }
+        }
+    });
+
+    $('#profilesummarytable').tablesorter({
+        widgets: ['zebra'],
+        sortList: [[1, 1]],
+        textExtraction: function (node) {
+            if (node.children.length > 0) {
+                return node.children[0].innerHTML;
+            } else {
+                return node.innerHTML;
+            }
+        }
+    });
+}
+
+/*
+ * Set position, left, top, width of sticky_columns div
+ */
+function setStickyColumnsPosition(position, top, left) {
+    if ($("#sticky_columns").length !== 0) {
+        $("#sticky_columns")
+            .css("position", position)
+            .css("top", top)
+            .css("left", left ? left : "auto")
+            .css("width", $("#table_results").width());
+    }
+}
+
+/*
+ * Initialize sticky columns
+ */
+function initStickyColumns() {
+    fixedTop = $('#floating_menubar').height();
+    if ($("#sticky_columns").length === 0) {
+        $('<table id="sticky_columns"></table>')
+            .insertBefore('#page_content')
+            .css("position", "fixed")
+            .css("z-index", "99")
+            .css("width", $("#table_results").width())
+            .css("margin-left", $('#page_content').css("margin-left"))
+            .css("top", fixedTop)
+            .css("display", "none");
+    }
+}
+
+/*
+ * Arrange/Rearrange columns in sticky header
+ */
+function rearrangeStickyColumns() {
+    var $sticky_columns = $("#sticky_columns");
+    var $originalHeader = $("#table_results > thead");
+    var $originalColumns = $originalHeader.find("tr:first").children();
+    var $clonedHeader = $originalHeader.clone();
+    // clone width per cell
+    $clonedHeader.find("tr:first").children().width(function(i,val) {
+        return $originalColumns.eq(i).width();
+    });
+    $sticky_columns.empty().append($clonedHeader);
+}
+
+/*
+ * Adjust sticky columns on horizontal/vertical scroll
+ */
+function handleStickyColumns() {
+    if ($("#table_results").length === 0) {
+        return;
+    }
+    var currentScrollX = $(window).scrollLeft();
+    var windowOffset = $(window).scrollTop();
+    var tableStartOffset = $("#table_results").offset().top;
+    var tableEndOffset = tableStartOffset + $("#table_results").height();
+    var $sticky_columns = $("#sticky_columns");
+    if (windowOffset >= tableStartOffset && windowOffset <= tableEndOffset) {
+        //for horizontal scrolling
+        if(prevScrollX != currentScrollX) {
+            prevScrollX = currentScrollX;
+            setStickyColumnsPosition("absolute", fixedTop + windowOffset);
+        //for vertical scrolling
+        } else {
+            setStickyColumnsPosition("fixed", fixedTop, $("#pma_navigation").width() - currentScrollX);
+        }
+        $sticky_columns.show();
+    } else {
+        $sticky_columns.hide();
+    }
+}
+
+AJAX.registerOnload('sql.js', function () {
+    makeProfilingChart();
+    initProfilingTables();
+});

@@ -12,8 +12,8 @@
                                     <div class="comment-author">
                                         <span class="author" style="font-size:16px; line-height:1.5em;" ><notempty name="vo.author_id"><a href="__MODULE__/User/index/id/{$vo.author_id}">{$vo.author}</a><else /><span class="author-span">{$vo.author}</span></notempty>
                                     回复&nbsp;
-<notempty name="reply.parent_author_id"><a href="__MODULE__/User/index/id/{$reply.parent_author_id}">{$reply.parentName}</a><else /><span class="author-span">{$reply.parentName}</span></notempty>
-                                    于：{$reply.createtime|date='Y-m-d H:s',###}</span>
+<notempty name="vo.parent_author_id"><a href="__MODULE__/User/index/id/{$vo.parent_author_id}">{$vo.parentName}</a><else /><span class="author-span">{$vo.parentName}</span></notempty>
+                                    于：{$vo.createtime|date='Y-m-d H:s',###}</span>
                                     </div>
 								</div><!--/ .comment-meta -->
 								<div class="comment-body">

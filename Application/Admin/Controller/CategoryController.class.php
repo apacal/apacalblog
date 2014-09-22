@@ -15,6 +15,11 @@ class CategoryController extends CommonController {
         $this->setAllNavList();
         $this->setAllModelList();
     }
+    public function manage() {
+        $model = M(CONTROLLER_NAME);
+        $list = $model->field($this->field)->order('sort DESC, updatetime DESC')->select();
+        $this->assign('list', $list);
+    }
     public function edit() {
         $model = M(CONTROLLER_NAME);
         $where['id'] = I('request.id');

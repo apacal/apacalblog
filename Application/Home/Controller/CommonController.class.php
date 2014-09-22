@@ -6,11 +6,8 @@ namespace Home\Controller;
 use Think\Controller;
 class CommonController extends Controller {
     public function _empty() {
-       // $admin = C('WEBADMIN');
-        //$this->error("操作失败，请联系管理员".$admin,U('Home/Index/index'), 1);
-        //$this->error("操作失败，请联系管理员".$admin);
    //     var_dump(C('FORBIDDEN'));
-        redirect(C('FORBIDDEN'));
+       redirect(C('FORBIDDEN'));
     }
 
     /**
@@ -43,14 +40,24 @@ class CommonController extends Controller {
      * 获得热门文章
      * @param $cid = 0, $limit = 18
      **/
-    public function getHotArticleList($cid = 0, $limit = 18) {
+    protected function getHotArticleList($cid = 0, $order='sort DESC, id DESC', $limit = 18) {
         $where['status'] = 1;
         if($cid != 0)
             $where['cid'] = array('in', D('Category')->getChild($cid)); //得到属于$cid的所有栏目的id
-        $list = D('Article')->where($where)->relation(true)->order('sort DESC, click DESC')->limit($limit)->select();
+        $list = D('Article')->where($where)->relation(true)->order($order)->limit($limit)->select();
         $this->assign('hotArticleCount', count($list));
         return $list;
     }
+
+    public function getRandArticleList($cid = 0, $order='sort DESC, id DESC', $limit = 18) {
+        $where['status'] = 1;
+        if($cid != 0)
+            $where['cid'] = array('in', D('Category')->getChild($cid)); //得到属于$cid的所有栏目的id
+        $list = D('Article')->where($where)->relation(true)->order($order)->limit($limit)->select();
+        $this->assign('hotArticleCount', count($list));
+        return $list;
+    }
+
     /**
      * 获得文章数目
      * @param $cid
@@ -61,4 +68,5 @@ class CommonController extends Controller {
             $where['cid'] = array('in', D('Category')->getChild($cid)); //得到属于$cid的所有栏目的id
         return (M('Article')->where($where)->count());
     }
+
 }

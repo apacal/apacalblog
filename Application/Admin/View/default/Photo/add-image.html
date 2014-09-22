@@ -1,0 +1,57 @@
+
+<div id="add-image" class="tab-pane in active">
+<div class="row">
+    <div class="action-buttons" style=" background: #f7f7f7;">
+        <span style="font-size: 24px; color: #2679b5; margin-left: 20px;line-height:50px;">
+            总共 888 张图片
+        </span>
+        <a data-toggle="tooltip" class="add-image" title="增加">  
+            <span class="blue"><i class="icon-plus-sign purple bigger-150"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>  
+        </a>  
+    </div>
+    <div id="manag-image" style=" padding-left: 20px; padding-right: 20px; padding-top:20px;">
+    <ul class="ace-thumbnails list-unstyled spaced" id="image-list">
+        <volist name="images" id="vo">
+        <li>
+        <a href="__UPLOAD__{$vo.image}" class="view-image">
+                <img  src="__UPLOAD__{$vo.image}" style="width:300px; height:168px;" />
+                <div class="text">
+                    <div class="inner">{$vo.title}</div>
+                </div>
+            </a>
+
+            <div class="tools tools-bottom">
+                <a class="add-image">
+                    <i class="icon-plus"></i>
+                </a>
+                <a class="edit-image" imageSrc="__UPLOAD__{$vo.image}" title="{$vo.title}>
+                    <i class="icon-pencil"></i>
+                </a>
+
+                <a class="remove-image" imageSrc="__UPLOAD__{$vo.image}" title="{$vo.title}" imageid="{$vo.id}">
+                    <i class="icon-remove red"></i>
+                </a>
+            </div>
+        </li>
+        </volist>
+    </ul>
+    </div>
+
+</div>
+</div>
+    
+        <script>
+			jQuery(function($) {
+                //delete image
+			    $('.remove-image').on('click', function(){  
+                    var str = $(this).attr('title');
+                    $("#del-modal-body").html(str);
+                    $('#modal-delete').modal('show');
+                });
+			    $('.add-image').on('click', function(){  
+                    $('#modal-insertImage').modal('show');
+                });
+			    $('.selectCheck').on('click', function(){     //全选/全不选点击事件
+                });
+            });
+        </script>

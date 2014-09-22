@@ -1,0 +1,80 @@
+        <include file="Public:header" />
+        <include file="Photo:manage-left" />
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="__MODULE__">首页</a>
+							</li>
+							<li class="active"><a href="__CONTROLLER__/manage">相册管理</a></li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								<a href="__CONTROLLER__/manage">相册管理</a>
+								<small>
+									<i class="icon-double-angle-right"></i>
+									 编辑相册
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+                          <div class="control-group">
+							<div class="col-xs-12" style="padding-right: 40px; padding-left: 40px; ">
+                                <div class="tabbable">
+                                    <ul class="nav nav-tabs" id="myTab">
+                                        <li>
+                                            <a data-toggle="tab" href="#add-photo">
+                                                <i class="green icon-desktop bigger-110"></i>
+                                                修改相册
+                                            </a>
+                                        </li>
+
+                                        <li class="active">
+                                            <a data-toggle="tab" href="#add-image">
+                                                <i class="green icon-picture bigger-110"></i>
+                                                修改图片
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#manage-image">
+                                                <i class="green icon-picture bigger-110"></i>
+                                                查看相片
+                                            </a>
+                                        </li>
+
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <include file="Photo:add-photo" />
+                                        <include file="Photo:add-image" />
+                                        <include file="Photo:manage-image" />
+
+                                    </div>
+                                </div>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+
+        
+        <include file="Photo:add-edit-footer" />

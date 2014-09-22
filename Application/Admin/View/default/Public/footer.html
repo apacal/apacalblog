@@ -72,6 +72,53 @@
                 </script> 
                 <script src="__ACE__/js/fuelux/fuelux.spinner.min.js"></script>
 
+
+<!-- ========================================= 闲言杂语　note modal　=======================-->
+    <div class="modal fade" id="modal-note" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" style=" width:80%;left:0px;" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 align="center" class="modal-title" >添加闲言杂语
+                        <button type="button" class="pull-right btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="pull-left btn btn-default" data-dismiss="modal">关闭</button>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <h4 align="center" ></h4>
+                    
+                        <form class="form-horizontal" role="form" action="__MODULE__/Note/insert" method="post">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-right" >  </label>
+                                <div class="col-sm-8">
+                                    <textarea row="10" placeholder="内容" style="height:200px;width:100%;" name="description" class="autosize-transition " required ></textarea>
+                                </div>
+                                <label class="col-sm-2 control-label no-padding-right" >  </label>
+                            </div>
+                            <div class="space-4"></div>
+                            
+                            
+                            <div class="clearfix form-actions">
+                                <div class="col-md-offset-5 col-md-7">
+                                    <button class="btn btn-info" type="submit">
+                                        <i class="icon-ok bigger-110"></i>
+                                        提交
+                                    </button>
+
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button class="btn" type="reset">
+                                        <i class="icon-undo bigger-110"></i>
+                                        清除
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                </div> 
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 <!-- ========================================= 图片预览modal　=======================-->
 
     <div class="modal fade" id="modal-{$vo.id}" tabindex="-1" role="dialog" aria-hidden="true">

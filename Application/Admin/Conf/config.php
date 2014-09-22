@@ -4,7 +4,7 @@ $admin_config	= array(
     'SALT'                      => 'ApacalBlogAdmin',
     'SITE_NAME'			=>  'ApacalBlog后台管理系统',//网站名字，后台的和前台不一样
 
-    'URL_MODEL'					=>1, 				// 如果你的环境不支持PATHINFO 请设置为3
+    'URL_MODEL'					=>2, 				// 如果你的环境不支持PATHINFO 请设置为3
 	'TMPL_CACHE_ON'				=>true, 			//开启模板缓存
 	'ADMIN_AUTH_ON'				=>true,
 	'ADMIN_AUTH_TYPE'			=>1,				// 默认认证类型 1 登录认证 2 实时认证

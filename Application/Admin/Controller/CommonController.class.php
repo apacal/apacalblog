@@ -5,6 +5,8 @@
 namespace Admin\Controller;
 use Think\Controller;
 class CommonController extends Controller {
+    protected $field = '*';
+
 	public function _initialize(){
         if (!$_SESSION [C('ADMIN_AUTH_KEY')]) {
 	        redirect(__MODULE__ . C('ADMIN_AUTH_GATEWAY'));
@@ -41,7 +43,6 @@ class CommonController extends Controller {
             $model->where($where)->save($data);
         }
         $this->success("重置成功！");
-
     }
     public function index() {
         $this->display();
@@ -55,7 +56,6 @@ class CommonController extends Controller {
     public function _after_manage() {
         $this->display();
     }
-    protected $field = '*';
     /**
      * 删除多条记录
      **/
@@ -104,10 +104,11 @@ class CommonController extends Controller {
             $this->error($model->getError());
         }
         $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
-        if(!$model->add($data))
+        if(!$model->add($data)) {
             $this->error($model->getError());
-        else
+        } else {
             $this->success('添加成功!', __CONTROLLER__.'/manage');
+        }
     }
     public function update() {
         $model = D(CONTROLLER_NAME);

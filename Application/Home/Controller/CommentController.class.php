@@ -11,6 +11,10 @@ class CommentController extends CommonController {
 		$result = array('ret' => -1, 'error' => '');
         $model = D('Comment');
         $data = $model->create();
+        if (isset($_SESSION['adminid'])) {
+            $data['author_id'] = $_SESSION['adminid'];
+            $data['author'] = $_SESSION['adminname'];
+        }
         if($model->add($data)){
 			$result['ret'] = 0;
 		}else{

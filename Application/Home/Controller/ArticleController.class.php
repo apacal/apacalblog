@@ -4,6 +4,7 @@ namespace Home\Controller;
 use Think\Controller;
 class ArticleController extends CommonController {
 
+
     public function index(){
         $cid = I('request.cid');
         //var_dump($cid);
@@ -15,7 +16,11 @@ class ArticleController extends CommonController {
         $this->assign('articleList', D('Article')->getArticleList($cid));
         $this->assign('cid', $cid);
         $this->assign('categoryInfo', ($info = $this->getCategoryInfo($cid)));
-        $this->assign('hotArticleList', $this->getHotArticleList($cid, 20));
+        $this->assign('hotArticleList', ($hotArticleList = $this->getHotArticleList($cid,'sort DESC, id DESC', 18)));
+        $this->assign('randArticleList', $this->getRandArticleList($cid, 10));
+        
+        $this->assign('hotTitle', '最新文章');
+        $this->assign('hotArticleCount', count($hotArticleList));
         $this->assign('articleCount',$this->getArticleCount($cid));
         $position = array();
         $position [] = array('cname' => '列表');
@@ -43,7 +48,7 @@ class ArticleController extends CommonController {
         $article = $model->getArticle($id);
         if(!empty($article)) {
             //热门文章
-            $hotArticle = $model->getHotArticle($article['cid']);
+            $hotArticle = $model->getHotArticle($article['cid'],'sort DESC,id DESC', 5);
             $dateCount = 0; $dateAllCount = 0;
             $this->assign('dateArticle',D('Article')->getDateArticle($dateCount, $article['cid']));
             $this->assign('dateAllArticle',D('Article')->getDateArticle($dateAllCount));
@@ -52,6 +57,7 @@ class ArticleController extends CommonController {
             $hotCount = count($hotArticle);
             $this->assign('hotCount', $hotCount);
             $this->assign('hotArticle', $hotArticle);
+            $this->assign('hotTitle', '最新文章');
             $this->assign('article', $article);
             // readNext
             $readNext = $model->getReadNext($article['cid'], $article['createtime']);
@@ -67,6 +73,7 @@ class ArticleController extends CommonController {
             $position [] = array('cname' => '正文');
             D('Category')->getPosition($article['cid'], $position);
             $this->seo($article['title'], $article['keywords'], $article['description'], $position);
+
 
             $this->display();
         }else{

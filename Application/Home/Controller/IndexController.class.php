@@ -74,4 +74,10 @@ class IndexController extends CommonController {
         $list = M('Advert')->where($where)->order('sort DESC, createtime DESC')->select();
         return $list;
     }
+
+    public function book() {
+        $this->seo('书籍', NULL, NULL, NULL);
+        $this->display();
+    }
+
 }

@@ -37,8 +37,15 @@ return array(
     
     'DEFAULT_THEME'    =>    'default',// 设置默认的模板主题
 
-	'DB_TYPE'		=>	'mysql',//  数据库类型	
-    'DB_DSN' => 'mysql://root:@)!$Apacalblog@localhost:3306/apacalblog#utf8',
+
+    'DB_TYPE'   => 'mysql',
+    //'DB_HOST'   => 'localhost', // 服务器地址
+    //'DB_NAME'   => 'apacalblog', // 数据库名
+    //'DB_USER'   => 'apacal', // 用户名
+    //'DB_PWD'    => 'dev2014', // 密码
+    //'DB_PORT'   => 3306, // 端口
+    //'DB_CHARSET'=> 'utf8', // 字符集    
+    'DB_DSN' => 'mysql://apacal:dev2014@localhost:3306/apacalblog#utf8',
 	'DB_PREFIX'		=>	'ablg_',//  数据表前缀
 
     'THUMB_PREFIX'  =>  'ablg_',  //缩略图的前缀

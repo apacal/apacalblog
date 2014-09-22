@@ -13,9 +13,9 @@ class ArticleController extends CommonController {
         $model = M('Article');
         $cid = I('request.cid');
         if(!empty($cid)) {
-            $list = $model->field($this->field)->where(array('cid' => $cid))->order('updatetime DESC')->select();
+            $list = $model->field('content', true)->where(array('cid' => $cid))->order('updatetime DESC')->select();
         }else{
-            $list = $model->field($this->field)->order('updatetime DESC')->select();
+            $list = $model->field('content', true)->order('updatetime DESC')->select();
         }
         foreach($list as &$val) {
             $where['id'] = $val['cid'];

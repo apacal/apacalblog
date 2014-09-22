@@ -10,9 +10,8 @@ class CategoryController extends CommonController {
             $this->error("参数错误！");
         $mid = M('Category')->where(array('id' => $cid))->getField('mid');
         $controller = M('Model')->where(array('id' => $mid))->getField('mcontroller');
-       // $url = U('cate'.strtolower($controller).'/'.$mid);
-       // var_dump($url);
+       //$url = U('cate'.strtolower($controller).'/'.$cid);
+       //var_dump($url);
         redirect(U('cate'.strtolower($controller).'/'.$cid));
-      //  redirect(U('/Home/Article/index/', array('cid' => $mid)));
     }
 }
