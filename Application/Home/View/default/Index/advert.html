@@ -35,13 +35,6 @@
                 <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
             </div><!-- /.carousel -->
         </div>
-        <div class="col-lg-4">
-            <h3 style=" margin-top: 0px; ">热门文章<span class="hot-count">{$hotArticleCount}</span></h3>
-            <ul class="unstyled">
-                <volist name="hotArticleList" id="vo">
-                    <li><span class="pull-right">[{$vo.createtime|date='m-d',###}]</span><a data-toggle="tooltip"  title="{$vo.cname}" href="{:U('article/'.$vo['id'])}">{$vo.title|msubstr=0,15}【{$vo.click}】</a></li>
-                </volist>
-            </ul>
-        </div>
+        <include file="Article:hotArticle" />
     </div>
 </div>

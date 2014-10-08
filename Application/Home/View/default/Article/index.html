@@ -30,14 +30,7 @@
                     </div>
                 </div>
             </div><!-- /.carousel -->
-            <div class="col-lg-4">
-                <h3 style=" margin-top: 0px; ">{$hotTitle}<span class="hot-count">{$hotArticleCount}</span></h3>
-                <ul class="unstyled">
-                    <volist name="hotArticleList" id="vo">
-                        <li><span class="pull-right">[{$vo.createtime|date='m-d',###}]</span><a data-toggle="tooltip"  title="{$vo.cname}" href="{:U('article/'.$vo['id'])}">{$vo.title|msubstr=0,15}【{$vo.click}】</a></li>
-                    </volist>
-                </ul>
-            </div>
+            <include file="Article:hotArticle" />
         </div>
     </div>
 
