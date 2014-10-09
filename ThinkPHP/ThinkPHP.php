@@ -90,5 +90,12 @@ if(!IS_CLI) {
 
 // 加载核心Think类
 require CORE_PATH.'Think'.EXT;
-// 应用初始化 
+// 应用初始化
+
+require_once  dirname(__FILE__) .'/Extend/MemcachedSession.class.php';
+
 Think\Think::start();
+
+
+
+
