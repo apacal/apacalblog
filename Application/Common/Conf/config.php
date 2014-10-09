@@ -25,6 +25,7 @@ return array(
     //'VIRE_FILTER' => array('Behavior\TokenBuildBehavior'), //开启表单令牌
     
     'DEFAULT_FILTER' => 'htmlspecialchars', // I函数默认的过滤方法,包括stripslashes、htmlentities、htmlspecialchars和strip_tags等
+
     /**
      * 表单令牌配置
      **/
@@ -49,14 +50,6 @@ return array(
 	'DB_PREFIX'		=>	'ablg_',//  数据表前缀
 
 
-    'MEMCACHE'  =>  array(
-        'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
-        'port'      =>      '11211',
-        'isSasl'    =>      'false',
-        'usrname'   =>      '7e4d0da81a0611e4',
-        'passwd'    =>      'Memcache2014'
-
-    ),
 
     'THUMB_PREFIX'  =>  'ablg_',  //缩略图的前缀
 
