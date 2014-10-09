@@ -60,7 +60,7 @@ return array(
     ),
 
     //session过期时间
-    'SESSION_TTL'   =>  60*60*24,
+    'SESSION_TTL'   =>  60*60,
 
 
 

@@ -23,6 +23,9 @@ $admin_config	= array(
 		'__UPLOAD__' 			=> $config['WEB_URL'].'/Uploads',
 	),	
 
+    //session过期时间
+    'SESSION_TTL'   =>  60*60*24*7,
+
     /* 分页设置 */
 	'PAGE_ROLLPAGE'   	        => 5,      // 分页显示页数
 	'PAGE_LISTROWS'         	=> 20,     // 分页每页显示记录数
