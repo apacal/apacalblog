@@ -50,7 +50,7 @@ return array(
 
 
     'MEMCACHE'  =>  array(
-        'hostname'  =>      '',
+        'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
         'port'      =>      '11211',
         'isSasl'    =>      'false',
         'usrname'   =>      '7e4d0da81a0611e4',
