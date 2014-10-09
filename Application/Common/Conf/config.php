@@ -48,6 +48,16 @@ return array(
     'DB_DSN' => 'mysql://apacal:dev2014@localhost:3306/apacalblog#utf8',
 	'DB_PREFIX'		=>	'ablg_',//  数据表前缀
 
+
+    'MEMCACHE'  =>  array(
+        'hostname'  =>      '',
+        'port'      =>      '11211',
+        'isSasl'    =>      'false',
+        'usrname'   =>      '7e4d0da81a0611e4',
+        'passwd'    =>      'Memcache2014'
+
+    ),
+
     'THUMB_PREFIX'  =>  'ablg_',  //缩略图的前缀
 
 
