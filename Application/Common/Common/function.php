@@ -35,4 +35,8 @@ function msubstr($str, $start=0, $length, $charset="utf-8") {
     return $slice;
 }
 
+
+//引入MemcachedManager
+require_once './ThinkPHP/Extend/MemcachedSession.class.php';
+
 ?>

@@ -50,6 +50,19 @@ return array(
 	'DB_PREFIX'		=>	'ablg_',//  数据表前缀
 
 
+    // Memcache设置
+    'MemCached'     =>   array(
+        'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
+        'port'      =>      '11211',
+        'isSasl'    =>      true,
+        'username'   =>      '7e4d0da81a0611e4',
+        'passwd'    =>      'Memcache2014'
+    ),
+
+    //session过期时间
+    'SESSION_TTL'   =>  60*60*24,
+
+
 
     'THUMB_PREFIX'  =>  'ablg_',  //缩略图的前缀
 

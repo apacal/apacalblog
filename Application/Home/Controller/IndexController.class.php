@@ -78,11 +78,11 @@ class IndexController extends CommonController {
 
     public function book() {
         $this->seo('书籍', NULL, NULL, NULL);
-        //$mem = \MemcachedManager::getInstance();.
+        //$mem = \MemcachedManager::getInstance();
         //var_dump($mem);
-   //     var_dump($mem->getStats());
-     //   $mem->set('hello', 'worldss');
- //       var_dump($mem->get('hello'));
+        //var_dump($mem->getStats());
+        //$mem->set('hello', 'worldss');
+        //var_dump($mem->get('hello'));
         $this->display();
     }
 

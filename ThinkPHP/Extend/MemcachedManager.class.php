@@ -20,16 +20,15 @@ class MemcachedManager {
 
 
     public function __construct() {
-        //$config = C('MemCached');
-        $config = array(
-        'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
-        'port'      =>      '11211',
-        'isSasl'    =>      true,
-        'username'   =>      '7e4d0da81a0611e4',
-        'passwd'    =>      'Memcache2014'
-        );
+        $config = C('MemCached');
+        //$config = array(
+        //'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
+        //'port'      =>      '11211',
+        //'isSasl'    =>      true,
+        //'username'   =>      '7e4d0da81a0611e4',
+        //'passwd'    =>      'Memcache2014'
+        //);
 
-        // use std Memcached
         self::$memcached = new Memcached;  //声明一个新的memcached链接
         self::$memcached->setOption(Memcached::OPT_COMPRESSION, false); //关闭压缩功能
         self::$memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, true); //使用binary二进制协议
@@ -38,15 +37,6 @@ class MemcachedManager {
         if (isset($config['isSasl']) && $config['isSasl'] === true) {
             self::$memcached->setSaslAuthData(isset($config['username']) ? $config['username'] : '7e4d0da81a0611e4', isset($config['passwd']) ? $config['passwd'] : 'Memcache2014'); //设置OCS帐号密码进行鉴权
         }
-
-        /*
-        self::$memcached->setOption(Memcached::OPT_COMPRESSION, false); //关闭压缩功能
-
-        self::$memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, true); //使用binary二进制协议
-        self::$memcached->addServer('7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com', 11211); //添加OCS实例地址及端口号
-
-        self::$memcached->setSaslAuthData('7e4d0da81a0611e4','Memcache2014'); //设置OCS帐号密码进行鉴权
-         */
 
     }
 
