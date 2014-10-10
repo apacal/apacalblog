@@ -1327,3 +1327,4 @@ function filter_exp(&$value){
 function in_array_case($value,$array){
     return in_array(strtolower($value),array_map('strtolower',$array));
 }
+

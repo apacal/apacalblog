@@ -15,15 +15,22 @@ class CommentModel extends Model {
         array('content', 'require', 'content必须!'),
         array('author', 'require', 'author必须!'),
     );
+
     /**
-     * 获取评论的次数
-     * @param $oid 来源的id，$cid 栏目id
-     **/
+     * @param $oid | origin id like article id
+     * @param $cid | category id
+     * @return array|false
+     */
     public function getCommentCount($oid, $cid) {
-        $where['status'] = 1;
-        $where['oid'] = $oid;
-        $where['cid'] = $cid;
-        $commentCount = $this->where($where)->count();
+        $tagCommentCount = cacheTag(CommentCount, $oid, $cid);
+        if (false === ($commentCount = getCache($tagCommentCount))) {
+            $where['status'] = 1;
+            $where['oid'] = $oid;
+            $where['cid'] = $cid;
+            $commentCount = $this->where($where)->count();
+
+            setCache($tagCommentCount, $commentCount, C('COMMENT_TTL'));
+        }
         return $commentCount;
     
     }

@@ -40,12 +40,6 @@ return array(
 
 
     'DB_TYPE'   => 'mysql',
-    //'DB_HOST'   => 'localhost', // 服务器地址
-    //'DB_NAME'   => 'apacalblog', // 数据库名
-    //'DB_USER'   => 'apacal', // 用户名
-    //'DB_PWD'    => 'dev2014', // 密码
-    //'DB_PORT'   => 3306, // 端口
-    //'DB_CHARSET'=> 'utf8', // 字符集    
     'DB_DSN' => 'mysql://apacal:dev2014@localhost:3306/apacalblog#utf8',
 	'DB_PREFIX'		=>	'ablg_',//  数据表前缀
 
@@ -53,14 +47,19 @@ return array(
     // Memcache设置
     'MemCached'     =>   array(
         'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
+        //'hostname'  =>      '127.0.0.1',
         'port'      =>      '11211',
-        'isSasl'    =>      true,
+        'isSasl'    =>      false,
         'username'   =>      '7e4d0da81a0611e4',
         'passwd'    =>      'Memcache2014'
     ),
 
     //session过期时间
-    'SESSION_TTL'   =>  60*60,
+    'SESSION_TTL'       =>          60*60,
+    'ARTICLE_TTL'       =>          60*60,
+    'NOTE_TTL'          =>          60*60,
+    'CATEGORY_TTL'      =>          60*60*24*30,
+    'COMMENT_TTL'       =>          60*19,
 
 
 

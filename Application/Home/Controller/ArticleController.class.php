@@ -5,6 +5,8 @@ use Think\Controller;
 class ArticleController extends CommonController {
 
 
+
+
     public function index(){
         $cid = I('request.cid');
         //var_dump($cid);
@@ -13,15 +15,21 @@ class ArticleController extends CommonController {
         $dataId = (M('Category')->where(array('id' => $cid, 'status' => 1))->field('id')->find());
         if(empty($dataId))
             $this->error("没有该分类！");
-        $this->assign('articleList', D('Article')->getArticleList($cid));
+
+        $articleModel = D('Article');
+
+        $this->assign('articleCount',$articleModel->getArticleCount($cid));
+        $this->assign('articleList', $articleModel->getArticleList($cid));
         $this->assign('cid', $cid);
         $this->assign('categoryInfo', ($info = $this->getCategoryInfo($cid)));
-        $this->assign('hotArticleList', ($hotArticleList = $this->getHotArticleList($cid,'sort DESC, id DESC', 18)));
-        $this->assign('randArticleList', $this->getRandArticleList($cid, 10));
-        
+
+
         $this->assign('hotTitle', '最新文章');
+        $this->assign('hotArticleList', ($hotArticleList = $articleModel->getNewlyArticleList($cid,'id DESC, sort DESC', 18)));
         $this->assign('hotArticleCount', count($hotArticleList));
-        $this->assign('articleCount',$this->getArticleCount($cid));
+
+
+        $this->assign('randArticleList', $articleModel->getRandArticleList($cid, 10));
         $position = array();
         $position [] = array('cname' => '列表');
         D('Category')->getPosition($cid, $position);
@@ -29,6 +37,7 @@ class ArticleController extends CommonController {
         
         $this->display();
     }
+
     /**
      * 获取当前分类的信息
      * @param $cid
@@ -40,30 +49,36 @@ class ArticleController extends CommonController {
         $info['adminimage'] = $admin['image'];
         return $info;
     }
+
     public function view(){
         $id = I('request.id');
         $model = D('Article');
-        if(empty($id) || !is_numeric($id))
+        if(empty($id) || !is_numeric($id)) {
             $this->error("参数错误!");
+        }
+
         $article = $model->getArticle($id);
         if(!empty($article)) {
-            //热门文章
-            $hotArticle = $model->getHotArticle($article['cid'],'sort DESC,id DESC', 5);
-            $dateCount = 0; $dateAllCount = 0;
-            $this->assign('dateArticle',D('Article')->getDateArticle($dateCount, $article['cid']));
-            $this->assign('dateAllArticle',D('Article')->getDateArticle($dateAllCount));
-            $this->assign('dateCount', $dateCount);
-            $this->assign('dateAllCount', $dateAllCount);
+
+            //hot article
+            $hotArticle = $model->getHotArticleList($article['cid'],'sort DESC,id DESC', 5);
             $hotCount = count($hotArticle);
             $this->assign('hotCount', $hotCount);
             $this->assign('hotArticle', $hotArticle);
+
+
+            $dateCount = 0; $dateAllCount = 0;
+            $this->assign('dateArticle', $model->getArticleCountGroupByDate($dateCount, $article['cid']));
+            $this->assign('dateAllArticle', $model->getArticleCountGroupByDate($dateAllCount));
+            $this->assign('dateCount', $dateCount);
+            $this->assign('dateAllCount', $dateAllCount);
             $this->assign('hotTitle', '最新文章');
             $this->assign('article', $article);
             // readNext
-            $readNext = $model->getReadNext($article['cid'], $article['createtime']);
+            $readNext = $model->getReadNextAndPrev($article['cid'], $article['createtime']);
             $this->assign('articleList', $readNext);
             // 随机文章
-            $this->assign('randArticle', $this->getRandArticle(5));
+            $this->assign('randArticle', $model->getRandArticleList(5));
             $this->assign('randCount', 5);
             // 评论
             M('Article')->where('id='.$id)->setInc('click');
@@ -80,19 +95,7 @@ class ArticleController extends CommonController {
             $this->error("没有该文章!");
         }
     }
-    /**
-     * 随机文章
-     **/
-    protected function getRandArticle($limit = 15) {
-        $model = M('Article');
-        $list = $model->where(array('status' => 1))->field('click, id, image, title')->select();
-        $rand = array_rand($list, $limit);
-        $randArticle = array();
-        foreach($rand as $val) {
-            $randArticle[] = $list[$val];
-        }
-        return $randArticle;
-    }
+
     /**
      * 获取评论信息
      * @param $id-来源文章id　$cid 分类id
@@ -135,7 +138,7 @@ class ArticleController extends CommonController {
         var_dump($cid);
         $time = I('request.time');
         if(!empty($cid) && $cid != 0) //0表示所有文章归档
-            $where['cid'] = array('in', D('Category')->getChild($cid)); //得到属于$cid的所有栏目的id
+            $where['cid'] = array('in', D('Category')->getThisCategoryChildren($cid)); //得到属于$cid的所有栏目的id
         $where['status'] = 1;
         $allList = D('Article')->where($where)->relation(true)->order("sort DESC, createtime DESC")->select();
         $list = array();
@@ -154,9 +157,9 @@ class ArticleController extends CommonController {
      * 显示更多的文章，供ajax调用
      **/
     public function more() {
-        $cid = I('post.cid');
+        $cid = I('request.cid');
         if(!empty($cid) || is_numeric($cid)) {
-            $this->assign('articleAddList', D('Article')->getArticleList($cid));
+            $this->assign('articleAddList', D('Article')->getArticleList($cid, $page =  I('request.p' ,0 , 'intval'))); //当空为会转为0
             $this->display();
         }else{
             $this->error("参数错误！");

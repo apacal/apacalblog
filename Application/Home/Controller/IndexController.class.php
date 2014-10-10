@@ -59,12 +59,13 @@ class IndexController extends CommonController {
         }
     }
     public function index(){
-        $this->assign('articleList', D('Article')->getArticleList());
-        $this->assign('articleCount',$this->getArticleCount());
+        $articleModel = D('Article');
+        $this->assign('articleList', $articleModel->getArticleList());
+        $this->assign('articleCount',$articleModel->getArticleCount());
         $this->assign('cid', 0);
         $this->assign('advertList', $advertList = $this->getAdvert());
         $this->assign('advertListCount', count($advertList));
-        $this->assign('hotArticleList', $this->getHotArticleList());
+        $this->assign('hotArticleList', $articleModel->getNewlyArticleList());
         $this->assign('hotTitle', '最新文章');
         $this->seo('首页', NULL, NULL, NULL);
         //var_dump($this->getArticleList());

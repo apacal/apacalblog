@@ -12,34 +12,91 @@ class CategoryModel extends RelationModel {
             'as_fields' => 'mcontroller',
         ),
     );
+
+    /**
+     * @param $cid | int
+     * @return array|false
+     */
+    public function getControllerNameByCategory($cid) {
+        $tag = cacheTag(ControllerNameByCategory, $cid);
+        if (false === ($controller = getCache($tag))) {
+            $mid = M('Category')->where(array('id' => $cid))->getField('mid');
+            $controller = M('Model')->where(array('id' => $mid))->getField('mcontroller');
+            setCache($tag, $controller, C('CATEGORY_TTL'));
+        }
+        return $controller;
+    }
+
+    /**
+     * @param $cid
+     * @param &$position
+     */
     public function getPosition($cid, &$position) {
-        $cate = $this->where(array('id' => $cid))->find();
-        $cate['url'] = U('category/'.$cate['id']);
-        $position[] = $cate;
-        while($cate['pid'] != 0) {
-            $cate = $this->where(array('id' => $cate['pid']))->find();
+
+        $tagPosition = cacheTag(Position, $cid);
+        if (false === ($position = getCache($tagPosition))) {
+            $cate = $this->where(array('id' => $cid))->find();
             $cate['url'] = U('category/'.$cate['id']);
-            $position [] = $cate;
+            $position[] = $cate;
+            while($cate['pid'] != 0) {
+                $cate = $this->where(array('id' => $cate['pid']))->find();
+                $cate['url'] = U('category/'.$cate['id']);
+                $position [] = $cate;
+            }
+            $new = array();
+            while($position) {
+                $new[] = array_pop($position);
+            }
+            $position = $new;
+
+            setCache($tagPosition, $position, C('CATEGORY_TTL'));
         }
-        $new = array();
-        while($position) {
-            $new[] = array_pop($position);
-        }
-        $position = $new;
 
     }
+
     /**
-     * 获得栏目菜单
-     **/
+     * get nav menu
+     * @return array|false
+     */
     public function getNav() {
-        $where['status'] = 1;
-        $where['pid'] = 0;
-        $list = $this->where($where)->order('sort DESC')->relation(true)->select();
-        $this->getSubNav($list);
+        $tagNav = cacheTag(Nav);
+        if (false === ($list = getCache($tagNav))) {
+            $where['status'] = 1;
+            $where['pid'] = 0;
+            $list = $this->where($where)->order('sort DESC')->relation(true)->select();
+            $this->getSubNav($list);
+
+            setCache($tagNav, $list, C('CATEGORY_TTL'));
+        }
         return $list;
     }
+
     /**
-     * 用于获取每个栏目下的栏目，
+     * @param $id
+     * @return array | false
+     */
+    public function getThisCategoryChildren($id) {
+        $tagChildren = cacheTag(ThisCategoryChildren, $id);
+        if (false === ($list = getCache($tagChildren))) {
+            $result = array();
+            $result[] = $id; //将当前的cid压入
+            $where['status'] = 1;
+            $where['pid'] = $id;
+            $list = $this->where($where)->getField('id', true);
+            $result = array_merge((array)$result, (array)$list);
+
+            $list = array();
+            // 处理查询结果
+            foreach ($result as $value)
+                $list[] = (int)$value;
+            //print_r($list);
+
+            setCache($tagChildren, $list, C("CATEGORY_TTL"));
+        }
+        return $list;
+    }
+
+    /**
      * @param &$list
      **/
     private function getSubNav(&$list) {
@@ -53,31 +110,7 @@ class CategoryModel extends RelationModel {
             }
         }
     }
-    /**
-     * 获取当前category的下属栏目
-     * @param $id 
-     **/
-    public function getChild($id) {
-        $result = array();
-        $this->getChildren($result, $id);
-        $list = array();
-        // 处理查询结果
-        foreach ($result as $value)
-            $list[] = (int)$value;
-        //print_r($list);
-        return $list;
-    }
-    /**
-     * 获取$cid 的下属栏目id，内部使用
-     * @param &$result, $id
-     **/
-    private function getChildren(&$result, $id) {
-        $result[] = $id; //将当前的cid压入
-        $where['status'] = 1;
-        $where['pid'] = $id;
-        $list = $this->where($where)->getField('id', true);
-        $result = array_merge((array)$result, (array)$list);
-    }
+
 }
 ?>
 

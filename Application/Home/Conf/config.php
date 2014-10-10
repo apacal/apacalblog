@@ -31,7 +31,6 @@ $home_config =  array(
             'admin/:adminid\d'          =>      'User/admin',
             'search/my'                 =>      'Index/search',
             'book/my'                      =>      'Index/book',
-            //'vate/my'                      =>      'Index/vate',
     ),
 
     /* 模版变量设置 */
