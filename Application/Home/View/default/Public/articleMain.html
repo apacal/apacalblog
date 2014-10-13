@@ -1,0 +1,41 @@
+
+<script type="text/javascript">
+    $(function(){
+        $(window).bind('scroll',function(){show()});
+        function show() { 
+            if($(window).scrollTop()+$(window).height()>=$(document).height()) {
+                leadMoreArticle();
+            }               
+        }
+    });
+
+    function leadMoreArticle() {
+    	var num = document.getElementById("articleParam").value;
+    	refreshAjaxDiv('__MODULE__/Article/more', 'cid={$cid}&p=' + num, 'article-list-autoadd', true);
+	 	num++;
+	 	document.getElementById("articleParam").value = num;
+    }
+    function showTip(mark, msg){
+    if(!mark)
+        $("#postTemp").html('<div class="alert alert-warning alert-dismissable">' + 
+            '<button data-dismiss="alert" class="close" type="button">&times;</button>' +
+            '<strong>错误提示：</strong> ' + msg +
+          '</div>');
+    else
+        $("#postTemp").html('<div class="alert alert-info alert-dismissable">' + 
+            '<button data-dismiss="alert" class="close" type="button">&times;</button>' +
+            '<strong>温馨提示：</strong> ' + msg +
+          '</div>');
+    }
+</script>
+<div class="container marketing page-body">
+    <div class="row view-summary-list" id="article-list-autoadd">
+        <h3 style=" padding-left: 20px; ">最近文章<span class="hot-count">{$articleCount}</span></h3>       
+		<input type="hidden" name="articleParam" id="articleParam" value="1" />
+        <include file="Public:articleList" />
+
+
+    </div><!-- /.row -->
+    <div class="row view-summary-list" id="postTemp">
+    </div>
+</div>

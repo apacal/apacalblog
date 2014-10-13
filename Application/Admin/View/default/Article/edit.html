@@ -1,0 +1,188 @@
+        <include file="Public:header" />
+        <include file="Article:manage-left" />
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="__MODULE__">首页</a>
+							</li>
+							<li class="active"><a href="__CONTROLLER__/manage">博客管理</a></li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								<a href="__CONTROLLER__/manage">博客管理</a>
+								<small>
+									<i class="icon-double-angle-right"></i>
+									 编辑博文
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+                          <div class="control-group">
+							<div class="col-xs-12">
+                                <form id="myform" class="form-horizontal" role="form" enctype="multipart/form-data" action="__MODULE__/Article/update/id/{$vo.id}" method="post">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right">栏目 </label>
+										<div class="col-sm-9">
+                                                <select class="col-xs-10 col-sm-5" name="cid"  id="form-field-select-1" required>
+                                                    <option value="{$vo.cid}" >当前栏目({$vo.cname})</option>
+                                                    {$categoryTree}
+												</select>
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right">标题 </label>
+										<div class="col-sm-9">
+                                            <span class="input-icon input-icon-right">
+											    <input type="text" placeholder="标题" style="width:348px"name="title" value="{$vo.title}" required />
+                                                <i class="icon-leaf green"></i>
+                                             </span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right">关键字 </label>
+										<div class="col-sm-9">
+											<input type="text" placeholder="关键字" name="keywords" value="{$vo.keywords}" class="col-xs-10 col-sm-5" required />
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 描述 </label>
+										<div class="col-sm-9">
+                                            <textarea row="10" placeholder="描述" style="height:100px" name="description" class="autosize-transition col-xs-10 col-sm-5">{$vo.description}</textarea>
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 排序值 </label>
+										<div class="col-sm-9">
+                                            <input id="sort" type="text" class="input-mini" name="sort" maxlength="3">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right">转载来源【0表示原创】 </label>
+										<div class="col-sm-9">
+											<input type="text" placeholder="转载来源" value="{$vo.source}" name="source" class="col-xs-10 col-sm-5" >
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right">转载来源链接【0表示原创】 </label>
+										<div class="col-sm-9">
+											<input type="text" placeholder="转载来源链接" value="{$vo.source_link}" name="source_link" class="col-xs-10 col-sm-5" >
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 图片 </label>
+										<div class="col-sm-9">
+                                                <img data-toggle="modal" data-target="#modal-{$vo.id}" src="__UPLOAD__{$vo.image}" alt="暂无图片" width="100px" class="img-thumbnail"></br>
+                                                <input type="hidden"  name="old-image" value="{$vo.image}" />
+                                        </div>
+									    <div class="space-4"></div>
+                                        <div class="col-sm-3"></div>
+										<div class="col-sm-9">
+                                                <input type="text" readonly="true" id="viewfile" onmouseout="document.getElementById('upload').style.display='none';" class="inputstyle"> 
+                                                <label for="unload" class="btn btn-xs btn-info"  onmouseover="document.getElementById('upload').style.display='block';" class="file1">点击上传新图...</label> 
+                                                <input type="file" name="image" onchange="document.getElementById('viewfile').value=this.value;this.style.display='none';" class="file" id="upload" style="display: block;left: 220px; width: 110px;"> 
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 内容 </label>
+										<div style="margin-left: 47px;" class="col-sm-11">
+                                            <span class="block pull-right">
+                                                <small class="grey middle">选择主题: &nbsp;</small>
+
+                                                <span class="btn-toolbar inline middle no-margin">
+                                                    <span data-toggle="buttons" class="btn-group no-margin">
+                                                        <label class="btn btn-sm btn-yellow">
+                                                            1
+                                                            <input type="radio" value="1" />
+                                                        </label>
+
+                                                        <label class="btn btn-sm btn-yellow active">
+                                                            2
+                                                            <input type="radio" value="2" />
+                                                        </label>
+
+                                                        <label class="btn btn-sm btn-yellow">
+                                                            3
+                                                            <input type="radio" value="3" />
+                                                        </label>
+                                                    </span>
+                                                </span>
+                                            </span>
+								        </h4>
+
+								        <div class="wysiwyg-editor autosize-transition" id="editor1">{$vo['content']}</div>
+
+                                        <div style='visibility: hidden; height:10px;'><textarea name="content" id="content"></textarea></div>
+										</div>
+									</div>
+									<div class="space-4"></div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" > 是否显示 </label>
+										<div class="col-sm-9">
+                                            <label>
+                                                <input name="status" id="status" class="ace ace-switch ace-switch-7" type="checkbox">
+											    <span class="lbl"></span>
+										    </label>
+										</div>
+									</div>
+									<div class="space-4"></div> 
+
+                                    
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												提交
+											</button>
+
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="icon-undo bigger-110"></i>
+												清除
+											</button>
+										</div>
+									</div>
+
+								</form>
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+
+        <include file="Article:add-edit-footer" />

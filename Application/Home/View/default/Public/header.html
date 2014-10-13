@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{$title}</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="baidu-site-verification" content="7wm8h4HH7a" />
+    <meta name="google-site-verification" content="guD3Sz59BGqypw23UHNoo7IxOoUJy9R_xvs2LscKrGA" />
+    <meta name="keywords" content="{$keywords}" />
+    <meta name="description" content="{$description}" />
+    <meta name="author" content="apacal">
+    <meta property="qc:admins" content="1252700301314636" />
+
+
+    <link rel="shortcut icon" href="__IMG__/log2.png">
+    <!-- google-core-prettify  -->
+    <link href="__CODE__/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="__CODE__/prettify.js"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="__BS__/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="__JS__/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+
+    <link href="__CSS__/home.css" rel="stylesheet">
+<!-- 暂时不用
+<link href="__JS__/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="__JS__/google-code-prettify/prettify.js"></script>
+-->
+    <!-- Link javascript -->
+    <script src="__JS__/home.js"></script>
+    <script src="__JS__/jquery.js"></script>
+    
+    <script src="__BS__/js/bootstrap.js"></script>
+
+  </head>
+<!-- NAVBAR
+================================================== -->
+  <body>
+<div class="navbar-wrapper">
+      <div class="container">
+
+        <div id="nav-home" role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+        <!--
+        <div id="nav-home" role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+        -->
+          <div class="container">
+            <div class="navbar-header">
+              <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+            <span class="sr-only">激情 程序 奋斗</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="__ROOT__/">Apacal个人日志</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+
+              <ul class="nav navbar-nav" id="home-nav">
+                <li><a href="__ROOT__/">首页</a></li>
+                <!-- 
+                    <li class="active"><a href="__ROOT__/">首页</a></li>
+                    -->
+                <volist name="navList" id="vo">
+                    <empty name="vo['subNav']">
+                    <li><a href="{$vo.url}">{$vo.cname}</a><li>
+                    <else />
+                        <li class="dropdown">
+                        <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="{$vo.url}">{$vo.cname}</a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <volist name="vo['subNav']" id="vo2">
+                                <li><a href="{$vo2.url}">{$vo2['cname']}</a></li>
+                            </volist>
+                        </ul>
+                        </li>
+                    </empty>
+                </volist>
+                <li><a href="{:U('book/my')}">书籍</a></li>
+              </ul>
+            </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                <form class="navbar-form" action="{:U('search/my')}" method="post" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search" name="content"  require />
+                    </div>
+                     <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+</div>

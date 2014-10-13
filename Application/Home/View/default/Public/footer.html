@@ -1,0 +1,168 @@
+
+    <!-- ====================================== view-image　　要显示的图片添加　view-image类，　添加imageUrl属性图片链接,在栏目展示时会加如，否则不需要加入　==================================-->
+    <div class="modal fade" id="modal-view-image" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" id="modal-category-view-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 align="center" class="modal-title" ><eq name="ACTION_NAME" value="index">栏目【{$categoryInfo.cname}】<else/>文章【{$article.title}】</eq>图片查看
+                        <button type="button" class="pull-right btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="pull-left btn btn-default" data-dismiss="modal">关闭</button>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <h4 align="center" id="modal-desc"></h4>
+                    <img src="" id="image-src" alt="正在载入图片" class="aligncenter img-thumbnail">
+                </div> 
+                <div class="modal-footer">
+                    <div style="font-size: 16px;color: #cc0000;">
+                        <p align="center">
+                            <strong>（转载本站文章请注明作者和出处 <a href="__ROOT__/">Apacal &ndash;apacal.cn</a> ，请勿用于任何商业用途）</strong>          
+                        </p>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <style>
+        #modal-category-view-dialog , #modal-article-image-dialog{
+            width:70%; left:0%; right:0%;
+        }
+        .aligncenter {
+            clear: both;
+            display: block;
+            margin:auto;
+        }
+    </style>
+    <!-- ====================================== aeticle-list-and-advert-view-image　　要显示的图片添加　article-view-image类，　添加articleUrl属性，储存文章的多URL 添加title属性，存储标题　==================================-->
+    <div class="modal fade" id="modal-article-image" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" id="modal-article-image-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 align="center" class="modal-title" ><span id="article-image-title"></span>
+                        <button type="button" class="pull-right btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="pull-left btn btn-default" data-dismiss="modal">关闭</button>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <p id="modal-article-image-desc" style="margin-bottom: 30px"></p>
+                    <img src="" id="article-image-src" alt="正在载入图片" class="aligncenter img-thumbnail">
+                </div> 
+                <div class="modal-footer">
+                    <div style="font-size: 16px;color: #cc0000;">
+                        <p align="center">
+                            <strong>（转载本站文章请注明作者和出处 <a href="__ROOT__/">Apacal &ndash;apacal.cn</a> ，请勿用于任何商业用途）</strong>          
+                        </p>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <script type="text/javascript">
+        function showImg(imgself) {
+            // 判断imageUrl的属性
+            var src = $(imgself).attr('src');
+            var prefix = "{:C('THUMB_PREFIX')}"; //缩略图前缀
+            if(src != undefined) {
+                $('#modal-article-image').modal('show');
+                src = src.replace(prefix, '');
+                var title = $(imgself).attr('title');
+                var url = $(imgself).attr('articleUrl');
+                var desc = $(imgself).attr('articledesc');
+                if(desc != undefined) {
+                    desc = '【描述】' + desc;
+                    $('#modal-article-image-desc').html(desc);
+                }
+                if(url != undefined) {
+                    var modalTitle = '文章图片预览【<a href="' + url + '">' + title + '</a>】';
+                }else{
+                    var modalTitle = title;
+                }
+                $('#article-image-title').html(modalTitle);
+                $('#article-image-src').attr('src', src);
+                return true;
+            }
+        }
+        $(document).ready(function(){
+            //　文章列表的图片预览
+            $('.article-view-image').click(function(){
+                    showImg(this);
+                });
+            // 文章内部的图片预览
+            $('.view-image').click(function(){
+                    $('#modal-view-image').modal('show');
+                    // 判断imageUrl的属性
+                    var originSrc = $(this).attr('imageUrl');
+                    if(originSrc != undefined) {
+                        
+                        var desc = $('#categoryDesc').html();
+                        $('#modal-desc').html(desc);
+                        $('#image-src').attr('src', originSrc);
+                        return true;
+                    }
+                    var src = $(this).attr('src');
+                    var prefix = "{:C('THUMB_PREFIX')}"; //缩略图前缀
+                    if(src != undefined) {
+                        src = src.replace(prefix, '');
+                    //alert (src);
+                   // var originSrc = $(this).attr('imageUrl');
+                        $('#image-src').attr('src', src);
+                    }
+                        
+                });
+        });
+    </script> 
+
+    <!-- FOOTER -->
+    <div class="container marketing" id="footer">
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        //$('pre').addClass('prettyprint linenums');
+
+                        $('pre').attr('class','prettyprint linenums');
+                        prettyPrint();
+                        // 到底部
+                        $('a.scrollToBottom').click(function(){
+                            $('html, body').animate({scrollTop: $(document).height()}, 'slow');
+                            return false;
+                        });
+                        // 到顶部
+                        $('a.scrollToTop').click(function(){
+                            $('html, body').animate({scrollTop:0}, 'slow');
+                            return false;
+                        });
+                        $('#friendlink').change(function(){
+                            if(this.value)
+                                window.open(this.value);
+                        });
+                    });
+                </script> 
+                <div id="scrollBtn"> <!-- 滚动屏幕 -->
+                    <a href="" class="scrollToTop" title="顶部" ><p class="scrollBtn-top"></p></a>
+                    <a  href="" class="scrollToCenter" title="留言反馈"><p class="scrollBtn-SNS"></p></a>
+                    <a href="" class="scrollToBottom" title="底部"><p class="scrollBtn-bottom"></p></a>
+                </div>
+                <div class="col-md-7">
+                    <div class="footerInfo">
+                        <p>Copyright © 2014 Apacal All rights reserved <a href="http://www.miitbeian.gov.cn/" target="_blank" >粤ICP备14021869号</a></p>	
+                        <p>技术支持: Apacal &nbsp; <a href="__WEB_URL__/Admin" target="_blank"> 管理入口</a>&nbsp;&nbsp;
+                        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_5860608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s5.cnzz.com/stat.php%3Fid%3D5860608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+                        </p>	
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="friendLink">
+                        <select  id="friendlink" class="seo_links">
+                            <option value="">友情链接</option>
+                            <volist name="linkList" id="vo">
+                            <option value="{$vo.url}">{$vo.title}</option>              		        
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+    </div> <!-- end footer -->
+        
+
+
+
+  </body>
+</html>

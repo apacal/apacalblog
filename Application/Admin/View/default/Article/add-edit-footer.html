@@ -1,0 +1,360 @@
+
+        <!-- insertFile modal ========================file===================-->
+        <div class="modal fade" id="modal-insertFile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" >插入文件</h3>
+              </div>
+              <div class="modal-body form-horizontal">
+
+                <div class="form-group">                               
+					<label class="col-sm-3 control-label no-padding-right" > 网络文件 </label>
+				    <div class="col-sm-7">
+                        <input class="form-control" value="" name="insertFile" id="insertFile" placeholder="URL" type="text" >                               
+                    </div>
+                </div>
+                <div class="form-group">                               
+					<label class="col-sm-3 control-label no-padding-right" > 文件说明 </label>
+				    <div class="col-sm-7">
+                        <input class="form-control" value="" name="fileint" id="fileint" placeholder="文件说明" type="text" >                               
+                    </div>
+                </div>
+                <div class="form-group">                               
+                        <span class="input-group-btn">                                  
+                            <button style="margin-left: 72%" class="btn btn-sm btn-primary insertFile" type="button"> ADD </button>                             
+                        </span>                         
+                </div> <!-- 上传文件 ======================= -->
+                <div class="form-group">                               
+                    <h4>上传本地文件</h4>
+					    <label class="col-sm-3 control-label no-padding-right" > 文件 </label>
+				        <div class="col-sm-8">
+                            <input type="text" readonly="true" id="arfile" onmouseout="document.getElementById('arupload').style.display='none';" class="inputstyle"> 
+                            <label for="unload" class="btn btn-xs btn-info"  onmouseover="document.getElementById('arupload').style.display='block';" class="file1">点击浏览...</label> 
+                            <input type="file" name="file" onchange="document.getElementById('arfile').value=this.value;this.style.display='none';" class="file" id="arupload" style="display: block; top: 0px;"> 
+                            <button style="margin-left: 6px;" class="btn btn-xs btn-primary uploadFile" type="button">上传</button>                             
+                        </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <a><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="insertFile btn btn-primary" data-dismiss="modal">确定</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.mod -->
+
+        <!-- insertCode modal============================Code================== -->
+        <div class="modal fade" id="modal-insertCode" tabindex="-1" role="dialog" aria-labelledby="myModalLabeCode" aria-hidden="true">
+
+          <div class="modal-dialog" style="width:50%">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" >插入代码</h3>
+              </div>
+              <div class="modal-body form-horizontal">
+                <div class="form-group">                               
+				    <div class="col-sm-12">
+                        <textarea rows="16" cols="63" id="addCode" placeholder="写入代码" style=" width: 610px; " ></textarea>
+                    </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-default clearCode" >清空</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="insertCode btn btn-primary" >添加</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.mod -->
+
+        <!-- insertImage modal ===============================Image=============-->
+        <div class="modal fade" id="modal-insertImage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" >插入图片</h3>
+              </div>
+              <div class="modal-body form-horizontal">
+
+                <div class="form-group">                               
+					<label class="col-sm-3 control-label no-padding-right" > 网络图片 </label>
+				    <div class="col-sm-7">
+                        <input class="form-control" value="" name="insertImage" id="insertImage" placeholder="URL" type="text" >                               
+                    </div>
+                </div>
+                <div class="form-group">                               
+                        <span class="input-group-btn">                                  
+                            <button style="margin-left: 72%" class="btn btn-sm btn-primary insertImage" type="button"> ADD </button>                             
+                        </span>                         
+                </div> <!-- 上传图片 ======================= -->
+                <div class="form-group">                               
+                    <h4>上传本地图片</h4>
+					    <label class="col-sm-3 control-label no-padding-right" > 图片 </label>
+				        <div class="col-sm-8">
+                            <input type="text" readonly="true" id="arimage" onmouseout="document.getElementById('imageupload').style.display='none';" class="inputstyle"> 
+                            <label for="unload" class="btn btn-xs btn-info"  onmouseover="document.getElementById('imageupload').style.display='block';" class="file1">点击浏览...</label> 
+                            <input type="file" name="imageupload" onchange="document.getElementById('arimage').value=this.value;this.style.display='none';" class="file" id="imageupload" style="display: block; top: 0px;"> 
+                            <button style="margin-left: 6px;" class="btn btn-xs btn-primary uploadImage" type="button">上传</button>                             
+                        </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <a><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="insertImage btn btn-primary" data-dismiss="modal">确定</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.mod -->
+        <script> //插入文件js
+        $(document).ready(function(){
+            //排序值加减按钮
+            var sortstr = "{$vo.sort}";
+            var sort = Number(sortstr);
+            $('#sort').ace_spinner({value: sort ,min:-500,max:500,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
+            //$('#sort').val(sort);
+            
+            var status = "{$vo.status}"; //设置初始状态
+            if (status == 1) { //状态位一
+                document.getElementById("status").checked=true
+            }
+
+            $(".insertFile").on('click', function(){ //添加文件
+			    $('#insertFile').attr('value',$(this).attr('insertFile'));//文件链接
+			    $('#fileint').attr('value',$(this).attr('fileint')); //文件说明
+                var add = $("#insertFile").val();
+                var content = $("#fileint").val();
+                if(content == '') {
+			        $('#fileint').focus();
+                    alert("说明必须!");
+                    return false;
+                }
+                if(add == '') {
+			        $('#insertFile').focus();
+                    alert("文件必须!");
+                    return false;
+                }
+                add = '<a href="__UPLOAD__' + add + '">' + content + '</a>';
+				$("#editor1").append(add);
+			    $('#insertFile').val("");//文件链接
+			    $('#fileint').val("");//文件链接
+			    $('#arfile').val("");//文件链接
+                $('#modal-insertFile').modal('hide')
+            });
+            $(".uploadFile").on('click', function(){ //上传文件
+                var url = "__MODULE__/Article/upload";
+                articleupload(url, 'arupload', 'insertFile');
+            });
+            $(".insertImage").on('click', function(){ //添加图片
+			    $('#insertImage').attr('value',$(this).attr('insertImage'));//图片
+                var add = $("#insertImage").val();
+                if(add == '') {
+			        $('#insertImage').focus();
+                    alert("图片必须!");
+                    return false;
+                }
+                add = '<img class="view-image" src="__UPLOAD__' + add + '">' + '<div><font face="Comic Sans MS" size="3">apacal image</font></div>';
+				$("#editor1").append(add);
+			    $('#insertImage').val("");//文件链接
+			    $('#arimage').val("");//文件链接
+                $('#modal-insertImage').modal('hide')
+            });
+            $(".insertCode").on('click',function(){  //插入代码
+                var add = $("#addCode").val();
+                add = htmlspecialchars(add);
+                add = '<pre class="highlight"> <font size="3">' + add + '</font></pre>' + '<font face="Comic Sans MS" size="3">apacal code</font>';
+			    $('#addCode').val("");
+				$("#editor1").append(add);
+                $('#modal-insertCode').modal('hide');
+            });
+            $(".clearCode").on('click',function(){ //clear代码
+			    $('#addCode').val("");
+            });
+            $(".uploadImage").on('click', function(){ //上传图片
+                var url = "__MODULE__/Article/uploadimage";
+                articleupload(url, 'imageupload', 'insertImage');
+            });
+        });
+        function htmlspecialchars(str)  {  
+            str = str.replace(/&/g, '&amp;');
+            str = str.replace(/</g, '&lt;');
+            str = str.replace(/>/g, '&gt;');
+            return str;
+        }
+        </script>
+
+    <!-- insertFile modal -->
+	<!-- page specific plugin scripts -->
+	<script src="__ACE__/js/jquery.hotkeys.min.js"></script>
+    <script src="__ACE__/js/bootbox.min.js"></script>
+	<script src="__ACE__/js/bootstrap-wysiwyg.min.js"></script>
+	<script type="text/javascript">
+    /*  ajax 上传文件　*/
+        function articleupload(url, fileid, inputid){
+            $.ajaxFileUpload({
+                url: url,//用于文件上传的服务器端请求的Action地址
+                type: "post",//请求方法
+                secureuri: false,//一般设置为false
+                fileElementId: fileid,//文件id属性  <input type="file" id="upload" name="upload" />
+                dataType: "JSON",
+                success: function(msg){
+			        $('#'+inputid).val(msg);//文件链接
+                }
+            });
+        } 
+    $(document).ready(function(){
+        $("form").submit(function(e){
+            $('pre').each(function() {
+                $(this).html(htmlspecialchars($(this).html()));
+            });
+            $("#content").html($("#editor1").html()); 
+        });
+    });
+        jQuery(function($){
+
+	
+        function showErrorAlert (reason, detail) {
+            var msg='';
+            if (reason==='unsupported-file-type') { msg = "Unsupported format " +detail; }
+            else {
+                console.log("error uploading file", reason, detail);
+            }
+            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
+             '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
+        }
+
+        //$('#editor1').ace_wysiwyg();//this will create the default editor will all buttons
+
+        //but we want to change a few buttons colors for the third style
+        $('#editor1').ace_wysiwyg({
+            toolbar:
+            [
+                'font',
+                null,
+                'fontSize',
+                null,
+                            {name:'bold', className:'btn-info'},
+                            {name:'italic', className:'btn-info'},
+                            {name:'strikethrough', className:'btn-info'},
+                            {name:'underline', className:'btn-info'},
+                            null,
+                            {name:'insertunorderedlist', className:'btn-success'},
+                            {name:'insertorderedlist', className:'btn-success'},
+                            {name:'outdent', className:'btn-purple'},
+                            {name:'indent', className:'btn-purple'},
+                            null,
+                            {name:'justifyleft', className:'btn-primary'},
+                            {name:'justifycenter', className:'btn-primary'},
+                            {name:'justifyright', className:'btn-primary'},
+                            {name:'justifyfull', className:'btn-inverse'},
+                            null,
+                            {name:'createLink', className:'btn-pink'},
+                            {name:'unlink', className:'btn-pink'},
+                            null,
+                            {name:'insertImage', className:'btn-success'},
+                            null,
+                            'insertFile',
+                            null,
+                            'insertCode',
+                            null,
+                            'foreColor',
+                            null,
+                            'backColor',
+                            null,
+                            //'backColor',
+                            {name:'undo', className:'btn-grey'},
+                            {name:'redo', className:'btn-grey'},
+                            'viewSource'
+                        ],
+                        'wysiwyg': {
+                            fileUploadError: showErrorAlert
+                        }
+                    }).prev().addClass('wysiwyg-style2');
+
+                    
+
+
+                    $('[data-toggle="buttons"] .btn').on('click', function(e){
+                        var target = $(this).find('input[type=radio]');
+                        var which = parseInt(target.val());
+                        var toolbar = $('#editor1').prev().get(0);
+                        if(which == 1 || which == 2 || which == 3) {
+                            toolbar.className = toolbar.className.replace(/wysiwyg\-style(1|2)/g , '');
+                            if(which == 1) $(toolbar).addClass('wysiwyg-style1');
+                            else if(which == 2) $(toolbar).addClass('wysiwyg-style2');
+                        }
+                    });
+
+
+                    
+
+                    //Add Image Resize Functionality to Chrome and Safari
+                    //webkit browsers don't have image resize functionality when content is editable
+                    //so let's add something using jQuery UI resizable
+                    //another option would be opening a dialog for user to enter dimensions.
+                    if ( typeof jQuery.ui !== 'undefined' && /applewebkit/.test(navigator.userAgent.toLowerCase()) ) {
+                        
+                        var lastResizableImg = null;
+                        function destroyResizable() {
+                            if(lastResizableImg == null) return;
+                            lastResizableImg.resizable( "destroy" );
+                            lastResizableImg.removeData('resizable');
+                            lastResizableImg = null;
+                        }
+
+                        var enableImageResize = function() {
+                            $('.wysiwyg-editor')
+                            .on('mousedown', function(e) {
+                                var target = $(e.target);
+                                if( e.target instanceof HTMLImageElement ) {
+                                    if( !target.data('resizable') ) {
+                                        target.resizable({
+                                            aspectRatio: e.target.width / e.target.height,
+                                        });
+                                        target.data('resizable', true);
+                                        
+                                        if( lastResizableImg != null ) {//disable previous resizable image
+                                            lastResizableImg.resizable( "destroy" );
+                                            lastResizableImg.removeData('resizable');
+                                        }
+                                        lastResizableImg = target;
+                                    }
+                                }
+                            })
+                            .on('click', function(e) {
+                                if( lastResizableImg != null && !(e.target instanceof HTMLImageElement) ) {
+                                    destroyResizable();
+                                }
+                            })
+                            .on('keydown', function() {
+                                destroyResizable();
+                            });
+                        }
+                        
+                        enableImageResize();
+
+                        /**
+                        //or we can load the jQuery UI dynamically only if needed
+                        if (typeof jQuery.ui !== 'undefined') enableImageResize();
+                        else {//load jQuery UI if not loaded
+                            $.getScript($path___ACE__+"/js/jquery-ui-1.10.3.custom.min.js", function(data, textStatus, jqxhr) {
+                                if('ontouchend' in document) {//also load touch-punch for touch devices
+                                    $.getScript($path___ACE__+"/js/jquery.ui.touch-punch.min.js", function(data, textStatus, jqxhr) {
+                                        enableImageResize();
+                                    });
+                                } else	enableImageResize();
+                            });
+                        }
+                        */
+                    }
+
+
+         });
+	</script>
+    <include file="Public:footer" />

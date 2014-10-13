@@ -1,0 +1,36 @@
+
+<div class="view-footer">
+    <div class="container marketing">
+        <div class="row view-summary-list">
+            <div class="read-next">
+                    <h2 style="margin-left: 16px;">Read Next</h2>
+            <notempty name="articleList">
+                    <include file="Public:articleList" />
+
+            <else />
+                <div class="alert alert-info alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong>温馨提示</strong> 暂无上一篇和下两篇
+                </div>
+            </notempty>
+            </div> <!-- end  read-next  -->
+            <div class="view-comment">
+                <ul class="nav nav-tabs" style=" margin-top: 20px; ">
+                    <li class="active"><a href="#apacal" data-toggle="tab">Apacal</a></li>
+                    <li><a href="#disqus" data-toggle="tab">Disqus</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="apacal">
+                        <include file="Comment:index" />
+                    </div>
+                    <include file="Public/disqus" />
+                </div>
+                           
+            </div>
+    
+        </div>
+    </div>
+</div>
+
+
+

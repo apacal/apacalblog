@@ -1,0 +1,39 @@
+
+<include file="Public/header" />
+<div style="height:70px"></div>
+<include file="Public/position" />
+
+    <div class="container marketing">
+        <div class="row">
+            <div class="col-lg-8" style=" padding-left: 6px; padding-right: 13px; ">
+                <!-- article list show photo -->
+                <div id="myCarousel" class="carousel slide " data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img data-toggle="modal"  imageurl="__UPLOAD__{$categoryInfo.image}" src="__UPLOAD__{$categoryInfo.image|getThunmName}" class="advertImg view-image">
+                            <div class="carousel-caption view-image" imageurl="__UPLOAD__{$categoryInfo.image}" style="padding-bottom: 150px">
+                                
+                                <h1><code>{$categoryInfo.cname}</code></h1>
+                                <p id="categoryDesc"><code>{$categoryInfo.description}</code></p>
+
+                                <div class="meta-author">
+                                    <empty name="categoryInfo.adminimage">
+                                        <span class="avatar"><img style="width:30px;height:30px" class="img-circle" src="__IMG__/admin.png" alt="Apacal" ></span>
+                                    <else />
+                                    <span class="avatar"><img style="width:30px;height:30px" class="img-circle" src="__UPLOAD__{$categoryInfo.adminimage|getThunmName}" ></span>
+                                    </empty>
+                                    <span class="author"><span class="dt">Author:</span> <span class="dd" ><a href="{:U('admin/'.$categoryInfo['adminid'])}" style="color:white"><code>{$categoryInfo.adminname}</code></a> · </span></span>
+                                    <span class="publish-date"><span class="dt">Publish date:</span> <span class="dd" ><code>{$categoryInfo.createtime|date='F d, Y', ###}</code></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.carousel -->
+            <include file="Article:hotArticle" />
+        </div>
+    </div>
+
+
+    <include file="Public:articleMain" />
+<include file="Public:footer" />
