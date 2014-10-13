@@ -11,11 +11,7 @@ use Think\Model;
 
 class NoteModel extends Model {
     public function getNoteList() {
-<<<<<<< HEAD
-        $tagNoteList = cacheTag('NoteList');
-=======
-        $tagNoteList = tagNoteList();
->>>>>>> origin/master
+        $tagNoteList = cacheTag(NoteList);
         if (false === ($list = getCache($tagNoteList))) {
             $sql = "select id, ablg_note.createtime as time,content,adminname,image from ablg_note left join ablg_admin on ablg_note.adminid=ablg_admin.adminid order by time desc";
             $list = $this->query($sql);
@@ -26,8 +22,4 @@ class NoteModel extends Model {
         return $list;
     }
 
-<<<<<<< HEAD
 } 
-=======
-} 
->>>>>>> origin/master

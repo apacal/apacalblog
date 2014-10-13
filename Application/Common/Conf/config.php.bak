@@ -55,11 +55,11 @@ return array(
     ),
 
     //session过期时间
-    'SESSION_TTL'       =>          60*60*24,
+    'SESSION_TTL'       =>          60*60*24*7,
     'ARTICLE_TTL'       =>          60*60*24,
     'NOTE_TTL'          =>          60*60*24,
     'CATEGORY_TTL'      =>          60*60*24*30,
-    'COMMENT_TTL'       =>          60*19,
+    'COMMENT_TTL'       =>          60*30,
 
 
 
