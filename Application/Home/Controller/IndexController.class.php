@@ -65,7 +65,8 @@ class IndexController extends CommonController {
         $this->assign('cid', 0);
         $this->assign('advertList', $advertList = $this->getAdvert());
         $this->assign('advertListCount', count($advertList));
-        $this->assign('hotArticleList', $articleModel->getNewlyArticleList());
+        $this->assign('hotArticleList', ($articleList = $articleModel->getNewlyArticleList()));
+        $this->assign('hotArticleCount', count($articleList));
         $this->assign('hotTitle', '最新文章');
         $this->seo('首页', NULL, NULL, NULL);
         //var_dump($this->getArticleList());
