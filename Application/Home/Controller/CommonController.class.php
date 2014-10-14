@@ -11,8 +11,8 @@ class CommonController extends Controller {
 
     public function _empty() {
    //     var_dump(C('FORBIDDEN'));
-        echo __ACTION__;
-      // redirect(C('FORBIDDEN'));
+      //  echo __ACTION__;
+        redirect(C('FORBIDDEN'));
     }
 
     /**
