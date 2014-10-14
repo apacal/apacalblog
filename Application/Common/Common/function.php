@@ -63,6 +63,10 @@ function setCache($key, $data, $expiration ) {
     return \mem()->set($key, $data, $expiration );
 }
 
+function deleteCache($key) {
+    return \mem()->delete($key);
+}
+
 
 define("OneArticle", 0);
 define("NewlyArticleList", 1);
@@ -78,7 +82,7 @@ define("HotArticleList", 10);
 define("ThisCategoryChildren", 11);
 define("CommentCount", 12);
 
-define("tagNoteList", 14);
+define("NoteList", 14);
 
 function cacheTag() {
     try {

@@ -5,4 +5,5 @@ weixin/Application/User/Conf/config.php
 ts/*
 */Runtime/*
 info.php
+.idea/*
 .gitignore

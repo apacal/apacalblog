@@ -16,6 +16,8 @@ class NoteController extends CommonController {
         if (!$model->add($data)) {
             $this->error($model->getError());
         } else {
+
+            deleteCache(cacheTag(NoteList));
             $this->success("添加成功!");
         }
     }
