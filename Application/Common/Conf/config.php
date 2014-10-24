@@ -1,6 +1,5 @@
 <?php
 if(!defined('THINK_PATH')) exit();
-define(ROOT_URL,'');
 return array(
     'FORBIDDEN'   => ROOT_URL .'/404',
     'SERACHTABLE' => array(         //查询的table
@@ -42,14 +41,15 @@ return array(
     'DB_TYPE'   => 'mysql',
     'DB_DSN' => 'mysql://apacal:dev2014@localhost:3306/apacalblog#utf8',
 	'DB_PREFIX'		=>	'ablg_',//  数据表前缀
+    "LOAD_EXT_FILE"     =>      "MemcahedManager,MemcachedSession",
 
 
     // Memcache设置
     'MemCached'     =>   array(
-        'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
-        //'hostname'  =>      '127.0.0.1',
+        //'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
+        'hostname'  =>      '127.0.0.2',
         'port'      =>      '11211',
-        'isSasl'    =>      true,
+        'isSasl'    =>      false,
         'username'   =>      '7e4d0da81a0611e4',
         'passwd'    =>      'Memcache2014'
     ),

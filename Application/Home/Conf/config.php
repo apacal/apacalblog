@@ -1,12 +1,11 @@
 <?php
-$config	=	require './Application/Common/Conf/config.php';
+$config	=	require APP_PATH .'Common/Conf/config.php';
 $home_config =  array(
     'SEARCHTABLE'       =>     array(
                     'Article',
                 ),
     'SEARCHCOL'         =>     array(
                     'title',
-                  //  'keywords',
                     'descriotion',
                     'content',
                 ),
@@ -19,7 +18,6 @@ $home_config =  array(
 	'TMPL_CACHE_ON'	    =>          true, 		//开启模板缓存
 	'URL_MODEL'         =>          2,           //服务器开启Rewrite模块时，可去除URL中的index.php 参数模式1,2,3
 	
-	'USER_AUTH_KEY'			=> 'homeAuthId',			// 用户认证SESSION标记
 	'DB_LIKE_FIELDS'		=> 'title|remark|content',	//搜索Like匹配字段
     'URL_ROUTER_ON'         => true, 
     'URL_ROUTE_RULES'       => array(

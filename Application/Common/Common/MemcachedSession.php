@@ -2,11 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: apacal
- * Date: 10/8/14
- * Time: 5:16 PM
+ * Date: 14-10-24
+ * Time: 下午7:24
  */
-
-require_once dirname(__FILE__) ."/MemcachedManager.class.php";
+//引入MemcachedManager
+require_once dirname(__FILE__) ."/MemcachedManager.php";
 
 class MemcachedSession implements SessionHandlerInterface {
 
@@ -48,12 +48,21 @@ class MemcachedSession implements SessionHandlerInterface {
 }
 
 
-set_session_hander(MemcachedManager::getInstance());
+try {
+    $cache_hander = MemcachedManager::getInstance();
+    if (!empty($cache_hander)) {
+        set_session_hander($cache_hander);
+    }
+}catch(Exception $e) {
+    print_r($e);
+}
+
 function set_session_hander(Memcached $cache_hander) {
     if ($cache_hander->set('hello', 'hello') === true) {
         session_set_save_handler($cache_hander, true);
     } else {
-        if (C('NoCachedDie') === true) {
+        $isToDie = C('NoCachedDie');
+        if ($isToDie === true) {
             die('cacehed can not connect');
         }
     }

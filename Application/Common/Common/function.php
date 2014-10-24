@@ -36,9 +36,14 @@ function msubstr($str, $start=0, $length, $charset="utf-8") {
 }
 
 
-//引入MemcachedManager
-require_once './ThinkPHP/Extend/MemcachedSession.class.php';
 
+function checkMemcahed() {
+    if(mem()->set('hello', 'hello') === true) {
+        return true;
+    } else {
+        return false;
+    }
+}
 /**
  * get memCache By key
  * @param $key
