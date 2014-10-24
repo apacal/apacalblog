@@ -25,6 +25,7 @@ $admin_config	= array(
 
     //session过期时间
     'SESSION_TTL'   =>  60*60*24*7,
+    'NoCachedDie' => true,
 
     /* 分页设置 */
 	'PAGE_ROLLPAGE'   	        => 5,      // 分页显示页数

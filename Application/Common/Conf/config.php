@@ -53,6 +53,7 @@ return array(
         'username'   =>      '7e4d0da81a0611e4',
         'passwd'    =>      'Memcache2014'
     ),
+    'NoCachedDie' => false,
 
     //session过期时间
     'SESSION_TTL'       =>          60*60*24,
