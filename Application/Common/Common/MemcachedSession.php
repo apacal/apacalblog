@@ -49,17 +49,17 @@ class MemcachedSession implements SessionHandlerInterface {
 
 
 try {
-    $cache_hander = MemcachedManager::getInstance();
-    if (!empty($cache_hander)) {
-        set_session_hander($cache_hander);
-    }
+    set_session_hander(new MemcachedSession(), MemcachedManager::getInstance());
 }catch(Exception $e) {
     print_r($e);
 }
 
-function set_session_hander(Memcached $cache_hander) {
-    if ($cache_hander->set('hello', 'hello') === true) {
-        session_set_save_handler($cache_hander, true);
+function set_session_hander(&$handler, Memcached &$cachedHandler) {
+    if ($cachedHandler->set('hello', 'hello') === true) {
+        if (!session_set_save_handler($handler, true) == true) {
+            //echo "fail";
+        }
+
     } else {
         $isToDie = C('NoCachedDie');
         if ($isToDie === true) {
