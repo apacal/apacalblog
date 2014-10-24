@@ -47,7 +47,7 @@ return array(
     // Memcache设置
     'MemCached'     =>   array(
         //'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
-        'hostname'  =>      '127.0.0.2',
+        'hostname'  =>      '127.0.0.1',
         'port'      =>      '11211',
         'isSasl'    =>      false,
         'username'   =>      '7e4d0da81a0611e4',
