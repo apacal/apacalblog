@@ -59,7 +59,11 @@ try {
 
 function set_session_hander(Memcached $cache_hander) {
     if ($cache_hander->set('hello', 'hello') === true) {
-        session_set_save_handler($cache_hander, true);
+        if (session_set_save_handler($cache_hander, true) == true) {
+            echo "success";
+        }else{
+            echo "fail";
+        }
     } else {
         $isToDie = C('NoCachedDie');
         if ($isToDie === true) {

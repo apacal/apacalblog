@@ -9,7 +9,7 @@ class PublicController extends Controller {
         if (!checkMemcahed() && C('NoCachedDie')) {
             $this->error('can not connect memcahed!');
         }
-        $this->display();
+        //$this->display();
     }
     /* ===========================================================================*/
     /**
@@ -33,7 +33,7 @@ class PublicController extends Controller {
             return false;
     }
 	public function checkLogin(){
-        $this->checkVerify();
+        //$this->checkVerify();
         $username = I('post.username');
         $password = I('post.password');
 		if(empty($username)) {
