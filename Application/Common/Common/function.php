@@ -37,6 +37,13 @@ function msubstr($str, $start=0, $length, $charset="utf-8") {
 
 
 
+function checkMemcahed() {
+    if(mem()->set('hello', 'hello') === true) {
+        return true;
+    } else {
+        return false;
+    }
+}
 /**
  * get memCache By key
  * @param $key

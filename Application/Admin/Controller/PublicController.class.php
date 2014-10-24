@@ -6,6 +6,9 @@ class PublicController extends Controller {
     }
     //　登录
     public function login(){
+        if (!checkMemcahed() && C('NoCachedDie')) {
+            $this->error('can not connect memcahed!');
+        }
         $this->display();
     }
     /* ===========================================================================*/
