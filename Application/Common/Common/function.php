@@ -36,8 +36,6 @@ function msubstr($str, $start=0, $length, $charset="utf-8") {
 }
 
 
-//引入MemcachedManager
-require_once './ThinkPHP/Extend/MemcachedSession.class.php';
 
 /**
  * get memCache By key

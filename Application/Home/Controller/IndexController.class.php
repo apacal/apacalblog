@@ -59,7 +59,6 @@ class IndexController extends CommonController {
         }
     }
     public function index(){
-        //print_r (mem()->getStats());
         $articleModel = D('Article');
         $this->assign('articleList', $articleModel->getArticleList());
         $this->assign('articleCount',$articleModel->getArticleCount());
