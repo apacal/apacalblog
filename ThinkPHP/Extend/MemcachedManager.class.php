@@ -32,7 +32,7 @@ class MemcachedManager {
         self::$memcached = new Memcached;  //声明一个新的memcached链接
         self::$memcached->setOption(Memcached::OPT_COMPRESSION, false); //关闭压缩功能
         self::$memcached->setOption(Memcached::OPT_BINARY_PROTOCOL, true); //使用binary二进制协议
-        self::$memcached->addServer(isset($config['hostname']) ? $config['hostname'] : 'http://localhost', isset($config['port']) ? $config['port'] : '11211'); //添加OCS实例地址及端口号
+        self::$memcached->addServer(isset($config['hostname']) ? $config['hostname'] : 'http://127.0.0.1', isset($config['port']) ? $config['port'] : '11211'); //添加OCS实例地址及端口号
 
         if (isset($config['isSasl']) && $config['isSasl'] === true) {
             self::$memcached->setSaslAuthData(isset($config['username']) ? $config['username'] : '7e4d0da81a0611e4', isset($config['passwd']) ? $config['passwd'] : 'Memcache2014'); //设置OCS帐号密码进行鉴权
