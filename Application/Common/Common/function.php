@@ -12,7 +12,7 @@
  */
 function getThunmName($str) {
 	$pattern = '/([^\/]+\.[^}]+)/i';
-	$replacement = C(THUMB_PREFIX).'${1}';
+	$replacement = C('THUMB_PREFIX').'${1}';
 	return preg_replace($pattern, $replacement, $str);
 }
 /**

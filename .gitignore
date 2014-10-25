@@ -1,9 +1,3 @@
-Application/Common/Conf/config.php
-weixin/*
-weixin/Application/Common/Conf/config.php
-weixin/Application/User/Conf/config.php
-ts/*
 */Runtime/*
-info.php
 .idea/*
 .gitignore

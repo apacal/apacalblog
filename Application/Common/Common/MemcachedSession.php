@@ -54,7 +54,7 @@ try {
     print_r($e);
 }
 
-function set_session_hander(&$handler, Memcached &$cachedHandler) {
+function set_session_hander($handler, Memcached $cachedHandler) {
     if ($cachedHandler->set('hello', 'hello') === true) {
         if (!session_set_save_handler($handler, true) == true) {
             //echo "fail";

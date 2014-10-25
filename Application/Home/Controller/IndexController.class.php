@@ -60,6 +60,9 @@ class IndexController extends CommonController {
     }
     public function index(){
         $articleModel = D('Article');
+        $categoryInfo = array();
+        $categoryInfo['cname'] = '首页';
+        $this->assign('categoryInfo', $categoryInfo);
         $this->assign('articleList', $articleModel->getArticleList());
         $this->assign('articleCount',$articleModel->getArticleCount());
         $this->assign('cid', 0);
@@ -80,11 +83,6 @@ class IndexController extends CommonController {
 
     public function book() {
         $this->seo('书籍', NULL, NULL, NULL);
-        //$mem = \MemcachedManager::getInstance();
-        //var_dump($mem);
-        //var_dump($mem->getStats());
-        //$mem->set('hello', 'worldss');
-        //var_dump($mem->get('hello'));
         $this->display();
     }
 
