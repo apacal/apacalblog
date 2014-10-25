@@ -21,7 +21,7 @@ class ArticleController extends CommonController {
         $this->assign('articleCount',$articleModel->getArticleCount($cid));
         $this->assign('articleList', $articleModel->getArticleList($cid));
         $this->assign('cid', $cid);
-        $this->assign('categoryInfo', ($info = $this->getCategoryInfo($cid)));
+        $this->assign('categoryInfo', ($categoryInfo = $this->getCategoryInfo($cid)));
 
 
         $this->assign('hotTitle', '最新文章');
@@ -33,7 +33,7 @@ class ArticleController extends CommonController {
         $position = array();
         $position [] = array('cname' => '列表');
         D('Category')->getPosition($cid, $position);
-        $this->seo($info['cname'], $info['keywords'], $info['description'], $position);
+        $this->seo($categoryInfo['cname'], $categoryInfo['keywords'], $categoryInfo['description'], $position);
         
         $this->display();
     }
