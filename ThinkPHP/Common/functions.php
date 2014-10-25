@@ -1180,12 +1180,12 @@ function session($name='',$value='') {
             $class  =   strpos($type,'\\')? $type : 'Think\\Session\\Driver\\'. ucwords(strtolower($type));
             $hander =   new $class();
             session_set_save_handler(
-                array(&$hander,"open"), 
-                array(&$hander,"close"), 
-                array(&$hander,"read"), 
-                array(&$hander,"write"), 
-                array(&$hander,"destroy"), 
-                array(&$hander,"gc")); 
+                array(&$hander,"open"),
+                array(&$hander,"close"),
+                array(&$hander,"read"),
+                array(&$hander,"write"),
+                array(&$hander,"destroy"),
+                array(&$hander,"gc"));
         }
         // 启动session
         if(C('SESSION_AUTO_START'))  session_start();

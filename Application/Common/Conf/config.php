@@ -1,6 +1,7 @@
 <?php
 if(!defined('THINK_PATH')) exit();
 return array(
+    'SHOW_PAGE_TRACE' =>true,
     'FORBIDDEN'   => ROOT_URL .'/404',
     'SERACHTABLE' => array(         //查询的table
         'Article'

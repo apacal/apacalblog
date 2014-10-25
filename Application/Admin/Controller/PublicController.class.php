@@ -9,7 +9,7 @@ class PublicController extends Controller {
         if (!checkMemcahed() && C('NoCachedDie')) {
             $this->error('can not connect memcahed!');
         }
-        //$this->display();
+        $this->display();
     }
     /* ===========================================================================*/
     /**
