@@ -1,7 +1,10 @@
 <?php
 if(!defined('THINK_PATH')) exit();
+define('ROOT_URL', 'http://apacal.cn');
+define('ROOT', '.');
 return array(
 
+    'WEB_URL'                       =>              ROOT_URL,
     // normal trace not in debug=on
     'SHOW_PAGE_TRACE'               =>              true,
     'PAGE_TRACE_SAVE'               =>              true,
@@ -35,7 +38,7 @@ return array(
     'RUNTIMESRC'                    =>              APP_PATH.'Runtime/',
     'URL_HTML_SUFFIX'               =>              '',  //网站静态后缀
     'WEBADMIN'                      =>              'Apacal', //网站管理员
-    'UPLOAD'                        =>              ROOT_URL .'/Uploads',
+    'UPLOAD'                        =>              ROOT .'/Uploads',
     'MODULE_ALLOW_LIST'             =>              array('Home','Admin'), //定义模块
     'DEFAULT_MODULE'                =>              'Home', //定义默认模块
     //'VIRE_FILTER'                 =>              array('Behavior\TokenBuildBehavior'), //开启表单令牌
@@ -57,7 +60,7 @@ return array(
     // pdo
     'DB_TYPE'                       =>              'pdo', // 数据库类型
     'DB_USER'                       =>              'root', // 用户名
-    'DB_PWD'                        =>              'dev2014', // 密码
+    'DB_PWD'                        =>              '@)!$Apacalblog', // 密码
     'DB_PORT'                       =>              3306, // 端口
     'DB_PREFIX'		                =>	            'ablg_',//  数据表前缀
     'DB_DSN'                        =>              'mysql:host=localhost;dbname=apacalblog;charset=utf8',

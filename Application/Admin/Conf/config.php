@@ -1,5 +1,6 @@
 <?php
 $config	=	require './Application/Common/Conf/config.php';
+$config['WEB_URL'] = '';
 $admin_config	= array(
     'SALT'                      => 'ApacalBlogAdmin',
     'SITE_NAME'			=>  'ApacalBlog后台管理系统',//网站名字，后台的和前台不一样
