@@ -1,6 +1,10 @@
 <?php
 $config	=	require APP_PATH .'Common/Conf/config.php';
+$config['WEB_URL'] = '';  
 $home_config =  array(
+    'SHOW_PAGE_TRACE'               =>              false,
+    'PAGE_TRACE_SAVE'               =>              false,
+
     'SEARCHTABLE'       =>     array(
                     'Article',
                 ),
