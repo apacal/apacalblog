@@ -41,6 +41,7 @@ body {
 }
 #nav-home {
    /* background-color: rgba(20,20,20,0.9); */
+    z-index: 999;
     width: 100%;
     border-width: 0;
 }
