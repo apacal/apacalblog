@@ -38,70 +38,56 @@
 -->
     <!-- Link javascript -->
     <script src="__JS__/home.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js">
+    <script src="__BS__/js/bootstrap.min.js"></script>
+
     <script src="__JS__/jquery.js"></script>
-    
-    <script src="__BS__/js/bootstrap.js"></script>
-
-  </head>
-<!-- NAVBAR
-================================================== -->
-  <body>
-<div class="navbar-wrapper">
-      <div class="container">
-
-        <div id="nav-home" role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-        <!--
-        <div id="nav-home" role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-        -->
-          <div class="container">
+    <script src="__JS__/headroom.min.js"></script>
+    <script src="__JS__/jQuery.headroom.js"></script>
+</head>
+<body>
+    <div id="nav-home" role="banner" class="header navbar-inverse">
+        <div style="padding-left: 0px; padding-right: 0px; margin-right:auto; margin-left:auto; width: 70%;">
             <div class="navbar-header">
-              <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
-            <span class="sr-only">激情 程序 奋斗</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="__ROOT__/">Apacal个人日志</a>
+                <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                    <span class="sr-only">激情 程序 奋斗</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="__ROOT__/">Apacal个人日志</a>
             </div>
             <div class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
 
-              <ul class="nav navbar-nav" id="home-nav">
-                <li><a href="__ROOT__/">首页</a></li>
-                <!-- 
-                    <li class="active"><a href="__ROOT__/">首页</a></li>
-                    -->
-                <volist name="navList" id="vo">
-                    <empty name="vo['subNav']">
-                    <li><a href="{$vo.url}">{$vo.cname}</a><li>
-                    <else />
-                        <li class="dropdown">
-                        <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="{$vo.url}">{$vo.cname}</a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <volist name="vo['subNav']" id="vo2">
-                                <li><a href="{$vo2.url}">{$vo2['cname']}</a></li>
-                            </volist>
-                        </ul>
-                        </li>
-                    </empty>
-                </volist>
-                <li><a href="{:U('book/my')}">书籍</a></li>
-              </ul>
-            </ul>
-              <ul class="nav navbar-nav navbar-right">
-                <li>
-                <form class="navbar-form" action="{:U('search/my')}" method="post" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search" name="content"  require />
-                    </div>
-                     <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-                </li>
+                <ul class="nav navbar-nav" id="home-nav">
+                    <li><a href="__ROOT__/">首页</a></li>
+                    <volist name="navList" id="vo">
+                        <empty name="vo['subNav']">
+                        <li><a href="{$vo.url}">{$vo.cname}</a><li>
+                        <else />
+                            <li class="dropdown">
+                            <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="{$vo.url}">{$vo.cname}</a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <volist name="vo['subNav']" id="vo2">
+                                    <li><a href="{$vo2.url}">{$vo2['cname']}</a></li>
+                                </volist>
+                            </ul>
+                            </li>
+                        </empty>
+                    </volist>
+                    <li><a href="{:U('book/my')}">书籍</a></li>
+                    <li><a href="{:U('aboutme/my')}">About Me</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <form class="navbar-form" action="{:U('search/my')}" method="post" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search" name="content"  require />
+                            </div>
+                             <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                    </li>
               </ul>
             </div>
-          </div>
         </div>
-
-      </div>
     </div>
-</div>

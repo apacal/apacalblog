@@ -20,14 +20,30 @@ body {
 
 /* 导航栏 */
 
+.headroom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    transition: all .2s ease-in-out;
+}
+.headroom--unpinned {
+    top: -100px;
+}
+.headroom--pinned {
+    top: 0;
+    z-index: 999;
+}
+
 #nav-container {
     /*  filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.5;     */
     padding-top: 0px;
 }
 #nav-home {
    /* background-color: rgba(20,20,20,0.9); */
+    z-index: 999;
+    width: 100%;
     border-width: 0;
-    position: absolute; 
 }
 .navbar-form {
      margin-top: 8px;
