@@ -1,16 +1,17 @@
 
     <notempty name="articleList">
         <volist name="articleList" id="vo">
-            <div class="col-lg-4 view-summary-div">
-                <div class="view-summary">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="thumbnail">
                     <div class="view-summary-1">
-                        <empty name="vo.image">
-                            <img class="article-view-image" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('article/'.$vo['id'])}" alt="{$vo.title}"  class="img-thumbnail" src="__IMG__/default.jpg">
-                        <else />
-                            <img alt="{$vo.title}" class="article-view-image" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('article/'.$vo['id'])}" src="__UPLOAD__{$vo.image|getThunmName}">
-                        </empty>
-                        <span class="interaction-count"><span class="dt">Interaction count:</span>{$vo.click}<span class="glyphicon glyphicon-share-alt"></span></span>
-                        <div class="view-content">
+                            <empty name="vo.image">
+                                <img class="article-view-image img-thumbnail" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('article/'.$vo['id'])}" alt="{$vo.title}"  class="img-thumbnail" src="__IMG__/default.jpg">
+                            <else />
+                                <img alt="{$vo.title}" class="article-view-image img-thumbnail" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('article/'.$vo['id'])}" src="__UPLOAD__{$vo.image|getThunmName}">
+                            </empty>
+                            <span class="interaction-count"><span class="dt">Interaction count:</span>{$vo.click}<span class="glyphicon glyphicon-share-alt"></span></span>
+
+                        <div class="caption">
                             <span class="tags" ><a href="{:U('category/'.$vo['cid'])}" class="parsed" >{$vo.cname}</a></span>
                             <a href="{:U('article/'.$vo['id'])}"><h5 class="view-h2">{$vo.title}</h5></a>
                             <p class="article-description" data-toggle="tooltip" title="{$vo.description}">
@@ -20,5 +21,16 @@
                         </div>
                     </div>
                     <div class="meta">
-                        <span class="author"><span class="dt">Author:</span> <a href="{:U('admin/'.$vo['adminid'])}">{$vo.adminname}</a></span> <span class="publish-date pull-right"><span class="dt">Publish date:</span> <span class="dd" itemprop="datePublished">{$vo.createtime|date='F d, Y', ###}</span></span> </div> </div> </div><!-- /.col-lg-4 --> </volist>
+                        <span class="author">
+                            <span class="dt">Author:</span> 
+                            <a href="{:U('admin/'.$vo['adminid'])}">{$vo.adminname}</a>
+                        </span> 
+                        <span class="publish-date pull-right">
+                            <span class="dt">Publish date:</span> 
+                            <span class="dd" itemprop="datePublished">{$vo.createtime|date='F d, Y', ###}</span>
+                        </span> 
+                    </div> 
+                </div>
+            </div><!-- /.col-lg-4 -->
+        </volist>
     </notempty>

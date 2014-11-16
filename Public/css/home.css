@@ -6,7 +6,7 @@ body {
     font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,'microsoft yahei ui',Microsoft Yahei,Verdana,Helvetica,Arial,'Simsun';
    /* font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",sans-serif;
     */
-    background-color: #e4e7ec; 
+    background-color: #CCCCCC; 
     /* background-color: #f4f6f8; */
     font-size: 16px;
 }
@@ -41,6 +41,7 @@ body {
 }
 #nav-home {
    /* background-color: rgba(20,20,20,0.9); */
+    position:relative;
     z-index: 999;
     width: 100%;
     border-width: 0;
@@ -76,49 +77,30 @@ ol.unstyled {
 /**
  * advert
  */
-#myCarousel {
+#carousel {
+    float:clear;
+}
+.carousel-caption .btn{
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
     clear: both;
-    
-   /* width: 100%; */
-}
-.advertImg {
-    margin: auto;
-    width: 100%;
-}
-.carousel-indicators {
-position: absolute;
-top: 10px;
-left: 50%;
-z-index: 15;
-width: 60%;
-padding-left: 0;
-margin-left: -30%;
-text-align: center;
-list-style: none;
-}
-#mycarousel-caption {
-position: absolute;
-right: 0;
-bottom: 0;
-left: 0;
-padding: 15px;
-background: #999999;
-background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 25px 0 25px;
+    padding: 9px 22px 7px;
+    text-decoration: none;
+    text-transform: uppercase;
 }
 
 /**
  *博客标题展示
  */
 .page-body {
-    padding: 30px 0 0 0;
+    padding: 0px 0 0 0;
 }
 
-.view-summary-list {
-    /*
-    margin-left: 6%;
-    width:90%;
-    */
-}
 
 .view-summary-div {
     padding-right: 20px; padding-left: 20px; 
@@ -513,6 +495,7 @@ background: rgba(0, 0, 0, 0.75);
     right: 3%;
     position: fixed;
     width: 28px;
+    background:#080808;
 }
 #scrollBtn .scrollBtn-top, #scrollBtn .scrollBtn-SNS, #scrollBtn .scrollBtn-bottom {
     background: url("../images/backToTop.png") no-repeat scroll 0 0 transparent;
@@ -548,8 +531,8 @@ background: rgba(0, 0, 0, 0.75);
 /* 底部 foot 
 ============================================================*/
 #footer {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     width: 100%;
     background:#222;
 }

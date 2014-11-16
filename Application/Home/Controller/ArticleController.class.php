@@ -159,7 +159,7 @@ class ArticleController extends CommonController {
     public function more() {
         $cid = I('request.cid');
         if(!empty($cid) || is_numeric($cid)) {
-            $this->assign('articleAddList', D('Article')->getArticleList($cid, $page =  I('request.p' ,0 , 'intval'))); //当空为会转为0
+            $this->assign('articleList', D('Article')->getArticleList($cid, $page =  I('request.p' ,0 , 'intval'))); //当空为会转为0
             $this->display();
         }else{
             $this->error("参数错误！");
