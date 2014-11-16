@@ -1,4 +1,4 @@
-<empty name="articleAddList">
+<empty name="articleList">
     
 <script type="text/javascript">
     $(function(){
@@ -6,28 +6,6 @@
     });
 </script>
 <else />
-        <volist name="articleAddList" id="vo">
 
-            <div class="col-lg-4 view-summary-div">
-                <div class="view-summary">
-                    <div class="view-summary-1">
-                        <empty name="vo.image">
-                        <img class="article-view-image" onclick="showImg(this);"articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('Home/Article/view',array('id' => $vo['id']))}" alt="{$vo.title}"  class="img-thumbnail" src="__IMG__/default.jpg">
-                        <else />
-                            <img alt="{$vo.title}" class="article-view-image" onclick="showImg(this);" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('Home/Article/view',array('id' => $vo['id']))}" src="__UPLOAD__{$vo.image|getThunmName}">
-                        </empty>
-                        <span class="interaction-count"><span class="dt">Interaction count:</span>{$vo.click}<span class="glyphicon glyphicon-share-alt"></span></span>
-                        <div class="view-content">
-                            <span class="tags" ><a href="__WEB_URL__/index.php/Category/index/cid/{$vo.cid}" class="parsed" >{$vo.cname}</a></span>
-                            <a href="__MODULE__/Article/view/id/{$vo.id}"><h5 class="view-h2">{$vo.title}</h5></a>
-                            <p class="article-description">{$vo.description|msubstr=0,80}</p>
-                        </div>
-                    </div>
-                    <div class="meta">
-                        <span class="author"><span class="dt">Author:</span> <a href="__MODULE__/User/admin/id/{$vo.adminid}">{$vo.adminname}</a></span>
-                        <span class="publish-date pull-right"><span class="dt">Publish date:</span> <span class="dd" itemprop="datePublished">{$vo.createtime|date='F d, Y', ###}</span></span>
-                    </div>
-                </div>
-            </div><!-- /.col-lg-4 -->
-        </volist>
+    <include file="Public/articleList" />
 </empty>

@@ -73,7 +73,7 @@
                     $('#modal-article-image-desc').html(desc);
                 }
                 if(url != undefined) {
-                    var modalTitle = '文章图片预览【<a href="' + url + '">' + title + '</a>】';
+                    var modalTitle = '文章列表预览【<a href="' + url + '">' + title + '</a>】';
                 }else{
                     var modalTitle = title;
                 }
@@ -117,7 +117,6 @@
                 <script type="text/javascript">
                     $(document).ready(function(){
                         $("#nav-home").headroom();
-                        //$('pre').addClass('prettyprint linenums');
 
                         $('pre').attr('class','prettyprint linenums');
                         prettyPrint();

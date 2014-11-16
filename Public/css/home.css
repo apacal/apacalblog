@@ -6,7 +6,7 @@ body {
     font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,'microsoft yahei ui',Microsoft Yahei,Verdana,Helvetica,Arial,'Simsun';
    /* font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",sans-serif;
     */
-    background-color: #e4e7ec; 
+    background-color: #CCCCCC; 
     /* background-color: #f4f6f8; */
     font-size: 16px;
 }
@@ -21,18 +21,20 @@ body {
 /* 导航栏 */
 
 .headroom {
-    position: fixed;
-    top: 0;
     left: 0;
+    position: fixed;
     right: 0;
-    transition: all .2s ease-in-out;
+    top: 0;
+    z-index: 10;
 }
+
 .headroom--unpinned {
     top: -100px;
 }
+
 .headroom--pinned {
     top: 0;
-    z-index: 999;
+    z-index: 200;
 }
 
 #nav-container {
@@ -41,7 +43,6 @@ body {
 }
 #nav-home {
    /* background-color: rgba(20,20,20,0.9); */
-    z-index: 999;
     width: 100%;
     border-width: 0;
 }
@@ -76,70 +77,32 @@ ol.unstyled {
 /**
  * advert
  */
-#myCarousel {
+#carousel {
+    float:clear;
+}
+.carousel-caption .btn{
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
     clear: both;
-    
-   /* width: 100%; */
-}
-.advertImg {
-    margin: auto;
-    width: 100%;
-}
-.carousel-indicators {
-position: absolute;
-top: 10px;
-left: 50%;
-z-index: 15;
-width: 60%;
-padding-left: 0;
-margin-left: -30%;
-text-align: center;
-list-style: none;
-}
-#mycarousel-caption {
-position: absolute;
-right: 0;
-bottom: 0;
-left: 0;
-padding: 15px;
-background: #999999;
-background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 25px 0 25px;
+    padding: 9px 22px 7px;
+    text-decoration: none;
+    text-transform: uppercase;
 }
 
 /**
  *博客标题展示
  */
 .page-body {
-    padding: 30px 0 0 0;
+    padding: 0px 0 0 0;
 }
 
-.view-summary-list {
-    /*
-    margin-left: 6%;
-    width:90%;
-    */
-}
-
-.view-summary-div {
-    padding-right: 20px; padding-left: 20px; 
-}
-.view-summary img {
-    width:100%;
-    height: 202px;
-}
-.view-summary {
-    float: left;
-    height: 400px;
-    width: 100%;
-    background-color: white;
-    padding-left: 0px; padding-right: 0px; 
-    margin-bottom: 30px; 
-}
-.view-summary-1 {
-    height: 365px;
-}
 .article-description {
-    height: 70px;
+    height: auto;
 }
 .interaction-count {
     display: block;
@@ -159,36 +122,13 @@ background: rgba(0, 0, 0, 0.75);
     display: none !important;
 }
 
-.view-content{
-    padding-left: 15px; padding-right: 15px; 
-    margin-top: 10px; 
+
+.caption h4{
+    margin-top: 0px;
+    margin-bottom: 5px;
 }
-.tags {
-    line-height: 20px;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: bold;
-    -webkit-font-smoothing: antialiased;
-    font-size: 10px;
-    line-height: 20px;
-    text-transform: uppercase;
-    color: #90939a;
-}
-.view-content .tags a{
-    color: #90939a;
-}
-.view-content a{ 
- /*   color: #222; */
-    text-decoration: none;
-}
-.view-content a:hover{
-  color: #2a6496;
-  text-decoration: underline;
-}
-.view-h2 {
-     margin-top: 0px; 
-     font-size: 19px;
-     line-height: 20px;
-}
+
+
 .meta {
     font-size: 10px;
     padding: 12px 20px 14px;
@@ -199,16 +139,43 @@ background: rgba(0, 0, 0, 0.75);
     font-style: normal;
     line-height: 12px;
     text-transform: uppercase;
+    margin-bottom: 3px;
+}
+
+.author {
+    float: left;
+    text-align: center;
+    width:30%;
 }
 .author a{ 
     color: #222;
     text-decoration: none;
 }
+
 .author a:hover{
     color: #222;
     text-decoration: underline;
 }
+
+.tags {
+    float: left;
+    text-align: center;
+    width:30%;
+    color: #90939a;
+}
+
+.tags a{
+    color: #90939a;
+}
+
+tags a:hover{
+  color: #2a6496;
+  text-decoration: underline;
+}
 .publish-date{
+    float: left;
+    text-align: right;
+    width:40%;
     color: #90939a;
 }
 
@@ -513,6 +480,7 @@ background: rgba(0, 0, 0, 0.75);
     right: 3%;
     position: fixed;
     width: 28px;
+    background:#080808;
 }
 #scrollBtn .scrollBtn-top, #scrollBtn .scrollBtn-SNS, #scrollBtn .scrollBtn-bottom {
     background: url("../images/backToTop.png") no-repeat scroll 0 0 transparent;
@@ -548,8 +516,8 @@ background: rgba(0, 0, 0, 0.75);
 /* 底部 foot 
 ============================================================*/
 #footer {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     width: 100%;
     background:#222;
 }
