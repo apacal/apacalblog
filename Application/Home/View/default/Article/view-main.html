@@ -1,28 +1,39 @@
 
     
-<div class="container marketing">
+        <div class="col-lg-9 thumbnail" style=" box-shadow: 0 0 5px 2px #ccc; margin-bottom: 20px; padding-bottom: 5px !important;">
+            <div class="article-view-head">
+                <h1 class="article-view-h1">
+                    {$article.title}
+                </h1>
+                <div class="meta-author article-autor" style="" >
+                    <span class="avatar" style=" margin-left: 50px; ">
+                        <empty name="article.adminimage">
+                            <img style="width:30px;height:30px" class="img-circle" src="__IMG__/admin.png" alt="{$article.adminname}" >
+                        <else />
+                            <img style="width:30px;height:30px" class="img-circle" src="__UPLOAD__{$article.adminimage|getThunmName}" alt="{$article.adminname}" >
+                        </empty>
+                    </span>
+                    <span class="author"><span class="dt">Author:</span> <span class="dd" ><a href="{:U('admin/'.$article['adminid'])}" style="color:black">{$article.adminname}</a> · </span></span>
+                    <span class="publishdate"><span class="dt">Publish date:</span> <span class="dd" >{$article.createtime|date='F d, Y', ###}</span></span>
+                    <span >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人气：{$article.click}次&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-comment"></i><a href="#checkComment">评论（{$article.commentCount}）</a></span>
 
-    <div class="row view-summary-list">
-        <div class="col-lg-9" style=" padding-right: 30px;  margin-bottom: 30px;">
-            <h1 class="article-view-h1">
-                <neq name="article.source" value="0"><a class="btn btn-default pull-left" style="margin-right: 50px;margin-top: 8px;" target="_blank" href="{$article.source_link}">转载</a></neq>
-                {$article.title}
-                <a class="btn btn-default pull-right" style="margin-right: 50px;margin-top: 8px;"href="{:U('catearticle/'.$article['cid'])}" role="button">{$article.cname} »</a>
-                <!--<a class="btn btn-default pull-right view-image" style="margin-right: 50px;margin-top: 8px;" imageUrl="__UPLOAD__{$article.image}" >查看图片</a>-->
-                <a class="btn btn-default pull-right view-image" style="clear:both; margin-right: 50px;margin-top: 8px;" imageUrl="__UPLOAD__{$article.image}" >查看图片</a>
-            </h1>
-            <div class="meta-author" style="margin-left:20%;" >
-                <span class="avatar" style=" margin-left: 50px; ">
-                    <empty name="article.adminimage">
-                        <img style="width:30px;height:30px" class="img-circle" src="__IMG__/admin.png" alt="{$article.adminname}" >
-                    <else />
-                        <img style="width:30px;height:30px" class="img-circle" src="__UPLOAD__{$article.adminimage|getThunmName}" alt="{$article.adminname}" >
-                    </empty>
-                </span>
-                <span class="author"><span class="dt">Author:</span> <span class="dd" ><a href="{:U('admin/'.$article['adminid'])}" style="color:black">{$article.adminname}</a> · </span></span>
-                <span class="publishdate"><span class="dt">Publish date:</span> <span class="dd" >{$article.createtime|date='F d, Y', ###}</span></span>
-                <span >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;人气：{$article.click}次&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-comment"></i><a href="#checkComment">评论（{$article.commentCount}）</a></span>
+                    <span class="category">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="{:U('catearticle/'.$article['cid'])}" role="button">{$article.cname}</a>
+                    </span>
+
+                    <span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class="view-image article-view-image"  imageUrl="__UPLOAD__{$article.image}" >查看图片</a>
+
+                    </span>
+                    <span class="article-source">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <neq name="article.source" value="0"><a target="_blank" href="{$article.source_link}">转载</a></neq>
+                    </span>
+                </div>
             </div>
+
             <div id="content">
                 {$article.content}
             </div>
@@ -50,77 +61,65 @@
             <script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=1395160639763929" charset="utf-8"></script>
             <!-- JiaThis Button END -->
 
-            <!--           文章标签　＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-            <ul class="article-tags unstyled">
-                <li><a class="btn btn-default" href="#" role="button">#Linux</a></li>
-                <li><a class="btn btn-default" href="#" role="button">#C++</a></li>
-                <li><a class="btn btn-default" href="#" role="button">#PHP</a></li>
-                <li><a class="btn btn-default" href="#" role="button">#Python</a></li>
-            </ul>
-            -->
         </div>
 
         <div class="col-lg-3">
-                <h3 style=" margin-top: 40px; ">热门文章<span class="hot-count">{$hotCount}</span></h3>
-                <volist name="hotArticle" id="vo">
-                    <div class="hot-summary">
-                            <span>
-                            <empty name="vo.image">
-                                <img alt="暂无图片"  class="article-view-image" src="__IMG__/default.jpg" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('article/'.$vo['id'])}">
-                            <else />
-                                <img alt="{$vo.title}"  class="article-view-image" src="__UPLOAD__{$vo.image|getThunmName}" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('article/'.$vo['id'])}">
-                            </empty>
-                              
-                            </span>
-                            <span class="hot-interaction-count"><span class="dt">Interaction count:</span>{$vo.click}<span class="glyphicon glyphicon-share"></span></span>
-                            <span class="hot-header"><a href="{:U('article/'.$vo['id'])}">{$vo.title}</a></span>
-                    </div>
-                </volist>
-                <h3 style=" margin-top: 40px; ">随机文章<span class="hot-count">{$randCount}</span></h3>
-                <volist name="randArticle" id="vo">
-                    <div class="hot-summary">
-                            <span>
-                            <empty name="vo.image">
-                                <img alt="暂无图片"  class="article-view-image" src="__IMG__/default.jpg" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('article/'.$vo['id'])}">
-                            <else />
-                                <img alt="{$vo.title}"  class="article-view-image" src="__UPLOAD__{$vo.image|getThunmName}" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('article/'.$vo['id'])}">
-                            </empty>
-                            </span>
-                            <span class="hot-interaction-count"><span class="dt">Interaction count:</span>{$vo.click}<span class="glyphicon glyphicon-share"></span></span>
-                            <span class="hot-header"><a href="{:U('article/'.$vo['id'])}">{$vo.title}</a></span>
-                    </div>
-                </volist>
-                <!--      文章分类　=========================================
-                <div class="article-seprate">
-                <h3>文章分类<span class="hot-count">4</span></h3>
-                <ul class="article-class unstyled">
-                    <li><a href="#" >Linux<span class="article-span">(12)</span></a></li>
-                    <li><a href="#" >Linux<span class="article-span">(12)</span></a></li>
-                    <li><a href="#" >Linux<span class="article-span">(12)</span></a></li>
-                    <li><a href="#" >Linux<span class="article-span">(12)</span></a></li>
-                </ul>
-                </div>
-                -->
-                <div class="article-seprate">
-                <h3>文章归档<span class="hot-count">{$dateCount}</span></h3>
-                <ul class="article-class unstyled">
-                    <volist name="dateArticle" id="vo">
-                    <li><a href="{:U('date/' .$vo['cid'] .'/' .$vo['time'])}">{$vo.time}<span class="article-span">({$vo.count})</span></a></li>
+                <div class="widget">
+                    <h3 style="margin-top: 10px;">热门文章<span class="hot-count">{$hotCount}</span></h3>
+                    <volist name="hotArticle" id="vo">
+                        <div class="hot-summary">
+                                <span>
+                                <empty name="vo.image">
+                                    <img alt="暂无图片"  class="article-view-image" src="__IMG__/default.jpg" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('article/'.$vo['id'])}">
+                                <else />
+                                    <img alt="{$vo.title}"  class="article-view-image" src="__UPLOAD__{$vo.image|getThunmName}" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('article/'.$vo['id'])}">
+                                </empty>
+                                  
+                                </span>
+                                <span class="hot-interaction-count"><span class="dt">Interaction count:</span>{$vo.click}<span class="glyphicon glyphicon-share"></span></span>
+                                <span class="hot-header"><a href="{:U('article/'.$vo['id'])}">{$vo.title}</a></span>
+                        </div>
+
                     </volist>
-                </ul>
                 </div>
-                <div class="article-seprate">
-                <h3>全站归档<span class="hot-count">{$dateAllCount}</span></h3>
-                <ul class="article-class unstyled">
-                    <volist name="dateAllArticle" id="vo">
-                        <li><a href="{:U('date/'.$vo['cid'].'/'.$vo['time'])}">{$vo.time}<span class="article-span">({$vo.count})</span></a></li>
+
+                <div class="widget">
+                    <h3>随机文章<span class="hot-count">{$randCount}</span></h3>
+                    <volist name="randArticle" id="vo">
+                        <div class="hot-summary">
+                                <span>
+                                <empty name="vo.image">
+                                    <img alt="暂无图片"  class="article-view-image" src="__IMG__/default.jpg" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('article/'.$vo['id'])}">
+                                <else />
+                                    <img alt="{$vo.title}"  class="article-view-image" src="__UPLOAD__{$vo.image|getThunmName}" articledesc="{$vo.description}" title="{$vo.title}" articleUrl="{:U('article/'.$vo['id'])}">
+                                </empty>
+                                </span>
+                                <span class="hot-interaction-count"><span class="dt">Interaction count:</span>{$vo.click}<span class="glyphicon glyphicon-share"></span></span>
+                                <span class="hot-header"><a href="{:U('article/'.$vo['id'])}">{$vo.title}</a></span>
+                        </div>
+
                     </volist>
-                </ul>
+                </div>
+
+                <div class="article-seprate widget">
+                    <h3>文章归档<span class="hot-count">{$dateCount}</span></h3>
+                    <ul>
+                        <volist name="dateArticle" id="vo">
+                            <li class="date-article-list"><a href="{:U('date/' .$vo['cid'] .'/' .$vo['time'])}">{$vo.time}<span class="article-span">({$vo.count})</span></a></li>
+                        </volist>
+                    </ul>
+                </div>
+
+                <div class="article-seprate widget">
+                    <h3>全站归档<span class="hot-count">{$dateAllCount}</span></h3>
+                    <ul>
+                        <volist name="dateAllArticle" id="vo">
+                            <li class="date-article-list"><a href="{:U('date/'.$vo['cid'].'/'.$vo['time'])}">{$vo.time}<span class="article-span">({$vo.count})</span></a></li>
+                        </volist>
+                    </ul>
                 </div>
         </div>
 
 
 
-    </div>
-</div>
 
