@@ -147,6 +147,7 @@ ol.unstyled {
     text-align: center;
     width:30%;
 }
+
 .author a{ 
     color: #222;
     text-decoration: none;
@@ -199,6 +200,7 @@ tags a:hover{
 }
 .meta-author {
     font-size: 15px;
+    text-align: center;
 }
 .meta-author a {
     color: black;
