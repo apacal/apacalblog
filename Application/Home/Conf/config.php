@@ -33,6 +33,7 @@ $home_config =  array(
             'admin/:adminid\d'          =>      'User/admin',
             'search/my'                 =>      'Index/search',
             'book/my'                      =>      'Index/book',
+            'aboutme/my'                      =>      'Index/aboutme',
     ),
 
     /* 模版变量设置 */

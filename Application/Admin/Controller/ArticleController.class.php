@@ -44,10 +44,12 @@ class ArticleController extends CommonController {
             $data['source'] = $data['source_url'] =0;
         }
         //$data['content'] = str_replace(array('<div>','</div>'), '', $data['content']);
-        if(!$model->add($data))
+        if(!$model->add($data)) {
             $this->error($model->getError());
-        else
+        } else {
+            $model->delCache($data['cid']);
             $this->success('添加博文成功!', __CONTROLLER__.'/manage');
+        }
     }
     public function uploadimage() {
         $upload = D('Upload');
@@ -93,10 +95,12 @@ class ArticleController extends CommonController {
         unset($data['createtime']);//unset createtime
        // $data['content'] = str_replace(array('<div>','</div>'), '', $data['content']);
        //var_dump($data);
-        if(!$model->where($where)->save($data))
+        if(!$model->where($where)->save($data)) {
             $this->error($model->getError());
-        else
+        } else {
+            $model->delCache($data['cid'], $id);
             $this->success('更新博文成功!', __CONTROLLER__.'/manage' );
+        }
     }
 }
 

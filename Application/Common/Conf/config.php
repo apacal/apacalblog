@@ -6,8 +6,8 @@ return array(
 
     'WEB_URL'                       =>              ROOT_URL,
     // normal trace not in debug=on
-    'SHOW_PAGE_TRACE'               =>              true,
-    'PAGE_TRACE_SAVE'               =>              true,
+    'SHOW_PAGE_TRACE'               =>              false,
+    'PAGE_TRACE_SAVE'               =>              false,
 
     // normal debug info
     'SHOW_ERROR_MSG'                =>              false,    // 显示错误信息
@@ -73,7 +73,7 @@ return array(
     // Memcache设置
     'MemCached'     =>   array(
         'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
-        //'hostname'  =>      '127.0.0.2',
+        //'hostname'  =>      '127.0.0.1',
         'port'      =>      '11211',
         'isSasl'    =>      true,
         'username'   =>      '7e4d0da81a0611e4',
