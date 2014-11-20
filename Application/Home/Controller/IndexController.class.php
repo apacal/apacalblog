@@ -16,16 +16,13 @@ class IndexController extends CommonController {
      */
     /* ===========================================================================*/
     protected function getSearch() {
-        //$content = I('post.content');
-        $content = $_REQUEST['content'];
+        $content = I('post.content');
+        //$content = $_REQUEST['content'];
      //   $content = str_replace('/[\S]*','',$content);
         $searchTable = C('SEARCHTABLE'); //需要查询的表
         $searchCol = C('SEARCHCOL');
         $searchSetCol = C('SEARCHSETCOL');
         $result = array();
-        //var_dump($searchTable);
-        //var_dump($searchCol);
-        //var_dump($searchSetCol);
         foreach($searchTable as $val) {
             $model = D($val);
             $where = array();
@@ -33,7 +30,7 @@ class IndexController extends CommonController {
                 $where[$value] = array('like', '%'.$content.'%');
             }
             $where['_logic'] = 'OR';
-            //var_dump($where);
+
             $list = $model->where($where)->relation(true)->field('content', true)->select();
             $result = array_merge($result, $list);
         }

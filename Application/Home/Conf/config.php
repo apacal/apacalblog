@@ -10,8 +10,12 @@ $home_config =  array(
                 ),
     'SEARCHCOL'         =>     array(
                     'title',
-                    'descriotion',
+                    'description',
                     'content',
+                ),
+    'SEARCHSETCOL'         =>     array(
+                    'title',
+                    'description',
                 ),
     'URL_HTML_SUFFIX'   =>          'html',  //网站静态后缀
     'ARTICLE_SHOWNUM'   =>          12,       //初始文章显示数目 
