@@ -114,28 +114,6 @@
 
     <!-- FOOTER -->
     <div class="container marketing" id="footer">
-                <script type="text/javascript">
-                    $(document).ready(function(){
-                        $("#nav-home").headroom();
-
-                        $('pre').attr('class','prettyprint linenums');
-                        prettyPrint();
-                        // 到底部
-                        $('a.scrollToBottom').click(function(){
-                            $('html, body').animate({scrollTop: $(document).height()}, 'slow');
-                            return false;
-                        });
-                        // 到顶部
-                        $('a.scrollToTop').click(function(){
-                            $('html, body').animate({scrollTop:0}, 'slow');
-                            return false;
-                        });
-                        $('#friendlink').change(function(){
-                            if(this.value)
-                                window.open(this.value);
-                        });
-                    });
-                </script> 
                 <div id="scrollBtn"> <!-- 滚动屏幕 -->
                     <a href="" class="scrollToTop" title="顶部" ><p class="scrollBtn-top"></p></a>
                     <a  href="" class="scrollToCenter" title="留言反馈"><p class="scrollBtn-SNS"></p></a>
@@ -160,9 +138,36 @@
                     </div>
                 </div>
     </div> <!-- end footer -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            // nav-home headroom init
+            $("#nav-home").headroom();
+
+            $('pre').attr('class','prettyprint linenums');
+            prettyPrint();
+            // 到底部
+            $('a.scrollToBottom').click(function(){
+                $('html, body').animate({scrollTop: $(document).height()}, 'slow');
+                return false;
+            });
+            // 到顶部
+            $('a.scrollToTop').click(function(){
+                $('html, body').animate({scrollTop:0}, 'slow');
+                return false;
+            });
+            $('#friendlink').change(function(){
+                if(this.value)
+                    window.open(this.value);
+            });
+
+            // bg color init
+            change_bg_3d('#000000', '#CCCCCC');
+        });
+
+    </script> 
         
 
 
-
-  </body>
+</div>
+</body>
 </html>

@@ -6,9 +6,17 @@ body {
     font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,'microsoft yahei ui',Microsoft Yahei,Verdana,Helvetica,Arial,'Simsun';
    /* font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",sans-serif;
     */
-    background-color: #CCCCCC; 
+    /*background-color: #CCCCCC; */
+    background: #111118;
     /* background-color: #f4f6f8; */
     font-size: 16px;
+}
+container {
+    background: white;
+}
+#container {
+    height: 100%;
+    width: 100%;
 }
 
 .latest-article {
@@ -347,7 +355,6 @@ tags a:hover{
 .view-footer {
     clear: both;
     background-color: #e4e7ec;
-    margin-bottom: 40px; 
 }
 /* comment
 =====================================================*/
@@ -568,4 +575,17 @@ tags a:hover{
 .seo_links {
     width: 80%;
 }
+
+.container{ 
+
+}
+/* fss */
+canvas {
+    position:fixed;
+    top:0px;
+    z-index: -60;
+}
+
+
+
 

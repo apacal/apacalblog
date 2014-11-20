@@ -15,10 +15,14 @@
 				alert('请重试');
 			},
 			success: function(ajaxStr) {
-				if(isAppend)
+				if(isAppend) {
 					$("#" + divId).append(ajaxStr);
-				else
+                } else {
 					$("#" + divId).html(ajaxStr);
+                }
+                // reflash bg
+                change_bg_3d('#000000', '#CCCCCC');
+                
 			}
 		});	
  } 
