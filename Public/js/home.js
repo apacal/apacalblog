@@ -21,7 +21,8 @@
 					$("#" + divId).html(ajaxStr);
                 }
                 // reflash bg
-                change_bg_3d('#000000', '#CCCCCC');
+                //change_bg_3d('#000000', '#CCCCCC');
+                change_bg_3d('#44b549', '#2d8e31');
                 
 			}
 		});	

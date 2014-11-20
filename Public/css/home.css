@@ -33,7 +33,7 @@ container {
     position: fixed;
     right: 0;
     top: 0;
-    z-index: 10;
+    z-index: 200;
 }
 
 .headroom--unpinned {
@@ -50,7 +50,8 @@ container {
     padding-top: 0px;
 }
 #nav-home {
-   /* background-color: rgba(20,20,20,0.9); */
+    background: #006600;
+    border-color: #398439;
     width: 100%;
     border-width: 0;
 }
@@ -64,8 +65,9 @@ container {
     color: white;
 }
 #home-nav li > a:hover , #home-nav > .open, .navbar-inverse .navbar-brand:hover{
-     color:#fff!important;
-     background: #c20000;
+    color:#fff!important;
+     /*background: #c20000;*/
+    background: #003300;
 }
 .dropdown:hover .dropdown-menu {
     display:block;
