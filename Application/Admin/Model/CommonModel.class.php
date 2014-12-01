@@ -7,7 +7,6 @@ use Think\Model;
 class CommonModel extends Model {
     protected $_auto = array( //自动完成
         array('is_check', '1', 1),
-        //array('status', '1'), //默认不需要审核
         array('createtime', 'time', self::MODEL_INSERT, 'function'),
         array('updatetime', 'time', 3, 'function'),
         array('adminid', 'getAdminId', 3, 'callback'),

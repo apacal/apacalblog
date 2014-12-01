@@ -1,164 +1,120 @@
-﻿        <include file="Public:header" />
-        <include file="Article:manage-left" />
-				<div class="main-content">
-					<div class="breadcrumbs" id="breadcrumbs">
-						<script type="text/javascript">
-							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
-						</script>
+﻿<include file="Public:header" />
+    <div class="table-responsive">
 
-						<ul class="breadcrumb">
-							<li>
-								<i class="icon-home home-icon"></i>
-								<a href="__MODULE__">首页</a>
-							</li>
-							<li class="active"><a href="__SELF__">博客管理</a></li>
-						</ul><!-- .breadcrumb -->
+        <include file="Public:selectbtn" />
+        <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="center">
+                        <label>
+                            <input type="checkbox" class="ace" />
+                            <span class="lbl"></span>
+                        </label>
+                    </th>
 
-						<div class="nav-search" id="nav-search">
-							<form class="form-search">
-								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-									<i class="icon-search nav-search-icon"></i>
-								</span>
-							</form>
-						</div><!-- #nav-search -->
-					</div>
+                    <th width="8%">ID</th>
+                    <th width="8%">栏目</th>
+                    <th class="center"  width="20%">标题</th>
+                    <th width="15%">描述</th>
+                    <th width="15%">排序值</th>
+                    <th width="10%">点击</th>
 
-					<div id="manage-content" class="page-content">
-						<div class="page-header">
-							<h1>
-								<a href="__SELF__">博客管理</a>
-								<small>
-									<i class="icon-double-angle-right"></i>
-									 博客列表
-								</small>
-							</h1>
-						</div><!-- /.page-header -->
+                    <th width="15%">
+                        <i class="icon-time bigger-110 hidden-480"></i>
+                        添加时间
+                    </th>
+                    <th width="10%">状态</th>
 
-						<div class="row">
-							<div class="col-xs-12">
+                    <th width="15%">操作</th>
+                </tr>
+            </thead>
 
-                                <div class="table-responsive">
+            <tbody>
 
-                                    <include file="Public:selectbtn" />
-                                    <table id="sample-table-2" class="table table-striped table-bordered table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th class="center">
-                                                    <label>
-                                                        <input type="checkbox" class="ace" />
-                                                        <span class="lbl"></span>
-                                                    </label>
-                                                </th>
-
-                                                <th width="12%">ID</th>
-                                                <th width="10%">栏目</th>
-                                                <th class="center"  width="25%">标题</th>
-                                                <th width="20%">描述</th>
-                                                <th width="8%">排序值</th>
-                                                <th width="5%">点击</th>
-
-                                                <th width="15%">
-                                                    <i class="icon-time bigger-110 hidden-480"></i>
-                                                    添加时间
-                                                </th>
-                                                <th width="10%">状态</th>
-
-                                                <th width="20%">操作</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-
-                                            <volist name="list" id="vo">
-                                                <tr>
-                                                    <td class="center">
-                                                        <label>
-                                                            <input type="checkbox" class="ace" name="checkid" value="{$vo.id}" />
-                                                            <span class="lbl"></span>
-                                                        </label>
-                                                    </td>
-                                                    <td>{$vo.id}</td>
-                                                    <td><a href="__CONTROLLER__/manage/cid/{$vo.cid}">{$vo.cname}</a></td>
-                                                    <td class="center">
-                                                        <a href="__CONTROLLER__/edit/id/{$vo.id}"><b>{$vo.title}</b></a>
-                                                    </td>
-                                                    <td>{$vo.description|msubstr=0,70}</td>
-                                                    <td>{$vo.sort}</td>
-                                                    <td>{$vo.click}</td>
-                                                    <td>{$vo.createtime|date="Y-m-d H:i", ###}</td>
+                <volist name="list" id="vo">
+                    <tr>
+                        <td class="center">
+                            <label>
+                                <input type="checkbox" class="ace" name="checkid" value="{$vo.id}" />
+                                <span class="lbl"></span>
+                            </label>
+                        </td>
+                        <td>{$vo.id}</td>
+                        <td><a href="{$vo.cateUrl}">{$vo.cname}</a></td>
+                        <td class="center">
+                            <a href="{$vo.url}"><b>{$vo.title}</b></a>
+                        </td>
+                        <td>{$vo.description|msubstr=0,70}</td>
+                        <td>{$vo.sort}</td>
+                        <td>{$vo.click}</td>
+                        <td>{$vo.createtime|date="Y-m-d H:i", ###}</td>
 
 
-                                                    <td >
-                                                        <if condition="$vo.status eq 1">
-                                                            <span class="label label-success arrowed">允许</span>
-                                                        <else />
-                                                            <span class="label label-info arrowed-right">禁止</span>
-                                                        </if>
-                                                    </td>
-                                                    <td>
-                                                        <div style="width:150px" class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                        <td >
+                            <if condition="$vo.status eq 1">
+                                <span class="label label-success arrowed">允许</span>
+                            <else />
+                                <span class="label label-info arrowed-right">禁止</span>
+                            </if>
+                        </td>
+                        <td>
+                            <div style="width:150px" class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
 
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <a href="{:U('Home/Article/view', array('id' => $vo['id']))}" target="_blank" class="tooltip-info" data-rel="tooltip" title="View">
-                                                                <span class="blue">
-                                                                    <i class="icon-zoom-in bigger-120"></i>
-                                                                </span>
-                                                            </a>
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <a href="__CONTROLLER__/edit/id/{$vo.id}" class="tooltip-success" data-rel="tooltip" title="Edit">
-                                                                <span class="green">
-                                                                    <i class="icon-edit bigger-120"></i>
-                                                                </span>
-                                                            </a>
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <a data-toggle="modal" data-target="#modal-{$vo.id}" class="tooltip-error" data-rel="tooltip" title="Delete">
-                                                                <span class="red">
-                                                                    <i class="icon-trash bigger-120"></i>
-                                                                </span>
-                                                            </a>
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="modal-{$vo.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                              <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                  <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                    <h4 class="modal-title" id="myModalLabel">警告您确定要删除</h4>
-                                                                  </div>
-                                                                  <div class="modal-body">
-                                                                  {$vo.id}----{$vo.description}
-                                                                  </div>
-                                                                  <div class="modal-footer">
-                                                                    <a><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                    <a href="__CONTROLLER__/del/id/{$vo.id}"><button type="button" class="btn btn-primary">确定</button></a>
-                                                                  </div>
-                                                                </div><!-- /.modal-content -->
-                                                              </div><!-- /.modal-dialog -->
-                                                            </div><!-- /.mod -->
-                                                        </div>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="{:U('Home/Article/view', array('id' => $vo['id']))}" target="_blank" class="tooltip-info" data-rel="tooltip" title="View">
+                                    <span class="blue">
+                                        <i class="icon-zoom-in bigger-120"></i>
+                                    </span>
+                                </a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="__CONTROLLER__/edit/id/{$vo.id}" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                    <span class="green">
+                                        <i class="icon-edit bigger-120"></i>
+                                    </span>
+                                </a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a data-toggle="modal" data-target="#modal-{$vo.id}" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                    <span class="red">
+                                        <i class="icon-trash bigger-120"></i>
+                                    </span>
+                                </a>
+                                <!-- Modal -->
+                                <div class="modal fade" id="modal-{$vo.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel">警告您确定要删除</h4>
+                                      </div>
+                                      <div class="modal-body">
+                                      {$vo.id}----{$vo.description}
+                                      </div>
+                                      <div class="modal-footer">
+                                        <a><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="__CONTROLLER__/del/id/{$vo.id}"><button type="button" class="btn btn-primary">确定</button></a>
+                                      </div>
+                                    </div><!-- /.modal-content -->
+                                  </div><!-- /.modal-dialog -->
+                                </div><!-- /.mod -->
+                            </div>
 
 
 
-                                                        <div class="visible-xs visible-sm hidden-md hidden-lg">
-                                                            <div class="inline position-relative">
-                                                                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
-                                                                    <i class="icon-caret-down icon-only bigger-120"></i>
-                                                                </button>
+                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                <div class="inline position-relative">
+                                    <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
+                                        <i class="icon-caret-down icon-only bigger-120"></i>
+                                    </button>
 
-                                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </volist>
-                                    </table>
+                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
                                 </div>
-							</div><!-- /.col -->
-						</div><!-- /.row -->
-					</div><!-- /.page-content -->
-				</div><!-- /.main-content -->
-
-		<!-- page specific plugin scripts -->
+                            </div>
+                        </td>
+                    </tr>
+                </volist>
+        </table>
+    </div>
+<!-- page specific plugin scripts -->
 
 		<script src="__ACE__/js/jquery.dataTables.min.js"></script>
 		<script src="__ACE__/js/jquery.dataTables.bootstrap.js"></script>

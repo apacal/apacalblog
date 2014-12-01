@@ -1,0 +1,45 @@
+    <div id="nav-home" class="header navbar-inverse" role="banner">
+        <div style="padding-left: 0px; padding-right: 0px; margin-right:auto; margin-left:auto; width: 100%;">
+            <div class="navbar-header">
+                <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                    <span class="sr-only">激情 程序 奋斗</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="__ROOT__/">Apacal个人日志</a>
+            </div>
+            <div class="navbar-collapse collapse">
+
+                <ul class="nav navbar-nav" id="home-nav">
+                    <li><a href="__ROOT__/">首页</a></li>
+                    <volist name="navList" id="vo">
+                        <empty name="vo['subNav']">
+                        <li><a href="{$vo.url}">{$vo.cname}</a><li>
+                        <else />
+                            <li class="dropdown">
+                            <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="{$vo.url}">{$vo.cname}</a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <volist name="vo['subNav']" id="vo2">
+                                    <li><a href="{$vo2.url}">{$vo2['cname']}</a></li>
+                                </volist>
+                            </ul>
+                            </li>
+                        </empty>
+                    </volist>
+                    <li><a href="{:U('book/my')}">书籍</a></li>
+                    <li><a href="{:U('aboutme/my')}">About Me</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <form class="navbar-form" action="{:U('search/my')}" method="post" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search" name="content"  require />
+                            </div>
+                             <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                    </li>
+              </ul>
+            </div>
+        </div>
+    </div>

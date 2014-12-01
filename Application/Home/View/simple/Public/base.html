@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <block name="header">
+        <include file="Public:header" />
+    </block>
+
+    <body>
+        <block name="nav">
+            <include file="Public:nav" />
+        </block>
+
+
+
+        <block name="content">
+
+        </block>
+
+        <block name="inner_css">
+
+        </block>
+
+        <block name="inner_js">
+
+        </block>
+
+        <block name="footer">
+            <include file="Public:footer" />
+        </block>
+        <block name="js">
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    // nav-home headroom init
+                    $("#nav-home").headroom();
+
+                    $('pre').attr('class','prettyprint linenums');
+                    prettyPrint();
+                    // 到底部
+                    $('a.scrollToBottom').click(function(){
+                        $('html, body').animate({scrollTop: $(document).height()}, 'slow');
+                        return false;
+                    });
+                    // 到顶部
+                    $('a.scrollToTop').click(function(){
+                        $('html, body').animate({scrollTop:0}, 'slow');
+                        return false;
+                    });
+                    $('#friendlink').change(function(){
+                        if(this.value)
+                            window.open(this.value);
+                    });
+                });
+
+            </script> 
+        </block>
+
+    </body>
+</html>

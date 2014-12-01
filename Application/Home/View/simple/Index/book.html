@@ -1,0 +1,35 @@
+<include file="Public/header" />
+<script language="javascript" type="text/javascript">window.onload = function(){ 
+    var oTable = document.getElementById("myTab"); 
+    for(var i=0;i<oTable.rows.length;i++){ 
+        oTable.rows[i].cells[0].innerHTML = (i+1); 
+        if(i%2==0)    //偶数行 
+            oTable.rows[i].className = "warning"; 
+        else
+            oTable.rows[i].className = "active"; 
+    } 
+}</script>
+
+<div style="height: 100px"></div>
+<div class="container marketing thumbnail" >
+
+        <table class="table table-bordered table-hover ">
+            <thead>
+              <tr class="success">
+                <th>#</th>
+                <th>书籍</th>
+                <th>时间</th>
+                <th>感想</th>
+              </tr>
+            </thead>
+            <tbody id="myTab">
+                <include file="Index/mybook" />
+            </tbody>
+        </table>
+
+</div>
+
+<div class="container marketing thumbnail" >
+        <include file="Public/disqus" />
+</div>
+<include file="Public:footer" />

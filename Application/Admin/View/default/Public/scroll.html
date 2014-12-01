@@ -1,0 +1,18 @@
+<div style="position: fixed;bottom: 40%;right: 10px;background-color: #555!important;" >
+    <i class="icon-double-angle-up  bigger-310 btn btn-sm btn-inverse" id="btn-scroll-up"></i><br />
+    <i class="icon-double-angle-down  bigger-310 btn btn-sm btn-inverse" id="btn-scroll-down"></i>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // 到底部
+        $('#btn-scroll-down').click(function(){
+            $('html, body, .content').animate({scrollTop: $(document).height()}, 300);
+            return false;
+        });
+        // 到顶部
+        $('a.scrollToTop').click(function(){
+            $('html, body').animate({scrollTop:0}, 'slow');
+            return false;
+        });
+    });
+</script>

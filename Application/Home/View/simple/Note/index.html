@@ -1,0 +1,25 @@
+<include file="Public/header" />
+
+<div style="height:100px"></div>
+<div class="container marketing thumbnail" >
+        <div style="background-color:white;padding:40px 40px; ">
+        <volist name="list" id="vo">
+            <div class="media" >
+                <a class="pull-left" href="{:U('admin/'.$vo['adminid'])}">
+                    <img class="media-object" style="height:64px;width:64px;" src="__UPLOAD__{$vo.image}" alt="...">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">{$vo.content}</h4>
+                    <span class="pull-right">
+                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="{$vo.time|date='Y-m-d H:i:s', ###}">{$vo.time|date='F d, Y', ###}</button>
+                    </span>
+                </div>
+            </div>
+            <div style="height:20px"></div>
+        </volist>
+        </div>
+</div>
+<div class="container marketing thumbnail" > 
+            <include file="Public/disqus" />
+</div>
+<include file="Public:footer" />

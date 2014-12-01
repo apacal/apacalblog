@@ -1,0 +1,28 @@
+    <div class="container marketing" id="footer">
+        <div id="scrollBtn"> <!-- 滚动屏幕 -->
+            <a href="" class="scrollToTop" title="顶部" ><p class="scrollBtn-top"></p></a>
+            <a  href="" class="scrollToCenter" title="留言反馈"><p class="scrollBtn-SNS"></p></a>
+            <a href="" class="scrollToBottom" title="底部"><p class="scrollBtn-bottom"></p></a>
+        </div>
+
+        <div class="col-md-7">
+            <div class="footerInfo">
+                <p>Copyright © 2014 Apacal All rights reserved <a href="http://www.miitbeian.gov.cn/" target="_blank" >粤ICP备14021869号</a></p>	
+                <p>技术支持: Apacal &nbsp; <a href="__WEB_URL__/Admin" target="_blank"> 管理入口</a>&nbsp;&nbsp;
+                <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_5860608'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s5.cnzz.com/stat.php%3Fid%3D5860608%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+                </p>	
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="friendLink">
+                <select  id="friendlink" class="seo_links">
+                    <option value="">友情链接</option>
+                    <volist name="linkList" id="vo">
+                    <option value="{$vo.url}">{$vo.title}</option>              		        
+                    </volist>
+                </select>
+            </div>
+        </div>
+    </div> <!-- end footer -->
+        
+

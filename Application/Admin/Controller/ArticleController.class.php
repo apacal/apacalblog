@@ -6,23 +6,41 @@ namespace Admin\Controller;
 use Think\Controller;
 class ArticleController extends CommonController {
 
+    public function _before_add() {
+        $this->setAllCategoryTree();
+    }
+
+    public function _before_edit() {
+        $this->setCategoryTree();
+    }
+
     /**
      * 管理界面
      **/
     public function manage() {
         $model = M('Article');
         $cid = I('request.cid');
+        $menuId = I('request.menuId');
+
         if(!empty($cid)) {
             $list = $model->field('content', true)->where(array('cid' => $cid))->order('updatetime DESC')->select();
         }else{
             $list = $model->field('content', true)->order('updatetime DESC')->select();
         }
         foreach($list as &$val) {
+            $val['url'] = $this->getEditUrl( $val, $menuId );
+            $val['cateUrl'] = $this->getManageUrl( $val, $menuId );
             $where['id'] = $val['cid'];
             $val['cname'] = M('Category')->where($where)->getField('cname');
         }
         $this->assign('list', $list);
     }
+
+
+    private function getManageUrl( $arr, $menuId ) {
+        return U(CONTROLLER_NAME .'/manage', array('cid' => $arr['cid'], 'menuId' => $menuId));
+    }
+
     /**
      * 添加博客
      **/
@@ -48,7 +66,7 @@ class ArticleController extends CommonController {
             $this->error($model->getError());
         } else {
             $model->delCache($data['cid']);
-            $this->success('添加博文成功!', __CONTROLLER__.'/manage');
+            $this->success('添加博文成功!', $this->getUrl(__CONTROLLER__.'/manage'));
         }
     }
     public function uploadimage() {
@@ -99,7 +117,7 @@ class ArticleController extends CommonController {
             $this->error($model->getError());
         } else {
             $model->delCache($data['cid'], $id);
-            $this->success('更新博文成功!', __CONTROLLER__.'/manage' );
+            $this->success( '更新博文成功!', $this->getUrl(CONTROLLER_NAME .'/manage') );
         }
     }
 }

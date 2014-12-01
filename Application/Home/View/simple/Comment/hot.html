@@ -1,0 +1,43 @@
+			<notempty name="hotComment">
+				<ul class="comments-list unstyled">
+                    <volist name="hotComment" id="vo">
+					<li class="comment" id="comment-content">
+                            <empty name="vo.author_id">
+								<img width="40" height="40" alt="" src="__IMG__/gravatar.png" class="avatar">
+							<else />
+								<a href="__MODULE__/User/index/id/{$vo.author_id}"><img width="40" height="40" alt="" src="__IMG__/gravatar.png" class="avatar"></a> </empty>
+						
+							<div class="comment-entry" style="width:85%;">
+								<div class="comment-meta" >
+                                    <div class="comment-author">
+                                        <span class="author" style="font-size:16px; line-height:1.5em;" ><notempty name="vo.author_id"><a href="__MODULE__/User/index/id/{$vo.author_id}">{$vo.author}</a><else /><span class="author-span">{$vo.author}</span></notempty>
+                                    回复&nbsp;
+<notempty name="vo.parent_author_id"><a href="__MODULE__/User/index/id/{$vo.parent_author_id}">{$vo.parentName}</a><else /><span class="author-span">{$vo.parentName}</span></notempty>
+                                    于：{$vo.createtime|date='Y-m-d H:s',###}</span>
+                                    </div>
+								</div><!--/ .comment-meta -->
+								<div class="comment-body">
+									<p>{$vo.content}</p>
+                                    <div class="reply">
+                                        <span class="reply-body">
+                                            <a href="javascript:commentVote({$vo.id},1,{$vo.agree}, 2)" id="agree{$vo.id}-hot">支持({$vo.agree})</a>
+                                            |
+                                            <a href="javascript:commentVote({$vo.id},2,{$vo.disagree}, 2)" id="disagree{$vo.id}-hot">反对({$vo.disagree})</a>
+                                            |
+								            <a class="comment-reply-link" rid="{$vo.id}" pid="{$vo.id}" author="{$vo.author}" href="#publish_comment">回复</a>
+                                        </span>
+                                    </div>
+								</div><!--/ .comment-body -->
+							</div><!--/ .comment-entry-->
+
+					</li><!--/ .comment-->
+					</volist><!-- msg_list -->
+				</ul><!--/ .comments-list-->
+
+	            
+            <else/>
+               	<div style="clear:both" class="alert alert-dismissable alert-info" id="noCommentAlert">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+ 		            <strong>温馨提示：</strong>暂无评论！
+ 		          </div>
+            </notempty>

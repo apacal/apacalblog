@@ -7,12 +7,14 @@ use Think\Controller;
 class CategoryController extends CommonController {
 
     private $info;
+
+
     public function _before_add() {
-        $this->setAllNavList();
+        $this->setAllCategoryTree();
         $this->setAllModelList();
     }
     public function _before_edit() {
-        $this->setAllNavList();
+        $this->setCategoryTree();
         $this->setAllModelList();
     }
     public function manage() {

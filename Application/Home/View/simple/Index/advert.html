@@ -1,0 +1,28 @@
+
+            <div id="carousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <for start="1" end="$advertListCount">
+                        <li data-target="#carousel" data-slide-to="{$i}"></li>
+                    </for>
+                </ol>
+                <div class="carousel-inner">
+                    <volist name="advertList" id="vo">
+                        <div class='item <eq name="i" value="1">active</eq>'>
+                            <img src="__UPLOAD__{$vo.image}" class="advertImg"  lt="{$vo.title}">
+                            <div class="container">
+                                <div class="carousel-caption">
+                                    <h1>{$vo.title}</h1>
+                                    <p>{$vo.description}</p>
+                                    <a class="btn" href="{$vo.url}"> MORE </a>
+                                </div>
+                            </div>
+                        </div>
+                    </volist>
+                </div>
+                <a class="left carousel-control" href="#carousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                <a class="right carousel-control" href="#carousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+

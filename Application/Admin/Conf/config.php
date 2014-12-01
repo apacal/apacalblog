@@ -2,11 +2,14 @@
 $config	=	require './Application/Common/Conf/config.php';
 $config['WEB_URL'] = '';
 $admin_config	= array(
+
+
+    "KEYWORLDS"                 => 'ApacalBlog-后台管理系统',
+    "DESCRIPTION"               => 'ApacalBlog-后台管理系统',
     'SALT'                      => 'ApacalBlogAdmin',
     'SITE_NAME'			=>  'ApacalBlog后台管理系统',//网站名字，后台的和前台不一样
 
     'URL_MODEL'					=>2, 				// 如果你的环境不支持PATHINFO 请设置为3
-	'TMPL_CACHE_ON'				=>true, 			//开启模板缓存
 	'ADMIN_AUTH_ON'				=>true,
 	'ADMIN_AUTH_TYPE'			=>1,				// 默认认证类型 1 登录认证 2 实时认证
     'ADMIN_AUTH_KEY'			=>'administrator',// ADMIN认证SESSION标记
@@ -28,11 +31,6 @@ $admin_config	= array(
     'SESSION_TTL'   =>  60*60*24*7,
     'NoCachedDie' => true,
 
-    /* 分页设置 */
-	'PAGE_ROLLPAGE'   	        => 5,      // 分页显示页数
-	'PAGE_LISTROWS'         	=> 20,     // 分页每页显示记录数
-	
 
-	
 );
 return array_merge($config,$admin_config);
