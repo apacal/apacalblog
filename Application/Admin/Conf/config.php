@@ -7,7 +7,7 @@ $admin_config	= array(
     "KEYWORLDS"                 => 'ApacalBlog-后台管理系统',
     "DESCRIPTION"               => 'ApacalBlog-后台管理系统',
     'SALT'                      => 'ApacalBlogAdmin',
-    'SITE_NAME'			=>  'ApacalBlog后台管理系统',//网站名字，后台的和前台不一样
+    'SITE_NAME'			=>  'ApacalBlog-后台管理系统',//网站名字，后台的和前台不一样
 
     'URL_MODEL'					=>2, 				// 如果你的环境不支持PATHINFO 请设置为3
 	'ADMIN_AUTH_ON'				=>true,

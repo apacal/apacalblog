@@ -4,6 +4,7 @@ use Think\Controller;
 class MenuController extends CommonController {
 
     public function _before_add() {
+        parent::_before_add();
         $this->setMenuTree();
         $this->setAllModelList();
     }
@@ -15,12 +16,13 @@ class MenuController extends CommonController {
         $model = D('Menu');
         $where['id'] = I('request.id');
 
-        $vo = $model->where($where)->relation(true)->find();
+        $vo = $model->where($where)->find();
         if(is_array($vo)) {
             $where['id'] = $vo['pid'];
             $vo['pname'] = $model->where($where)->getField('name');
         }
 
+        $this->__edit($vo);
         $this->assign('vo', $vo);
         $this->display();
     }

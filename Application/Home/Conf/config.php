@@ -2,6 +2,14 @@
 $config	=	require APP_PATH .'Common/Conf/config.php';
 $config['WEB_URL'] = '';  
 $home_config =  array(
+
+    'SITE_NAME'			=>          'Apacal网络日志',   //网站名字
+    'SITE_NAME_BAR'     =>          '激情 程序 奋斗',
+    'SITE_KEYWORDS'		=>  'zhongqingzhu 钟庆柱 Apacal Apacal网络日志 apacalblog Apacal Apacal个人博客 激情 奋斗 技术的乐趣、快乐',
+    'SITE_DESCRIPTION'	=>  '分享一些对技术的思考，扯一些生活的感悟，享受技术带来的乐趣、快乐，享受编程带的乐趣、快乐。',
+
+    'DEFAULT_THEME' => 'default',
+
     'SHOW_PAGE_TRACE'               =>              true,
     'PAGE_TRACE_SAVE'               =>              false,
 
@@ -22,8 +30,6 @@ $home_config =  array(
     'ARTICLE_PAGE_NUM'  =>          9,  //每次加载的文章的数目
     'COMMENT_SHOWNUM'   =>          5,       //初始显示comment数目 
     'COMMENT_PAGE_NUM'  =>          5,  //每次加载的comment的数目
-    'SITE_NAME'			=>          'ApacalBlog',   //网站名字
-	'TMPL_CACHE_ON'	    =>          true, 		//开启模板缓存
 	'URL_MODEL'         =>          2,           //服务器开启Rewrite模块时，可去除URL中的index.php 参数模式1,2,3
 	
 	'DB_LIKE_FIELDS'		=> 'title|remark|content',	//搜索Like匹配字段

@@ -6,11 +6,15 @@
     <ul class="breadcrumb">
         <li>
             <i class="icon-home home-icon"></i>
-            <a href="__MODULE__">首页</a>
+            <span>首页</span>
         </li>
         <volist name="position" id="pvo">
             <li>
-                <a href="{$pvo.url}">{$pvo.name}</a>
+                <empty name="pvo.url">
+                    <span>{$pvo.name}</span>
+                    <else />
+                    <a href="{$pvo.url}">{$pvo.name}</a>
+                </empty>
             </li>
         </volist>
     </ul><!-- .breadcrumb -->

@@ -1,5 +1,5 @@
 ﻿<include file="Public:header" />
-    <form class="form-horizontal" role="form" enctype="multipart/form-data" action="__CONTROLLER__/update/id/{$vo.id}" method="post">
+    <form class="form-horizontal" role="form" enctype="multipart/form-data" action="{$actionUrl}" method="post">
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" > 标题 </label>
             <div class="col-sm-9">
@@ -9,31 +9,15 @@
         <div class="space-4"></div>
 
         <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right" > 模型 </label>
-            <div class="col-sm-9">
-                    <select class="col-xs-10 col-sm-5" name="mid"  required>
-                        <empty name="vo.mid">
-                                <option value="">请选择模型</option>
-                            <else />
-                                <option value="{$vo.mid}">当前模型（{$vo.mname}-{$vo.model}）</option>
-                        </empty>
-                        <volist name="modelList" id="mvo">
-                            <option value="{$mvo.id}">【{$mvo.mname}-{$mvo.mcontroller}】</option>
-                        </volist>
-                    </select>
-            </div>
-        </div>
-
-        <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right">父Menu </label>
             <div class="col-sm-9">
                     <select class="col-xs-10 col-sm-5" name="pid"  required>
                         <empty name="vo.pid">
-                            <if condition="$vo.pid eq 0">
+                            <?php if ($vo['pid'] == 0 && $vo['pid'] != '') { ?>
                                     <option value="{$vo.pid}">当前父Menu（根Menu）</option>
-                                <else />
+                            <?php } else { ?>
                                 <option value="">请选择父Menu</option>
-                            </if>
+                            <?php } ?>
 
                             <else />
                                 <option value="{$vo.pid}">当前父Menu（{$vo.pname}）</option>
@@ -44,10 +28,19 @@
             </div>
         </div>
         <div class="space-4"></div>
+
         <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right" > 调用的方法 </label>
+            <label class="col-sm-3 control-label no-padding-right" > Controller(控制器) </label>
             <div class="col-sm-9">
-                <input type="text" value="{$vo.function}" placeholder="调用的方法" name="function" class="col-xs-10 col-sm-5" required />
+                <input type="text" value="{$vo.controller}" placeholder="Controller" name="controller" class="col-xs-10 col-sm-5" required />
+            </div>
+        </div>
+        <div class="space-4"></div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" > Action(方法) </label>
+            <div class="col-sm-9">
+                <input type="text" value="{$vo.action}" placeholder="Action" name="action" class="col-xs-10 col-sm-5" required />
             </div>
         </div>
         <div class="space-4"></div>

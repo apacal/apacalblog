@@ -1,52 +1,49 @@
 ﻿<include file="Public:header" />
-    <form class="form-horizontal" role="form" enctype="multipart/form-data" action="__CONTROLLER__/update/id/{$vo.id}" method="post">
+    <form class="form-horizontal" role="form" enctype="multipart/form-data" action="{$actionUrl}" method="post">
         <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right" > 标题 </label>
+            <label class="col-sm-3 control-label no-padding-right" > 内容 </label>
             <div class="col-sm-9">
-                <input type="text" placeholder="标题" value="{$vo.cname}" name="cname" class="col-xs-10 col-sm-5" required />
+                <textarea row="10" placeholder="内容" style="height:400px; width:70%;" name="content" class="autosize-transition col-xs-10 col-sm-5" >{$vo.content}</textarea>
             </div>
         </div>
         <div class="space-4"></div>
 
         <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right" > 模型 </label>
+            <label class="col-sm-3 control-label no-padding-right" > Pid </label>
             <div class="col-sm-9">
-                    <select class="col-xs-10 col-sm-5" name="mid"  id="form-field-select-1" required>
-                        <option value="{$vo.mid}">{$modelNow}</option>
-                        <volist name="modelList" id="mvo">
-                            <option value="{$mvo.id}">【{$mvo.mname}-{$mvo.mcontroller}】</option>
-                        </volist>
-                    </select>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right">父栏目 </label>
-            <div class="col-sm-9">
-                    <select class="col-xs-10 col-sm-5" name="pid"  required>
-                        <option value="{$vo.pid}">{$categoryNow}</option>
-                        <option value="0">根栏目</option>
-                        {$categoryTree}
-                    </select>
+                <empty name="vo.pid">
+                    <input type="text" value="0" placeholder="Controller" name="pid" class="col-xs-10 col-sm-5" required />
+                    <else />
+                    <input type="text" value="{$vo.pid}" readonly="true" placeholder="Controller" name="pid" class="col-xs-10 col-sm-5" required />
+                </empty>
             </div>
         </div>
         <div class="space-4"></div>
+
+
         <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right" > 关键字 </label>
+            <label class="col-sm-3 control-label no-padding-right" > agree </label>
             <div class="col-sm-9">
-                <input type="text" value="{$vo.keywords}" placeholder="关键字" name="keywords" class="col-xs-10 col-sm-5" required />
+                <empty name="vo.agree">
+                    <input type="text" value="0" placeholder="agree" name="agree" class="col-xs-10 col-sm-5" required />
+                    <else />
+                    <input type="text" value="{$vo.agree}" readonly="true" placeholder="agree" name="agree" class="col-xs-10 col-sm-5" required />
+                </empty>
             </div>
         </div>
         <div class="space-4"></div>
 
         <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right" > 描述 </label>
+            <label class="col-sm-3 control-label no-padding-right" > disagree </label>
             <div class="col-sm-9">
-                <textarea row="10" placeholder="描述" style="height:100px" name="description" class="autosize-transition col-xs-10 col-sm-5" required >{$vo.description}</textarea>
+                <empty name="vo.disagree">
+                    <input type="text" value="0" placeholder="disagree" name="disagree" class="col-xs-10 col-sm-5" required />
+                    <else />
+                    <input type="text" value="{$vo.disagree}" readonly="true" placeholder="disagree" name="disagree" class="col-xs-10 col-sm-5" required />
+                </empty>
             </div>
         </div>
         <div class="space-4"></div>
-
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" > 排序值 </label>
             <div class="col-sm-9">
@@ -54,8 +51,6 @@
             </div>
         </div>
         <div class="space-4"></div>
-
-        <include file="Public:form-image" />
 
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" > 状态 </label>
@@ -97,4 +92,5 @@
             $('#sort').ace_spinner({value: sort ,min:-500,max:500,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
         });
     </script>
+
 <include file="Public:footer" />

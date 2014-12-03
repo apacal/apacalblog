@@ -29,7 +29,7 @@ class ArticleController extends CommonController {
         }
         foreach($list as &$val) {
             $val['url'] = $this->getEditUrl( $val, $menuId );
-            $val['cateUrl'] = $this->getManageUrl( $val, $menuId );
+            $val['cateUrl'] = $this->getManageUrlByCateId( $val['cid'], $menuId );
             $where['id'] = $val['cid'];
             $val['cname'] = M('Category')->where($where)->getField('cname');
         }
@@ -37,8 +37,8 @@ class ArticleController extends CommonController {
     }
 
 
-    private function getManageUrl( $arr, $menuId ) {
-        return U(CONTROLLER_NAME .'/manage', array('cid' => $arr['cid'], 'menuId' => $menuId));
+    private function getManageUrlByCateId( $cid, $menuId ) {
+        return U(CONTROLLER_NAME .'/manage', array('cid' => $cid, 'menuId' => $menuId));
     }
 
     /**

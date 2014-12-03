@@ -6,6 +6,7 @@ namespace Admin\Controller;
 use Think\Controller;
 class CommonController extends Controller {
     protected $field = '*';
+    protected $manageSort = "update DESC";
 
     public function index() {
         $this->manage();
@@ -22,30 +23,17 @@ class CommonController extends Controller {
      * init menu and menu position
      */
     private function initMenu() {
-        $arr = array(
-            'add',
-            'update',
-            'delete',
-            'insert',
-            'edit',
-            'delAllRuntime',
-            'delHomeRuntime',
-            'delAdminRuntime',
-        );
-
         $currId = I( 'get.menuId' );
         if ( empty( $currId ) || !is_numeric($currId) ) {
-            if ( !in_array( ACTION_NAME, $arr) ) {
-                $this->error('current menu is missing!');
-            }
+            $currId = isset($_SESSION['menuId']) ? $_SESSION['menuId'] : 1;
         } else {
-            $_SESSION['mid'] = $currId;
+            $_SESSION['menuId'] = $currId;
         }
 
         $model = D( 'Menu' );
 
         $menu = $model->getMenu( $currId );
-        $this->assign( 'menu', $menu );
+        $this->assign('menu', $menu);
 
         $thisMenu = $model->getMenuById( $currId );
         $this->assign( 'thisMenu', $thisMenu );
@@ -88,7 +76,28 @@ class CommonController extends Controller {
         $this->display();
     }
 
+    public function _before_add() {
+        $url = $this->getManageUrl(CONTROLLER_NAME .'/insert');
+        $this->assign('actionUrl', $url);
+    }
+
+    /**
+     * display add html and init empty vo data
+     */
     public function add() {
+        $model = M(CONTROLLER_NAME);
+        $fields = $model->getDbFields();
+        $vo = array();
+        foreach($fields as $val) {
+            if ($val == 'status') {
+                $vo[$val] = 1;
+            } else if ($val == 'sort') {
+                $vo[$val] = 0;
+            } else {
+                $vo[$val] = '';
+            }
+        }
+        $this->assign('vo', $vo);
         $this->display(CONTROLLER_NAME .':edit');
     }
 
@@ -110,8 +119,31 @@ class CommonController extends Controller {
         if(!$model->add($data)) {
             $this->error($model->getError());
         } else {
-            $this->success('添加成功!', $this->getSuccessUrl(__CONTROLLER__.'/manage'));
+            $this->success('添加成功!', $this->getManageUrl(__CONTROLLER__.'/manage'));
         }
+    }
+
+    /**
+     * must called by edit, init action url
+     * @param $vo
+     */
+    public function  __edit($vo) {
+        $url = U(CONTROLLER_NAME .'/update', array('id' => $vo['id']));
+        $this->assign('actionUrl', $url);
+    }
+
+    public function edit() {
+        $model = M(CONTROLLER_NAME);
+        $where['id'] = I('request.id');
+
+        $vo = $model->where($where)->find();
+        if($vo['cid']) {
+            $where['id'] = $vo['cid'];
+            $vo['cname'] = M('Category')->where($where)->getField('cname');
+        }
+        $this->__edit($vo);
+        $this->assign('vo', $vo);
+        $this->display();
     }
 
     public function update() {
@@ -130,27 +162,15 @@ class CommonController extends Controller {
             $this->error($model->getError());
         } else {
 
-            $this->success('更新成功!', $this->getUrl(CONTROLLER_NAME .'/manage'));
+            $this->success('更新成功!', $this->getManageUrl(CONTROLLER_NAME .'/manage'));
         }
     }
 
-    public function edit() {
-        $model = M(CONTROLLER_NAME);
-        $where['id'] = I('request.id');
-
-        $vo = $model->where($where)->find();
-        if($vo['cid']) {
-            $where['id'] = $vo['cid'];
-            $vo['cname'] = M('Category')->where($where)->getField('cname');
-        }
-        $this->assign('vo', $vo);
-        $this->display();
-    }
 
     public function manage() {
         $menuId = I('request.menuId');
         $model = M(CONTROLLER_NAME);
-        $list = $model->field($this->field)->order('updatetime DESC')->select();
+        $list = $model->field($this->field)->order($this->manageSort)->select();
         if (is_array($list)) {
             foreach ($list as &$val) {
                 $val['url'] = $this->getEditUrl($val, $menuId);
@@ -227,7 +247,7 @@ class CommonController extends Controller {
     }
 
     protected function setMenuTree() {
-        $list = D('Menu')->relation(true)->select();
+        $list = D('Menu')->order('sort DESC')->select();
         import('Org.Tree');
         $tree=new \tree($list);
         //格式字符串
@@ -256,7 +276,16 @@ class CommonController extends Controller {
     protected  function getEditUrl( $arr, $menuId ) {
         return U(CONTROLLER_NAME .'/edit', array('id' => $arr['id'], 'menuId' => $menuId));
     }
-    protected  function getUrl( $url ) {
-        return U($url, array('menuId' => $_SESSION['mid']));
+
+    /**
+     * get manage url by add or index action in menu
+     * @param $url
+     * @return string
+     */
+    protected  function getManageUrl( $url ) {
+        if ( false === ($menuId = D('Menu')->getManageMenuId($_SESSION['menuId']))) {
+            $menuId = $_SESSION['menuId'];
+        }
+        return U($url, array('menuId' => $menuId));
     }
 }

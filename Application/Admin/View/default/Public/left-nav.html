@@ -33,37 +33,7 @@
 						</div>
 					</div><!-- #sidebar-shortcuts -->
 			<ul class="nav nav-list">
-
-                <volist name="menu" id="vo1">
-                    <empty name="vo1.sub">
-                    <li class="{$vo1.meta}">
-                        <a href="{$vo1.url}">
-                            <i class="{$vo1.icon}"></i>
-                            <span class="menu-text">{$vo1.name}</span>
-                        </a>
-                    </li>
-                    <else />
-                        <li class="{$vo1.meta}">
-							<a href="#" class="dropdown-toggle">
-                                <i class="{$vo1.icon}"></i>
-                                <span class="menu-text">{$vo1.name}</span>
-								<b class="arrow icon-angle-down"></b>
-							</a>
-							<ul class="submenu">
-                                <volist name="vo1.sub" id="vo2">
-                                    <li class="{$vo2.meta}"> <a href="{$vo2.url}">
-                                        <i class="icon-double-angle-right"></i>
-                                        {$vo2.name}
-                                        </a>
-                                    </li>
-                                </volist>
-                            </ul>
-                        </li>
-
-                    </empty>
-
-                </volist>
-
+                {$menu}
 			</ul><!-- /.nav-list -->
 
 			<div class="sidebar-collapse" id="sidebar-collapse">

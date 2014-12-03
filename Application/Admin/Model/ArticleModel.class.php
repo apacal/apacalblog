@@ -1,7 +1,4 @@
 <?php
-/**
- * 广告模型
- **/
 namespace Admin\Model;
 use Think\Model;
 class ArticleModel extends CommonModel {

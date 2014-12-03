@@ -1,12 +1,22 @@
 <?php
-if(!defined('THINK_PATH')) exit();
-define('ROOT_URL', 'http://apacal.cn');
-define('ROOT', '.');
 return array(
 
+    //网站系统设置
+
+    'SITE_KEYWORDS'		=>  'zhongqingzhu 钟庆柱 Apacal Apacal网络日志 apacalblog Apacal Apacal个人博客 激情 奋斗 技术的乐趣、快乐',
+    'SITE_DESCRIPTION'	=>  '分享一些对技术的思考，扯一些生活的感悟，享受技术带来的乐趣、快乐，享受编程带的乐趣、快乐。',
+    'EMAIL'				=>	'apacalzqz@gmail.com',
+    'OFFLINEMESSAGE'	=>	'本站正在维护中，暂不能访问。<br /> 请稍后再访问本站。',
+    'ICP_NUM'			=>	'粤ICP备14021869号',
+
     'WEB_URL'                       =>              ROOT_URL,
+    'SITE_URL'     		=>  ROOT_URL,//网站地址
+
+    'TMPL_STRIP_SPACE' => true,  // 是否去除模板文件里面的 html 空格与换行
+    'TMPL_CACHE_ON' => false,  // 是否开启模板编译缓存 , 设为 false 则每次都会重新编译
+
     // normal trace not in debug=on
-    'SHOW_PAGE_TRACE'               =>              false,
+    'SHOW_PAGE_TRACE'               =>              true,
     'PAGE_TRACE_SAVE'               =>              false,
 
     // normal debug info
@@ -95,15 +105,5 @@ return array(
 
    
 	
-	//网站系统设置
-    'WEB_URL'           =>  ROOT_URL,//网站地址
-	'SITE_URL'     		=>  ROOT_URL,//网站地址
-	
-    'SITE_ROOT_NAME'    =>  'Apacal个人日志 | ', //网站首页名称
-    'SITE_KEYWORDS'		=>  'Apacal Apacal个人日志 apacalblog Apacal Apacal个人博客 激情 奋斗 技术的乐趣、快乐',
-	'SITE_DESCRIPTION'	=>  '分享一些对技术的思考，扯一些生活的感悟，享受技术带来的乐趣、快乐，享受编程带的乐趣、快乐。',
-	'EMAIL'				=>	'apacal@126.com',
-	'OFFLINEMESSAGE'	=>	'本站正在维护中，暂不能访问。<br /> 请稍后再访问本站。',
-	'ICP_NUM'			=>	'粤ICP备14021869号',
-	
+
 );

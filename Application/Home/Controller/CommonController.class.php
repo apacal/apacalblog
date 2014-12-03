@@ -26,7 +26,7 @@ class CommonController extends Controller {
      * seo 设置标题，关键字，描述，位置
      **/
     public function seo($title,$keywords,$description,$position){
-        $title = C('SITE_ROOT_NAME').$title;
+        $title = C('SITE_NAME'). " | $title";
         $this->assign('title',$title);
         $this->assign('keywords', $keywords.' | '.C('SITE_KEYWORDS'));
         $this->assign('description', $description.' | '.C('SITE_DESCRIPTION'));
