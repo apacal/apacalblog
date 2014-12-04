@@ -170,7 +170,9 @@ class CommonController extends Controller {
     public function manage() {
         $menuId = I('request.menuId');
         $model = M(CONTROLLER_NAME);
-        $list = $model->field($this->field)->order($this->manageSort)->select();
+        if ( false === ($list = $model->field($this->field)->order($this->manageSort)->select())) {
+            $this->error("database error");
+        }
         if (is_array($list)) {
             foreach ($list as &$val) {
                 $val['url'] = $this->getEditUrl($val, $menuId);
