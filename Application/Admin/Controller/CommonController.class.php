@@ -7,6 +7,7 @@ use Think\Controller;
 class CommonController extends Controller {
     protected $field = '*';
     protected $manageSort = "update DESC";
+    protected $pkId = 'id';
 
     public function index() {
         $this->manage();
@@ -23,6 +24,7 @@ class CommonController extends Controller {
      * init menu and menu position
      */
     private function initMenu() {
+        $model = D( 'Menu' );
         $currId = I( 'get.menuId' );
         if ( empty( $currId ) || !is_numeric($currId) ) {
             $currId = isset($_SESSION['menuId']) ? $_SESSION['menuId'] : 1;
@@ -30,7 +32,6 @@ class CommonController extends Controller {
             $_SESSION['menuId'] = $currId;
         }
 
-        $model = D( 'Menu' );
 
         $menu = $model->getMenu( $currId );
         $this->assign('menu', $menu);
@@ -134,10 +135,10 @@ class CommonController extends Controller {
 
     public function edit() {
         $model = M(CONTROLLER_NAME);
-        $where['id'] = I('request.id');
+        $where[$this->pkId] = I('request.id');
 
         $vo = $model->where($where)->find();
-        if($vo['cid']) {
+        if(isset($vo['cid'])) {
             $where['id'] = $vo['cid'];
             $vo['cname'] = M('Category')->where($where)->getField('cname');
         }

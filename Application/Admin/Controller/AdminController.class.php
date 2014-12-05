@@ -5,6 +5,8 @@
 namespace Admin\Controller;
 use Think\Controller;
 class AdminController extends CommonController {
+    protected $manageSort = "adminid desc";
+    protected $pkId = "adminid";
 
     public function index() {
         $id = $_SESSION['adminid'];
@@ -13,15 +15,6 @@ class AdminController extends CommonController {
         $this->display();
     }
     
-    public function edit() {
-        $model = M(CONTROLLER_NAME);
-        $where['adminid'] = I('request.id');
-        $vo = $model->where($where)->find();
-        $this->assign('vo', $vo);
-        $this->display();
-    }
-    /**
-     **/
     public function insert() {
         $model= D('Admin');
         if(!($data = $model->create())) {
@@ -43,6 +36,7 @@ class AdminController extends CommonController {
         else
             $this->success('添加管理员成功!', __CONTROLLER__.'/manage');
     }
+
     public function del() {
         $model = M(CONTROLLER_NAME);
         $where['adminid'] = I('request.id');
