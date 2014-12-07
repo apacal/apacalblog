@@ -1,22 +1,6 @@
 <?php
 namespace Admin\Model;
 class MenuModel extends CommonModel {
-    protected $_auto = array( //自动完成
-        array('createtime', 'time', self::MODEL_INSERT, 'function'),
-        array('updatetime', 'time', 3, 'function'),
-        array('adminid', 'getAdminId', 3, 'callback'),
-    );
-
-    /**
-     * 获取管理员id
-     **/
-    protected function getAdminId() {
-        $adminid = $_SESSION['adminid'];
-        if($adminid)
-            return $adminid;
-        return 1;
-    }
-
     protected $_validate = array(
         array('name','require','名字必须！'),
 

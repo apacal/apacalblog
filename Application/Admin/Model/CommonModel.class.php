@@ -6,21 +6,55 @@ namespace Admin\Model;
 use Think\Model;
 class CommonModel extends Model {
     protected $_auto = array( //自动完成
-        array('is_check', '1', 1),
         array('createtime', 'time', self::MODEL_INSERT, 'function'),
-        array('updatetime', 'time', 3, 'function'),
-        array('adminid', 'getAdminId', 3, 'callback'),
+        array('updatetime', 'time', self::MODEL_BOTH, 'function'),
+        array('adminid', 'getAdminId', self::MODEL_BOTH, 'callback'),
     );
+
     /**
-     * 获取管理员id
-     **/
+     * get Admin id from session
+     * @return int
+     */
     protected function getAdminId() {
-        $adminid = $_SESSION['adminid'];
-        if($adminid)
-            return $adminid;
-        return 1;
+        if(isset($_SESSION['adminid'])) {
+            return $_SESSION['adminid'];
+        } else {
+            return false;
+        }
     }
+
     protected $_validate = array(
         array('description', 'require', '描述必须!'),
     );
+
+    protected $order = 'updatetime desc';
+
+    protected $where = array();
+
+
+    /**
+     * get data list
+     * @param array $where
+     * @param string $order
+     * @param string $limit
+     * @return array | false
+     */
+    public function getList($where = array(), $order = '', $limit = '') {
+        if(empty($where)) {
+            $where = $this->where;
+        }
+        if (empty($order)) {
+            $order = $this->order;
+        }
+
+        if (empty($limit)) {
+            $list = $this->where($where)->order($order)->slecet();
+        } else {
+
+            $list = $this->where($where)->order($order)->limit($limit)->slecet();
+        }
+
+        return $list;
+    }
+
 }
