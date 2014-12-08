@@ -8,6 +8,10 @@ $(document).ready(function(){
     $(".dropdown").mouseleave(function(){
         $(this).children("ul.dropdown-menu").css("display", "none");
     });
+    $(".nav-a").click(function(){
+        var url = $(this).attr("href");
+        window.location.href = url;
+    });
 });
 
 /**

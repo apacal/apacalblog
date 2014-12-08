@@ -114,7 +114,7 @@ class CategoryModel extends RelationModel {
         }
 
         $html .=
-            '<a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="' .$val['url'] .'">' .$val['cname'] .'</a>'
+            '<a id="dLabel" class="nav-a" role="button" data-toggle="dropdown" data-target="#" href="' .$val['url'] .'">' .$val['cname'] .'</a>'
             .'<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">';
         $html .= $this->getNavHtml($val['subNav'], 2);
         $html .=

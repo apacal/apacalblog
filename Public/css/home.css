@@ -56,6 +56,10 @@ body {
 .navbar-form {
      margin-top: 8px;
 }
+.dropdown-menu {
+    /*background: #006600;*/
+    /*border-color: #398439;*/
+}
 #home-nav .dropdown .dropdown-menu li > a{
     color: black;
 }
