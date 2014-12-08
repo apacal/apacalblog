@@ -6,12 +6,22 @@ class MenuController extends CommonController {
     public function _before_add() {
         parent::_before_add();
         $this->setMenuTree();
-        $this->setAllModelList();
     }
     public function _before_edit() {
         $this->setMenuTree();
-        $this->setAllModelList();
     }
+
+    protected function setMenuTree() {
+        $list = D('Menu')->order('sort DESC')->select();
+        import('Org.Tree');
+        $tree=new \tree($list);
+        //格式字符串
+        $str="<option value=\$id \$selected>\$spacer\$name</option>";
+        //返回树
+        $result = $tree->get_tree(0,$str, -1);
+        $this->assign('menuTree', $result);
+    }
+
     public function edit() {
         $model = D('Menu');
         $where['id'] = I('request.id');

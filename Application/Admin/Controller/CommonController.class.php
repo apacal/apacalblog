@@ -225,20 +225,6 @@ class CommonController extends Controller {
         $Verify->entry();
     }
 
-    /**
-     * set all category select tree
-     */
-    protected function setAllCategoryTree() {
-        $where['status'] = 1;
-        $list = M('Category')->where($where)->field('id, pid, cname')->order("sort DESC")->select();
-        import('Org.Tree');
-        $tree=new \tree($list);
-        //格式字符串
-        $str="<option value=\$id \$selected>\$spacer\$cname</option>";
-        //返回树
-        $result = $tree->get_tree(0,$str, -1);
-        $this->assign('categoryTree', $result);
-    }
 
     /*
      * set all model list
@@ -249,32 +235,6 @@ class CommonController extends Controller {
         $this->assign('modelList', $list);
     }
 
-    protected function setMenuTree() {
-        $list = D('Menu')->order('sort DESC')->select();
-        import('Org.Tree');
-        $tree=new \tree($list);
-        //格式字符串
-        $str="<option value=\$id \$selected>\$spacer\$name</option>";
-        //返回树
-        $result = $tree->get_tree(0,$str, -1);
-        $this->assign('menuTree', $result);
-    }
-    protected function setCategoryTree() {
-        $map['mcontroller'] = CONTROLLER_NAME;
-        $mid = M('Model')->where($map)->getField('id');
-        if($mid) {
-            $where['mid'] = $mid;
-            $where['status'] = 1;
-            $list = M('Category')->where($where)->field('id, pid, cname')->select();
-            import('Org.Tree');
-            $tree=new \tree($list);
-		    //格式字符串
-		    $str="<option value=\$id \$selected>\$spacer\$cname</option>";
-		    //返回树
-		    $result = $tree->get_tree(0,$str, -1);
-            $this->assign('categoryTree', $result);
-        }
-    }
 
     protected  function getEditUrl( $arr, $menuId ) {
         return U(CONTROLLER_NAME .'/edit', array('id' => $arr['id'], 'menuId' => $menuId));

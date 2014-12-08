@@ -60,17 +60,69 @@ class CategoryModel extends RelationModel {
      */
     public function getNav() {
         $tagNav = cacheTag(Nav);
-        if (false === ($list = getCache($tagNav))) {
+        //if (false === ($html = getCache($tagNav))) {
             $where['status'] = 1;
             $where['pid'] = 0;
             $list = $this->where($where)->order('sort DESC')->relation(true)->select();
             $this->getSubNav($list);
 
-            setCache($tagNav, $list, C('CATEGORY_TTL'));
-        }
-        return $list;
+            if (false !== ($html = $this->getNavHtml($list, 1))) {
+                setCache($tagNav, $html, C('CATEGORY_TTL'));
+            } else {
+                return false;
+            }
+
+        //} else {
+            return $html;
+        //}
     }
 
+    private function getNavHtml($list, $isFirst) {
+        if (is_array($list)) {
+            $html = '';
+            foreach($list as $val) {
+                if (isset($val['subNav'])) {
+                    $html .= $this->getNavHtmlHaveChild($val, $isFirst);
+                } else {
+
+                    $html .= $this->getNavHtmlNotChild($val);
+                }
+            }
+            return $html;
+
+        } else {
+            return false;
+        }
+}
+
+    private function getNavHtmlNotChild($val) {
+        $html = '';
+        $html .=
+            '<li><a href="' .$val['url'] .'">' .$val['cname'] .'</a><li>';
+
+        return $html;
+    }
+
+    private function getNavHtmlHaveChild($val, $isFirst) {
+        $html = '';
+        $html .=
+            '<li class="';
+        if ($isFirst == 1) {
+            $html .= 'dropdown">';
+        } else {
+            $html .= 'dropdown-submenu dropdown">';
+        }
+
+        $html .=
+            '<a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="' .$val['url'] .'">' .$val['cname'] .'</a>'
+            .'<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">';
+        $html .= $this->getNavHtml($val['subNav'], 2);
+        $html .=
+            '</ul>'
+            .'</li>';
+        return $html;
+
+    }
     /**
      * @param $id
      * @return array | false

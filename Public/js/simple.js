@@ -1,4 +1,16 @@
 /**
+ * 多级菜单显示效果
+ */
+$(document).ready(function(){
+    $(".dropdown").hover(function(){
+        $(this).children("ul.dropdown-menu").css("display", "block");
+    });
+    $(".dropdown").mouseleave(function(){
+        $(this).children("ul.dropdown-menu").css("display", "none");
+    });
+});
+
+/**
   * 局部刷新DIV
   * @param url（相应url）, divId，执行局部刷新。
   * @author apacal
@@ -20,6 +32,10 @@
                 } else {
 					$("#" + divId).html(ajaxStr);
                 }
+                // reflash bg
+                //change_bg_3d('#000000', '#CCCCCC');
+                change_bg_3d('#44b549', '#2d8e31');
+                
 			}
 		});	
  } 

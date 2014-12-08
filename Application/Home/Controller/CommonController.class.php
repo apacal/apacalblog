@@ -7,24 +7,24 @@ use Think\Controller;
 class CommonController extends Controller {
 
 
-
-
+    /**
+     * empty action redirect to 404
+     */
     public function _empty() {
-   //     var_dump(C('FORBIDDEN'));
-      //  echo __ACTION__;
         redirect(C('FORBIDDEN'));
     }
 
-    /**
-     *  初始化
-     **/
     function _initialize(){
-        $this->assign('navList',D('Category')->getNav());
+        $this->assign('navHtml',D('Category')->getNav());
         $this->assign('linkList', $this->getLink());
     }
+
     /**
-     * seo 设置标题，关键字，描述，位置
-     **/
+     * @param $title
+     * @param $keywords
+     * @param $description
+     * @param $position
+     */
     public function seo($title,$keywords,$description,$position){
         $title = C('SITE_NAME'). " | $title";
         $this->assign('title',$title);
@@ -32,9 +32,10 @@ class CommonController extends Controller {
         $this->assign('description', $description.' | '.C('SITE_DESCRIPTION'));
         $this->assign('position',$position);
     }
+
     /**
-     * 获得友情链接
-     **/
+     * @return array | false;
+     */
     private function getLink() {
         $where['status'] = 1;
         $list = M('Link')->where($where)->order('sort DESC, createtime DESC')->select();

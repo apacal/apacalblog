@@ -1,4 +1,16 @@
 /**
+ * 多级菜单显示效果
+ */
+$(document).ready(function(){
+    $(".dropdown").hover(function(){
+        $(this).children("ul.dropdown-menu").css("display", "block");
+    });
+    $(".dropdown").mouseleave(function(){
+        $(this).children("ul.dropdown-menu").css("display", "none");
+    });
+});
+
+/**
   * 局部刷新DIV
   * @param url（相应url）, divId，执行局部刷新。
   * @author apacal
