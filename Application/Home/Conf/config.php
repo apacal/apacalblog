@@ -3,12 +3,13 @@ $config	=	require APP_PATH .'Common/Conf/config.php';
 $config['WEB_URL'] = '';  
 $home_config =  array(
 
+    'TMPL_CACHE_ON'                 =>              false,        // 是否开启模板编译缓存,设为false则每次都会重新编译
     'SITE_NAME'			=>          'Apacal网络日志',   //网站名字
     'SITE_NAME_BAR'     =>          '激情 程序 奋斗',
     'SITE_KEYWORDS'		=>  'zhongqingzhu 钟庆柱 Apacal Apacal网络日志 apacalblog Apacal Apacal个人博客 激情 奋斗 技术的乐趣、快乐',
     'SITE_DESCRIPTION'	=>  '分享一些对技术的思考，扯一些生活的感悟，享受技术带来的乐趣、快乐，享受编程带的乐趣、快乐。',
 
-    'DEFAULT_THEME' => 'default',
+    'DEFAULT_THEME' => 'simple',
 
     'SHOW_PAGE_TRACE'               =>              true,
     'PAGE_TRACE_SAVE'               =>              false,

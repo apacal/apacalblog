@@ -1,5 +1,8 @@
-    <div id="nav-home" class="header navbar-inverse" role="banner">
-        <div style="padding-left: 0px; padding-right: 0px; margin-right:auto; margin-left:auto; width: 100%;">
+    <div class="wrapper">
+        <img style="width:100%; height: 422px;" src="http://s.cn.bing.net/az/hprichbg/rb/HanoiVietnam_ZH-CN14680778388_1920x1080.jpg">
+    </div>
+    <div id="nav-home" class="navbar-inverse">
+        <div class="container">
             <div class="navbar-header">
                 <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
                     <span class="sr-only">{:C('SITE_NAME_BAR')}</span>
@@ -7,12 +10,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="__ROOT__/">{:C('SITE_NAME')}</a>
             </div>
             <div class="navbar-collapse collapse">
-
                 <ul class="nav navbar-nav" id="home-nav">
-                    <li><a href="__ROOT__/">首页</a></li>
+                    <li><a href="__ROOT__/">HOME</a></li>
                     {$navHtml}
                     <li><a href="{:U('book/my')}">书籍</a></li>
                     <li><a href="{:U('aboutme/my')}">About Me</a></li>
@@ -29,4 +30,8 @@
               </ul>
             </div>
         </div>
+    </div>
+
+    <div class="wrapper">
+        <img style="width:100%; height: 422px;" src="http://s.cn.bing.net/az/hprichbg/rb/HanoiVietnam_ZH-CN14680778388_1920x1080.jpg">
     </div>

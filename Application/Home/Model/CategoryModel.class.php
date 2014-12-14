@@ -114,8 +114,15 @@ class CategoryModel extends RelationModel {
         }
 
         $html .=
-            '<a id="dLabel" class="nav-a" role="button" data-toggle="dropdown" data-target="#" href="' .$val['url'] .'">' .$val['cname'] .'</a>'
-            .'<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">';
+            '<a id="dLabel" class="nav-a" role="button" data-toggle="dropdown" data-target="#" href="' .$val['url'] .'">' .$val['cname'];
+
+        if ($isFirst == 1) {
+            $html .= '<span class="caret"></span></a>';
+        } else {
+            $html .= '</a>';
+        }
+
+        $html .= '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">';
         $html .= $this->getNavHtml($val['subNav'], 2);
         $html .=
             '</ul>'
