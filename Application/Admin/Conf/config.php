@@ -29,7 +29,7 @@ $admin_config	= array(
 
     //session过期时间
     'SESSION_TTL'   =>  60*60*24*7,
-    'NoCachedDie' => true,
+    'NoCachedDie' => false,
 
 
 );

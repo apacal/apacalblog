@@ -66,7 +66,7 @@ class ArticleController extends CommonController {
             $this->error($model->getError());
         } else {
             $model->delCache($data['cid']);
-            $this->success('添加博文成功!', $this->getUrl(__CONTROLLER__.'/manage'));
+            $this->success('添加博文成功!', $this->getManageUrl(__CONTROLLER__.'/manage'));
         }
     }
     public function uploadimage() {
@@ -117,7 +117,7 @@ class ArticleController extends CommonController {
             $this->error($model->getError());
         } else {
             $model->delCache($data['cid'], $id);
-            $this->success( '更新博文成功!', $this->getUrl(CONTROLLER_NAME .'/manage') );
+            $this->success( '更新博文成功!', $this->getManageUrl(CONTROLLER_NAME .'/manage') );
         }
     }
 }

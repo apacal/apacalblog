@@ -1,1 +1,67 @@
 <extend name="Public:base" />
+<block name="content">
+    <div class="container content">
+        <div class="col-md-8 col-sm-8 col-xs-12 left">
+            <volist name="article_list" id="art_vo">
+                <article>
+                    <header>
+                        <h1 class="entry-title">
+                            <a href="{$art_vo.url}">{$art_vo.title}</a>
+                        </h1>
+                        <div class="entry-meta">
+
+                            <span class="entry-date">
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                    <time>{$art_vo.createtime|date='F d, Y', ###}</time>
+                                </a>
+                                <span class="entry-sep">&nbsp;&nbsp;/&nbsp;&nbsp;</span>
+                            </span>
+
+                            <span class="entry-author">
+                                <a href="{$art_vo.adminUrl}">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    {$art_vo.adminname}
+                                </a>
+                                <span class="entry-sep">&nbsp;&nbsp;/&nbsp;&nbsp;</span>
+                            </span>
+
+                            <span class="entry-count">
+                                <a href="#">{$art_vo.click}&nbsp;CLICK</a>
+                                <span class="entry-sep">&nbsp;&nbsp;/&nbsp;&nbsp;</span>
+                            </span>
+
+                            <span class="entry-comment">
+                                <a href="#checkComment">
+                                    <span class="glyphicon glyphicon-comment"></span>
+                                    {$art_vo.commentCount} &nbsp; comment
+                                </a>
+                            </span>
+
+                        </div>
+                    </header>
+                    <div class="entry-content">
+                        {$art_vo.content}
+                    </div>
+                    <div class="entry-more">
+
+                        <a href="{$art_vo.url}" class="more-link btn-group btn-group-lg">
+
+                            <button type="button" class="btn btn-default">
+                                    Continue reading
+                            </button>
+                        </a>
+                    </div>
+                    <div class="entry-tags tag-links">
+                        <a href="http://blog.marchtea.com/archives/tag/wordpress" rel="tag">wordpress</a>
+                        <a href="http://blog.marchtea.com/archives/tag/%e5%89%8d%e7%ab%af" rel="tag">前端</a>
+                    </div>
+
+                </article>
+            </volist>
+        </div>
+        <div class="col-md-4 col-sm-8 col-xs-12 right">
+
+        </div>
+    </div>
+</block>

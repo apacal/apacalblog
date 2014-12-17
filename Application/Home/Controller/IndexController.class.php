@@ -60,7 +60,7 @@ class IndexController extends CommonController {
         $categoryInfo = array();
         $categoryInfo['cname'] = '首页';
         $this->assign('categoryInfo', $categoryInfo);
-        $this->assign('articleList', $articleModel->getArticleList());
+        $this->assign('article_list', $articleModel->getArticleList());
         $this->assign('articleCount',$articleModel->getArticleCount());
         $this->assign('cid', 0);
         $this->assign('advertList', $advertList = $this->getAdvert());

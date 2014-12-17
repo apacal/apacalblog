@@ -37,10 +37,21 @@ class ArticleModel extends RelationModel {
                 $where['cid'] = array('in', D('Category')->getThisCategoryChildren($cid)); //得到属于$cid的所有栏目的id
             $where['status'] = 1;
             if ($page < 1) {
-                $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->field('content', true)->limit($articleShow)->select();
+                $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->limit($articleShow)->select();
             } else {
                 $first = $articleShow + ($page - 1) * $pageNum;
-                $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->field('content', true)->limit($first, $pageNum)->select();
+                $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->limit($first, $pageNum)->select();
+            }
+
+            foreach($list as &$val) {
+                $val['url'] = U('article/' .$val['id']);
+                $val['adminUrl'] = U('admin/' .$val['adminid']);
+                // <hr> is mean this is a separate to article
+                $str = strstr($val['content'], "<hr>", true);
+                if (!empty($str)) {
+                    $val['content'] = $str;
+                }
+
             }
 
             setCache($tagArticleList, $list, C('ARTICLE_TTL'));
