@@ -11,7 +11,7 @@ class ArticleController extends CommonController {
     }
 
     public function _before_edit() {
-        $this->setCategoryTree();
+        $this->setAllCategoryTree();
     }
 
     /**

@@ -6,6 +6,7 @@ namespace Admin\Controller;
 use Think\Controller;
 class AdvertController extends CommonController {
 
+    protected $manageSort = "id DESC";
     /**
      * 添加广告
      **/

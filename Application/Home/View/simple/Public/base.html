@@ -5,27 +5,44 @@
     </block>
 
     <body>
-        <block name="nav">
-            <include file="Public:nav" />
+        <block name="header-wrapper">
+            <div class="wrapper banner crossfade"data-crossfade-start="__IMG__/bg.jpg" data-crossfade-end="__IMG__/bg1.jpg" style="height: 362px">
+                <img src="__IMG__/bg1.jpg" style="width:100%;height: 100%;">
+                <div class="carousel-caption" id="header-info" style="top:15%">
+                    <div class="blog-info" style="opacity: 1;">
+                        <h3 class="blog-title">
+                            <a href="http://apacal.cn" title="Keep It Simple, Stupid — open our mind" rel="home">Keep It Simple, Stupid</a>
+                        </h3>
+                        <h4 class="blog-description">open our mind</h4>
+                    </div> <!-- /blog-info -->
+                </div>
+            </div>
         </block>
 
+        <div id="main">
+
+            <block name="nav">
+                <include file="Public:nav" />
+            </block>
 
 
-        <block name="content">
 
-        </block>
+            <block name="content">
 
-        <block name="inner_css">
+            </block>
 
-        </block>
+            <block name="inner_css">
 
-        <block name="inner_js">
+            </block>
 
-        </block>
+            <block name="inner_js">
 
-        <block name="footer">
-            <include file="Public:footer" />
-        </block>
+            </block>
+
+            <block name="footer">
+                <include file="Public:footer" />
+            </block>
+            </div>
         <block name="js">
             <script type="text/javascript">
                 $(document).ready(function(){

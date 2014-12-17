@@ -21,6 +21,21 @@ class CommonController extends Controller {
     }
 
     /**
+     * set all category select tree
+     */
+    protected function setAllCategoryTree() {
+        $where['status'] = 1;
+        $list = M('Category')->where($where)->field('id, pid, cname')->order("sort DESC, pid DESC")->select();
+        import('Org.Tree');
+        $tree=new \tree($list);
+        //格式字符串
+        $str="<option value=\$id \$selected>\$spacer\$cname</option>";
+        //返回树
+        $result = $tree->get_tree(0,$str, -1);
+        $this->assign('categoryTree', $result);
+    }
+
+    /**
      * init menu and menu position
      */
     private function initMenu() {

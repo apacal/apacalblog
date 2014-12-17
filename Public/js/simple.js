@@ -12,7 +12,67 @@ $(document).ready(function(){
         var url = $(this).attr("href");
         window.location.href = url;
     });
+    $(function(){
+        $('.crossfade').crossfade({
+            threshold: 0.5
+        });
+    });
+    $(window).bind('scroll',function(){showHeader()});
+
 });
+
+
+var opacity = 1;
+var prev = 0;
+var topSize = 15;
+
+function showHeader() {
+
+    var prev = window.prev;
+    var opacity = window.opacity;
+    var topSize = window.topSize;
+    var height = $(".wrapper").height();
+    var step = 1 / 7;
+    var topStep = 4;
+
+    var curr = $(document).scrollTop();
+    if ( 0 <= opacity && opacity <= 1 && curr != 0) {
+        if (curr >= prev) {
+            opacity -= step;
+            topSize += topStep;
+        } else {
+            opacity += step;
+            topSize -= topStep;
+        }
+    }
+    if (curr == 0) {
+        opacity = 1;
+        topSize = 15;
+    }
+
+    console.log("opacity: " + opacity);
+    console.log("prev: " + prev);
+    console.log("curr: " + curr);
+    console.log("height: " + height);
+    prev = $(document).scrollTop();
+    if (curr <= height) {
+        $(".blog-info").css("opacity", opacity);
+        $(".blog-info").css("bottom", curr / 2);
+        $("#header-info").css("top", topSize + "%");
+    } else {
+        opacity = 0;
+        topSize = 40;
+
+    }
+    window.topSize = topSize;
+    window.prev = prev;
+    window.opacity = opacity;
+
+    console.log("topSize:" + topSize);
+
+
+
+}
 
 /**
   * 局部刷新DIV
