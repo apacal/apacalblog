@@ -63,7 +63,7 @@
 </div><!-- /.mod -->
 
 
-<div class="modal fade" id="modal-insertCode" tabindex="-1" role="dialog" aria-labelledby="myModalLabeCode" aria-hidden="true">
+<div class="modal fade" id="modal-insertCode" tabindex="-1" role="dialog">
 
     <div class="modal-dialog" style="width:50%">
         <div class="modal-content">
@@ -74,15 +74,17 @@
             <div class="modal-body form-horizontal">
                 <div class="form-group">                               
 				    <div class="col-sm-12">
-                        <textarea rows="16" cols="63" id="addCode" placeholder="写入代码" style=" width: 610px; " ></textarea>
+                        <textarea rows="16" cols="63" id="code-textarea" placeholder="写入代码" style=" width: 610px; " ></textarea>
                     </div>
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-default clearCode" >清空</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" class="insertCode btn btn-primary" >添加</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" id="clear-code-textarea" class="btn btn-default" >清空</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" id="insert-code-to-editor" class="btn btn-primary" >添加</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -135,7 +137,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.mod -->
 
-        <script>
+    <script>
 
         // declare a global var range to save range
         var range;
@@ -248,11 +250,23 @@
             restoreSelection();
             var element = document.createElement('img');
             element.setAttribute('src', imageUrl);
-            //element.setAttribute('src', "http://marchteablog.qiniudn.com/wp-content/uploads/2014/04/download1.jpeg");
             insertElementAtCursor(element);
             $('#image-url').val("");//文件链接
             $('#upload-image-input').val("");
             $('#modal-insertImage').modal('hide')
+        }
+
+        function insertCodeToEditor() {
+            var code = $("#code-textarea").val();
+            code = initCodeStr(code);
+            restoreSelection();
+            var element = document.createElement('pre');
+            element.appendChild(document.createTextNode(code));
+            var ele = document.createElement('br');
+            insertElementAtCursor(ele);
+            insertElementAtCursor(element);
+            $('#code-textarea').val("");
+            $('#modal-insertCode').modal('hide');
         }
 
         $(document).ready(function(){
@@ -269,28 +283,21 @@
             $("#upload-image-to-server").on('click', insertImageToServer);
             $("#insert-image-to-editor").on('click', insertImageToEditor);
 
-            $(".insertCode").on('click',function(){  //插入代码
-                var add = $("#addCode").val();
-                add = htmlspecialchars(add);
-                add = '<pre class="highlight"> <font size="3">' + add + '</font></pre>' + '<font face="Comic Sans MS" size="3">apacal code</font>';
-			    $('#addCode').val("");
-				$("#editor1").append(add);
-                $('#modal-insertCode').modal('hide');
-            });
+            $("#insert-code-to-editor").on('click',insertCodeToEditor);
 
-            $(".clearCode").on('click',function(){ //clear代码
-			    $('#addCode').val("");
+            $("#clear-code-textarea").on('click',function(){ //clear代码
+			    $('#code-textarea').val("");
             });
 
 
         });
-        function htmlspecialchars(str)  {  
+        function initCodeStr(str)  {
             str = str.replace(/&/g, '&amp;');
             str = str.replace(/</g, '&lt;');
             str = str.replace(/>/g, '&gt;');
             return str;
         }
-        </script>
+    </script>
 
     <!-- insertFile modal -->
 	<!-- page specific plugin scripts -->
@@ -299,23 +306,24 @@
 	<script src="__ACE__/js/bootstrap-wysiwyg.min.js"></script>
 	<script type="text/javascript">
     /*  ajax 上传文件　*/
-        function uploadFileToServer(url, fileid, inputid){
-            $.ajaxFileUpload({
-                url: url,//用于文件上传的服务器端请求的Action地址
-                type: "post",//请求方法
-                secureuri: false,//一般设置为false
-                fileElementId: fileid,//文件id属性  <input type="file" id="upload" name="upload" />
-                dataType: "JSON",
-                success: function(data){
-                    var data = JSON.parse(data);
-                    if(data.code == 0) {
-                        $('#'+inputid).val(data.msg);//文件链接
-                    } else {
-                        alert(data.msg);
-                    }
+    function uploadFileToServer(url, fileid, inputid){
+        $.ajaxFileUpload({
+            url: url,//用于文件上传的服务器端请求的Action地址
+            type: "post",//请求方法
+            secureuri: false,//一般设置为false
+            fileElementId: fileid,//文件id属性  <input type="file" id="upload" name="upload" />
+            dataType: "JSON",
+            success: function(data){
+                var data = JSON.parse(data);
+                if(data.code == 0) {
+                    $('#'+inputid).val(data.msg);//文件链接
+                } else {
+                    alert(data.msg);
                 }
-            });
-        } 
+            }
+        });
+    }
+
     $(document).ready(function(){
         $("form").submit(function(e){
             $('pre').each(function() {
@@ -324,20 +332,18 @@
             $("#content").html($("#editor1").html()); 
         });
     });
-        jQuery(function($){
 
-	
+    jQuery(function($){
+
         function showErrorAlert (reason, detail) {
             var msg='';
             if (reason==='unsupported-file-type') { msg = "Unsupported format " +detail; }
             else {
                 console.log("error uploading file", reason, detail);
             }
-            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
-             '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
+            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+
+            '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
         }
-
-        //$('#editor1').ace_wysiwyg();//this will create the default editor will all buttons
 
         //but we want to change a few buttons colors for the third style
         $('#editor1').ace_wysiwyg({
@@ -347,122 +353,61 @@
                 null,
                 'fontSize',
                 null,
-                            {name:'bold', className:'btn-info'},
-                            {name:'italic', className:'btn-info'},
-                            {name:'strikethrough', className:'btn-info'},
-                            {name:'underline', className:'btn-info'},
-                            null,
-                            {name:'insertunorderedlist', className:'btn-success'},
-                            {name:'insertorderedlist', className:'btn-success'},
-                            {name:'outdent', className:'btn-purple'},
-                            {name:'indent', className:'btn-purple'},
-                            null,
-                            {name:'justifyleft', className:'btn-primary'},
-                            {name:'justifycenter', className:'btn-primary'},
-                            {name:'justifyright', className:'btn-primary'},
-                            {name:'justifyfull', className:'btn-inverse'},
-                            null,
-                            {name:'createLink', className:'btn-pink'},
-                            {name:'unlink', className:'btn-pink'},
-                            null,
-                            {name:'insertImage', className:'btn-success'},
-                            null,
-                            'insertFile',
-                            null,
-                            'insertCode',
-                            null,
-                            'foreColor',
-                            null,
-                            'backColor',
-                            null,
-                            //'backColor',
-                            {name:'undo', className:'btn-grey'},
-                            {name:'redo', className:'btn-grey'},
-                            'viewSource'
-                        ],
-                        'wysiwyg': {
-                            fileUploadError: showErrorAlert
-                        }
-                    }).prev().addClass('wysiwyg-style2');
+                {name:'bold', className:'btn-info'},
+                {name:'italic', className:'btn-info'},
+                {name:'strikethrough', className:'btn-info'},
+                {name:'underline', className:'btn-info'},
+                null,
+                {name:'insertunorderedlist', className:'btn-success'},
+                {name:'insertorderedlist', className:'btn-success'},
+                {name:'outdent', className:'btn-purple'},
+                {name:'indent', className:'btn-purple'},
+                null,
+                {name:'justifyleft', className:'btn-primary'},
+                {name:'justifycenter', className:'btn-primary'},
+                {name:'justifyright', className:'btn-primary'},
+                {name:'justifyfull', className:'btn-inverse'},
+                null,
+                {name:'createLink', className:'btn-pink'},
+                {name:'unlink', className:'btn-pink'},
+                null,
+                {name:'insertImage', className:'btn-success'},
+                null,
+                'insertFile',
+                null,
+                'insertCode',
+                null,
+                'foreColor',
+                null,
+                'backColor',
+                null,
+                //'backColor',
+                {name:'undo', className:'btn-grey'},
+                {name:'redo', className:'btn-grey'},
+                'viewSource'
+            ],
+            'wysiwyg': {
+                fileUploadError: showErrorAlert
+            }
+        }).prev().addClass('wysiwyg-style2');
 
                     
 
 
-                    $('[data-toggle="buttons"] .btn').on('click', function(e){
-                        var target = $(this).find('input[type=radio]');
-                        var which = parseInt(target.val());
-                        var toolbar = $('#editor1').prev().get(0);
-                        if(which == 1 || which == 2 || which == 3) {
-                            toolbar.className = toolbar.className.replace(/wysiwyg\-style(1|2)/g , '');
-                            if(which == 1) $(toolbar).addClass('wysiwyg-style1');
-                            else if(which == 2) $(toolbar).addClass('wysiwyg-style2');
-                        }
-                    });
+        $('[data-toggle="buttons"] .btn').on('click', function(e){
+            var target = $(this).find('input[type=radio]');
+            var which = parseInt(target.val());
+            var toolbar = $('#editor1').prev().get(0);
+            if(which == 1 || which == 2 || which == 3) {
+                toolbar.className = toolbar.className.replace(/wysiwyg\-style(1|2)/g , '');
+                if(which == 1) $(toolbar).addClass('wysiwyg-style1');
+                else if(which == 2) $(toolbar).addClass('wysiwyg-style2');
+            }
+        });
 
 
-                    
-
-                    //Add Image Resize Functionality to Chrome and Safari
-                    //webkit browsers don't have image resize functionality when content is editable
-                    //so let's add something using jQuery UI resizable
-                    //another option would be opening a dialog for user to enter dimensions.
-                    if ( typeof jQuery.ui !== 'undefined' && /applewebkit/.test(navigator.userAgent.toLowerCase()) ) {
-                        
-                        var lastResizableImg = null;
-                        function destroyResizable() {
-                            if(lastResizableImg == null) return;
-                            lastResizableImg.resizable( "destroy" );
-                            lastResizableImg.removeData('resizable');
-                            lastResizableImg = null;
-                        }
-
-                        var enableImageResize = function() {
-                            $('.wysiwyg-editor')
-                            .on('mousedown', function(e) {
-                                var target = $(e.target);
-                                if( e.target instanceof HTMLImageElement ) {
-                                    if( !target.data('resizable') ) {
-                                        target.resizable({
-                                            aspectRatio: e.target.width / e.target.height,
-                                        });
-                                        target.data('resizable', true);
-                                        
-                                        if( lastResizableImg != null ) {//disable previous resizable image
-                                            lastResizableImg.resizable( "destroy" );
-                                            lastResizableImg.removeData('resizable');
-                                        }
-                                        lastResizableImg = target;
-                                    }
-                                }
-                            })
-                            .on('click', function(e) {
-                                if( lastResizableImg != null && !(e.target instanceof HTMLImageElement) ) {
-                                    destroyResizable();
-                                }
-                            })
-                            .on('keydown', function() {
-                                destroyResizable();
-                            });
-                        }
-                        
-                        enableImageResize();
-
-                        /**
-                        //or we can load the jQuery UI dynamically only if needed
-                        if (typeof jQuery.ui !== 'undefined') enableImageResize();
-                        else {//load jQuery UI if not loaded
-                            $.getScript($path___ACE__+"/js/jquery-ui-1.10.3.custom.min.js", function(data, textStatus, jqxhr) {
-                                if('ontouchend' in document) {//also load touch-punch for touch devices
-                                    $.getScript($path___ACE__+"/js/jquery.ui.touch-punch.min.js", function(data, textStatus, jqxhr) {
-                                        enableImageResize();
-                                    });
-                                } else	enableImageResize();
-                            });
-                        }
-                        */
-                    }
 
 
-         });
+    });
 	</script>
     <include file="Public:footer" />
