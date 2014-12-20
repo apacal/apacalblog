@@ -13,20 +13,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" id="home-nav">
                     <li><a href="__ROOT__/">HOME</a></li>
-                    {$navHtml}
+                    {$nav_html}
                     <li><a href="{:U('book/my')}">书籍</a></li>
                     <li><a href="{:U('aboutme/my')}">About Me</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <form class="navbar-form" action="{:U('search/my')}" method="post" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search" name="content"  require />
-                            </div>
-                             <button type="submit" class="btn btn-default">Submit</button>
-                        </form>
-                    </li>
-              </ul>
             </div>
         </div>
     </div>

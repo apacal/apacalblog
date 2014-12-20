@@ -74,7 +74,7 @@ function deleteCache($key) {
 
 
 define("OneArticle", 0);
-define("NewlyArticleList", 1);
+define("RecentArticleList", 1);
 define("RandArticleList", 2);
 define("ArticleCount", 3);
 define("ArticleCountGroupByDate", 4);

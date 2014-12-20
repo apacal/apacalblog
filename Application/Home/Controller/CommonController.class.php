@@ -15,8 +15,8 @@ class CommonController extends Controller {
     }
 
     function _initialize(){
-        $this->assign('navHtml',D('Category')->getNav());
-        $this->assign('linkList', $this->getLink());
+        $this->assign('nav_html',D('Category')->getNav());
+        $this->assign('link_list', $this->getLink());
     }
 
     /**

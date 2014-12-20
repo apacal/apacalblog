@@ -16,7 +16,7 @@ class AdvertController extends CommonController {
             $this->error($model->getError());
         }
         $upload = D('Upload');
-        $image = $upload->upload('Advert', 3, true, 761, 427, \Think\Image::IMAGE_THUMB_CENTER);
+        $image = $upload->uploadImage('Advert', 3, true, 761, 427, \Think\Image::IMAGE_THUMB_CENTER);
         if(!$image)
             $this->error('图片不能为空！');
         $data['image'] = $image;
@@ -38,11 +38,15 @@ class AdvertController extends CommonController {
         if(empty($id) || !is_numeric($id))
             $this->error('参数错误！');
         $upload = D('Upload');
-        $image = $upload->upload('Advert', 3, true, 761, 427, \Think\Image::IMAGE_THUMB_CENTER);
-        if($image) {
+        $image = $upload->uploadImage('Advert', 3, true, 761, 427, \Think\Image::IMAGE_THUMB_CENTER);
+        if(false != $image) {
             $data['image'] = $image;
-            $src = C('UPLOAD').I('request.old-image');
-            $upload->del($src);
+            $upload->del(I('post.old-image'));
+        } else {
+            $error = $upload->getError();
+            if (!empty($error)) {
+                $this->error($error);
+            }
         }
         $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
         unset($data['createtime']);//unset createtime

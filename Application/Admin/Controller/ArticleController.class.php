@@ -69,26 +69,33 @@ class ArticleController extends CommonController {
             $this->success('添加博文成功!', $this->getManageUrl(__CONTROLLER__.'/manage'));
         }
     }
-    public function uploadimage() {
+
+    public function uploadImage() {
         $upload = D('Upload');
-        $image = $upload->upload('Article', 3, true, 750, 420);
-        if(!$image)
-            $this->error($upload->getError());
-        $image = getThunmName($image);
-        echo $image;
+        $image = $upload->uploadImage('Article', 3, true, 750, 420);
+
+        $this->jsonReturn($image, $upload->getError());
     }
+
     public function upload() {
         $upload = D('Upload');
         $file = $upload->uploadFile('Article', 12);
-        if(!$file)
-            $this->error($upload->getError());
-        //$result = array();
-        //$result['file'] = $file;
-        //var_dump($file);
-		//$this->ajaxReturn($result, 'json');
-        echo $file;
-
+        $this->jsonReturn($file, $upload->getError());
     }
+
+    protected function jsonReturn($msg, $error) {
+        $data = array();
+        if(false !== $msg) {
+            $data['msg'] = $msg;
+            $data['code'] = 0;
+        } else {
+            $data['code'] = -1;
+            $data['msg'] = $error;
+        }
+        die(json_encode($data));
+    }
+
+
     /**
      * 更新博客
      **/

@@ -86,30 +86,6 @@ class ArticleModel extends RelationModel {
     }
 
     /**
-     * get hot article list
-     * @param $cid
-     * @param string $order
-     * @param int $limit
-     * @return bool | array
-     */
-    public function getHotArticleList($cid, $order = 'sort DESC, click DESC', $limit = 5) {
-        $tagHotArticleList = cacheTag(HotArticleList,$cid);
-        if (false === ($list = getCache($tagHotArticleList))) {
-            $where['cid'] = $cid;
-            $where['status'] = 1;
-            $list = $this->where($where)->order($order)->field('content', true)->limit($limit)->select();
-            if (empty($list)) {
-                return false;
-            }
-
-            setCache($tagHotArticleList, $list, C('ARTICLE_TTL'));
-        }
-        return $list;
-
-    }
-
-
-    /**
      * get article count group by date
      * @param $count
      * @param int $cid
@@ -173,19 +149,25 @@ class ArticleModel extends RelationModel {
 
 
     /**
-     * get newly article in this category
+     * get recent article in this category
      * @param int $cid
      * @param string $order
      * @param int $limit
      * @return array|false
      */
-    public  function getNewlyArticleList($cid = 0, $order='id DESC, sort DESC', $limit = 18) {
-        $tagNewlyArticleList = cacheTag(NewlyArticleList, $cid);
+    public  function getRecentArticleList($cid = 0, $order='id DESC, sort DESC', $limit = 5) {
+        $tagNewlyArticleList = cacheTag(RecentArticleList, $cid);
         if (false === ($list = getCache($tagNewlyArticleList))) {
             $where['status'] = 1;
             if($cid != 0)
                 $where['cid'] = array('in', D('Category')->getThisCategoryChildren($cid)); //得到属于$cid的所有栏目的id
             $list = D('Article')->where($where)->relation(true)->order($order)->limit($limit)->select();
+
+            if (is_array($list)) {
+                foreach ($list as &$val) {
+                    $val['url'] = U('article/' .$val['id']);
+                }
+            }
 
             setCache($tagNewlyArticleList, $list, C('ARTICLE_TTL'));
         }

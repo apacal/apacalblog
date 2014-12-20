@@ -3,21 +3,17 @@
     <label class="col-sm-3 control-label no-padding-right" > 图片 </label>
     <empty name="vo.image">
         <div class="col-sm-9">
-            <input type="text" readonly="true" id="viewfile" onmouseout="document.getElementById('upload').style.display='none';" class="inputstyle">
-            <label for="unload" class="btn btn-xs btn-info"  onmouseover="document.getElementById('upload').style.display='block';" class="file1">点击上传图片</label>
-            <input type="file" name="image" onchange="document.getElementById('viewfile').value=this.value;this.style.display='none';" class="file" id="upload" style="display: block;left: 220px; width: 110px;">
+            <input type="file" title="选择本地文件" name="image">
         </div>
         <else />
         <div class="col-sm-9">
-            <img data-toggle="modal" data-target="#modal-image01" src="__UPLOAD__{$vo.image}" alt="暂无图片" width="100px" class="view-image img-thumbnail"></br>
+            <img data-toggle="modal" data-target="#modal-image01" src="{$vo.image}" alt="暂无图片" width="100px" class="view-image img-thumbnail"></br>
             <input type="hidden"  name="old-image" value="{$vo.image}" />
         </div>
         <div class="space-4"></div>
         <div class="col-sm-3"></div>
         <div class="col-sm-9">
-            <input type="text" readonly="true" id="viewfile" onmouseout="document.getElementById('upload').style.display='none';" class="inputstyle">
-            <label for="unload" class="btn btn-xs btn-info"  onmouseover="document.getElementById('upload').style.display='block';" class="file1">点击上传新图...</label>
-            <input type="file" name="image" onchange="document.getElementById('viewfile').value=this.value;this.style.display='none';" class="file" id="upload" style="display: block;left: 220px; width: 110px;">
+            <input type="file" title="选择新的本地文件" name="image">
         </div>
     </empty>
 </div>

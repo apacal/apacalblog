@@ -1,4 +1,8 @@
 
+$(document).ready(function(){
+    $('input[type=file]').bootstrapFileInput();
+});
+
 function checkAll() {  //全选
     var code_Values = document.getElementsByTagName("input"); 
     for(i = 0;i < code_Values.length;i++){ 
@@ -14,4 +18,6 @@ function uncheckAll() { //全不选
             code_Values[i].checked = false; 
         } 
     } 
-} 
+}
+
+

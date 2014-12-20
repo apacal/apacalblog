@@ -7,8 +7,7 @@
 * @date 2014-03-31
  */
 namespace Admin\Model;
-use Think\Model;
-class UploadModel extends Model {
+class UploadModel{
     protected $error;
     protected $info;
     public function getInfo() {
@@ -17,23 +16,28 @@ class UploadModel extends Model {
     public function getError() {
         return $this->error;
     }
+
+    public function _initialize() {
+        C('SHOW_PAGE_TRACE', false);
+    }
+
     /**
-     * 上传
+     * upload a image to server
      * @param $model
-     **/
-    public function upload($model, $maxSize = 3, $isThumb = true, $maxWidth = 360, $maxHeight = 202, $type=\Think\Image::IMAGE_THUMB_FILLED) {
-        $maxSize *= 1048576;
+     * @param int $maxSize
+     * @param bool $isThumb
+     * @param int $maxWidth
+     * @param int $maxHeight
+     * @param int $type
+     * @return bool|string
+     */
+    public function uploadImage($model, $maxSize = 3, $isThumb = true, $maxWidth = 360, $maxHeight = 202, $type=\Think\Image::IMAGE_THUMB_FILLED) {
         $upload = new \Think\Upload();
         $save_path = '/'.$model.'/image/';
-        $upload->rootPath = C('UPLOAD');
-        $upload->maxSize = $maxSize;
-        $upload->savePath = $save_path;
         $upload->exts = array('jpg', 'gif', 'png', 'jpeg');
-        $upload->saveName = 'time';
-        $upload->autoSub = true;
-        $upload->subName = array('date','Ymd');
+        $this->initUploadConfig($upload, $save_path, $maxSize);
         $this->info = $upload->upload();
-        if(!$this->info) {
+        if(false === $this->info) {
             $this->error = $upload->getError();
             return false;
         }
@@ -41,38 +45,44 @@ class UploadModel extends Model {
         $src = $info['savepath'] .$info['savename'];
         if($isThumb)
             $this->saveThumb($src, $maxWidth, $maxHeight, $type);
-        return $src;
+        return $this->genUploadUrl($src);
     }
-    /**
-     * 上传文件
-     * @param $model $maxSize 
-     **/
-    public function uploadFile($model, $maxSize = 3) {
+
+    private function genUploadUrl($src) {
+        return 'http://' .$_SERVER['SERVER_NAME'] .'/' .C('UPLOADS_DIR_NAME') .$src;
+
+    }
+    private function initUploadConfig($upload, $save_path, $maxSize) {
         $maxSize *= 1048576;
-        $upload = new \Think\Upload();
-        $save_path = '/'.$model.'/file/';
         $upload->maxSize = $maxSize;
-        $upload->rootPath = C('UPLOAD');
         $upload->savePath = $save_path;
-        $upload->exts = array('tar.gz','bz2','zip','doc', 'rar', 'gz', 'tar', 'pdf','jpg','png','gif','jpeg');
-        $upload->saveName = 'time';
+        $upload->rootPath = C('UPLOAD');
+        $upload->saveName = array('uniqid','');;
+        $upload->hash = true;
         $upload->autoSub = true;
         $upload->subName = array('date','Ymd');
+    }
+
+    public function uploadFile($model, $maxSize = 3) {
+        $upload = new \Think\Upload();
+        $save_path = '/'.$model.'/file/';
+        $this->initUploadConfig($upload, $save_path, $maxSize);
+        $upload->exts = array('tar.gz','bz2','zip','doc', 'rar', 'gz', 'tar', 'pdf','jpg','png','gif','jpeg');
         $this->info = $upload->upload();
-        //$this->info = $upload->uploadOne($_FILES['photo']);
-        if(!$this->info) {
+        if(false === $this->info) {
             $this->error = $upload->getError();
             return false;
         }
         $info = array_pop($this->info);//取出第一个
         $src = $info['savepath'] .$info['savename'];
-        return $src;
+        return $this->genUploadUrl($src);
     }
+
     /**
      * 生成缩略图
      **/
     public function saveThumb($src, $width, $height, $type) {
-        $src = C(UPLOAD).$src;
+        $src = C('UPLOAD').$src;
         $image = new \Think\Image(); 
 		if(is_file($src)){
             $image->open($src);

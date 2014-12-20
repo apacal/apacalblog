@@ -57,25 +57,10 @@ class IndexController extends CommonController {
     }
     public function index(){
         $articleModel = D('Article');
-        $categoryInfo = array();
-        $categoryInfo['cname'] = '首页';
-        $this->assign('categoryInfo', $categoryInfo);
         $this->assign('article_list', $articleModel->getArticleList());
-        $this->assign('articleCount',$articleModel->getArticleCount());
-        $this->assign('cid', 0);
-        $this->assign('advertList', $advertList = $this->getAdvert());
-        $this->assign('advertListCount', count($advertList));
-        $this->assign('hotArticleList', ($articleList = $articleModel->getNewlyArticleList()));
-        $this->assign('hotArticleCount', count($articleList));
-        $this->assign('hotTitle', '最新文章');
+        $this->assign('recent_article_list', $articleModel->getRecentArticleList());
         $this->seo('首页', NULL, NULL, NULL);
-        //var_dump($this->getArticleList());
         $this->display();
-    }
-    private function getAdvert() {
-        $where['status'] = 1;
-        $list = M('Advert')->where($where)->order('sort DESC, createtime DESC')->select();
-        return $list;
     }
 
     public function book() {

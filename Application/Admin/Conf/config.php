@@ -14,6 +14,7 @@ $admin_config	= array(
 	'ADMIN_AUTH_TYPE'			=>1,				// 默认认证类型 1 登录认证 2 实时认证
     'ADMIN_AUTH_KEY'			=>'administrator',// ADMIN认证SESSION标记
 	'ADMIN_AUTH_GATEWAY'			=>'/Public/login',	// 默认认证网关
+    'UPLOADS_DIR_NAME'           =>  'Uploads',   // upload dir name
 
     /* 模版变量设置 */
 	'TMPL_PARSE_STRING' => array(

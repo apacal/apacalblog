@@ -124,6 +124,7 @@ header a:hover{
 }
 
 
+/* blog-info */
 .blog-logo { display: inline-block; }
 
 .blog-logo a,
@@ -175,11 +176,10 @@ header a:hover{
     font-weight: 300;
 }
 
-/* 导航栏 */
 
+/* nav */
 
 #nav-container {
-    /*  filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.5;     */
     padding-top: 0px;
 }
 
@@ -193,11 +193,6 @@ header a:hover{
     font-weight: 500;
     line-height: 150%;
 }
-
-.navbar-form {
-     margin-top: 8px;
-}
-
 
 .navbar-nav>li>a {
     padding-top: 20px;
@@ -273,19 +268,79 @@ header a:hover{
     color:#fff!important;
 }
 
-ul.unstyled,
-ol.unstyled {
-    list-style: none outside none;
-    margin-left: 0px;
-    padding-left: 0px;
+
+/* right */
+@media (max-width: 800px) {
+    .right {
+        display: none;
+    }
+
 }
-#ulList {
-    list-style: none outside none;
-    margin-left: 0px;
+/* search --------------------------------------- */
+
+
+.entry-search form { position: relative; }
+
+.entry-search input { height: 52px; }
+
+.entry-search input#s {
+    -webkit-appearance: none;
+    width: 99%;
+    padding: 18px 95px 18px 18px;
+    background: #FFF;
+    border: 1px solid #DDD;
+    border-right: none;
+    font-family: 'Lato', sans-serif;
+    border-radius: 3px 0 0 3px;
+    -moz-border-radius: 3px 0 0 3px;
+    -webkit-border-radius: 3px 0 0 3px;
 }
 
-/*  滚动屏幕
-======================================================*/
+.entry-search #s:focus {
+    outline: none;
+    background: #EEE;
+    color: #444;
+}
+
+.entry-search #searchsubmit {
+    -webkit-appearance: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 85px;
+    line-height: 1;
+    border: none;
+    background: #1abc9c;
+    border: 1px solid #1abc9c;
+    color: #FFF;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Lato', sans-serif;
+    border-radius: 0 3px 3px 0;
+    -moz-border-radius: 0 3px 3px 0;
+    -webkit-border-radius: 0 3px 3px 0;
+}
+
+.entry-search #searchsubmit:hover {
+    cursor: pointer;
+    background-color: #089D80;
+    border-color: #089D80;
+}
+
+.widget {
+    padding-bottom: 15%;
+    border-bottom: 4px solid #EEE;
+    margin-bottom: 15%;
+}
+
+.recent-article > ul > li:first-child { border-top: 0; }
+
+.recent-article ul li {
+    padding: 10px 0;
+    border-top: 1px solid #EEE;
+}
+
+/*  scroll */
 #scrollBtn {
     padding-left: 0px; padding-right: 0px; 
     border: 1px solid #CCCCCC;

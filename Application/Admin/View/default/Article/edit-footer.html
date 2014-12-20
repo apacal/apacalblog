@@ -1,170 +1,274 @@
+<style>
+    .upload-network, .upload-local {
+        padding: 20px;
+        margin: 20px 0;
+        border: 1px solid #eee;
+        border-left-width: 5px;
+        border-radius: 3px;
+        border-left-color: #5bc0de;
+    }
 
-        <!-- insertFile modal ========================file===================-->
-        <div class="modal fade" id="modal-insertFile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</style>
 
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
+<!-- insert file modal -->
+<div class="modal fade" id="modal-insertFile" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3 class="modal-title" >插入文件</h3>
-              </div>
-              <div class="modal-body form-horizontal">
-
-                <div class="form-group">                               
-					<label class="col-sm-3 control-label no-padding-right" > 网络文件 </label>
-				    <div class="col-sm-7">
-                        <input class="form-control" value="" name="insertFile" id="insertFile" placeholder="URL" type="text" >                               
-                    </div>
-                </div>
-                <div class="form-group">                               
-					<label class="col-sm-3 control-label no-padding-right" > 文件说明 </label>
-				    <div class="col-sm-7">
-                        <input class="form-control" value="" name="fileint" id="fileint" placeholder="文件说明" type="text" >                               
-                    </div>
-                </div>
-                <div class="form-group">                               
-                        <span class="input-group-btn">                                  
-                            <button style="margin-left: 72%" class="btn btn-sm btn-primary insertFile" type="button"> ADD </button>                             
-                        </span>                         
-                </div> <!-- 上传文件 ======================= -->
-                <div class="form-group">                               
-                    <h4>上传本地文件</h4>
-					    <label class="col-sm-3 control-label no-padding-right" > 文件 </label>
-				        <div class="col-sm-8">
-                            <input type="text" readonly="true" id="arfile" onmouseout="document.getElementById('arupload').style.display='none';" class="inputstyle"> 
-                            <label for="unload" class="btn btn-xs btn-info"  onmouseover="document.getElementById('arupload').style.display='block';" class="file1">点击浏览...</label> 
-                            <input type="file" name="file" onchange="document.getElementById('arfile').value=this.value;this.style.display='none';" class="file" id="arupload" style="display: block; top: 0px;"> 
-                            <button style="margin-left: 6px;" class="btn btn-xs btn-primary uploadFile" type="button">上传</button>                             
+            </div>
+            <div class="modal-body form-horizontal">
+                <div class="upload-network">
+                    <h4><b>网络文件</b></h4>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" > 网络文件 </label>
+                        <div class="col-sm-7">
+                            <input class="form-control" value="" id="file-url" placeholder="URL" type="text" >
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" > 文件说明 </label>
+                        <div class="col-sm-7">
+                            <input class="form-control" value="" id="file-info" placeholder="文件说明" type="text" >
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <a><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" class="insertFile btn btn-primary" data-dismiss="modal">确定</button>
-              </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-        </div><!-- /.mod -->
 
-        <!-- insertCode modal============================Code================== -->
-        <div class="modal fade" id="modal-insertCode" tabindex="-1" role="dialog" aria-labelledby="myModalLabeCode" aria-hidden="true">
+                <div class="upload-local">
+                    <h4><b>上传本地文件</b></h4>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-xs-12 control-label no-padding-right" > 文件 </label>
+                        <div class="col-sm-8 col-xs-12">
 
-          <div class="modal-dialog" style="width:50%">
-            <div class="modal-content">
-              <div class="modal-header">
+                            <input type="file" title="选择本地文件" id="upload-file-input" name="upload-file-input">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-xs-12 control-label no-padding-right" > &nbsp; </label>
+                        <div class="col-sm-8 col-xs-12">
+                            <button id="upload-file-to-server" class="btn" type="button">上传</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" id="insert-file-to-editor" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.mod -->
+
+
+<div class="modal fade" id="modal-insertCode" tabindex="-1" role="dialog" aria-labelledby="myModalLabeCode" aria-hidden="true">
+
+    <div class="modal-dialog" style="width:50%">
+        <div class="modal-content">
+            <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3 class="modal-title" >插入代码</h3>
-              </div>
-              <div class="modal-body form-horizontal">
+            </div>
+            <div class="modal-body form-horizontal">
                 <div class="form-group">                               
 				    <div class="col-sm-12">
                         <textarea rows="16" cols="63" id="addCode" placeholder="写入代码" style=" width: 610px; " ></textarea>
                     </div>
                 </div>
-              </div>
+            </div>
 
-              <div class="modal-footer">
+            <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <button type="button" class="btn btn-default clearCode" >清空</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <button type="button" class="insertCode btn btn-primary" >添加</button>
-              </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-        </div><!-- /.mod -->
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.mod -->
 
-        <!-- insertImage modal ===============================Image=============-->
-        <div class="modal fade" id="modal-insertImage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
+<div class="modal fade" id="modal-insertImage" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3 class="modal-title" >插入图片</h3>
-              </div>
-              <div class="modal-body form-horizontal">
-
-                <div class="form-group">                               
-					<label class="col-sm-3 control-label no-padding-right" > 网络图片 </label>
-				    <div class="col-sm-7">
-                        <input class="form-control" value="" name="insertImage" id="insertImage" placeholder="URL" type="text" >                               
+            </div>
+            <div class="modal-body form-horizontal">
+                <div class="upload-network">
+                    <h4><b>网络图片</b></h4>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" > 网络图片 </label>
+                        <div class="col-sm-7">
+                            <input class="form-control" value="" id="image-url" placeholder="URL" type="text" >
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">                               
-                        <span class="input-group-btn">                                  
-                            <button style="margin-left: 72%" class="btn btn-sm btn-primary insertImage" type="button"> ADD </button>                             
-                        </span>                         
-                </div> <!-- 上传图片 ======================= -->
-                <div class="form-group">                               
-                    <h4>上传本地图片</h4>
-					    <label class="col-sm-3 control-label no-padding-right" > 图片 </label>
-				        <div class="col-sm-8">
-                            <input type="text" readonly="true" id="arimage" onmouseout="document.getElementById('imageupload').style.display='none';" class="inputstyle"> 
-                            <label for="unload" class="btn btn-xs btn-info"  onmouseover="document.getElementById('imageupload').style.display='block';" class="file1">点击浏览...</label> 
-                            <input type="file" name="imageupload" onchange="document.getElementById('arimage').value=this.value;this.style.display='none';" class="file" id="imageupload" style="display: block; top: 0px;"> 
-                            <button style="margin-left: 6px;" class="btn btn-xs btn-primary uploadImage" type="button">上传</button>                             
+
+                <div class="upload-local">
+                    <h4><b>上传本地图片</b></h4>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-xs-12 control-label no-padding-right" > 图片 </label>
+                        <div class="col-sm-8 col-xs-12">
+
+                            <input type="file" title="选择本地图片" id="upload-image-input" name="upload-image-input">
                         </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-xs-12 control-label no-padding-right" > &nbsp; </label>
+                        <div class="col-sm-8 col-xs-12">
+                            <button id="upload-image-to-server" class="btn" type="button">上传</button>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <a><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" class="insertImage btn btn-primary" data-dismiss="modal">确定</button>
-              </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-        </div><!-- /.mod -->
-        <script> //插入文件js
-        $(document).ready(function(){
-            //排序值加减按钮
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" id="insert-image-to-editor" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.mod -->
+
+        <script>
+
+        // declare a global var range to save range
+        var range;
+        function insertElementAtCursor(element) {
+            var sel, range;
+            if (window.getSelection) {
+                sel = window.getSelection();
+                if (sel.getRangeAt && sel.rangeCount) {
+                    range = sel.getRangeAt(0);
+                    range.deleteContents();
+                    range.insertNode( element );
+                }
+            } else if (document.selection && document.selection.createRange) {
+                // 原始IE是下句，　后面的没有测试不知道能否使用
+                //document.selection.createRange().text = text;
+                document.selection.createRange().insertNode(element);
+            }
+        }
+
+
+        $(".test").click(function(){
+            restoreSelection();
+            var element = document.createElement('b');
+            element.appendChild(document.createTextNode("fffffff"));
+            insertElementAtCursor(element);
+        });
+
+        // save selection to window.range
+        function saveSelection() {
+            if (window.getSelection) {
+                sel = window.getSelection();
+                if (sel.getRangeAt && sel.rangeCount) {
+                    window.range = sel.getRangeAt(0);
+                }
+            } else if (document.selection && document.selection.createRange) {
+                window.range =  document.selection.createRange();
+            }
+        }
+
+        // restore selection from window.range
+        function restoreSelection() {
+            if (window.range) {
+                if (window.getSelection) {
+                    sel = window.getSelection();
+                    sel.removeAllRanges();
+                    sel.addRange(window.range);
+                } else if (document.selection && window.range.select) {
+                    window.range.select();
+                }
+            }
+        }
+
+        function initEditorPage() {
+            // sort btn
             var sortstr = "{$vo.sort}";
             var sort = Number(sortstr);
             $('#sort').ace_spinner({value: sort ,min:-500,max:500,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
-            //$('#sort').val(sort);
-            
+
             var status = "{$vo.status}"; //设置初始状态
-            if (status == 1) { //状态位一
+            if (status == 1) {
                 document.getElementById("status").checked=true
             }
 
-            $(".insertFile").on('click', function(){ //添加文件
-			    $('#insertFile').attr('value',$(this).attr('insertFile'));//文件链接
-			    $('#fileint').attr('value',$(this).attr('fileint')); //文件说明
-                var add = $("#insertFile").val();
-                var content = $("#fileint").val();
-                if(content == '') {
-			        $('#fileint').focus();
-                    alert("说明必须!");
-                    return false;
-                }
-                if(add == '') {
-			        $('#insertFile').focus();
-                    alert("文件必须!");
-                    return false;
-                }
-                add = '<a href="__UPLOAD__' + add + '">' + content + '</a>';
-				$("#editor1").append(add);
-			    $('#insertFile').val("");//文件链接
-			    $('#fileint').val("");//文件链接
-			    $('#arfile').val("");//文件链接
-                $('#modal-insertFile').modal('hide')
+        }
+
+        function insertFileToServer() {
+            var url = "{:U('Article/upload')}";
+            uploadFileToServer(url, 'upload-file-input', 'file-url');
+        }
+
+        function insertFileToEditor() {
+            var fileUrl = $("#file-url").val();
+            var fileInfo = $("#file-info").val();
+            if(fileInfo == '') {
+                $('#file-info').focus();
+                alert("说明必须!");
+                return false;
+            }
+            if(fileUrl == '') {
+                $('#file-url').focus();
+                alert("文件必须!");
+                return false;
+            }
+
+            restoreSelection();
+            var element = document.createElement('a');
+            element.setAttribute('href', fileUrl);
+            element.appendChild(document.createTextNode(fileInfo));
+            insertElementAtCursor(element);
+
+            $('#file-url').val("");//文件链接
+            $('#file-info').val("");//文件
+            $('#upload-file-input').val("");
+            $('#modal-insertFile').modal('hide')
+        }
+
+        function insertImageToServer() {
+            var url = "{:U('Article/uploadImage')}";
+            uploadFileToServer(url, 'upload-image-input', 'image-url');
+        }
+
+        function insertImageToEditor() {
+            var imageUrl = $('#image-url').val();
+            if(imageUrl == '') {
+                $('#image-url').focus();
+                alert("图片必须!");
+                return false;
+            }
+
+            restoreSelection();
+            var element = document.createElement('img');
+            element.setAttribute('src', imageUrl);
+            //element.setAttribute('src', "http://marchteablog.qiniudn.com/wp-content/uploads/2014/04/download1.jpeg");
+            insertElementAtCursor(element);
+            $('#image-url').val("");//文件链接
+            $('#upload-image-input').val("");
+            $('#modal-insertImage').modal('hide')
+        }
+
+        $(document).ready(function(){
+            // when mouseleave to saveSelection
+            $("#editor1").mouseleave(function(){
+                saveSelection();
             });
-            $(".uploadFile").on('click', function(){ //上传文件
-                var url = "__MODULE__/Article/upload";
-                articleupload(url, 'arupload', 'insertFile');
-            });
-            $(".insertImage").on('click', function(){ //添加图片
-			    $('#insertImage').attr('value',$(this).attr('insertImage'));//图片
-                var add = $("#insertImage").val();
-                if(add == '') {
-			        $('#insertImage').focus();
-                    alert("图片必须!");
-                    return false;
-                }
-                add = '<img class="view-image" src="__UPLOAD__' + add + '">' + '<div><font face="Comic Sans MS" size="3">apacal image</font></div>';
-				$("#editor1").append(add);
-			    $('#insertImage').val("");//文件链接
-			    $('#arimage').val("");//文件链接
-                $('#modal-insertImage').modal('hide')
-            });
+
+            initEditorPage();
+
+            $("#upload-file-to-server").on('click', insertFileToServer); //上传文件
+            $("#insert-file-to-editor").on('click', insertFileToEditor);
+
+            $("#upload-image-to-server").on('click', insertImageToServer);
+            $("#insert-image-to-editor").on('click', insertImageToEditor);
+
             $(".insertCode").on('click',function(){  //插入代码
                 var add = $("#addCode").val();
                 add = htmlspecialchars(add);
@@ -173,13 +277,12 @@
 				$("#editor1").append(add);
                 $('#modal-insertCode').modal('hide');
             });
+
             $(".clearCode").on('click',function(){ //clear代码
 			    $('#addCode').val("");
             });
-            $(".uploadImage").on('click', function(){ //上传图片
-                var url = "__MODULE__/Article/uploadimage";
-                articleupload(url, 'imageupload', 'insertImage');
-            });
+
+
         });
         function htmlspecialchars(str)  {  
             str = str.replace(/&/g, '&amp;');
@@ -196,15 +299,20 @@
 	<script src="__ACE__/js/bootstrap-wysiwyg.min.js"></script>
 	<script type="text/javascript">
     /*  ajax 上传文件　*/
-        function articleupload(url, fileid, inputid){
+        function uploadFileToServer(url, fileid, inputid){
             $.ajaxFileUpload({
                 url: url,//用于文件上传的服务器端请求的Action地址
                 type: "post",//请求方法
                 secureuri: false,//一般设置为false
                 fileElementId: fileid,//文件id属性  <input type="file" id="upload" name="upload" />
                 dataType: "JSON",
-                success: function(msg){
-			        $('#'+inputid).val(msg);//文件链接
+                success: function(data){
+                    var data = JSON.parse(data);
+                    if(data.code == 0) {
+                        $('#'+inputid).val(data.msg);//文件链接
+                    } else {
+                        alert(data.msg);
+                    }
                 }
             });
         } 
