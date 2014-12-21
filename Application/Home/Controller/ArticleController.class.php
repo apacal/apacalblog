@@ -4,10 +4,6 @@ namespace Home\Controller;
 use Home\Model\ArticleModel;
 use Think\Controller;
 class ArticleController extends CommonController {
-
-
-
-
     public function index(){
         $cid = I('request.cid');
         //var_dump($cid);
@@ -53,22 +49,24 @@ class ArticleController extends CommonController {
 
     public function view(){
         $id = I('request.id');
-        //$model = D('Article');
-        $model = new ArticleModel();
         if(empty($id) || !is_numeric($id)) {
             $this->error("参数错误!");
         }
 
+        $model = new ArticleModel();
         $article = $model->getOneArticle($id);
         if(!empty($article)) {
-            $this->assign('article', $article);
-
-            $this->assign('article_list', $model->getArticleList($article['cid']));
+            $this->assign('art_vo', $article);
             $this->assign('recent_article_list',$model->getRecentArticleList($article['cid']));
             $this->assign('archives_list', $model->getArticleListGroupByDate($article['cid']));
+
             // readNext
-            $readNext = $model->getReadNextAndPrev($article['cid'], $article['createtime']);
-            $this->assign('articleList', $readNext);
+            $next = $model->getNextArticle($article['cid'], $article['createtime']);
+            $this->assign('next', $next);
+
+            $prev = $model->getPrevArticle($article['cid'], $article['createtime']);
+            $this->assign('prev', $prev);
+
 
             // 评论
             M('Article')->where('id='.$id)->setInc('click');

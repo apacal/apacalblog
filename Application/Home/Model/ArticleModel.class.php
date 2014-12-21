@@ -1,5 +1,7 @@
 <?php
 namespace Home\Model;
+use Admin\Model\AdminModel;
+use Admin\Model\TermModel;
 use Think\Model\RelationModel;
 class ArticleModel extends RelationModel {
 
@@ -33,8 +35,9 @@ class ArticleModel extends RelationModel {
 		$articleShow = C('ARTICLE_SHOWNUM');
         $tagArticleList = cacheTag(ArticleList, $cid, $page);
         if (false === ($list = getCache($tagArticleList))) {
-            if($cid !=0)
-                $where['cid'] = array('in', D('Category')->getThisCategoryChildren($cid)); //得到属于$cid的所有栏目的id
+            if($cid !=0) {
+                $where['cid'] = array('in', (new CategoryModel())->getThisCategoryChildren($cid));
+            }
             $where['status'] = 1;
             if ($page < 1) {
                 $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->limit($articleShow)->select();
@@ -43,16 +46,7 @@ class ArticleModel extends RelationModel {
                 $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->limit($first, $pageNum)->select();
             }
 
-            foreach($list as &$val) {
-                $val['url'] = U('article/' .$val['id']);
-                $val['adminUrl'] = U('admin/' .$val['adminid']);
-                // <hr> is mean this is a separate to article
-                $str = strstr($val['content'], "<hr>", true);
-                if (!empty($str)) {
-                    $val['content'] = $str;
-                }
-
-            }
+            $this->getExtendInfoForArticle($list, true, true);
 
             setCache($tagArticleList, $list, C('ARTICLE_TTL'));
 
@@ -60,6 +54,8 @@ class ArticleModel extends RelationModel {
         }
         return $list;
     }
+
+
 
     /**
      * get a articel && set cache
@@ -74,11 +70,8 @@ class ArticleModel extends RelationModel {
             $article = $this->where($where)->relation(true)->find();
             if(empty($article))
                 return false;
-            $article['commentCount'] =  (int)D('Comment')->getCommentCount($article['id'], $article['cid']);
-            $admin = M('Admin')->where(array('adminid' => $article['adminid']))->find();
-            $article['adminname'] = $admin['adminname'];
-            $article['adminimage'] = $admin['image'];
 
+            $this->getExtendInfoForArticle($article);
             setCache($tagArticle, $article, C('ARTICLE_TTL'));
 
         }
@@ -95,16 +88,19 @@ class ArticleModel extends RelationModel {
         if (false === ($list = getCache($tagDateArticel))) {
 
             if ($cid == 0) { //全部文章
-                $list = $this->query("SELECT COUNT(FROM_UNIXTIME(createtime,'%Y-%m')) AS count,FROM_UNIXTIME(createtime,'%Y%m') AS time, FROM_UNIXTIME(createtime,'%M %Y') AS title  FROM `".C('DB_PREFIX')."article`  where status=1 GROUP BY time ORDER BY time DESC");
+                $cidCondition = "";
             } else {
                 $where['cid'] = $cid;
-                $allCid =  D('Category')->getThisCategoryChildren($cid); //得到属于$cid的所有栏目的id
+                $allCid =  (new CategoryModel())->getThisCategoryChildren($cid);
                 $allcid = implode(",", $allCid);
-                $list = $this->query("SELECT COUNT(FROM_UNIXTIME(createtime,'%Y-%m')) AS count,FROM_UNIXTIME(createtime,'%Y%m') AS time,  FROM_UNIXTIME(createtime,'%M %Y') AS title  FROM `".C('DB_PREFIX')."article`  where status=1 and cid in (".$allcid.") GROUP BY time ORDER BY time DESC");
+                $cidCondition = " and cid in ($allcid) ";
             }
+
+            $list = $this->query("SELECT COUNT(FROM_UNIXTIME(createtime,'%Y-%m')) AS count,FROM_UNIXTIME(createtime,'%Y%m') AS time, FROM_UNIXTIME(createtime,'%M %Y') AS title  FROM `".C('DB_PREFIX')."article`  where status=1" .$cidCondition ." GROUP BY time ORDER BY time DESC");
+
             foreach($list as &$value) {
                 $value['cid'] = $cid;
-                $value['url'] = U('Article/date', array('cid' => $value['cid'], 'time' => $value['time']));
+                $value['url'] = U('date/'.$value['cid'] .'/' .$value['time']);
             }
 
             setCache($tagDateArticel, $list, C('ARTICLE_TTL'));
@@ -112,37 +108,32 @@ class ArticleModel extends RelationModel {
         return $list;
     }
 
-    /**
-     * get two next article and one prev article
-     * @param $cid
-     * @param $createtime
-     * @return false | array
-     */
-    public function getReadNextAndPrev($cid, $createtime) {
-        $tagNextAndPrev = cacheTag(ReadNextAndPrev, $cid, $createtime);
-        if (false === ($list = getCache($tagNextAndPrev))) {
+    public function getNextArticle($cid, $createtime) {
+        $tagNextArticle = cacheTag(NextArticle, $cid, $createtime);
+        if (false === ($next = getCache($tagNextArticle))) {
+            $where['cid'] = $cid;
+            $where['status'] = 1;
+            $where['createtime'] = array('gt', $createtime);
+            $next = $this->where($where)->relation(true)->order('createtime DESC')->field('content', true)->find();
+
+            setCache($tagNextArticle, $next, C('ARTICLE_TTL'));
+
+        }
+        return $next;
+    }
+
+    public function getPrevArticle($cid, $createtime) {
+        $tagPrevArticle = cacheTag(PrevArticle, $cid, $createtime);
+        if (false === ($next = getCache($tagPrevArticle))) {
             $where['cid'] = $cid;
             $where['status'] = 1;
             $where['createtime'] = array('lt', $createtime);
-            $prev = $this->where($where)->relation(true)->order('createtime DESC')->field('content', true)->find();
-            $where['createtime'] = array('gt', $createtime);
-            $next = $this->where($where)->relation(true)->order('createtime DESC')->field('content', true)->limit(2)->select();
+            $next = $this->where($where)->relation(true)->order('createtime DESC')->field('content', true)->find();
 
-            $list = array();
-            if(!empty($prev)) {
-                $list[] = $prev;
-            }
-
-            if(!empty($next)) {
-                foreach ($next as $value) {
-                    $list[] = $value;
-                }
-            }
-
-            setCache($tagNextAndPrev, $list, C('ARTICLE_TTL'));
+            setCache($tagPrevArticle, $next, C('ARTICLE_TTL'));
 
         }
-        return $list;
+        return $next;
     }
 
 
@@ -173,26 +164,6 @@ class ArticleModel extends RelationModel {
     }
 
     /**
-     * get rand article in this category
-     * @param int $cid
-     * @param string $order
-     * @param int $limit
-     * @return array|false
-     */
-    public function getRandArticleList($cid = 0, $order='sort DESC, id DESC', $limit = 18) {
-        $tagRandArticleList = cacheTag(RandArticleList, $cid);
-        if (false === ($list = getCache($tagRandArticleList))) {
-            $where['status'] = 1;
-            if($cid != 0)
-                $where['cid'] = array('in', D('Category')->getThisCategoryChildren($cid)); //得到属于$cid的所有栏目的id
-            $list = D('Article')->where($where)->relation(true)->order($order)->limit($limit)->select();
-
-            setCache($tagRandArticleList, $list, C('ARTICLE_TTL'));
-        }
-        return $list;
-    }
-
-    /**
      * get article's count number in this category
      * @param int $cid
      * @return int | false
@@ -208,6 +179,52 @@ class ArticleModel extends RelationModel {
             setCache($tagArticleCount, $count, C('ARTICLE_TTL'));
         }
         return $count;
+    }
+
+    private function buildTags($objectId) {
+        $Terms = new TermModel();
+        $tags = $Terms->getTermsByObjectIdAndTaxonomy('Article', $objectId);
+        foreach($tags as &$val) {
+            $val['url'] = U('tag/' .$val['name']);
+        }
+        return $tags;
+
+    }
+
+    /**
+     * extend info for article, include tags, comment count, author name
+     * @param &$articles  | array | mixed array
+     */
+    private function getExtendInfoForArticle(&$articles, $isMixed = false, $isStrstrContent = false) {
+        $Comment = new CommentModel();
+        $temp = true;
+        // if is not a array, become a array and sign it
+        if ($isMixed == false) {
+            $temp = array();
+            $temp[] = $articles;
+            $articles = $temp;
+        }
+
+        foreach($articles as &$val) {
+            $val['commentCount'] =  (int)$Comment->getCommentCount($val['id'], $val['cid']);
+            $val['url'] = U('article/' .$val['id']);
+
+            $val['tags'] = $this->buildTags($val['id']);
+            $val['adminUrl'] = U('admin/' .$val['adminid']);
+
+            if ($isStrstrContent == true) {
+                $str = strstr($val['content'], "<hr>", true);
+                if (!empty($str)) {
+                    $val['content'] = $str;
+                }
+            }
+        }
+
+        // restore not to array
+        if (false === $isMixed) {
+            $articles = $articles[0];
+        }
+
     }
 }
 ?>

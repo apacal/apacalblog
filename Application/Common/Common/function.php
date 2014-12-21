@@ -79,7 +79,8 @@ define("RandArticleList", 2);
 define("ArticleCount", 3);
 define("ArticleCountGroupByDate", 4);
 define("ArticleList", 5);
-define("ReadNextAndPrev", 6);
+define("PrevArticle", 6);
+define("NextArticle", 16);
 define("ControllerNameByCategory", 7);
 define("Position", 8);
 define("Nav", 9);
@@ -90,21 +91,13 @@ define("CommentCount", 12);
 define("NoteList", 14);
 
 function cacheTag() {
-    try {
-        $args = func_get_args();
-        if (empty($args)) {
-            throw new Exception('loss args');
-        }
-        $tag = '';
-        foreach($args as $val) {
-            $tag .= $val .'_';
-        }
-        $tag = trim($tag, '_');
-        return $tag;
-
-    } catch(Exception $e) {
-        echo 'Caught exception: ',  $e->getMessage(), "\n";
+    $args = func_get_args();
+    $tag = '';
+    foreach($args as $val) {
+        $tag .= $val .'_';
     }
+    $tag = trim($tag, '_');
+    return $tag;
 }
 
 

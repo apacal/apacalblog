@@ -39,7 +39,8 @@ $home_config =  array(
             'catearticle/:cid\d'        =>      'Article/index', //文章栏目
             'catenote/:cid\d'           =>      'Note/index',
             'article/:id\d'             =>      'Article/view', // article/id => Article/view/id/$id
-            'category/:cid\d'           =>      'Category/index', 
+            'tag/:name\d'             =>      'Article/tag',
+            'category/:cid\d'           =>      'Category/index',
             'date/:cid/:time'           =>      'Article/dateArc', 
             'admin/:adminid\d'          =>      'User/admin',
             'search/my'                 =>      'Index/search',

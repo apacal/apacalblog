@@ -1,0 +1,36 @@
+<header>
+    <h1 class="entry-title">
+        <a href="{$art_vo.url}">{$art_vo.title}</a>
+    </h1>
+    <div class="entry-meta">
+
+        <span class="entry-date">
+            <a href="{$art_vo.url}">
+                <span class="glyphicon glyphicon-time"></span>
+                <time>{$art_vo.createtime|date='F d, Y', ###}</time>
+            </a>
+            <span class="entry-sep">&nbsp;&nbsp;/&nbsp;&nbsp;</span>
+        </span>
+
+        <span class="entry-author">
+            <a href="{$art_vo.adminUrl}">
+                <span class="glyphicon glyphicon-user"></span>
+                {$art_vo.adminname}
+            </a>
+            <span class="entry-sep">&nbsp;&nbsp;/&nbsp;&nbsp;</span>
+        </span>
+
+        <span class="entry-count">
+            <a href="{$art_vo.url}">{$art_vo.click}&nbsp;CLICK</a>
+            <span class="entry-sep">&nbsp;&nbsp;/&nbsp;&nbsp;</span>
+        </span>
+
+        <span class="entry-comment">
+            <a href="{$art_vo.url}#respond">
+                <span class="glyphicon glyphicon-comment"></span>
+                {$art_vo.commentCount} &nbsp; comment
+            </a>
+        </span>
+
+    </div>
+</header>
