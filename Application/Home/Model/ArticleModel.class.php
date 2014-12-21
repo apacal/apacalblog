@@ -66,7 +66,7 @@ class ArticleModel extends RelationModel {
      * @param $id
      * @return false | array
      */
-    public function getArticle($id) {
+    public function getOneArticle($id) {
         $tagArticle = cacheTag(OneArticle, $id);
         if (false === ($article = getCache($tagArticle))) {
             $where['id'] = $id;
@@ -86,31 +86,29 @@ class ArticleModel extends RelationModel {
     }
 
     /**
-     * get article count group by date
-     * @param $count
+     * get article List group by date
      * @param int $cid
      * @return bool | array
      */
-    public function getArticleCountGroupByDate(&$count, $cid = 0) {
+    public function getArticleListGroupByDate($cid = 0) {
         $tagDateArticel = cacheTag(ArticleCountGroupByDate,$cid);
         if (false === ($list = getCache($tagDateArticel))) {
 
             if ($cid == 0) { //全部文章
-                $list = $this->query("SELECT COUNT(FROM_UNIXTIME(createtime,'%Y-%m')) AS count,FROM_UNIXTIME(createtime,'%Y-%m') AS time FROM `".C('DB_PREFIX')."article`  where status=1 GROUP BY time ORDER BY time DESC");
+                $list = $this->query("SELECT COUNT(FROM_UNIXTIME(createtime,'%Y-%m')) AS count,FROM_UNIXTIME(createtime,'%Y%m') AS time, FROM_UNIXTIME(createtime,'%M %Y') AS title  FROM `".C('DB_PREFIX')."article`  where status=1 GROUP BY time ORDER BY time DESC");
             } else {
                 $where['cid'] = $cid;
                 $allCid =  D('Category')->getThisCategoryChildren($cid); //得到属于$cid的所有栏目的id
                 $allcid = implode(",", $allCid);
-                $list = $this->query("SELECT COUNT(FROM_UNIXTIME(createtime,'%Y-%m')) AS count,FROM_UNIXTIME(createtime,'%Y-%m') AS time FROM `".C('DB_PREFIX')."article`  where status=1 and cid in (".$allcid.") GROUP BY time ORDER BY time DESC");
+                $list = $this->query("SELECT COUNT(FROM_UNIXTIME(createtime,'%Y-%m')) AS count,FROM_UNIXTIME(createtime,'%Y%m') AS time,  FROM_UNIXTIME(createtime,'%M %Y') AS title  FROM `".C('DB_PREFIX')."article`  where status=1 and cid in (".$allcid.") GROUP BY time ORDER BY time DESC");
             }
             foreach($list as &$value) {
                 $value['cid'] = $cid;
+                $value['url'] = U('Article/date', array('cid' => $value['cid'], 'time' => $value['time']));
             }
 
             setCache($tagDateArticel, $list, C('ARTICLE_TTL'));
         }
-
-        $count = count($list);
         return $list;
     }
 

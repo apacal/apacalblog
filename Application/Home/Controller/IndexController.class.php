@@ -2,19 +2,14 @@
 namespace Home\Controller;
 use Think\Controller;
 class IndexController extends CommonController {
+
     public function search() {
         $list = $this->getSearch();
         $this->assign('articleCount', count($list));
         $this->assign('articleList', $list);
         $this->display();
     }
-    /* ===========================================================================*/
-    /**
-        * @brief getSearch   获得查询的信息
-        *
-        * @returns  $list
-     */
-    /* ===========================================================================*/
+
     protected function getSearch() {
         $content = I('post.content');
         //$content = $_REQUEST['content'];
@@ -38,15 +33,7 @@ class IndexController extends CommonController {
         //var_dump($result);
         return $result;
     }
-    /* ===========================================================================*/
-    /**
-        * @brief setSearch 标记查询内容
-        *
-        * @param    $list
-        *
-        * @returns  
-     */
-    /* ===========================================================================*/
+
     protected function setSearch(&$list, $col, $content) {
         $replace = "<code>$content</code>";
         foreach($list as &$val) {
@@ -55,10 +42,12 @@ class IndexController extends CommonController {
             }
         }
     }
+
     public function index(){
         $articleModel = D('Article');
         $this->assign('article_list', $articleModel->getArticleList());
         $this->assign('recent_article_list', $articleModel->getRecentArticleList());
+        $this->assign('archives_list', $articleModel->getArticleListGroupByDate());
         $this->seo('首页', NULL, NULL, NULL);
         $this->display();
     }

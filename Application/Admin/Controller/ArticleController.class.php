@@ -3,6 +3,9 @@
  * Article控制器
  **/
 namespace Admin\Controller;
+use Admin\Model\ArticleModel;
+use Admin\Model\TermModel;
+use Admin\Model\UploadModel;
 use Think\Controller;
 class ArticleController extends CommonController {
 
@@ -11,6 +14,19 @@ class ArticleController extends CommonController {
     }
 
     public function _before_edit() {
+        $model = new TermModel();
+        $tags = $model->getTermsByObjectIdAndTaxonomy(CONTROLLER_NAME, $_REQUEST['id']);
+        if(is_array($tags)) {
+            $new = array();
+            foreach($tags as $val) {
+                $new[] = $val['name'];
+            }
+            $tags = json_encode($new);
+
+        }
+        $this->assign('tags', $tags);
+        $systemTags = $model->getTermsByTaxonomy(CONTROLLER_NAME);
+        $this->assign('system_tags', $systemTags);
         $this->setAllCategoryTree();
     }
 
@@ -41,44 +57,16 @@ class ArticleController extends CommonController {
         return U(CONTROLLER_NAME .'/manage', array('cid' => $cid, 'menuId' => $menuId));
     }
 
-    /**
-     * 添加博客
-     **/
-    public function insert() {
-        $model= D('Article');
-        if(!($data = $model->create())) {
-            $this->error($model->getError());
-        }
-        $upload = D('Upload');
-        $image = $upload->upload('Article');
-        if(!$image){
-            $this->error('图片不能为空！');
-            //$this->error($upload->getError());
-        }
-        $data['image'] = $image;
-        $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
-        $data['content'] = $_REQUEST['content'];
-        if(empty($data['source'])){
-            $data['source'] = $data['source_url'] =0;
-        }
-        //$data['content'] = str_replace(array('<div>','</div>'), '', $data['content']);
-        if(!$model->add($data)) {
-            $this->error($model->getError());
-        } else {
-            $model->delCache($data['cid']);
-            $this->success('添加博文成功!', $this->getManageUrl(__CONTROLLER__.'/manage'));
-        }
-    }
 
     public function uploadImage() {
-        $upload = D('Upload');
+        $upload = new UploadModel();
         $image = $upload->uploadImage('Article', 3, true, 750, 420);
 
         $this->jsonReturn($image, $upload->getError());
     }
 
     public function upload() {
-        $upload = D('Upload');
+        $upload = new UploadModel();
         $file = $upload->uploadFile('Article', 12);
         $this->jsonReturn($file, $upload->getError());
     }
@@ -97,35 +85,70 @@ class ArticleController extends CommonController {
 
 
     /**
+     * 添加博客
+     **/
+    public function insert() {
+        $model= new ArticleModel();
+        if(!($data = $model->create())) {
+            $this->error($model->getError());
+        }
+        $this->initPostData($data);
+        if(empty($data['source'])){
+            $data['source'] = $data['source_url'] =0;
+        }
+        if(false === ($id = $model->add($data))) {
+            $this->error($model->getError());
+        } else {
+            $this->saveTags($id);
+            $this->success('添加博文成功!', $this->getManageUrl(__CONTROLLER__.'/manage'));
+        }
+    }
+
+    protected function initPostData(&$data) {
+        $upload = new UploadModel();
+        $image = $upload->uploadImage('Article');
+        if($image != false){
+            $data['image'] = $image;
+        }
+        $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
+        $data['content'] = $_REQUEST['content'];
+        if(empty($data['source'])){
+            $data['source'] = $data['source_link'] =0;
+        }
+
+    }
+    /**
      * 更新博客
      **/
     public function update() {
-        $model= D('Article');
+        $model= new ArticleModel();
         if(!($data = $model->create())) {
             $this->error($model->getError());
         }
         $id = I('request.id');
-        if(empty($id) || !is_numeric($id))
+        if(empty($id) || !is_numeric($id)) {
             $this->error('参数错误！');
-        $upload = D('Upload');
-        $image = $upload->upload('Article');
-        if($image) {
-            $data['image'] = $image;
-            $src = C('UPLOAD').I('request.old-image');
-            $upload->del($src);
         }
-        $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
+        $this->initPostData($data);
+
         $where['id'] = $id;
-        $data['content'] = $_REQUEST['content'];
         unset($data['createtime']);//unset createtime
-       // $data['content'] = str_replace(array('<div>','</div>'), '', $data['content']);
-       //var_dump($data);
         if(!$model->where($where)->save($data)) {
             $this->error($model->getError());
         } else {
-            $model->delCache($data['cid'], $id);
+            $this->saveTags($id);
             $this->success( '更新博文成功!', $this->getManageUrl(CONTROLLER_NAME .'/manage') );
         }
+    }
+
+    protected function saveTags($id) {
+        $terms = new TermModel();
+        $tags = json_decode($_REQUEST['tags']);
+        if (is_array($tags)) {
+            $terms->saveTerms(CONTROLLER_NAME, $id, $tags);
+        }
+
+
     }
 }
 

@@ -333,10 +333,17 @@ header a:hover{
     margin-bottom: 15%;
 }
 
-.recent-article > ul > li:first-child { border-top: 0; }
+.recent-article > ul > li:first-child, .recent-comment > ul > li:first-child, .archives > ul > li:first-child {
+    border-top: 0;
+}
 
-.recent-article ul li {
+.recent-article ul li, .recent-comment ul li{
     padding: 10px 0;
+    border-top: 1px solid #EEE;
+}
+
+.archives ul li {
+    padding: 5px 0;
     border-top: 1px solid #EEE;
 }
 

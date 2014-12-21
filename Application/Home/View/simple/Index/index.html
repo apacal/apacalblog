@@ -78,6 +78,39 @@
                     </volist>
                 </ul>
             </div>
+
+            <div class="widget recent-comment">
+                <h3 class="text-uppercase">RECENT COMMENTS</h3>
+                <ul class="list-unstyled">
+                    <volist name="recent_comment_list" id="comment_vo" >
+                        <li>
+                            <h4>
+                                <a href="#">apacal</a> &nbsp; ON &nbsp;
+                                <a href="{$comment_vo.url}">{$comment_vo.title}</a>
+                            </h4>
+                        </li>
+                    </volist>
+                    <li>
+                        <h4>
+                            <a href="#">apacal</a> &nbsp; ON &nbsp;
+                            <a href="#">PHP STORM Xdebug单步调试</a>
+                        </h4>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="widget archives">
+                <h3 class="text-uppercase">ARCHIVES</h3>
+                <ul class="list-unstyled">
+                    <volist name="archives_list" id="archive_vo" >
+                        <li>
+                            <h4>
+                                <a href="{$archive_vo.url}">{$archive_vo.title}</a>
+                            </h4>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
         </div>
     </div>
 </block>

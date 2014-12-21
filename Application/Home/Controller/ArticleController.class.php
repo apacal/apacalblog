@@ -1,6 +1,7 @@
 <?php
 // 本类由系统自动生成，仅供测试用途
 namespace Home\Controller;
+use Home\Model\ArticleModel;
 use Think\Controller;
 class ArticleController extends CommonController {
 
@@ -52,34 +53,23 @@ class ArticleController extends CommonController {
 
     public function view(){
         $id = I('request.id');
-        $model = D('Article');
+        //$model = D('Article');
+        $model = new ArticleModel();
         if(empty($id) || !is_numeric($id)) {
             $this->error("参数错误!");
         }
 
-        $article = $model->getArticle($id);
+        $article = $model->getOneArticle($id);
         if(!empty($article)) {
-
-            //hot article
-            $hotArticle = $model->getHotArticleList($article['cid'],'sort DESC,id DESC', 5);
-            $hotCount = count($hotArticle);
-            $this->assign('hotCount', $hotCount);
-            $this->assign('hotArticle', $hotArticle);
-
-
-            $dateCount = 0; $dateAllCount = 0;
-            $this->assign('dateArticle', $model->getArticleCountGroupByDate($dateCount, $article['cid']));
-            $this->assign('dateAllArticle', $model->getArticleCountGroupByDate($dateAllCount));
-            $this->assign('dateCount', $dateCount);
-            $this->assign('dateAllCount', $dateAllCount);
-            $this->assign('hotTitle', '最新文章');
             $this->assign('article', $article);
+
+            $this->assign('article_list', $model->getArticleList($article['cid']));
+            $this->assign('recent_article_list',$model->getRecentArticleList($article['cid']));
+            $this->assign('archives_list', $model->getArticleListGroupByDate($article['cid']));
             // readNext
             $readNext = $model->getReadNextAndPrev($article['cid'], $article['createtime']);
             $this->assign('articleList', $readNext);
-            // 随机文章
-            $this->assign('randArticle', $model->getRandArticleList(5));
-            $this->assign('randCount', 5);
+
             // 评论
             M('Article')->where('id='.$id)->setInc('click');
             $this->setComment($article['id'], $article['cid']);
@@ -88,7 +78,6 @@ class ArticleController extends CommonController {
             $position [] = array('cname' => '正文');
             D('Category')->getPosition($article['cid'], $position);
             $this->seo($article['title'], $article['keywords'], $article['description'], $position);
-
 
             $this->display();
         }else{

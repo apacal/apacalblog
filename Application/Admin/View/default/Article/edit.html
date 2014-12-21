@@ -1,134 +1,161 @@
 <include file="Public:header" />
-    <form id="myform" class="form-horizontal" role="form" enctype="multipart/form-data" action="__MODULE__/Article/update/id/{$vo.id}" method="post">
-        <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right">栏目 </label>
-            <div class="col-sm-9">
-                    <select class="col-xs-10 col-sm-5" name="cid"  id="form-field-select-1" required>
-                        <empty name="vo.cid">
-                            <option >请选择栏目</option><else />
-                            <option value="{$vo.cid}" >当前栏目({$vo.cname})</option>
-                        </empty>
-                        {$categoryTree}
-                    </select>
+<form id="myform" class="form-horizontal" role="form" enctype="multipart/form-data" action="__MODULE__/Article/update/id/{$vo.id}" method="post">
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right">栏目 </label>
+        <div class="col-sm-9">
+                <select class="col-xs-10 col-sm-5" name="cid"  id="form-field-select-1" required>
+                    <empty name="vo.cid">
+                        <option >请选择栏目</option><else />
+                        <option value="{$vo.cid}" >当前栏目({$vo.cname})</option>
+                    </empty>
+                    {$categoryTree}
+                </select>
+        </div>
+    </div>
+    <div class="space-4"></div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right">标题 </label>
+        <div class="col-sm-9">
+            <span class="input-icon input-icon-right">
+                <input type="text" placeholder="标题" style="width:348px"name="title" value="{$vo.title}" required />
+                <i class="icon-leaf green"></i>
+             </span>
+        </div>
+    </div>
+    <div class="space-4"></div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right">标签 </label>
+        <div class="col-sm-9">
+            <div class="input-group">
+                <input id="add_tag" type="text" placeholder="标签名">
+                <input id="tags" type="hidden" name="tags"  placeholder="标签名">
             </div>
         </div>
-        <div class="space-4"></div>
-
-        <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right">标题 </label>
-            <div class="col-sm-9">
-                <span class="input-icon input-icon-right">
-                    <input type="text" placeholder="标题" style="width:348px"name="title" value="{$vo.title}" required />
-                    <i class="icon-leaf green"></i>
-                 </span>
-            </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right"> &nbsp; </label>
+        <div class="col-sm-9">
+            <a class="add_tag btn btn-xs btn-success">
+            添加新的标签
+            </a>
+            <a class="btn btn-xs btn-info select-system-tag">
+                选择使用过的标签
+            </a>
         </div>
-        <div class="space-4"></div>
+    </div>
+    <div id="show_tag" class="col-sm-12 col-xs-12"></div>
+    <div id="show-system-tag" class="col-sm-12 col-xs-12" style="display: none;">
 
-        <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right">关键字 </label>
-            <div class="col-sm-9">
-                <input type="text" placeholder="关键字" name="keywords" value="{$vo.keywords}" class="col-xs-10 col-sm-5" required />
-            </div>
+        <volist name="system_tags" id="tag_vo">
+            <button type="button" style="margin-right: 10px" class="btn btn-xs btn-info system-tag text-uppercase" val="{$tag_vo.name}">{$tag_vo.name}
+            </button>
+        </volist>
+
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right">关键字 </label>
+        <div class="col-sm-9">
+            <input type="text" placeholder="关键字" name="keywords" value="{$vo.keywords}" class="col-xs-10 col-sm-5" required />
         </div>
-        <div class="space-4"></div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right" > 描述 </label>
-            <div class="col-sm-9">
-                <textarea row="10" id="test1" placeholder="描述" style="height:100px" name="description" class="autosize-transition col-xs-10 col-sm-5">{$vo.description}</textarea>
-            </div>
+    </div>
+    <div class="space-4"></div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" > 描述 </label>
+        <div class="col-sm-9">
+            <textarea row="10" id="test1" placeholder="描述" style="height:100px" name="description" class="autosize-transition col-xs-10 col-sm-5">{$vo.description}</textarea>
         </div>
-        <div class="space-4"></div>
+    </div>
+    <div class="space-4"></div>
 
-        <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right" > 排序值 </label>
-            <div class="col-sm-9">
-                <input id="sort" type="text" class="input-mini" name="sort" maxlength="3">
-            </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" > 排序值 </label>
+        <div class="col-sm-9">
+            <input id="sort" type="text" class="input-mini" name="sort" maxlength="3">
         </div>
+    </div>
 
-        <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right">转载来源【0表示原创】 </label>
-            <div class="col-sm-9">
-                <input type="text" placeholder="转载来源" value="{$vo.source}" name="source" class="col-xs-10 col-sm-5" >
-            </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right">转载来源【0表示原创】 </label>
+        <div class="col-sm-9">
+            <input type="text" placeholder="转载来源" value="{$vo.source}" name="source" class="col-xs-10 col-sm-5" >
         </div>
-        <div class="space-4"></div>
+    </div>
+    <div class="space-4"></div>
 
-        <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right">转载来源链接【0表示原创】 </label>
-            <div class="col-sm-9">
-                <input type="text" placeholder="转载来源链接" value="{$vo.source_link}" name="source_link" class="col-xs-10 col-sm-5" >
-            </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right">转载来源链接【0表示原创】 </label>
+        <div class="col-sm-9">
+            <input type="text" placeholder="转载来源链接" value="{$vo.source_link}" name="source_link" class="col-xs-10 col-sm-5" >
         </div>
-        <div class="space-4"></div>
+    </div>
+    <div class="space-4"></div>
 
-        <include file="Public:form-image" />
-        <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right" > 内容 </label>
-            <div style="margin-left: 47px;" class="col-sm-11">
-                <span class="block pull-right">
-                    <small class="grey middle">选择主题: &nbsp;</small>
+    <include file="Public:form-image" />
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" > 内容 </label>
+        <div style="margin-left: 47px;" class="col-sm-11">
+            <span class="block pull-right">
+                <small class="grey middle">选择主题: &nbsp;</small>
 
-                    <span class="btn-toolbar inline middle no-margin">
-                        <span data-toggle="buttons" class="btn-group no-margin">
-                            <label class="btn btn-sm btn-yellow">
-                                1
-                                <input type="radio" value="1" />
-                            </label>
+                <span class="btn-toolbar inline middle no-margin">
+                    <span data-toggle="buttons" class="btn-group no-margin">
+                        <label class="btn btn-sm btn-yellow">
+                            1
+                            <input type="radio" value="1" />
+                        </label>
 
-                            <label class="btn btn-sm btn-yellow active">
-                                2
-                                <input type="radio" value="2" />
-                            </label>
+                        <label class="btn btn-sm btn-yellow active">
+                            2
+                            <input type="radio" value="2" />
+                        </label>
 
-                            <label class="btn btn-sm btn-yellow">
-                                3
-                                <input type="radio" value="3" />
-                            </label>
-                        </span>
+                        <label class="btn btn-sm btn-yellow">
+                            3
+                            <input type="radio" value="3" />
+                        </label>
                     </span>
                 </span>
-            </h4>
+            </span>
+        </h4>
 
-            <div class="wysiwyg-editor autosize-transition" id="editor1">{$vo['content']}</div>
+        <div class="wysiwyg-editor autosize-transition" id="editor1">{$vo['content']}</div>
 
-            <div style='visibility: hidden; height:10px;'><textarea name="content" id="content"></textarea></div>
-            </div>
+        <div style='visibility: hidden; height:10px;'><textarea name="content" id="content"></textarea></div>
         </div>
-        <div class="space-4"></div>
+    </div>
+    <div class="space-4"></div>
 
-        <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right" > 是否显示 </label>
-            <div class="col-sm-9">
-                <label>
-                    <input name="status" id="status" class="ace ace-switch ace-switch-7" type="checkbox">
-                    <span class="lbl"></span>
-                </label>
-            </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" > 是否显示 </label>
+        <div class="col-sm-9">
+            <label>
+                <input name="status" id="status" class="ace ace-switch ace-switch-7" type="checkbox">
+                <span class="lbl"></span>
+            </label>
         </div>
-        <div class="space-4"></div>
+    </div>
+    <div class="space-4"></div>
 
 
-        <div class="clearfix form-actions">
-            <div class="col-md-offset-3 col-md-9">
-                <button class="btn btn-info" type="submit">
-                    <i class="icon-ok bigger-110"></i>
-                    提交
-                </button>
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-3 col-md-9">
+            <button class="btn btn-info" type="submit">
+                <i class="icon-ok bigger-110"></i>
+                提交
+            </button>
 
-                &nbsp; &nbsp; &nbsp;
-                <button class="btn" type="reset">
-                    <i class="icon-undo bigger-110"></i>
-                    清除
-                </button>
-                <b class="test">
-
-                    test
-                </b>
-            </div>
+            &nbsp; &nbsp; &nbsp;
+            <button class="btn" type="reset">
+                <i class="icon-undo bigger-110"></i>
+                清除
+            </button>
         </div>
+    </div>
 
-    </form>
+</form>
 
 <include file="Article:edit-footer" />
