@@ -49,4 +49,13 @@
             </volist>
         </ul>
     </div>
+
+    <div class="widget tags">
+        <h3 class="text-uppercase">TAGS</h3>
+        <div class="tags-cloud">
+            <volist name="tags_list" id="tag_vo" >
+                        <a href="{$tag_vo.url}">{$tag_vo.name}</a>
+            </volist>
+        </div>
+    </div>
 </div>

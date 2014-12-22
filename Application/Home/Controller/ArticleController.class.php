@@ -54,22 +54,24 @@ class ArticleController extends CommonController {
         }
 
         $model = new ArticleModel();
-        $article = $model->getOneArticle($id);
+        $article = $model->getArticleById($id);
         if(!empty($article)) {
             $this->assign('art_vo', $article);
-            $this->assign('recent_article_list',$model->getRecentArticleList($article['cid']));
-            $this->assign('archives_list', $model->getArticleListGroupByDate($article['cid']));
+            $this->assign('recent_article_list',$model->getRecentArticleListByCategory($article['cid']));
+            $this->assign('archives_list', $model->getArticleListGroupByDateByCategry($article['cid']));
+            $this->assign('tags_list', $model->getTagsByCategory($article['cid']));
 
             // readNext
-            $next = $model->getNextArticle($article['cid'], $article['createtime']);
+            $next = $model->getNextArticleByCategory($article['cid'], $article['createtime']);
             $this->assign('next', $next);
 
-            $prev = $model->getPrevArticle($article['cid'], $article['createtime']);
+            $prev = $model->getPrevArticleByCategory($article['cid'], $article['createtime']);
             $this->assign('prev', $prev);
 
 
             // 评论
-            M('Article')->where('id='.$id)->setInc('click');
+            $model->setIncClickById($id, 'click');
+
             $this->setComment($article['id'], $article['cid']);
             
             $position = array();

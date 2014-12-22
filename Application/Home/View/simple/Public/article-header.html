@@ -12,6 +12,14 @@
             <span class="entry-sep">&nbsp;&nbsp;/&nbsp;&nbsp;</span>
         </span>
 
+        <span class="entry-cate">
+            <a href="{$art_vo.cateUrl}">
+                <span class="glyphicon glyphicon-th"></span>
+                {$art_vo.cname}
+            </a>
+            <span class="entry-sep">&nbsp;&nbsp;/&nbsp;&nbsp;</span>
+        </span>
+
         <span class="entry-author">
             <a href="{$art_vo.adminUrl}">
                 <span class="glyphicon glyphicon-user"></span>
@@ -21,7 +29,10 @@
         </span>
 
         <span class="entry-count">
-            <a href="{$art_vo.url}">{$art_vo.click}&nbsp;CLICK</a>
+            <a href="{$art_vo.url}">
+                <span class="glyphicon glyphicon-share-alt"></span>
+                {$art_vo.click}&nbsp;CLICK
+            </a>
             <span class="entry-sep">&nbsp;&nbsp;/&nbsp;&nbsp;</span>
         </span>
 

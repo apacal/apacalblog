@@ -1,5 +1,6 @@
 <?php
 namespace Home\Controller;
+use Home\Model\ArticleModel;
 use Think\Controller;
 class IndexController extends CommonController {
 
@@ -44,10 +45,11 @@ class IndexController extends CommonController {
     }
 
     public function index(){
-        $articleModel = D('Article');
-        $this->assign('article_list', $articleModel->getArticleList());
-        $this->assign('recent_article_list', $articleModel->getRecentArticleList());
-        $this->assign('archives_list', $articleModel->getArticleListGroupByDate());
+        $articleModel = new ArticleModel();
+        $this->assign('article_list', $articleModel->getArticleListByCategory(0));
+        $this->assign('recent_article_list', $articleModel->getRecentArticleListByCategory(0));
+        $this->assign('archives_list', $articleModel->getArticleListGroupByDateByCategry(0));
+        $this->assign('tags_list', $articleModel->getTagsByCategory(0));
         $this->seo('首页', NULL, NULL, NULL);
         $this->display();
     }

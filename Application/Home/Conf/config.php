@@ -36,13 +36,12 @@ $home_config =  array(
 	'DB_LIKE_FIELDS'		=> 'title|remark|content',	//搜索Like匹配字段
     'URL_ROUTER_ON'         => true, 
     'URL_ROUTE_RULES'       => array(
-            'catearticle/:cid\d'        =>      'Article/index', //文章栏目
-            'catenote/:cid\d'           =>      'Note/index',
+            'note/:cid\d'           =>      'Note/index',
             'article/:id\d'             =>      'Article/view', // article/id => Article/view/id/$id
             'tag/:name\d'             =>      'Article/tag',
-            'category/:cid\d'           =>      'Category/index',
+            'cate/:cid\d'           =>      'Category/index',
             'date/:cid/:time'           =>      'Article/dateArc', 
-            'admin/:adminid\d'          =>      'User/admin',
+            'admin/:id\d'          =>      'User/admin',
             'search/my'                 =>      'Index/search',
             'book/my'                      =>      'Index/book',
             'aboutme/my'                      =>      'Index/aboutme',

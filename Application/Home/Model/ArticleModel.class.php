@@ -1,6 +1,5 @@
 <?php
 namespace Home\Model;
-use Admin\Model\AdminModel;
 use Admin\Model\TermModel;
 use Think\Model\RelationModel;
 class ArticleModel extends RelationModel {
@@ -25,12 +24,33 @@ class ArticleModel extends RelationModel {
         ),
     );
 
+    public function getTagsByCategory($cid = 0) {
+        if ($cid != 0) {
+            $where['cid'] = array('in', (new CategoryModel())->getThisCategoryChildren($cid));
+        }
+        $where['status'] = 1;
+        $list = $this->where($where)->field('id')->select();
+        if (!empty($list)) {
+            $objectIds = array();
+            foreach($list as $val) {
+                $objectIds[] = $val['id'];
+            }
+            $tags = (new TermModel())->getTermsByObjectIdAndTaxonomy('Article', $objectIds);
+            $this->buildTagsUrl($tags);
+            return $tags;
+        } else {
+            return null;
+        }
+
+
+    }
+
     /**
      * @param int $cid when cid = 0 means the all article not care about the cid
      * @param int $page when the page = 0 means this is first page
      * @return array|bool
      */
-    public function getArticleList($cid = 0, $page = 0) {
+    public function getArticleListByCategory($cid = 0, $page = 0) {
         $pageNum = C('ARTICLE_PAGE_NUM');
 		$articleShow = C('ARTICLE_SHOWNUM');
         $tagArticleList = cacheTag(ArticleList, $cid, $page);
@@ -62,7 +82,7 @@ class ArticleModel extends RelationModel {
      * @param $id
      * @return false | array
      */
-    public function getOneArticle($id) {
+    public function getArticleById($id) {
         $tagArticle = cacheTag(OneArticle, $id);
         if (false === ($article = getCache($tagArticle))) {
             $where['id'] = $id;
@@ -83,7 +103,7 @@ class ArticleModel extends RelationModel {
      * @param int $cid
      * @return bool | array
      */
-    public function getArticleListGroupByDate($cid = 0) {
+    public function getArticleListGroupByDateByCategry($cid = 0) {
         $tagDateArticel = cacheTag(ArticleCountGroupByDate,$cid);
         if (false === ($list = getCache($tagDateArticel))) {
 
@@ -108,7 +128,7 @@ class ArticleModel extends RelationModel {
         return $list;
     }
 
-    public function getNextArticle($cid, $createtime) {
+    public function getNextArticleByCategory($cid, $createtime) {
         $tagNextArticle = cacheTag(NextArticle, $cid, $createtime);
         if (false === ($next = getCache($tagNextArticle))) {
             $where['cid'] = $cid;
@@ -122,7 +142,7 @@ class ArticleModel extends RelationModel {
         return $next;
     }
 
-    public function getPrevArticle($cid, $createtime) {
+    public function getPrevArticleByCategory($cid, $createtime) {
         $tagPrevArticle = cacheTag(PrevArticle, $cid, $createtime);
         if (false === ($next = getCache($tagPrevArticle))) {
             $where['cid'] = $cid;
@@ -144,7 +164,7 @@ class ArticleModel extends RelationModel {
      * @param int $limit
      * @return array|false
      */
-    public  function getRecentArticleList($cid = 0, $order='id DESC, sort DESC', $limit = 5) {
+    public  function getRecentArticleListByCategory($cid = 0, $order='id DESC, sort DESC', $limit = 5) {
         $tagNewlyArticleList = cacheTag(RecentArticleList, $cid);
         if (false === ($list = getCache($tagNewlyArticleList))) {
             $where['status'] = 1;
@@ -168,7 +188,7 @@ class ArticleModel extends RelationModel {
      * @param int $cid
      * @return int | false
      */
-    public  function getArticleCount($cid = 0) {
+    public  function getArticleCountByCategory($cid = 0) {
         $tagArticleCount = cacheTag($cid);
         if (false === ($count = getCache($tagArticleCount))) {
             $where['status'] = 1;
@@ -181,13 +201,25 @@ class ArticleModel extends RelationModel {
         return $count;
     }
 
-    private function buildTags($objectId) {
+
+    public function setIncClickById($id, $field) {
+        $this->where(array('id' => $id))->setInc($field);
+    }
+
+    private function buildTagsByObjectId($objectId) {
         $Terms = new TermModel();
         $tags = $Terms->getTermsByObjectIdAndTaxonomy('Article', $objectId);
-        foreach($tags as &$val) {
-            $val['url'] = U('tag/' .$val['name']);
-        }
+        $this->buildTagsUrl($tags);
         return $tags;
+
+    }
+
+    private function buildTagsUrl(&$tags) {
+        if(is_array($tags)) {
+            foreach($tags as &$val) {
+                $val['url'] = U('tag/' .$val['name']);
+            }
+        }
 
     }
 
@@ -209,8 +241,9 @@ class ArticleModel extends RelationModel {
             $val['commentCount'] =  (int)$Comment->getCommentCount($val['id'], $val['cid']);
             $val['url'] = U('article/' .$val['id']);
 
-            $val['tags'] = $this->buildTags($val['id']);
+            $val['tags'] = $this->buildTagsByObjectId($val['id']);
             $val['adminUrl'] = U('admin/' .$val['adminid']);
+            $val['cateUrl'] = U('cate/' .$val['cid']);
 
             if ($isStrstrContent == true) {
                 $str = strstr($val['content'], "<hr>", true);

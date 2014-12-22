@@ -39,14 +39,21 @@ class TermModel {
         return null;
 
     }
+
     /**
      * @param $taxonomy | string
-     * @param $objectId | int
+     * @param $objectIds | int | array
      * @return array|null
      */
-    public function getTermsByObjectIdAndTaxonomy($taxonomy, $objectId) {
+    public function getTermsByObjectIdAndTaxonomy($taxonomy, $objectIds) {
         $relationships = new Model('TermRelationships');
-        $relationshipsData = $relationships->where(array('object_id' => $objectId))->select();
+        $map = array();
+        if (is_array($objectIds)) {
+            $map['object_id'] = array('in', $objectIds);
+        } else {
+            $map['object_id'] = $objectIds;
+        }
+        $relationshipsData = $relationships->where($map)->select();
 
         if (is_array($relationshipsData)) {
             $taxonomyModel = new Model('TermTaxonomy');

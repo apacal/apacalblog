@@ -328,10 +328,14 @@ header a:hover{
 }
 
 .widget {
-    padding-bottom: 15%;
     border-bottom: 4px solid #EEE;
     margin-bottom: 15%;
 }
+.widget:last-child {
+    border-bottom: 0px;
+    
+}
+
 
 .recent-article > ul > li:first-child, .recent-comment > ul > li:first-child, .archives > ul > li:first-child {
     border-top: 0;
@@ -345,6 +349,25 @@ header a:hover{
 .archives ul li {
     padding: 5px 0;
     border-top: 1px solid #EEE;
+}
+
+.tags-cloud a {
+    display: block;
+    float: left;
+    padding: 8px 11px;
+    line-height: 1;
+    margin: 0 5px 5px 0;
+    background: #BBB;
+    color: #FFF;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.tags-cloud a:hover {
+    background: #1abc9c;
+    text-decoration: none;
+    color: #FFF;
 }
 
 /*  scroll */
