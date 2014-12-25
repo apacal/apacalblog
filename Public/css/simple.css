@@ -281,6 +281,22 @@ header a:hover{
 }
 
 
+.page-title {
+    border: 0px;
+}
+.page-title h4{
+    width: 100%;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: #999;
+    padding-bottom: 5px;
+    border-bottom: 0px;
+}
 /* search --------------------------------------- */
 
 
@@ -334,7 +350,10 @@ header a:hover{
 
 .widget {
     border-bottom: 4px solid #EEE;
-    margin-bottom: 15%;
+    padding-bottom: 20px;;
+}
+.widget h3 {
+    margin-top: 30px;
 }
 .widget:last-child {
     border-bottom: 0px;
@@ -342,11 +361,11 @@ header a:hover{
 }
 
 
-.recent-article > ul > li:first-child, .recent-comment > ul > li:first-child, .archives > ul > li:first-child {
+.recent-article > ul > li:first-child, .recent-comment > ul > li:first-child, .archives > ul > li:first-child ,.meta > ul > li:first-child{
     border-top: 0;
 }
 
-.recent-article ul li, .recent-comment ul li{
+.recent-article ul li, .recent-comment ul li, .meta ul li{
     padding: 10px 0;
     border-top: 1px solid #EEE;
 }
@@ -356,6 +375,10 @@ header a:hover{
     border-top: 1px solid #EEE;
 }
 
+.tags {
+    overflow: hidden;
+    padding-bottom: 45px;
+}
 .tags-cloud a {
     display: block;
     float: left;
@@ -408,6 +431,9 @@ header a:hover{
     font-weight: 700;
 }
 
+#comment-post {
+    padding-top: 30px;
+}
 #comment-post .input-group {
     margin-bottom: 2%;
     width: 80%;
@@ -437,6 +463,12 @@ header a:hover{
     cursor: pointer;
     background-color: #1abc9c;
     color: #ffffff;
+}
+.logged-in-as {
+    font-size: 1.1em;
+    color: #666;
+    padding-bottom: 15px;
+    padding-top: 5px;
 }
 
 .comment-title {

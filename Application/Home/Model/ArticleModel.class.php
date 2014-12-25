@@ -24,6 +24,33 @@ class ArticleModel extends RelationModel {
         ),
     );
 
+
+    public function getListByWhere($where) {
+        return $this->getArticleListByWhere($where);
+    }
+    public function getArticleListByTag($name) {
+        $Term = new TermModel();
+        $objectIds = $Term->getObjectIdsByTaxonomyAndTag('Article',$name);
+        if (empty($objectIds)) {
+            return false;
+        }
+        $where = array(
+            'id' => array('in', $objectIds),
+            'status' => 1,
+        );
+        return $this->getArticleListByWhere($where);
+    }
+    public function getArticleListByWhere($where) {
+        if (isset($where['cid']) && is_numeric($where['cid'])) {
+            $where['cid'] = array('in',(new CategoryModel())->getThisCategoryChildren($where['cid']));
+        }
+        $list = $this->where($where)->relation(true)->select();
+        if (empty($list)) {
+            return false;
+        }
+        $this->getExtendInfoForArticle($list, true, false);
+        return $list;
+    }
     public function getTagsByCategory($cid = 0) {
         if ($cid != 0) {
             $where['cid'] = array('in', (new CategoryModel())->getThisCategoryChildren($cid));
@@ -127,7 +154,7 @@ class ArticleModel extends RelationModel {
 
             foreach($list as &$value) {
                 $value['cid'] = $cid;
-                $value['url'] = U('date/'.$value['cid'] .'/' .$value['time']);
+                $value['url'] = U('date/'.$value['cid'] .'/' .$value['title'] .C('URL_HASH'));
             }
 
             setCache($tagDateArticel, $list, C('ARTICLE_TTL'));
@@ -187,7 +214,7 @@ class ArticleModel extends RelationModel {
 
             if (is_array($list)) {
                 foreach ($list as &$val) {
-                    $val['url'] = U('article/' .$val['id']);
+                    $val['url'] = U('article/' .$val['id'] .C("URL_HASH"));
                 }
             }
 
@@ -230,7 +257,7 @@ class ArticleModel extends RelationModel {
     private function buildTagsUrl(&$tags) {
         if(is_array($tags)) {
             foreach($tags as &$val) {
-                $val['url'] = U('tag/' .$val['name']);
+                $val['url'] = U('tag/' .$val['name'] .C('URL_HASH'));
             }
         }
 
@@ -242,7 +269,6 @@ class ArticleModel extends RelationModel {
      */
     private function getExtendInfoForArticle(&$articles, $isMixed = false, $isStrstrContent = false) {
         $Comment = new CommentModel();
-        $temp = true;
         // if is not a array, become a array and sign it
         if ($isMixed == false) {
             $temp = array();
@@ -252,11 +278,11 @@ class ArticleModel extends RelationModel {
 
         foreach($articles as &$val) {
             $val['commentCount'] =  (int)$Comment->getCommentCount($val['id'], $val['cid']);
-            $val['url'] = U('article/' .$val['id']);
+            $val['url'] = U('article/' .$val['id'] .C('URL_HASH'));
 
             $val['tags'] = $this->buildTagsByObjectId($val['id']);
-            $val['adminUrl'] = U('admin/' .$val['adminid']);
-            $val['cateUrl'] = U('cate/' .$val['cid']);
+            $val['adminUrl'] = U('user/' .$val['adminid'] .C('URL_HASH'));
+            $val['cateUrl'] = U('categpry/' .$val['cid'] .C('URL_HASH'));
 
             if ($isStrstrContent == true) {
                 $str = strstr($val['content'], "<hr>", true);

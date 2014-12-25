@@ -1,39 +1,13 @@
 <?php
 // 本类由系统自动生成，仅供测试用途
 namespace Home\Controller;
+use Admin\Model\TermModel;
 use Home\Model\ArticleModel;
 use Home\Model\CommentModel;
 use Think\Controller;
 class ArticleController extends CommonController {
-    public function index(){
-        $cid = I('request.cid');
-        //var_dump($cid);
-        if(empty($cid) || !is_numeric($cid))
-            $this->error("参数错误！");
-        $dataId = (M('Category')->where(array('id' => $cid, 'status' => 1))->field('id')->find());
-        if(empty($dataId))
-            $this->error("没有该分类！");
-
-        $articleModel = D('Article');
-
-        $this->assign('articleCount',$articleModel->getArticleCount($cid));
-        $this->assign('articleList', $articleModel->getArticleList($cid));
-        $this->assign('cid', $cid);
-        $this->assign('categoryInfo', ($categoryInfo = $this->getCategoryInfo($cid)));
-
-
-        $this->assign('hotTitle', '最新文章');
-        $this->assign('hotArticleList', ($hotArticleList = $articleModel->getNewlyArticleList($cid,'id DESC, sort DESC', 18)));
-        $this->assign('hotArticleCount', count($hotArticleList));
-
-
-        $this->assign('randArticleList', $articleModel->getRandArticleList($cid, 10));
-        $position = array();
-        $position [] = array('cname' => '列表');
-        D('Category')->getPosition($cid, $position);
-        $this->seo($categoryInfo['cname'], $categoryInfo['keywords'], $categoryInfo['description'], $position);
-        
-        $this->display();
+    public function index($cid = 0){
+        R('Index/index', array('cid' => $cid));
     }
 
     /**
@@ -90,36 +64,49 @@ class ArticleController extends CommonController {
     /**
      * 时间归类
      **/
-    public function dateArc() {
-        $cid = I('request.cid');
-        var_dump($cid);
-        $time = I('request.time');
-        if(!empty($cid) && $cid != 0) //0表示所有文章归档
-            $where['cid'] = array('in', D('Category')->getThisCategoryChildren($cid)); //得到属于$cid的所有栏目的id
-        $where['status'] = 1;
-        $allList = D('Article')->where($where)->relation(true)->order("sort DESC, createtime DESC")->select();
-        $list = array();
-        foreach($allList as $value) { //筛选出当前时间挡的文章
-            $temp = date('Y-m', $value['createtime']);
-            if($temp == $time)
-                $list[] = $value;
+    public function date($cid = 0) {
+        if (!is_numeric($cid)) {
+            $this->error('参数错误！');
         }
-        if(empty($list))
-            $this->error("没有该分类！");
-        $this->assign('articleCount', count($list));
-        $this->assign('articleList', $list);
-        $this->display('dataArc');
+        $startTime = strtotime(I('time'));
+        $endTime = strtotime(I('time') ."+1 month");
+
+        $articleModel = new ArticleModel();
+
+        $where = array(
+            'status' => 1,
+            'cid' => $cid,
+            'createtime' => array('between', array($startTime,$endTime)),
+        );
+        $articleList = $articleModel->getArticleListByWhere($where);
+        if (empty($articleList)) {
+            $this->error("没有该归档！");
+        }
+        $this->assign('article_list', $articleList);
+        $this->assign('recent_comment_list', (new CommentModel())->getRecentCommentListByCategory($cid, 0, 8));
+        $this->assign('recent_article_list', $articleModel->getRecentArticleListByCategory($cid));
+        $this->assign('archives_list', $articleModel->getArticleListGroupByDateByCategry($cid));
+        $this->assign('tags_list', $articleModel->getTagsByCategory($cid));
+        $this->seo('首页', NULL, NULL, NULL);
+        $this->display('Index:index');
     }
-    /*
-     * 显示更多的文章，供ajax调用
-     **/
-    public function more() {
-        $cid = I('request.cid');
-        if(!empty($cid) || is_numeric($cid)) {
-            $this->assign('articleList', D('Article')->getArticleList($cid, $page =  I('request.p' ,0 , 'intval'))); //当空为会转为0
-            $this->display();
-        }else{
-            $this->error("参数错误！");
+
+    public function tag($name = 'LINUX') {
+        $cid = 0;
+        $articleModel = new ArticleModel();
+
+        $articleList = $articleModel->getArticleListByTag($name);
+
+        if(empty($articleList)) {
+            $this->error('没有该' .$name .'!');
         }
+
+        $this->assign('article_list', $articleList);
+        $this->assign('recent_comment_list', (new CommentModel())->getRecentCommentListByCategory($cid, 0, 8));
+        $this->assign('recent_article_list', $articleModel->getRecentArticleListByCategory($cid));
+        $this->assign('archives_list', $articleModel->getArticleListGroupByDateByCategry($cid));
+        $this->assign('tags_list', $articleModel->getTagsByCategory($cid));
+        $this->seo('首页', NULL, NULL, NULL);
+        $this->display('Index:index');
     }
 }

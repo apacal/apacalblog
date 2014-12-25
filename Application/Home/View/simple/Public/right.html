@@ -1,11 +1,12 @@
 <div class="col-md-4 col-sm-4 col-xs-12 right">
     <div class=" widget entry-search">
-        <form method="get" class="searchform" action="{:U('search/my')}">
+        <form method="post" class="searchform" action="<?php echo U('/search' .C('URL_HASH'));?>">
             <input type="search" value="" placeholder="Search form" name="s" id="s">
             <input type="submit" id="searchsubmit" value="Search">
         </form>
     </div>
 
+    <notempty name="recent_article_list">
     <div class="widget recent-article">
         <h3 class="text-uppercase">Recent Posts</h3>
         <ul class="list-unstyled">
@@ -16,7 +17,9 @@
             </volist>
         </ul>
     </div>
+    </notempty>
 
+    <notempty name="recent_comment_list">
     <div class="widget recent-comment">
         <h3 class="text-uppercase">RECENT COMMENTS</h3>
         <ul class="list-unstyled">
@@ -37,7 +40,9 @@
             </volist>
         </ul>
     </div>
+    </notempty>
 
+    <notempty name="archives_list">
     <div class="widget archives">
         <h3 class="text-uppercase">ARCHIVES</h3>
         <ul class="list-unstyled">
@@ -50,7 +55,9 @@
             </volist>
         </ul>
     </div>
+    </notempty>
 
+    <notempty name="tags_list">
     <div class="widget tags">
         <h3 class="text-uppercase">TAGS</h3>
         <div class="tags-cloud">
@@ -58,5 +65,23 @@
                         <a href="{$tag_vo.url}">{$tag_vo.name}</a>
             </volist>
         </div>
+    </div>
+    </notempty>
+
+    <div class="widget meta">
+        <h3 class="text-uppercase">META</h3>
+
+        <ul class="list-unstyled text-uppercase">
+            <li>
+                <h4>
+                    <empty name="uid">
+                        <a href="{:U('/Admin/Public/login')}" target="_blank">Log in</a>
+                        <else />
+                        <a href="{:U('/Admin/Public/logout')}" target="_blank">Log out</a>
+                    </empty>
+                </h4>
+            </li>
+        </ul>
+
     </div>
 </div>

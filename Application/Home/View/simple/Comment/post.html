@@ -7,6 +7,19 @@
     <h2 id="reply-title" class="comment-reply-title">
         Leave a Reply
     </h2>
+    <notempty name="uid">
+    <p class="logged-in-as">
+        Logged in as
+        <a href="{$userInfo.url}">{$userInfo.name}</a>.
+        <a href="{:U('/Admin/Public/logout')}">Log out?</a>
+    </p>
+
+
+    <input id="comment-pid" type="hidden" value="0">
+    <input id="comment-name" type="hidden" class="form-control" placeholder="Username" value="{$userInfo.name}">
+    <input id="comment-email" type="hidden" class="form-control" placeholder="User Email" value="{$userInfo.email}">
+    <input id="comment-website" type="hidden" class="form-control" placeholder="Website" value="{$userInfo.website}">
+        <else />
     <p class="comment-notes">
             Your email address will not be published. Required fields are marked
             <span class="required">*</span>
@@ -27,6 +40,7 @@
         <input id="comment-website" type="text" class="form-control" placeholder="Website" value="{$userInfo.website}">
     </div>
 
+    </notempty>
 
     <div id="summernote">Hello</div>
 

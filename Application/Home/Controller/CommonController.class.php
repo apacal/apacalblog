@@ -14,7 +14,8 @@ class CommonController extends Controller {
      * empty action redirect to 404
      */
     public function _empty() {
-        redirect(C('FORBIDDEN'));
+        var_dump(CONTROLLER_NAME);
+        //redirect(C('FORBIDDEN'));
     }
 
     protected function jsonReturn($data) {
@@ -22,9 +23,15 @@ class CommonController extends Controller {
     }
 
     function _initialize(){
+        $userInfo = getUserInfo();
+        if (($uid = is_login()) > 0) {
+            $this->assign('uid', $uid);
+            $userInfo['url'] = U('user/' .$uid .C('URL_HASH'));
+        }
+
+        $userInfo = getUserInfo();
         $this->assign('nav_html',(new CategoryModel())->getNav());
         $this->assign('link_list', $this->getLink());
-        $userInfo = getUserInfo();
         $this->assign('userInfo', $userInfo);
         if (isset($userInfo['uid'])) {
             $this->assign('uid', $userInfo['uid']);

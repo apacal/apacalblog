@@ -30,6 +30,7 @@ class CategoryModel extends RelationModel {
         }
         return array('origin' => $origin, 'cate' => $cate);
     }
+
     /**
      * @param $cid | int
      * @return array|false
@@ -42,33 +43,6 @@ class CategoryModel extends RelationModel {
             setCache($tag, $controller, C('CATEGORY_TTL'));
         }
         return $controller;
-    }
-
-    /**
-     * @param $cid
-     * @param &$position
-     */
-    public function getPosition($cid, &$position) {
-
-        $tagPosition = cacheTag(Position, $cid);
-        if (false === ($position = getCache($tagPosition))) {
-            $cate = $this->where(array('id' => $cid))->find();
-            $cate['url'] = U('category/'.$cate['id']);
-            $position[] = $cate;
-            while($cate['pid'] != 0) {
-                $cate = $this->where(array('id' => $cate['pid']))->find();
-                $cate['url'] = U('category/'.$cate['id']);
-                $position [] = $cate;
-            }
-            $new = array();
-            while($position) {
-                $new[] = array_pop($position);
-            }
-            $position = $new;
-
-            setCache($tagPosition, $position, C('CATEGORY_TTL'));
-        }
-
     }
 
     /**
@@ -147,6 +121,7 @@ class CategoryModel extends RelationModel {
         return $html;
 
     }
+
     /**
      * @param $id
      * @return array | false
@@ -179,7 +154,7 @@ class CategoryModel extends RelationModel {
         foreach($list as &$value) {
             $where['status'] = 1;
             $where['pid'] = $value['id'];
-            $value['url'] = U('category/'.$value['id']);
+            $value['url'] = U('category/'.$value['id'] .C('URL_HASH'));
             if(($subNav = $this->where($where)->order('sort DESC')->relation(true)->select())) {
                 $value['subNav'] = $subNav;
                 $this->getSubNav($value['subNav']);

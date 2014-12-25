@@ -11,9 +11,10 @@ class ArticleController extends CommonController {
 
     public function _before_add() {
         $this->setAllCategoryTree();
+        $this->initTags();
     }
 
-    public function _before_edit() {
+    private function initTags() {
         $model = new TermModel();
         $tags = $model->getTermsByObjectIdAndTaxonomy(CONTROLLER_NAME, $_REQUEST['id']);
         if(is_array($tags)) {
@@ -28,6 +29,10 @@ class ArticleController extends CommonController {
         $systemTags = $model->getTermsByTaxonomy(CONTROLLER_NAME);
         $this->assign('system_tags', $systemTags);
         $this->setAllCategoryTree();
+    }
+
+    public function _before_edit() {
+        $this->initTags();
     }
 
     /**

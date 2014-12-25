@@ -15,7 +15,7 @@
 
                     </volist>
                 </div>
-
+                <?php if(!empty($prev) || !empty($next)) { ?>
                 <div class="entry-prev-next">
                     <div class="col-sm-6 col-xs-12">
                         <notempty name="prev">
@@ -37,6 +37,7 @@
                     </notempty>
                     </div>
                 </div>
+                <?php } ?>
 
             </article>
             <div class="entry-comment">

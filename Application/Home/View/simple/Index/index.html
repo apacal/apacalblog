@@ -2,7 +2,16 @@
 <block name="content">
     <div class="container content">
         <div class="col-md-8 col-sm-8 col-xs-12 left">
+            <notempty name="page_title">
+                <div class="page-title">
+                    <h4 class="text-uppercase">
+                        {$page_title}
+                    </h4>
+                </div>
+            </notempty>
             <volist name="article_list" id="art_vo">
+                <div>
+
                 <article>
                     <include file="Public:article-header" />
                     <div class="entry-content">
@@ -25,6 +34,7 @@
                     </div>
 
                 </article>
+                </div>
             </volist>
         </div>
 

@@ -6,6 +6,13 @@
 
 
 
+function is_login() {
+    if(isset($_SESSION[C('ADMIN_AUTH_KEY')])) {
+        return $_SESSION[C('ADMIN_AUTH_KEY')];
+    }
+    return 0;
+}
+
 function setUserInfoByAdminLogin($info) {
     $info['name'] = $info['adminname'];
     $info['uid'] = $info['adminid'];

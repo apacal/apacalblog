@@ -1,57 +1,49 @@
 <?php
 namespace Home\Controller;
 use Home\Model\ArticleModel;
+use Home\Model\CommentModel;
+use Home\Model\SearchModel;
 use Think\Controller;
 class IndexController extends CommonController {
 
     public function search() {
-        $list = $this->getSearch();
-        $this->assign('articleCount', count($list));
-        $this->assign('articleList', $list);
-        $this->display();
-    }
+        $cid = 0;
+        $content = I('post.s');
+        $articleList = (new SearchModel())->getSearchList($content);
 
-    protected function getSearch() {
-        $content = I('post.content');
-        //$content = $_REQUEST['content'];
-     //   $content = str_replace('/[\S]*','',$content);
-        $searchTable = C('SEARCHTABLE'); //需要查询的表
-        $searchCol = C('SEARCHCOL');
-        $searchSetCol = C('SEARCHSETCOL');
-        $result = array();
-        foreach($searchTable as $val) {
-            $model = D($val);
-            $where = array();
-            foreach($searchCol as $value) {
-                $where[$value] = array('like', '%'.$content.'%');
-            }
-            $where['_logic'] = 'OR';
-
-            $list = $model->where($where)->relation(true)->field('content', true)->select();
-            $result = array_merge($result, $list);
-        }
-        $this->setSearch($result, $searchSetCol, $content);
-        //var_dump($result);
-        return $result;
-    }
-
-    protected function setSearch(&$list, $col, $content) {
-        $replace = "<code>$content</code>";
-        foreach($list as &$val) {
-            foreach($col as $value) {
-                $val[$value] = str_replace($content, $replace, $val[$value]);
-            }
-        }
-    }
-
-    public function index(){
         $articleModel = new ArticleModel();
-        $this->assign('article_list', $articleModel->getArticleListByCategory(0));
-        $this->assign('recent_article_list', $articleModel->getRecentArticleListByCategory(0));
-        $this->assign('archives_list', $articleModel->getArticleListGroupByDateByCategry(0));
-        $this->assign('tags_list', $articleModel->getTagsByCategory(0));
+
+
+        if ($articleList === false) {
+            $pageTitle = "SEARCH RESULTS: \"${content}\" (0 COL)";
+        } else {
+            $count = count($articleList);
+            $pageTitle = "SEARCH RESULTS: \"${content}\" ($count COL)";
+        }
+        $this->assign('page_title',$pageTitle);
+        $this->assign('article_list', $articleList);
+        $this->assign('recent_comment_list', (new CommentModel())->getRecentCommentListByCategory($cid, 0, 8));
+        $this->assign('recent_article_list', $articleModel->getRecentArticleListByCategory($cid));
+        $this->assign('archives_list', $articleModel->getArticleListGroupByDateByCategry($cid));
+        $this->assign('tags_list', $articleModel->getTagsByCategory($cid));
         $this->seo('首页', NULL, NULL, NULL);
-        $this->display();
+        $this->display('Index:index');
+    }
+
+    public function index($cid = 0){
+        if ($cid != 0 && (!is_numeric($cid))) {
+            $this->error('参数错误!');
+        }
+
+        $articleModel = new ArticleModel();
+
+        $this->assign('recent_comment_list', (new CommentModel())->getRecentCommentListByCategory($cid, 0, 8));
+        $this->assign('article_list', $articleModel->getArticleListByCategory($cid));
+        $this->assign('recent_article_list', $articleModel->getRecentArticleListByCategory($cid));
+        $this->assign('archives_list', $articleModel->getArticleListGroupByDateByCategry($cid));
+        $this->assign('tags_list', $articleModel->getTagsByCategory($cid));
+        $this->seo('首页', NULL, NULL, NULL);
+        $this->display('Index:index');
     }
 
     public function book() {

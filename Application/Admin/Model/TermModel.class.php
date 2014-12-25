@@ -19,6 +19,29 @@ class TermModel {
 
     /**
      * @param $taxonomy
+     * @param $name | string tag slug
+     * @return array
+     */
+    public function getObjectIdsByTaxonomyAndTag($taxonomy,$name) {
+        $termModel = new Model('Terms');
+        $map = array('slug'=>$name);
+        $termsData = $termModel->where($map)->select();
+        if(is_array($termsData)) {
+            $taxonomyModel = new Model('TermTaxonomy');
+            $termsIds = array();
+            foreach ($termsData as $val) {
+                $termsIds[] = $val['term_id'];
+            }
+            $taxonomyIdsForRelation = $taxonomyModel->where(array('term_id' => array('in', $termsIds), 'taxonomy' => $taxonomy))->getField('term_taxonomy_id');
+            $where = array(
+                'term_taxonomy_id' => array('in', $taxonomyIdsForRelation)
+            );
+            $ret = (new Model('TermRelationships'))->where($where)->getField('object_id');
+            return $ret;
+        }
+    }
+    /**
+     * @param $taxonomy
      * @return array|null
      */
     public function getTermsByTaxonomy($taxonomy) {

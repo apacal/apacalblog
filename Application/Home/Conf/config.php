@@ -3,6 +3,7 @@ $config	=	require APP_PATH .'Common/Conf/config.php';
 $config['WEB_URL'] = '';  
 $home_config =  array(
 
+    'URL_HASH'      =>      '#nav-home', //url 默认描点
     'TMPL_CACHE_ON'                 =>              false,        // 是否开启模板编译缓存,设为false则每次都会重新编译
     'SITE_NAME'			=>          'Apacal网络日志',   //网站名字
     'SITE_NAME_BAR'     =>          '激情 程序 奋斗',
@@ -14,15 +15,15 @@ $home_config =  array(
     'SHOW_PAGE_TRACE'               =>              true,
     'PAGE_TRACE_SAVE'               =>              false,
 
-    'SEARCHTABLE'       =>     array(
+    'SEARCH_TABLE'       =>     array(
                     'Article',
                 ),
-    'SEARCHCOL'         =>     array(
+    'SEARCH_COL'         =>     array(
                     'title',
                     'description',
                     'content',
                 ),
-    'SEARCHSETCOL'         =>     array(
+    'SEARCH_SET_COL'         =>     array(
                     'title',
                     'description',
                 ),
@@ -33,13 +34,18 @@ $home_config =  array(
 	'DB_LIKE_FIELDS'		=> 'title|remark|content',	//搜索Like匹配字段
     'URL_ROUTER_ON'         => true, 
     'URL_ROUTE_RULES'       => array(
+
+            // article/id => Article/view/id/$id
+            'article/:id\d'             =>      'Article/view',
+            'category/:cid\d'           =>      'Category/index',
+            'date/:cid/:time'           =>      'Article/date',
+            'tag/:name'               =>      'Article/tag',
+            'user/:id\d'                =>      'User/index',
+
+
+
             'note/:cid\d'           =>      'Note/index',
-            'article/:id\d'             =>      'Article/view', // article/id => Article/view/id/$id
-            'tag/:name\d'             =>      'Article/tag',
-            'cate/:cid\d'           =>      'Category/index',
-            'date/:cid/:time'           =>      'Article/dateArc', 
-            'admin/:id\d'          =>      'User/admin',
-            'search/my'                 =>      'Index/search',
+            'search'                 =>      'Index/search',
             'book/my'                      =>      'Index/book',
             'aboutme/my'                      =>      'Index/aboutme',
     ),
