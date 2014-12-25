@@ -47,23 +47,30 @@ class ArticleModel extends RelationModel {
 
     /**
      * @param int $cid when cid = 0 means the all article not care about the cid
+     * @param int $limit
      * @param int $page when the page = 0 means this is first page
+     * @param int $everyPageNum
      * @return array|bool
      */
-    public function getArticleListByCategory($cid = 0, $page = 0) {
-        $pageNum = C('ARTICLE_PAGE_NUM');
-		$articleShow = C('ARTICLE_SHOWNUM');
+    public function getArticleListByCategory($cid = 0 ,$limit = 0, $page = 0, $everyPageNum = 0) {
         $tagArticleList = cacheTag(ArticleList, $cid, $page);
         if (false === ($list = getCache($tagArticleList))) {
+            if (empty($everyPageNum)) {
+                $everyPageNum = C('EVERY_PAGE_NUM');
+            }
+            if (empty($limit)) {
+                $limit = $everyPageNum;
+            }
+            $where = array();
             if($cid !=0) {
                 $where['cid'] = array('in', (new CategoryModel())->getThisCategoryChildren($cid));
             }
             $where['status'] = 1;
             if ($page < 1) {
-                $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->limit($articleShow)->select();
+                $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->limit($limit)->select();
             } else {
-                $first = $articleShow + ($page - 1) * $pageNum;
-                $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->limit($first, $pageNum)->select();
+                $first = ($page - 1) * $everyPageNum;
+                $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->limit($first, $everyPageNum)->select();
             }
 
             $this->getExtendInfoForArticle($list, true, true);
@@ -160,17 +167,23 @@ class ArticleModel extends RelationModel {
     /**
      * get recent article in this category
      * @param int $cid
-     * @param string $order
      * @param int $limit
+     * @param int $notId
+     * @param string $order
      * @return array|false
      */
-    public  function getRecentArticleListByCategory($cid = 0, $order='id DESC, sort DESC', $limit = 5) {
+    public  function getRecentArticleListByCategory($cid = 0, $notId = 0, $limit = 5, $order='id DESC, sort DESC') {
         $tagNewlyArticleList = cacheTag(RecentArticleList, $cid);
         if (false === ($list = getCache($tagNewlyArticleList))) {
+            $where = array();
+            if(!empty($notId)) {
+                $where['id'] = array('neq', $notId);
+            }
             $where['status'] = 1;
-            if($cid != 0)
-                $where['cid'] = array('in', D('Category')->getThisCategoryChildren($cid)); //得到属于$cid的所有栏目的id
-            $list = D('Article')->where($where)->relation(true)->order($order)->limit($limit)->select();
+            if($cid != 0) {
+                $where['cid'] = array('in', (new CategoryModel())->getThisCategoryChildren($cid)); //得到属于$cid的所有栏目的id
+            }
+            $list = $this->where($where)->relation(true)->order($order)->limit($limit)->select();
 
             if (is_array($list)) {
                 foreach ($list as &$val) {

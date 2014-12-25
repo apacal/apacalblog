@@ -1,0 +1,130 @@
+<link rel="stylesheet" href="__SUMMERNOTE__/font-awesome.min.css" />
+<link href="__SUMMERNOTE__/summernote.css" rel="stylesheet">
+<script src="__SUMMERNOTE__/summernote.js"></script>
+
+
+<div id="comment-post">
+    <h2 id="reply-title" class="comment-reply-title">
+        Leave a Reply
+    </h2>
+    <p class="comment-notes">
+            Your email address will not be published. Required fields are marked
+            <span class="required">*</span>
+    </p>
+    <input id="comment-pid" type="hidden" value="0">
+    <div class="input-group input-group-lg">
+        <span class="input-group-addon">User Name&nbsp;*</span>
+        <input id="comment-name" type="text" class="form-control" placeholder="Username" value="{$userInfo.name}">
+    </div>
+
+    <div class="input-group input-group-lg">
+        <span class="input-group-addon">User Email&nbsp;*</span>
+        <input id="comment-email" type="text" class="form-control" placeholder="User Email" value="{$userInfo.email}">
+    </div>
+
+    <div class="input-group input-group-lg">
+        <span class="input-group-addon">Website</span>
+        <input id="comment-website" type="text" class="form-control" placeholder="Website" value="{$userInfo.website}">
+    </div>
+
+
+    <div id="summernote">Hello</div>
+
+    <div class="comment-not-allowed-tags">
+        You can't use these HTML tags and attributes: <code>&lt;a href="" title=""&gt;  &lt; script &gt;</code>
+    </div>
+    <div class="comment-submit">
+        <button type="button" onclick="postComment();" class="btn btn-default btn-lg">
+            Post Submit
+        </button>
+
+    </div>
+
+    <div id="show-error"></div>
+</div>
+<script>
+    function postComment() {
+        var userName = getInputVal('name', true);
+        var userEmail = getInputVal('email', true);
+        var pid = getInputVal('pid', true);
+        var userWebsite = getInputVal('website', false);
+        var content = $('#summernote').code();
+        ajaxPostComment(userName, userEmail, userWebsite, content, pid);
+
+    }
+
+    function setCommentPid(pid) {
+        $('#comment-pid').val(pid);
+    }
+
+
+    function getInputVal(subInputId, requied) {
+        var val = $("#comment-" + subInputId).val();
+        if (requied === true) {
+            if (val == '') {
+                $(inputId).focus();
+            }
+        }
+        return val;
+    }
+
+    function showError(msg) {
+        var html = '<div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button> <strong>';
+
+        html += '评论失败！</strong> 信息为：' + msg + ' . </div>';
+        $('#show-error').html(html);
+    }
+
+    function ajaxPostComment(name, email, website, content, pid) {
+        var uid = "{$userInfo.uid}";
+        var url = "{:U('Comment/add')}";
+        var oid = "{$art_vo.id}";
+        var cid = "{$art_vo.cid}";
+        $.post(url, {
+                pid: pid,
+                oid: oid,
+                cid: cid,
+                uid: uid,
+                name: name,
+                email: email,
+                website: website,
+                content: content
+            },
+            function(data,status){
+                if (status == 'success') {
+                    data = JSON.parse(data);
+                    if (0 == data.code) {
+                        location.reload();
+                    } else {
+                        showError(data.msg);
+                    }
+                } else {
+                    showError('post fail');
+                }
+            });
+
+    }
+
+    $('#summernote').summernote({
+        height: 300,                 // set editor height
+
+        minHeight: null,             // set minimum height of editor
+        maxHeight: null,             // set maximum height of editor
+        focus: false,    // set focus to editable area after initializing summernote
+        toolbar: [
+            //[groupname, [button list]]
+            ['style', ['style']],
+            ['format', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['Lato']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['table', 'hr']],
+            ['height', ['height']],
+        ]
+    });
+</script>
+
+
+
+
+

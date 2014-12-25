@@ -17,6 +17,7 @@ class CommonController extends Controller {
         if (!$_SESSION [C('ADMIN_AUTH_KEY')]) {
 	        redirect(__MODULE__ . C('ADMIN_AUTH_GATEWAY'));
         }
+        $this->assign('userInfo', getUserInfo());
         $this->initMenu();
     }
 

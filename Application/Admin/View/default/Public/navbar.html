@@ -35,7 +35,7 @@
 								</li>
 
 								<li>
-									<a href="{:U('Admin/Del/delAllRuntime')}">
+									<a href="{:U('Del/delAllRuntime')}">
 										<div class="clearfix">
 											<span class="pull-left">
 										        <i class="btn btn-xs btn-primary  icon-trash "></i>
@@ -46,7 +46,7 @@
 								</li>
 
 								<li>
-									<a href="{:U('Admin/Del/delHomeRuntime')}">
+									<a href="{:U('Del/delHomeRuntime')}">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs btn-info icon-trash"></i>
@@ -57,7 +57,7 @@
 								</li>
 
 								<li>
-									<a href="{:U('Admin/Del/delAdminRuntime')}">
+									<a href="{:U('Del/delAdminRuntime')}">
 										<div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs btn-purple icon-trash "></i>
@@ -70,10 +70,10 @@
 						</li>
 						<li class="light-blue">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-								<img class="nav-user-photo" src="__UPLOAD__{$_SESSION['image']}" alt="{$_SESSION['adminname']}" />
+								<img class="nav-user-photo" src="{$userInfo.image}" alt="{$userInfo.name}" />
 								<span class="user-info">
 									<small>欢迎光临,</small>
-									{$_SESSION['adminname']}
+									{$userInfo.name}
 								</span>
 
 								<i class="icon-caret-down"></i>
@@ -81,14 +81,14 @@
 
 							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 								<li>
-									<a href="__MODULE__/Admin/manage">
+									<a href="{:U('Admin/manage')}">
 										<i class="icon-cog"></i>
 										管理员管理
 									</a>
 								</li>
 
 								<li>
-									<a href="__MODULE__/Admin/index/">
+									<a href="{:U('Admin/index')}">
 										<i class="icon-user"></i>
 										个人资料
 									</a>

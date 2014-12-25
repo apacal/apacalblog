@@ -3,6 +3,8 @@
  * Admin控制器
  **/
 namespace Admin\Controller;
+use Admin\Model\AdminModel;
+use Admin\Model\UploadModel;
 use Think\Controller;
 class AdminController extends CommonController {
     protected $manageSort = "adminid desc";
@@ -23,13 +25,12 @@ class AdminController extends CommonController {
         $map['adminname'] = $data['adminname'];
         if(M('Admin')->where($map)->find())
             $this->error('用户已经存在!');
-        $upload = D('Upload');
-        $image = $upload->upload('Admin', 3, true, 200, 200);
+        $upload = new UploadModel();
+        $image = $upload->uploadImage('Admin', 3, true, 200, 200);
         if(!$image)
             $this->error('图片不能为空！');
         $data['image'] = $image;
         $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
-        //$data['pwd'] = md5($data['password']);
         $data['pwd'] = $this->createHash($data['password']);
         if(!$model->add($data))
             $this->error($model->getError());
@@ -48,7 +49,7 @@ class AdminController extends CommonController {
     /**
      **/
     public function update() {
-        $model= M('Admin');
+        $model= new AdminModel();
         if(I('request.password') != '' && I('request.password')) { //有提交密码
             if(!($data = $model->create())) {
                 $this->error($model->getError());
@@ -66,20 +67,17 @@ class AdminController extends CommonController {
             $this->error('参数错误！');
         $map['adminid'] = array('neq', $id);
         $map['adminname'] = $data['adminname'];
-        if(M('Admin')->where($map)->find())
+        if($model->where($map)->find())
             $this->error('用户已经存在!');
-        $upload = D('Upload');
-        $image = $upload->upload('Admin', 3, true, 200, 200);
+        $upload = new UploadModel();
+        $image = $upload->uploadImage('Admin', 3, true, 200, 200);
         if($image) {
             $data['image'] = $image;
-            $src = C('UPLOAD').I('request.old-image');
-            $upload->del($src);
         }
         $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
         unset($data['createtime']);//unset createtime
         $where['adminid'] = $id;
         if(!empty($data['password'])) {
-            //$data['pwd'] = md5($data['password']);
             $data['pwd'] = $this->createHash($data['password']);
         }
         if(!$model->where($where)->save($data))

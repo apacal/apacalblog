@@ -59,10 +59,7 @@ class PublicController extends Controller {
 				$this->error('账号已被管理员禁用！');
 			}
 			$_SESSION[C('ADMIN_AUTH_KEY')] = $authInfo['adminid'];
-			$_SESSION['adminid'] = $authInfo['adminid'];
-			$_SESSION['adminname'] = $authInfo['adminname'];
-			$_SESSION['image'] = $authInfo['image'];
-			$_SESSION['lastLoginTime'] = $authInfo['logintime'];
+            setUserInfoByAdminLogin($authInfo);
 			//保存登录信息
 			$User = M('Admin');
 			$ip = get_client_ip();
@@ -70,7 +67,6 @@ class PublicController extends Controller {
 			$data = array();
 			$data['adminid'] = $authInfo['adminid'];
 			$data['logintime'] = $time;
-			//$data['login_count']	=	array('exp','login_count+1');
 			$data['loginip'] = $ip;
 			$User->save($data);
 

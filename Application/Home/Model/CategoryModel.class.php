@@ -1,5 +1,6 @@
 <?php
 namespace Home\Model;
+use Think\Model;
 use Think\Model\RelationModel;
 class CategoryModel extends RelationModel {
 
@@ -8,11 +9,27 @@ class CategoryModel extends RelationModel {
             'mapping_type' => self::BELONGS_TO,
             'class_name' => 'Model',
             'foreign_key' => 'mid',
-            'mapping_fields' => 'mcontroller',
-            'as_fields' => 'mcontroller',
+            'mapping_fields' => 'mcontroller, model',
+            'as_fields' => 'mcontroller,model',
         ),
     );
 
+    /**
+     * @param $cid
+     * @param $oid
+     * @return array | array('cate' => $cata, 'data' => $data)
+     */
+    public function getExtendInfoByCategoryIdAndObjectId($cid, $oid) {
+        $cate = $this->where(array('id'=>$cid))->relation(true)->find();
+        if (empty($cate)) {
+            return false;
+        }
+        $origin = (new Model($cate['model']))->where(array('id'=>$oid, 'cid' => $cid))->field('title')->find();
+        if(empty($origin)) {
+            $origin = false;
+        }
+        return array('origin' => $origin, 'cate' => $cate);
+    }
     /**
      * @param $cid | int
      * @return array|false

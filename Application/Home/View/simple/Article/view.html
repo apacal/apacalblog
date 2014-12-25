@@ -4,7 +4,7 @@
     <div class="container content">
         <div class="col-md-8 col-sm-8 col-xs-12 left">
             <article>
-                <include file="Public:article-header" />
+                <include file="Public/article-header" />
                 <div class="entry-content">
                     {$art_vo.content}
                 </div>
@@ -16,9 +16,36 @@
                     </volist>
                 </div>
 
+                <div class="entry-prev-next">
+                    <div class="col-sm-6 col-xs-12">
+                        <notempty name="prev">
+
+                        <a title="{$prev.title}" href="{$prev.url}">
+                            <h5>Previous post</h5>
+                            <h4>{$prev.title}</h4>
+                        </a>
+
+                        </notempty>
+                    </div>
+
+                    <div class="col-sm-6 col-xs-12">
+                    <notempty name="next">
+                        <a id="entry-next" title="{$next.title}" href="{$next.url}">
+                            <h5>Next post</h5>
+                            <h4>{$next.title}</h4>
+                        </a>
+                    </notempty>
+                    </div>
+                </div>
+
             </article>
+            <div class="entry-comment">
+
+                <include file="Comment/index" />
+                <include file="Comment/post" />
+            </div>
         </div>
 
-        <include file="Public:right" />
+        <include file="Public/right" />
     </div>
 </block>

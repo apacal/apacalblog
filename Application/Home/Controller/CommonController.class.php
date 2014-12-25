@@ -3,7 +3,9 @@
  * 基础Controller
  **/
 namespace Home\Controller;
+use Home\Model\CategoryModel;
 use Think\Controller;
+use Think\Model;
 
 class CommonController extends Controller {
 
@@ -15,23 +17,30 @@ class CommonController extends Controller {
         redirect(C('FORBIDDEN'));
     }
 
+    protected function jsonReturn($data) {
+        die(json_encode($data));
+    }
+
     function _initialize(){
-        $this->assign('nav_html',D('Category')->getNav());
+        $this->assign('nav_html',(new CategoryModel())->getNav());
         $this->assign('link_list', $this->getLink());
+        $userInfo = getUserInfo();
+        $this->assign('userInfo', $userInfo);
+        if (isset($userInfo['uid'])) {
+            $this->assign('uid', $userInfo['uid']);
+        }
     }
 
     /**
      * @param $title
      * @param $keywords
      * @param $description
-     * @param $position
      */
-    public function seo($title,$keywords,$description,$position){
+    public function seo($title,$keywords,$description){
         $title = C('SITE_NAME'). " | $title";
         $this->assign('title',$title);
         $this->assign('keywords', $keywords.' | '.C('SITE_KEYWORDS'));
         $this->assign('description', $description.' | '.C('SITE_DESCRIPTION'));
-        $this->assign('position',$position);
     }
 
     /**
@@ -39,7 +48,7 @@ class CommonController extends Controller {
      */
     private function getLink() {
         $where['status'] = 1;
-        $list = M('Link')->where($where)->order('sort DESC, createtime DESC')->select();
+        $list = (new Model('Link'))->where($where)->order('sort DESC, createtime DESC')->select();
         return $list;
     }
 

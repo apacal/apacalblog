@@ -23,17 +23,18 @@
             <volist name="recent_comment_list" id="comment_vo" >
                 <li>
                     <h4>
-                        <a href="#">apacal</a> &nbsp; ON &nbsp;
+                        <notempty name="comment_vo.userUrl">
+                            <a href="{$comment_vo.userUrl}">
+                                {$comment_vo.name}
+                            </a>
+                            <else />
+                                {$comment_vo.name}
+                        </notempty>
+                         &nbsp; ON &nbsp;
                         <a href="{$comment_vo.url}">{$comment_vo.title}</a>
                     </h4>
                 </li>
             </volist>
-            <li>
-                <h4>
-                    <a href="#">apacal</a> &nbsp; ON &nbsp;
-                    <a href="#">PHP STORM Xdebug单步调试</a>
-                </h4>
-            </li>
         </ul>
     </div>
 

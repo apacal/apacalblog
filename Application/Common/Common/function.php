@@ -3,6 +3,40 @@
  * 应用默认加载的文件，一些基本函数
  **/
 
+
+
+
+function setUserInfoByAdminLogin($info) {
+    $info['name'] = $info['adminname'];
+    $info['uid'] = $info['adminid'];
+    $_SESSION[C("USER_INFO")] = $info;
+    return true;
+}
+
+function setUserInfo($info) {
+    $_SESSION[C("USER_INFO")] = $info;
+    return true;
+}
+
+/**
+ * get user info from session
+ * @return false | array
+ */
+function getUserInfo() {
+    return getValueFromSessionByKey(C('USER_INFO'));
+}
+
+/**
+ * @param $key
+ * @return false | array
+ */
+function getValueFromSessionByKey($key) {
+    if(isset($_SESSION[$key])) {
+        return $_SESSION[$key];
+    } else {
+        return false;
+    }
+}
 /**
  * 搜略图名称转换
  * @static

@@ -27,10 +27,7 @@ $home_config =  array(
                     'description',
                 ),
     'URL_HTML_SUFFIX'   =>          'html',  //网站静态后缀
-    'ARTICLE_SHOWNUM'   =>          12,       //初始文章显示数目 
-    'ARTICLE_PAGE_NUM'  =>          9,  //每次加载的文章的数目
-    'COMMENT_SHOWNUM'   =>          5,       //初始显示comment数目 
-    'COMMENT_PAGE_NUM'  =>          5,  //每次加载的comment的数目
+    'EVERY_PAGE_NUM'  =>          9,  //每次加载的文章的数目
 	'URL_MODEL'         =>          2,           //服务器开启Rewrite模块时，可去除URL中的index.php 参数模式1,2,3
 	
 	'DB_LIKE_FIELDS'		=> 'title|remark|content',	//搜索Like匹配字段
@@ -56,6 +53,7 @@ $home_config =  array(
 		'__IMG__' 				=> $config['WEB_URL'].'/Public/images',
 		'__JS__' 				=> $config['WEB_URL'].'/Public/js',
 		'__BS__' 				=> $config['WEB_URL'].'/Public/bootstrap',
+        '__SUMMERNOTE__' 				=> $config['WEB_URL'].'/Public/summernote',
 		'__UPLOAD__' 			=> $config['WEB_URL'].'/Uploads',
 	),	
 

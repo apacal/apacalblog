@@ -2,6 +2,9 @@
  * 多级菜单显示效果
  */
 $(document).ready(function(){
+    initHash();
+
+
     $(".dropdown").hover(function(){
         $(this).children("ul.dropdown-menu").css("display", "block");
     });
@@ -17,16 +20,22 @@ $(document).ready(function(){
             threshold: 0.5
         });
     });
-    $(window).bind('scroll',function(){showHeader()});
+    $(window).bind('scroll',function(){showBlogInfo()});
 
 });
+
+function initHash() {
+    var type = window.location.hash.substr(1);
+    window.location.hash = type;
+
+}
 
 
 var opacity = 1;
 var prev = 0;
 var topSize = 15;
 
-function showHeader() {
+function showBlogInfo() {
 
     var prev = window.prev;
     var opacity = window.opacity;
@@ -50,10 +59,10 @@ function showHeader() {
         topSize = 15;
     }
 
-    console.log("opacity: " + opacity);
-    console.log("prev: " + prev);
-    console.log("curr: " + curr);
-    console.log("height: " + height);
+    //console.log("opacity: " + opacity);
+    //console.log("prev: " + prev);
+    //console.log("curr: " + curr);
+    //console.log("height: " + height);
     prev = $(document).scrollTop();
     if (curr <= height) {
         $(".blog-info").css("opacity", opacity);
@@ -68,7 +77,7 @@ function showHeader() {
     window.prev = prev;
     window.opacity = opacity;
 
-    console.log("topSize:" + topSize);
+    //console.log("topSize:" + topSize);
 
 
 

@@ -1,4 +1,11 @@
 <header>
+    <div class="entry-img">
+        <notempty name="art_vo.image">
+            <a href="{$art_vo.url}">
+                <img src="{$art_vo.image}" style="height: 160px;">
+            </a>
+        </notempty>
+    </div>
     <h1 class="entry-title">
         <a href="{$art_vo.url}">{$art_vo.title}</a>
     </h1>
@@ -37,7 +44,7 @@
         </span>
 
         <span class="entry-comment">
-            <a href="{$art_vo.url}#respond">
+            <a href="{$art_vo.url}#comment-post">
                 <span class="glyphicon glyphicon-comment"></span>
                 {$art_vo.commentCount} &nbsp; comment
             </a>

@@ -2,6 +2,7 @@
 // 本类由系统自动生成，仅供测试用途
 namespace Home\Controller;
 use Home\Model\ArticleModel;
+use Home\Model\CommentModel;
 use Think\Controller;
 class ArticleController extends CommonController {
     public function index(){
@@ -53,72 +54,39 @@ class ArticleController extends CommonController {
             $this->error("参数错误!");
         }
 
-        $model = new ArticleModel();
-        $article = $model->getArticleById($id);
-        if(!empty($article)) {
-            $this->assign('art_vo', $article);
-            $this->assign('recent_article_list',$model->getRecentArticleListByCategory($article['cid']));
-            $this->assign('archives_list', $model->getArticleListGroupByDateByCategry($article['cid']));
-            $this->assign('tags_list', $model->getTagsByCategory($article['cid']));
-
-            // readNext
-            $next = $model->getNextArticleByCategory($article['cid'], $article['createtime']);
-            $this->assign('next', $next);
-
-            $prev = $model->getPrevArticleByCategory($article['cid'], $article['createtime']);
-            $this->assign('prev', $prev);
-
-
-            // 评论
-            $model->setIncClickById($id, 'click');
-
-            $this->setComment($article['id'], $article['cid']);
-            
-            $position = array();
-            $position [] = array('cname' => '正文');
-            D('Category')->getPosition($article['cid'], $position);
-            $this->seo($article['title'], $article['keywords'], $article['description'], $position);
-
-            $this->display();
-        }else{
+        $Article = new ArticleModel();
+        $article = $Article->getArticleById($id);
+        if(empty($article)) {
             $this->error("没有该文章!");
         }
+        $Article->setIncClickById($id, 'click');
+
+        $this->assign('art_vo', $article);
+        $this->assign('post_uid', $article['adminid']);
+        $this->assign('recent_article_list',$Article->getRecentArticleListByCategory($article['cid'], $article['id']));
+        $this->assign('archives_list', $Article->getArticleListGroupByDateByCategry($article['cid']));
+        $this->assign('tags_list', $Article->getTagsByCategory($article['cid']));
+
+        // readNext
+        $next = $Article->getNextArticleByCategory($article['cid'], $article['createtime']);
+        $this->assign('next', $next);
+        $prev = $Article->getPrevArticleByCategory($article['cid'], $article['createtime']);
+        $this->assign('prev', $prev);
+
+
+        // 评论
+        $Comment = new CommentModel();
+        $this->assign('recent_comment_list', $Comment->getRecentCommentListByCategory($article['cid'], $article['id'], 8));
+        $commentList = $Comment->getCommentListByCidAndOid($article['cid'], $article['id']);
+        $this->assign('comment_list', $commentList);
+        $this->assign('comment_count', $Comment->getCommentCount($article['cid'], $article['id']));
+
+
+
+        $this->seo($article['title'], $article['keywords'], $article['description']);
+        $this->display();
     }
 
-    /**
-     * 获取评论信息
-     * @param $id-来源文章id　$cid 分类id
-     **/
-    protected function setComment($id, $cid) {
-        $model = D('Comment');
-        //评论数
-        $where['oid&status&pid&cid'] = array($id,'1','0',$cid,'_multi' => true);
-        $commentCount = $model->where($where)->count();
-        //获取最多COMMENT_SHOWNUM的一级评论
-        $maxShowComment = C('COMMENT_SHOWNUM');
-        if(!isset($maxShowComment) || empty($maxShowComment)) {
-            $maxShowComment = 5;
-        }
-        $comment = $model->where($where)->limit($maxShowComment)->order('createtime ASC')->select();
-        if(is_array($comment)) {
-            foreach($comment as $key => $val) {
-                $comment[$key]['reply'] = $model->where('status=1 AND pid='.$val['id'])->order('createtime ASC')->select();
-                $comment[$key]['reply'] = isset($comment[$key]['reply']) ? $comment[$key]['reply'] : array();
-                $model->getParentName($comment[$key]['reply']);
-            }
-        }
-        //最热的评论
-        $mapHotComment['oid&status&cid'] = array($id, '1', $cid, '_multi' => true);
-        $mapHotComment['agree'] = array('GT', 5);
-        $hotComment = $model->where($mapHotComment)->order('agree DESC')->limit(10)->select();
-        //获取是否还有评论没有显示出来，一级评论大于$maxShowComment
-        if($commentCount > $maxShowComment)
-            $this->assign('commentMore',1);
-        $model->getParentName($hotComment);
-        $this->assign('hotComment',$hotComment);
-        $this->assign('commentList',$comment);//评论
-        $this->assign('commentCount',$commentCount);
-    }
     /**
      * 时间归类
      **/

@@ -1,6 +1,8 @@
 <?php
 return array(
 
+    'USER_INFO'     => 'user_info', // user info session key, include user name,email, website
+
     //网站系统设置
 
     'SITE_KEYWORDS'		=>  'zhongqingzhu 钟庆柱 Apacal Apacal网络日志 apacalblog Apacal Apacal个人博客 激情 奋斗 技术的乐趣、快乐',
@@ -23,8 +25,6 @@ return array(
     'SHOW_ERROR_MSG'                =>              false,    // 显示错误信息
     'ERROR_MESSAGE'                 =>              '发生错误！',
 
-    'TMPL_STRIP_SPACE'              =>              true, // 是否去除模板文件里面的html空格与换行
-    'TMPL_CACHE_ON'                 =>              true, // 是否开启模板编译缓存,设为false则每次都会重新编译
     'TMPL_CACHE_TIME'               =>              0, // 模板缓存有效期 0 为永久，(以数字为值，单位:秒)
     'URL_CASE_INSENSITIVE'          =>              false,  // URL区分大小写
 

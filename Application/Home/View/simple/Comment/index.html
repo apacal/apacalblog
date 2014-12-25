@@ -1,66 +1,125 @@
-<include file="Comment:js" />
-<div class="msg">
-<div class="col-md-8">
-    <div class="comments" id="main-comments">
-        <div id="checkComment">
-        <div id="publishComment" class="msghr" >
-		<h3>
-			<img src="__IMG__/write.gif"><span id="publish_comment" >&nbsp;&nbsp发表评论</span> <span class="pull-right"><a class="show-all" href="#">查看所有{$commentCount}条评论</a></span>
-		</h3>
-        </div>
-        <p style="padding-top: 10px;">愿您的每句评论，都能给大家的生活添色彩，带来共鸣，带来思索，带来快乐。</p>
-            <div class="add_comm">
 
-                    <textarea class="form-control" rows="5" cols="60" id="commentcontent" placeholder="（必须）请说几句吧，200字以内..." onblur="setVIM();" onfocus="unsetVIM()"></textarea>
-                    <div class="comm-con">
-                    <empty name="CURUSER.name">
-                    <strong style="color: #BA141D;">署名：</strong>
-                    <input type="text" onblur="if(this.value=='')this.value='匿名';setVIM();" onfocus="if(this.value=='匿名')this.value='';unsetVIM();" value="匿名" class="ipt-txt" size="36" id="author" name="author">
-                    </ else>
-					<input type="hidden" name="author" id="author" value="{$CURUSER.name}" />
-					<input type="hidden" name="author_id" id="author_id" value="{$CURUSER.id}" />
-                    </empty>
-					<input type="hidden" name="pid" id="pid" value="0" />
-					<input type="hidden" name="rid" id="rid" value="0" />
-					<input type="hidden" name="aid" id="aid" value="{$article.id}" />
-					<input type="hidden" name="cid" id="cid" value="{$article.cid}" />
-                    <button type="submit" class="btn btn-info" id="btnComment"  name="btnComment" onclick="return addComment()">提交</button>
+<notempty name="comment_list">
+    <div class="comment-title">
+        <h2>{$comment_count} Comments</h2>
+    </div>
+
+    <div class="comment-list">
+        <ul class="media-list">
+            <volist name="comment_list" id="comment_vo">
+                <li class="media" id="comment-{$comment_vo.id}">
+                    <a class="media-left" <notempty name="comment_vo.userUrl">href="{$comment_vo.userUrl}"</notempty>>
+                        <img alt="{$comment_vo.name}" src='
+                        <empty name="comment_vo.image">__IMG__/gravatar.png<else />{$comment_vo.image}</empty>' style="width:64px; height: 64px;">
+                    </a>
+                    <div class="media-body">
+                        <div class="comment-author">
+                            <h4>
+                                <b><notempty name="comment_vo.userUrl">
+                                    <a href="comment_vo.userUrl" target="_blank">
+                                        {$comment_vo.name}
+                                    </a>
+                                    <else />
+                                    {$comment_vo.name}
+                                    </notempty>
+                                </b>
+                                <eq name="comment_vo.uid" value="$post_uid">&nbsp;&nbsp;(Post Author)&nbsp;&nbsp;</eq>
+                            </h4>
+                        </div>
+                        <h4><a href="#comment-post" onclick="setCommentPid({$comment_vo.id});" class="reply-click" >{$comment_vo.createtime|date = 'F d, Y', ###} AT {$comment_vo.createtime|date='g:i A', ###}</a></h4>
+                        <div class="comment-content">
+                            {$comment_vo.content}
+                        </div>
+
+                        <h4 class="reply-action"><a href="#comment-post" class="reply-click" onclick="setCommentPid({$comment_vo.id});">REPLY</a></h4>
+                        <!------------            sub     ------------------------->
+                        <notempty name="comment_vo.sub">
+                            <volist name="comment_vo.sub" id="com_sub_vo">
+                                <div class="media" id="comment-{$com_sub_vo}">
+                                    <a class="media-left" <notempty name="com_sub_vo.userUrl">href="{$com_sub_vo.userUrl}"</notempty>>
+                                    <img alt="{$com_sub_vo.name}" src='
+                        <empty name="com_sub_vo.image">__IMG__/gravatar.png<else />{$com_sub_vo.image}</empty>' style="width:64px; height: 64px;">
+                                    </a>
+                                    <div class="media-body">
+                                        <div class="comment-author">
+                                            <h4>
+                                                <b><notempty name="com_sub_vo.userUrl">
+                                                    <a href="com_sub_vo.userUrl" target="_blank">
+                                                        {$com_sub_vo.name}
+                                                    </a>
+                                                    <else />
+                                                    {$com_sub_vo.name}
+                                                </notempty>
+                                                </b>
+                                                <eq name="com_sub_vo.uid" value="$post_uid">&nbsp;&nbsp;(Post Author)&nbsp;&nbsp;</eq>
+                                            </h4>
+                                        </div>
+                                        <h4><a href="#comment-post" onclick="setCommentPid({$com_sub_vo.id});" class="reply-click" >{$com_sub_vo.createtime|date = 'F d, Y', ###} AT {$com_sub_vo.createtime|date='g:i A', ###}</a></h4>
+                                        <div class="comment-content">
+                                            {$com_sub_vo.content}
+                                        </div>
+
+                                        <h4 class="reply-action"><a href="#comment-post" class="reply-click" onclick="setCommentPid({$com_sub_vo.id});">REPLY</a></h4>
+
+                                        <!------------------------------ sub2 ------------------------------->
+                                        <notempty name="com_sub_vo.sub2">
+                                            <volist name="com_sub_vo.sub2" id="com_sub2_vo">
+                                                <div class="media" id="comment-{$com_sub2_vo.id}">
+                                                    <a class="media-left" <notempty name="com_sub2_vo.userUrl">href="{$com_sub2_vo.userUrl}"</notempty>>
+                                                    <img alt="{$com_sub2_vo.name}" src='
+                        <empty name="com_sub2_vo.image">__IMG__/gravatar.png<else />{$com_sub2_vo.image}</empty>' style="width:64px; height: 64px;">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <div class="comment-author">
+                                                            <h4>
+                                                                <b><notempty name="com_sub2_vo.userUrl">
+                                                                    <a href="com_sub2_vo.userUrl" target="_blank">
+                                                                        {$com_sub2_vo.name}
+                                                                    </a>
+                                                                    <else />
+                                                                    {$com_sub2_vo.name}
+                                                                </notempty>
+                                                                </b>
+                                                                <eq name="com_sub2_vo.uid" value="$post_uid">&nbsp;&nbsp;(Post Author)&nbsp;&nbsp;</eq>
+
+                                                                <!---   sub 2            @      reply user         ------>
+
+                                                                <b><notempty name="com_sub2_vo.pUrl">
+
+                                                                    <span>&nbsp; @ &nbsp;</span>
+
+                                                                    <a href="com_sub2_vo.pUrl" target="_blank">
+                                                                        {$com_sub2_vo.pName}
+                                                                    </a>
+                                                                    <else />
+                                                                    {$com_sub2_vo.pName}
+                                                                </notempty>
+                                                                </b>
+                                                                <eq name="com_sub2_vo.pUid" value="$post_uid">&nbsp;&nbsp;(Post Author)&nbsp;&nbsp;</eq>
+                                                            </h4>
+                                                        </div>
+                                                        <h4><a href="#comment-post" onclick="setCommentPid({$com_sub2_vo.id});" class="reply-click" >{$com_sub2_vo.createtime|date = 'F d, Y', ###} AT {$com_sub2_vo.createtime|date='g:i A', ###}</a></h4>
+                                                        <div class="comment-content">
+                                                            {$com_sub2_vo.content}
+                                                        </div>
+
+                                                        <h4 class="reply-action"><a href="#comment-post" class="reply-click" onclick="setCommentPid({$com_sub2_vo.id});">REPLY</a></h4>
+
+                                                    </div>
+                                                 </div>
+                                             </volist>
+                                        </notempty>
+                                        <!-------------------  end     sub2   -------------------->
+
+                                    </div>
+                                </div>
+                            </volist>
+                        </notempty>
+                        <!------------  end          sub     ------------------------->
+
                     </div>
-            </div>
-            <div id="postTemp"></div>
-        </div>
-
-        <div class="check">
-        <div class="msghr">
-		<h3>
-			<img src="__IMG__/commlist.gif"><span>&nbsp;&nbsp评论列表</span>
-		</h3>
-		</div> 
-        <div class="commentlist unstyled" id="commentlist">
-			<include file="Comment:comment" />
-		</div>
-		<div class="loadMoreComment">
-		<if condition="$commentMore eq 1">
-			<input type="hidden" name="loadMoreCommentParam" id="loadMoreCommentParam" value="0" />
-			<a href="javascript:void(0)" class="btn btn-primary btn-lg btn-block" onclick="loadMoreComment()">加载更多评论</a>
-
-		</if>
-		
-		</div>
-        </div>
+                </li>
+            </volist>
+        </ul>
     </div>
-</div>
-<div class="col-md-4" id="hotmsg">
-    <div class="comments">
-        <div class="msghr">
-		<h3>
-			<img src="__IMG__/commlist.gif"><span>&nbsp;&nbsp最热评论</span>
-		</h3>
-		</div> 
-        <div class="commentlist" id="commentlist">
-			<include file="Comment:hot" />
-		</div>
-    </div>
-</div>
-
-</div>
+</notempty>
