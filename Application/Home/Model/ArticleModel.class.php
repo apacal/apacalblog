@@ -282,7 +282,7 @@ class ArticleModel extends RelationModel {
 
             $val['tags'] = $this->buildTagsByObjectId($val['id']);
             $val['adminUrl'] = U('user/' .$val['adminid'] .C('URL_HASH'));
-            $val['cateUrl'] = U('categpry/' .$val['cid'] .C('URL_HASH'));
+            $val['cateUrl'] = U('category/' .$val['cid'] .C('URL_HASH'));
 
             if ($isStrstrContent == true) {
                 $str = strstr($val['content'], "<hr>", true);

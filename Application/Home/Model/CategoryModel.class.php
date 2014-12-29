@@ -35,14 +35,23 @@ class CategoryModel extends RelationModel {
      * @param $cid | int
      * @return array|false
      */
-    public function getControllerNameByCategory($cid) {
+    public function getRedirectUrlByCategory($cid) {
         $tag = cacheTag(ControllerNameByCategory, $cid);
-        if (false === ($controller = getCache($tag))) {
-            $mid = M('Category')->where(array('id' => $cid))->getField('mid');
-            $controller = M('Model')->where(array('id' => $mid))->getField('mcontroller');
-            setCache($tag, $controller, C('CATEGORY_TTL'));
+        if (false !== ($url = getCache($tag))) {
+            return $url;
         }
-        return $controller;
+        $cate = M('Category')->where(array('id' => $cid))->find();
+        if(!isset($cate['url']) || empty($cate['url'])) {
+            $controller = M('Model')->where(array('id' => $cate['mid']))->getField('mcontroller');
+
+            $url = U($controller .'/index', array('cid' => $cid));
+
+        } else {
+            $url = $cate['url'];
+        }
+
+        setCache($tag, $url, C('CATEGORY_TTL'));
+        return $url;
     }
 
     /**

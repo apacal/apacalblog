@@ -570,26 +570,78 @@ header a:hover{
 /* end  滚动屏幕 */
 
 
-/* 底部 foot 
+/* 底部 foot
 ============================================================*/
-#footer {
+footer {
     padding-top: 5px;
     padding-bottom: 5px;
-    width: 100%;
     background:#222;
 }
-.footerInfo {
-    color: white;
-    line-height: 16px;
-    margin: 20px 0;
+footer .container {
+    margin-top: 70px;
 }
-.footerInfo > p {
-    margin: 0 0 5px;
-    text-align: center;
+
+footer a {
+    target: blank;
 }
-.friendLink {
-    margin: 6% 0 0 6%;
+/** footer widgets **/
+.widgets ul li:first-child{
+    border-top:0px;
 }
-.seo_links {
-    width: 80%;
+.widgets h4 {
+    color:#ffffff;
 }
+.widgets ul li a {
+    font-size:1.1em;
+}
+.widgets ul li {
+    padding: 10px 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+.links ul li:first-child{
+
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+.site-info {
+
+    padding-left: 0px;
+    padding-right: 0px;;
+    color:#666666;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 2px solid rgba(255,255,255,0.1);
+    margin-bottom: 60px;
+}
+.site-info a {
+
+    color:#666666;
+}
+.site-info a:hover{
+    color: #1abc9c;
+    text-decoration: none;
+}
+
+.site-info-right {
+    text-align: right;
+}
+
+
+.site-info div{
+    padding: 0px 0px;
+}
+
+#calendar {
+    font-size: 1.0em;
+}
+.c-mouth-view {
+    font-size: 1.3em;
+    font-weight: 600;
+}
+.c-row:first-child {
+    font-size:1.3em;
+    font-weight: 500;
+}
+.this-day  {
+    color: #1abc9c;
+}
+

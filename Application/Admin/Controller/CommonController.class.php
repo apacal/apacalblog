@@ -95,7 +95,7 @@ class CommonController extends Controller {
 
     public function _before_add() {
         $url = $this->getManageUrl(CONTROLLER_NAME .'/insert');
-        $this->assign('actionUrl', $url);
+        $this->assign('action_url', $url);
     }
 
     /**
@@ -146,7 +146,7 @@ class CommonController extends Controller {
      */
     public function  __edit($vo) {
         $url = U(CONTROLLER_NAME .'/update', array('id' => $vo['id']));
-        $this->assign('actionUrl', $url);
+        $this->assign('action_url', $url);
     }
 
     public function edit() {

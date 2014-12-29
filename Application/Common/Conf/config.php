@@ -1,5 +1,6 @@
 <?php
 return array(
+    'SITE_URL'      =>  'http://apacal.cn',
 
     'USER_INFO'     => 'user_info', // user info session key, include user name,email, website
 

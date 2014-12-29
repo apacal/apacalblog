@@ -1,17 +1,72 @@
-    <div class="container marketing" id="footer">
-        <div id="scrollBtn"> <!-- 滚动屏幕 -->
-            <a href="" class="scrollToTop" title="顶部" ><p class="scrollBtn-top"></p></a>
-            <a  href="#comment-post" class="scrollToCenter" title="评论"><p class="scrollBtn-SNS"></p></a>
-            <a href="" class="scrollToBottom" title="底部"><p class="scrollBtn-bottom"></p></a>
-        </div>
+<footer>
+    <div id="scrollBtn"> <!-- 滚动屏幕 -->
+        <a href="" class="scrollToTop" title="顶部" ><p class="scrollBtn-top"></p></a>
+        <a  href="#comment-post" class="scrollToCenter" title="评论"><p class="scrollBtn-SNS"></p></a>
+        <a href="" class="scrollToBottom" title="底部"><p class="scrollBtn-bottom"></p></a>
+    </div>
 
-        <div class="col-sm-4 col-xs-12">
+    <div class="container marketing">
+
+        <div class="col-sm-4 col-xs-12 follow-me">
             <div class="widgets">
                 <h4>
-
+                    FOLLOW ME ON
                 </h4>
+                <ul class="list-unstyled">
+                    <li> <a href="https://github.com/apacal" target="_blank">github</a> </li>
+                    <li> <a href="http://weibo.com/2526838991/profile?topnav=1&wvr=6" target="_blank">weibo</a> </li>
+                    <li> <a href="http://music.163.com/#/user/home?id=18059001" target="_blank">music 163</a></li>
+                    <li> <a href="http://user.qzone.qq.com/1612577280/profile" target="_blank">qzone</a></li>
+                </ul>
             </div>
         </div>
+
+        <div class="col-sm-4 col-xs-12 links">
+            <div class="widgets">
+                <h4>
+                    LINKS
+                </h4>
+                <ul class="list-unstyled">
+                    <volist name="link_list" id="vo">
+                        <li>
+                            <a href="{$vo.url}" target="_blank">{$vo.title}</a>
+                        </li>
+                    </volist>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-sm-4 col-xs-12 calendar">
+            <div id="calendar" ></div>
+        </div>
+        <script>
+            var options = {
+                title:"{:C('SITE_NAME')}",
+                events: [],
+                firstDayOfWeek: "Monday",
+                showDays: true,
+                url: "http://apacal.cn",
+                color: "black"
+            };
+            $("#calendar").kalendar(options);
+        </script>
+
+
+        <div class="col-sm-12 col-xs-12 site-info">
+            <div class="col-sm-6 col-xs-12 text-uppercase">
+                <p> © 2014 &nbsp;&nbsp;
+                    <a href="{:C('SITE_URL')}" title="Keep It Simple, Stupid — open our mind" >Keep It Simple, Stupid</a>
+                </p>
+            </div>
+            <div class="col-sm-6 col-xs-12 text-uppercase site-info-right">
+                <p> power by  &nbsp;&nbsp;
+                    <a href="{:C('SITE_URL')}" title="APACAL" >apacal</a>  —
+                    <a class="scrollToTop" href="" >Up ↑</a>
+                </p>
+            </div>
+        </div>
+        <!--
         <div class="col-md-7">
             <div class="footerInfo">
                 <p>Copyright © 2014 Apacal All rights reserved <a href="http://www.miitbeian.gov.cn/" target="_blank" >粤ICP备14021869号</a></p>	
@@ -20,16 +75,8 @@
                 </p>	
             </div>
         </div>
-        <div class="col-md-5">
-            <div class="friendLink">
-                <select  id="friendlink" class="seo_links">
-                    <option value="">友情链接</option>
-                    <volist name="link_list" id="vo">
-                    <option value="{$vo.url}">{$vo.title}</option>              		        
-                    </volist>
-                </select>
-            </div>
-        </div>
+        -->
     </div> <!-- end footer -->
-        
 
+
+</footer>

@@ -3,10 +3,13 @@
  * 栏目控制器
  **/
 namespace Admin\Controller;
+use Admin\Model\UploadModel;
+use Home\Model\CategoryModel;
 use Think\Controller;
 class CategoryController extends CommonController {
 
     public function _before_add() {
+        parent::_before_add();
         $this->setAllCategoryTree();
         $this->setAllModelList();
     }
@@ -18,7 +21,6 @@ class CategoryController extends CommonController {
 
     public function manage() {
         $model = D(CONTROLLER_NAME);
-        //$list = $model->field($this->field)->order('sort DESC, updatetime DESC')->select();
         $list = $model->getAllCategory();
         $this->assign('list', $list);
     }
@@ -34,7 +36,55 @@ class CategoryController extends CommonController {
         }
         $this->assign('vo', $vo);
         $this->setNowCategory($vo);
+        parent::__edit($vo);
         $this->display();
+    }
+
+    /**
+     * 添加栏目
+     **/
+    public function insert() {
+        $model= new CategoryModel();
+        if(!($data = $model->create())) {
+            $this->error($model->getError());
+        }
+        $upload = new UploadModel();
+        $image = $upload->uploadImage('Category', 3, true, 761, 427, \Think\Image::IMAGE_THUMB_CENTER);
+        if(!$image) {
+            $data['image'] = $image;
+        } else {
+            $data['image'] = '';
+        }
+        $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
+        if(!$model->add($data))
+            $this->error($model->getError());
+        else
+            $this->success('添加栏目成功!', __CONTROLLER__.'/manage');
+    }
+
+    /**
+     * 更新栏目
+     **/
+    public function update() {
+        $model= new CategoryModel();
+        if(!($data = $model->create())) {
+            $this->error($model->getError());
+        }
+        $id = I('request.id');
+        if(empty($id) || !is_numeric($id))
+            $this->error('参数错误！');
+        $upload = new UploadModel();
+        $image = $upload->uploadImage('Category', 3, true, 761, 427, \Think\Image::IMAGE_THUMB_CENTER);
+        if(!empty($image)) {
+            $data['image'] = $image;
+        }
+        $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
+        unset($data['createtime']);//unset createtime
+        $where['id'] = $id;
+        if(!$model->where($where)->save($data))
+            $this->error($model->getError());
+        else
+            $this->success('更新栏目成功!', __CONTROLLER__.'/manage');
     }
 
     private  function setNowCategory($info) {
@@ -45,49 +95,4 @@ class CategoryController extends CommonController {
         $this->assign('modelNow', $modelNow);
     }
 
-    /**
-     * 添加栏目
-     **/
-    public function insert() {
-        $model= D('Category');
-        if(!($data = $model->create())) {
-            $this->error($model->getError());
-        }
-        $upload = D('Upload');
-        $image = $upload->upload('Category', 3, true, 761, 427, \Think\Image::IMAGE_THUMB_CENTER);
-        if(!$image)
-            $this->error('图片不能为空！');
-        $data['image'] = $image;
-        $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
-        if(!$model->add($data))
-            $this->error($model->getError());
-        else
-            $this->success('添加栏目成功!', __CONTROLLER__.'/manage');
-    }
-    /**
-     * 更新栏目
-     **/
-    public function update() {
-        $model= D('Category');
-        if(!($data = $model->create())) {
-            $this->error($model->getError());
-        }
-        $id = I('request.id');
-        if(empty($id) || !is_numeric($id))
-            $this->error('参数错误！');
-        $upload = D('Upload');
-        $image = $upload->upload('Category', 3, true, 761, 427, \Think\Image::IMAGE_THUMB_CENTER);
-        if($image) {
-            $data['image'] = $image;
-            $src = C('UPLOAD').I('request.old-image');
-            $upload->del($src);
-        }
-        $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
-        unset($data['createtime']);//unset createtime
-        $where['id'] = $id;
-        if(!$model->where($where)->save($data))
-            $this->error($model->getError());
-        else
-            $this->success('更新栏目成功!', __CONTROLLER__.'/manage');
-    }
 }

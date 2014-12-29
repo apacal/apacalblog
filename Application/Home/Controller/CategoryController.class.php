@@ -11,7 +11,7 @@ class CategoryController extends CommonController {
             $this->error("参数错误！");
         }
         $model = new CategoryModel();
-        $controller = $model->getControllerNameByCategory($cid);
-        R($controller .'/index', array('cid' => $cid));
+        $url = $model->getRedirectUrlByCategory($cid);
+        redirect($url);
     }
 }

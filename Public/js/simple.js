@@ -4,6 +4,7 @@
 $(document).ready(function(){
     initHash();
 
+    initCalendar();
 
     $(".dropdown").hover(function(){
         $(this).children("ul.dropdown-menu").css("display", "block");
@@ -23,6 +24,10 @@ $(document).ready(function(){
     $(window).bind('scroll',function(){showBlogInfo()});
 
 });
+
+function initCalendar() {
+
+}
 
 function initHash() {
     var type = window.location.hash.substr(1);

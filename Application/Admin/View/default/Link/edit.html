@@ -1,5 +1,5 @@
-﻿        <include file="Public:header" />
-                                <form class="form-horizontal" role="form" enctype="multipart/form-data" action="__MODULE__/Link/update/id/{$vo.id}" method="post">
+﻿<include file="Public:header" />
+                                <form class="form-horizontal" role="form" enctype="multipart/form-data" action="{$action_url}" method="post">
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-right" > 标题 </label>
 										<div class="col-sm-9">
@@ -60,18 +60,18 @@
 
 								</form>
 
-        <script> //初始状态js
-        $(document).ready(function(){
-            var status = {$vo.status}; //设置初始状态
-            if (status == 1) { //状态位一
-                document.getElementById("status").checked=true
-            }
-            //排序值加减按钮
-            var sortstr = "{$vo.sort}";
-            var sort = Number(sortstr);
-            $('#sort').ace_spinner({value: sort ,min:-500,max:500,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
-        });
-        </script>
+<script> //初始状态js
+    $(document).ready(function(){
+        var status = "{$vo.status}"; //设置初始状态
+        if (status == '1') { //状态位一
+            document.getElementById("status").checked=true
+        }
+        //排序值加减按钮
+        var sortstr = "{$vo.sort}";
+        var sort = Number(sortstr);
+        $('#sort').ace_spinner({value: sort ,min:-500,max:500,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
+    });
+</script>
 
 
-                <include file="Public:footer" />
+<include file="Public:footer" />

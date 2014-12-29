@@ -53,15 +53,16 @@ $home_config =  array(
     /* 模版变量设置 */
 	'TMPL_PARSE_STRING' => array(
 		'__WEB_URL__'			=> $config['WEB_URL'],
-		'__PUBLIC__' 			=> $config['WEB_URL'].'/Public',    
-		'__CODE__' 				=> $config['WEB_URL'].'/Public/code',
+        '__UPLOAD__' 			=> $config['WEB_URL'].'/Uploads',
+		'__PUBLIC__' 			=> $config['WEB_URL'].'/Public',
 		'__CSS__' 				=> $config['WEB_URL'].'/Public/css',
 		'__IMG__' 				=> $config['WEB_URL'].'/Public/images',
 		'__JS__' 				=> $config['WEB_URL'].'/Public/js',
 		'__BS__' 				=> $config['WEB_URL'].'/Public/bootstrap',
         '__SUMMERNOTE__' 				=> $config['WEB_URL'].'/Public/summernote',
-		'__UPLOAD__' 			=> $config['WEB_URL'].'/Uploads',
-	),	
+        '__GOOGLE_CODE__' 				=> $config['WEB_URL'].'/Public/google-code-prettify',
+        '__KALENDAR__' 				=> $config['WEB_URL'].'/Public/kalendar',
+	),
 
     //邮箱配置
 	'SMTP_SERVER' =>'smtp.126.com',					//邮件服务器
