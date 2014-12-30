@@ -35,7 +35,7 @@ class CategoryModel extends RelationModel {
      * @param $cid | int
      * @return array|false
      */
-    public function getRedirectUrlByCategory($cid) {
+    public function getRedirectUrlByCategory($cid, $page) {
         $tag = cacheTag(ControllerNameByCategory, $cid);
         if (false !== ($url = getCache($tag))) {
             return $url;
@@ -44,7 +44,13 @@ class CategoryModel extends RelationModel {
         if(!isset($cate['url']) || empty($cate['url'])) {
             $controller = M('Model')->where(array('id' => $cate['mid']))->getField('mcontroller');
 
-            $url = U($controller .'/index', array('cid' => $cid));
+            if(!empty($page)) {
+                $url = U($controller .'/index', array('cid' => $cid, 'page' => $page));
+
+            } else {
+
+                $url = U($controller .'/index', array('cid' => $cid));
+            }
 
         } else {
             $url = $cate['url'];

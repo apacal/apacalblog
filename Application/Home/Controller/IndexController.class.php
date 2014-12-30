@@ -30,16 +30,37 @@ class IndexController extends CommonController {
         $this->display('Index:index');
     }
 
-    public function index($cid = 0){
+    public function index($cid = 0, $page = 1){
         if ($cid != 0 && (!is_numeric($cid))) {
+            $this->error('参数错误!');
+        }
+        if (!is_numeric($page)) {
             $this->error('参数错误!');
         }
 
         $articleModel = new ArticleModel();
+        $totalPageCount = $articleModel->getTotalPageCountByCategory($cid);
 
-        $this->assign('recent_comment_list', (new CommentModel())->getRecentCommentListByCategory($cid, 0, 8));
-        $this->assign('article_list', $articleModel->getArticleListByCategory($cid));
+        if ($page > 1 && !empty($totalPageCount)) {
+            $pageTitle = "RESULTS:(PAGE $page OF $totalPageCount)";
+            $this->assign('new_url', U(CONTROLLER_NAME .'/' .ACTION_NAME, array('cid' => $cid, 'page' => ($page - 1))));
+        }
+        if (empty($totalPageCount)) {
+            $pageTitle = "NOT RESULTS";
+        }
+
+        $this->assign('page_title', $pageTitle);
+
+
+        if ($totalPageCount > $page) {
+            $this->assign('old_url', U(CONTROLLER_NAME .'/' .ACTION_NAME, array('cid' => $cid, 'page' => ($page + 1))));
+        }
+
+
+        $articleList = $articleModel->getArticleListByCategory($cid, 0, $page);
+        $this->assign('article_list', $articleList);
         $this->assign('recent_article_list', $articleModel->getRecentArticleListByCategory($cid));
+        $this->assign('recent_comment_list', (new CommentModel())->getRecentCommentListByCategory($cid, 0, 8));
         $this->assign('archives_list', $articleModel->getArticleListGroupByDateByCategry($cid));
         $this->assign('tags_list', $articleModel->getTagsByCategory($cid));
         $this->seo('首页', NULL, NULL, NULL);

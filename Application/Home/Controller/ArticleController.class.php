@@ -6,8 +6,12 @@ use Home\Model\ArticleModel;
 use Home\Model\CommentModel;
 use Think\Controller;
 class ArticleController extends CommonController {
-    public function index($cid = 0){
-        R('Index/index', array('cid' => $cid));
+    public function index($cid = 0, $page = 0){
+        if (!empty($page)) {
+            R('Index/index', array('cid' => $cid, 'page' => $page));
+        }else{
+            R('Index/index', array('cid' => $cid));
+        }
     }
 
     /**

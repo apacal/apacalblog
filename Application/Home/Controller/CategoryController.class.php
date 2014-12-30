@@ -10,8 +10,9 @@ class CategoryController extends CommonController {
         if(!is_numeric($cid)) {
             $this->error("参数错误！");
         }
+        $page = I('request.page');
         $model = new CategoryModel();
-        $url = $model->getRedirectUrlByCategory($cid);
+        $url = $model->getRedirectUrlByCategory($cid, $page);
         redirect($url);
     }
 }

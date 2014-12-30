@@ -72,6 +72,23 @@ class ArticleModel extends RelationModel {
 
     }
 
+    public function getTotalPageCountByCategory($cid = 0, $everyPageNum = 0) {
+        if (empty($everyPageNum)) {
+            $everyPageNum = C('EVERY_PAGE_NUM');
+        }
+
+        $where = array(
+            'status' => 1,
+        );
+        if (!empty($cid)) {
+            $cids = (new CategoryModel())->getThisCategoryChildren($cid);
+            $where['cid'] = array('in', $cids);
+        }
+        $count = $this->where($where)->count();
+        $totalPage = (int)(($count + $everyPageNum) / $everyPageNum);
+        return $totalPage;
+
+    }
     /**
      * @param int $cid when cid = 0 means the all article not care about the cid
      * @param int $limit
@@ -93,7 +110,7 @@ class ArticleModel extends RelationModel {
                 $where['cid'] = array('in', (new CategoryModel())->getThisCategoryChildren($cid));
             }
             $where['status'] = 1;
-            if ($page < 1) {
+            if ($page <= 1) {
                 $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->limit($limit)->select();
             } else {
                 $first = ($page - 1) * $everyPageNum;

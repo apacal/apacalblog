@@ -10,6 +10,10 @@ class AdminController extends CommonController {
     protected $manageSort = "adminid desc";
     protected $pkId = "adminid";
 
+    public function  __edit($vo) {
+        $url = U(CONTROLLER_NAME .'/update', array('id' => $vo['adminid']));
+        $this->assign('action_url', $url);
+    }
     public function index() {
         $id = $_SESSION['adminid'];
         $info = M('Admin')->where(array('adminid' => $id))->find();

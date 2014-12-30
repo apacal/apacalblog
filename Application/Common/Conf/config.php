@@ -13,7 +13,6 @@ return array(
     'ICP_NUM'			=>	'粤ICP备14021869号',
 
     'WEB_URL'                       =>              ROOT_URL,
-    'SITE_URL'     		=>  ROOT_URL,//网站地址
 
     'TMPL_STRIP_SPACE' => true,  // 是否去除模板文件里面的 html 空格与换行
     'TMPL_CACHE_ON' => false,  // 是否开启模板编译缓存 , 设为 false 则每次都会重新编译

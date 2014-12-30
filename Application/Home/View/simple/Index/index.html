@@ -9,8 +9,9 @@
                     </h4>
                 </div>
             </notempty>
+        </div>
+        <div class="col-md-8 col-sm-8 col-xs-12 left">
             <volist name="article_list" id="art_vo">
-                <div>
 
                 <article>
                     <include file="Public:article-header" />
@@ -34,8 +35,31 @@
                     </div>
 
                 </article>
-                </div>
             </volist>
+
+
+
+            <?php if(!empty($old_url) || !empty($new_url)) { ?>
+            <div class="entry-prev-next" style="margin-bottom:40px;margin-top:40px;">
+                <div class="col-sm-6 col-xs-12">
+                    <notempty name="old_url">
+
+                        <a href="{$old_url}">
+                            <h4>OLDER POSTS</h4>
+                        </a>
+
+                    </notempty>
+                </div>
+
+                <div class="col-sm-6 col-xs-12">
+                    <notempty name="new_url">
+                        <a id="entry-next" href="{$new_url}">
+                            <h4>NEWER POSTS</h4>
+                        </a>
+                    </notempty>
+                </div>
+            </div>
+            <?php } ?>
         </div>
 
         <include file="Public:right" />
