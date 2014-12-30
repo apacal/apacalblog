@@ -4,6 +4,7 @@ $config['WEB_URL'] = '';
 $home_config =  array(
 
     'URL_HASH'      =>      '#nav-home', //url 默认描点
+    'COMMENT_HASH'      =>      '#comment-post',
     'TMPL_CACHE_ON'                 =>              false,        // 是否开启模板编译缓存,设为false则每次都会重新编译
     'SITE_NAME'			=>          'Apacal网络日志',   //网站名字
     'SITE_NAME_BAR'     =>          '激情 程序 奋斗',
@@ -40,7 +41,7 @@ $home_config =  array(
             'category/:cid\d'           =>      'Category/index',
             'date/:cid/:time'           =>      'Article/date',
             'tag/:name'               =>      'Article/tag',
-            'user/:id\d'                =>      'User/index',
+            'user/:id\d'                =>      'User/view',
 
 
 

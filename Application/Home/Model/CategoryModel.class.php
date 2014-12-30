@@ -62,6 +62,7 @@ class CategoryModel extends RelationModel {
         $tagNav = cacheTag(Nav);
         //if (false === ($html = getCache($tagNav))) {
             $where['status'] = 1;
+            $where['is_show'] = 1;
             $where['pid'] = 0;
             $list = $this->where($where)->order('sort DESC')->relation(true)->select();
             $this->getSubNav($list);
@@ -162,6 +163,7 @@ class CategoryModel extends RelationModel {
     private function getSubNav(&$list) {
         foreach($list as &$value) {
             $where['status'] = 1;
+            $where['is_show'] = 1;
             $where['pid'] = $value['id'];
             $value['url'] = U('category/'.$value['id'] .C('URL_HASH'));
             if(($subNav = $this->where($where)->order('sort DESC')->relation(true)->select())) {

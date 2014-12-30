@@ -10,6 +10,7 @@ use Think\Controller;
 class ArticleController extends CommonController {
 
     public function _before_add() {
+        parent::_before_add();
         $this->setAllCategoryTree();
         $this->initTags();
     }
@@ -98,9 +99,6 @@ class ArticleController extends CommonController {
             $this->error($model->getError());
         }
         $this->initPostData($data);
-        if(empty($data['source'])){
-            $data['source'] = $data['source_url'] =0;
-        }
         if(false === ($id = $model->add($data))) {
             $this->error($model->getError());
         } else {
@@ -109,19 +107,6 @@ class ArticleController extends CommonController {
         }
     }
 
-    protected function initPostData(&$data) {
-        $upload = new UploadModel();
-        $image = $upload->uploadImage('Article');
-        if($image != false){
-            $data['image'] = $image;
-        }
-        $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
-        $data['content'] = $_REQUEST['content'];
-        if(empty($data['source'])){
-            $data['source'] = $data['source_link'] =0;
-        }
-
-    }
     /**
      * 更新博客
      **/
@@ -153,6 +138,20 @@ class ArticleController extends CommonController {
             $terms->saveTerms(CONTROLLER_NAME, $id, $tags);
         }
 
+
+    }
+
+    protected function initPostData(&$data) {
+        $upload = new UploadModel();
+        $image = $upload->uploadImage('Article');
+        if($image != false){
+            $data['image'] = $image;
+        }
+        $data['status'] = $data['status'] == 'on' ? 1 : 0;
+        $data['content'] = $_REQUEST['content'];
+        if(empty($data['source'])){
+            $data['source'] = $data['source_url'] =0;
+        }
 
     }
 }

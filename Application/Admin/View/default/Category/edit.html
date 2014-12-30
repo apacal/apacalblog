@@ -75,6 +75,17 @@
         </div>
         <div class="space-4"></div>
 
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" > 前台是否显示 </label>
+            <div class="col-sm-9">
+                <label>
+                    <input name="is_show" id="is_show" class="ace ace-switch ace-switch-7" type="checkbox">
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+        <div class="space-4"></div>
+
         <div class="clearfix form-actions">
             <div class="col-md-offset-3 col-md-9">
                 <button class="btn btn-info" type="submit">
@@ -94,9 +105,13 @@
 
     <script> //初始状态js
         $(document).ready(function(){
-            var status = {$vo.status}; //设置初始状态
-            if (status == 1) { //状态位一
+            var status = "{$vo.status}"; //设置初始状态
+            if (status == '1') { //状态位一
                 document.getElementById("status").checked=true
+            }
+            var is_show = "{$vo.is_show}"; //设置初始状态
+            if (status == '1') { //状态位一
+                document.getElementById("is_show").checked=true
             }
             //排序值加减按钮
             var sortstr = "{$vo.sort}";

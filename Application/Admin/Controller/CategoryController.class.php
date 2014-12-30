@@ -3,8 +3,8 @@
  * 栏目控制器
  **/
 namespace Admin\Controller;
+use Admin\Model\CategoryModel;
 use Admin\Model\UploadModel;
-use Home\Model\CategoryModel;
 use Think\Controller;
 class CategoryController extends CommonController {
 
@@ -20,13 +20,13 @@ class CategoryController extends CommonController {
 
 
     public function manage() {
-        $model = D(CONTROLLER_NAME);
+        $model = new CategoryModel();
         $list = $model->getAllCategory();
         $this->assign('list', $list);
     }
 
     public function edit() {
-        $model = M(CONTROLLER_NAME);
+        $model = new CategoryModel();
         $where['id'] = I('request.id');
         $vo = $model->where($where)->find();
         //$vo['content'] = str_replace(array('<div>','</div>'), '', $vo['content']);
@@ -55,7 +55,8 @@ class CategoryController extends CommonController {
         } else {
             $data['image'] = '';
         }
-        $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
+        $data['status'] = $data['status'] == 'on' ? 1 : 0;
+        $data['is_show'] = $data['is_show'] == 'on' ? 1 : 0;
         if(!$model->add($data))
             $this->error($model->getError());
         else
@@ -78,8 +79,9 @@ class CategoryController extends CommonController {
         if(!empty($image)) {
             $data['image'] = $image;
         }
-        $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
-        unset($data['createtime']);//unset createtime
+        $data['status'] = $data['status'] == 'on' ? 1 : 0;
+        $data['is_show'] = $data['is_show'] == 'on' ? 1 : 0;
+        //unset($data['createtime']);//unset createtime
         $where['id'] = $id;
         if(!$model->where($where)->save($data))
             $this->error($model->getError());

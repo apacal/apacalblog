@@ -1,0 +1,142 @@
+<style>
+    .delete-tag {
+        padding-top: 5px;padding-bottom: 5px;
+    }
+</style>
+<script>
+    function addTag(tag) {
+        if (include(window.tagArray, tag) != true) {
+            $("#add_tag").val("");
+            window.tagArray.push(tag);
+            $("#show_tag").append(getTagHtml(tag));
+
+            //必须再次绑定事件；
+            $('.delete-tag').on('closed.bs.alert', function () {
+                var tag = $(this).attr("tag");
+                var index = window.tagArray.indexOf(tag);
+                if (index > -1) {
+                    window.tagArray.splice(index, 1);
+                    updataTagDataToInput();
+                }
+            });
+
+            //$("#show_tag").html(html);
+            updataTagDataToInput();
+        }
+    }
+
+    /**
+     * find obj is in array
+     * @param arr
+     * @param obj
+     * @returns {boolean}
+     */
+    function include(arr, obj) {
+        for(var i=0; i<arr.length; i++) {
+            if (arr[i] == obj) return true;
+        }
+    }
+
+    /**
+     * update tag data to input
+     */
+    function updataTagDataToInput() {
+        $("#tags").val(JSON.stringify(window.tagArray));
+    }
+
+    /**
+     * init tags html when edit a forum
+     * @param arr
+     */
+    function initTagsHtml(arr) {
+        var html = "";
+        for(var i=0; i<arr.length; i++) {
+            html += getTagHtml(arr[i])
+        }
+        $("#show_tag").html(html);
+        updataTagDataToInput();
+    }
+
+    function isChinese(temp)
+    {
+        var re=/[^\u4e00-\u9fa5]/;
+        if(re.test(temp)) return false;
+        return true;
+    }
+    /**
+     * get a tag dialog html
+     * @param tag
+     * @returns {string}
+     */
+    function getTagHtml(tag) {
+        if (isChinese(tag)) {
+            var len = tag.length * 30;
+        } else {
+            var len = tag.length * 20;
+        }
+        if (len < 75) {
+            len = 75;
+        }
+        console.log(tag.length);
+
+        var html = '<div class="col-sm-2 alert alert-success alert-dismissible fade in delete-tag" tag="' + tag + '" style="margin-right:10px; width:' + len + 'px;" role="alert"> <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button> <strong class="text-uppercase">' + tag + '</strong> </div>';
+        return html;
+    }
+
+    /**
+     * init some var
+     */
+    var tags = '{$tags}';
+    if (tags !== "false" && tags !== '') {
+        var tagArray = JSON.parse(tags);
+        initTagsHtml(tagArray);
+    } else {
+
+        var tagArray = new Array();
+    }
+
+
+    $(document).ready(function() {
+        /**
+         * when detete a tag remove from tag array
+         */
+        $('.delete-tag').on('closed.bs.alert', function () {
+            var tag = $(this).attr("tag");
+
+            var index = window.tagArray.indexOf(tag);
+            if (index > -1) {
+                window.tagArray.splice(index, 1);
+                updataTagDataToInput();
+            }
+        });
+        $(".system-tag").click(function () {
+            var tag = $(this).attr("val");
+            addTag(tag);
+
+        });
+
+        $(".select-system-tag").click(function () {
+            if ($("#show-system-tag").css("display") == "none") {
+                $("#show-system-tag").css("display", "block");
+            } else {
+                $("#show-system-tag").css("display", "none");
+            }
+        });
+
+        /**
+         * when add a tag
+         */
+        $(".add_tag").click(function () {
+            var html = $("#show_tag").html();
+            var tag = $("#add_tag").val();
+            tag = tag.toUpperCase();
+            if (tag == '') {
+                $("#add_tag").focus();
+            } else {
+                addTag(tag);
+            }
+        });
+
+
+    });
+</script>

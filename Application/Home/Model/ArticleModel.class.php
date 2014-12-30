@@ -279,6 +279,7 @@ class ArticleModel extends RelationModel {
         foreach($articles as &$val) {
             $val['commentCount'] =  (int)$Comment->getCommentCount($val['id'], $val['cid']);
             $val['url'] = U('article/' .$val['id'] .C('URL_HASH'));
+            $val['comment_url'] = U('article/' .$val['id'] .C('COMMENT_HASH'));
 
             $val['tags'] = $this->buildTagsByObjectId($val['id']);
             $val['adminUrl'] = U('user/' .$val['adminid'] .C('URL_HASH'));

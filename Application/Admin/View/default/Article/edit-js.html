@@ -1,0 +1,40 @@
+
+<link rel="stylesheet" href="__SUMMERNOTE__/font-awesome.min.css" />
+<link href="__SUMMERNOTE__/summernote-bs3.css" rel="stylesheet">
+<link href="__SUMMERNOTE__/summernote.css" rel="stylesheet">
+<script src="__SUMMERNOTE__/summernote.js"></script>
+<script src="__SUMMERNOTE__/summernote-zh-CN.js"></script>
+
+
+
+
+<script>
+    function checkForm() {
+        var value = $('#summernote').code();
+        $('#content').val(value);
+    }
+    $(document).ready(function() {
+        var status = "{$vo.status}"; //设置初始状态
+        if (status == '1') { //状态位一
+            document.getElementById("status").checked=true
+        }
+        //排序值加减按钮
+        var sortstr = "{$vo.sort}";
+        var sort = Number(sortstr);
+
+        $('#sort').ace_spinner({value: sort ,min:-500,max:500,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
+
+        $('#summernote').summernote({
+            height: 300,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: false,   // set focus to editable area after initializing summernote
+            lang: 'zh-CN'
+
+        });
+
+
+
+
+    });
+</script>

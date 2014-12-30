@@ -50,9 +50,5 @@ class IndexController extends CommonController {
         $this->seo('书籍', NULL, NULL, NULL);
         $this->display();
     }
-    public function aboutme() {
-        $this->seo('About Me', NULL, NULL, NULL);
-        $this->display();
-    }
 
 }

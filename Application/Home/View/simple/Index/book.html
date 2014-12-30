@@ -1,17 +1,24 @@
-<include file="Public/header" />
-<script language="javascript" type="text/javascript">window.onload = function(){ 
-    var oTable = document.getElementById("myTab"); 
-    for(var i=0;i<oTable.rows.length;i++){ 
-        oTable.rows[i].cells[0].innerHTML = (i+1); 
-        if(i%2==0)    //偶数行 
-            oTable.rows[i].className = "warning"; 
-        else
-            oTable.rows[i].className = "active"; 
-    } 
-}</script>
 
-<div style="height: 100px"></div>
-<div class="container marketing thumbnail" >
+<extend name="Public:base" />
+
+<block name="inner_js">
+    <script language="javascript" type="text/javascript">
+        window.onload = function() {
+            var oTable = document.getElementById("myTab");
+            for (var i = 0; i < oTable.rows.length; i++) {
+                oTable.rows[i].cells[0].innerHTML = (i + 1);
+                if (i % 2 == 0)    //偶数行
+                    oTable.rows[i].className = "warning";
+                else
+                    oTable.rows[i].className = "active";
+            }
+        };
+    </script>
+</block>
+
+
+<block name="content">
+    <div class="container marketing thumbnail book" >
 
         <table class="table table-bordered table-hover ">
             <thead>
@@ -27,9 +34,6 @@
             </tbody>
         </table>
 
-</div>
+    </div>
+</block>
 
-<div class="container marketing thumbnail" >
-        <include file="Public/disqus" />
-</div>
-<include file="Public:footer" />

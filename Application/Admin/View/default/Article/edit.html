@@ -89,7 +89,7 @@
     <div class="form-group">
         <label class="col-sm-3 control-label no-padding-right">转载来源链接【0表示原创】 </label>
         <div class="col-sm-9">
-            <input type="text" placeholder="转载来源链接" value="{$vo.source_link}" name="source_link" class="col-xs-10 col-sm-5" >
+            <input type="text" placeholder="转载来源链接" value="{$vo.source_url}" name="source_url" class="col-xs-10 col-sm-5" >
         </div>
     </div>
     <div class="space-4"></div>
@@ -97,35 +97,9 @@
     <include file="Public:form-image" />
     <div class="form-group">
         <label class="col-sm-3 control-label no-padding-right" > 内容 </label>
-        <div style="margin-left: 47px;" class="col-sm-11">
-            <span class="block pull-right">
-                <small class="grey middle">选择主题: &nbsp;</small>
+        <div id="summernote">{$vo.content}</div>
+        <textarea id="content" name="content" style="display:none;"></textarea>
 
-                <span class="btn-toolbar inline middle no-margin">
-                    <span data-toggle="buttons" class="btn-group no-margin">
-                        <label class="btn btn-sm btn-yellow">
-                            1
-                            <input type="radio" value="1" />
-                        </label>
-
-                        <label class="btn btn-sm btn-yellow active">
-                            2
-                            <input type="radio" value="2" />
-                        </label>
-
-                        <label class="btn btn-sm btn-yellow">
-                            3
-                            <input type="radio" value="3" />
-                        </label>
-                    </span>
-                </span>
-            </span>
-        </h4>
-
-        <div class="wysiwyg-editor autosize-transition" id="editor1">{$vo['content']}</div>
-
-        <div style='visibility: hidden; height:10px;'><textarea name="content" id="content"></textarea></div>
-        </div>
     </div>
     <div class="space-4"></div>
 
@@ -143,7 +117,7 @@
 
     <div class="clearfix form-actions">
         <div class="col-md-offset-3 col-md-9">
-            <button class="btn btn-info" type="submit">
+            <button class="btn btn-info" type="submit" onclick="checkForm();">
                 <i class="icon-ok bigger-110"></i>
                 提交
             </button>
@@ -158,4 +132,6 @@
 
 </form>
 
-<include file="Article:edit-footer" />
+<include file="Article:tag-js" />
+<include file="Article:edit-js" />
+<include file="Public:footer" />

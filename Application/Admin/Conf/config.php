@@ -26,6 +26,7 @@ $admin_config	= array(
 		'__JS__' 				=> $config['WEB_URL'].'/Public/js',
 		'__BS__' 				=> $config['WEB_URL'].'/Public/bootstrap',
 		'__UPLOAD__' 			=> $config['WEB_URL'].'/Uploads',
+        '__SUMMERNOTE__' 				=> $config['WEB_URL'].'/Public/summernote',
 	),	
 
     //session过期时间
