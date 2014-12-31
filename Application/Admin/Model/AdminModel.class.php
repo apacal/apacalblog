@@ -12,6 +12,16 @@ class AdminModel extends CommonModel {
         array('repassword','password','确认密码不正确',0,'confirm'), // 验证确认密码是否和密码一致
     );
 
+    /**
+     * @param $uid
+     * @return array | false
+     */
+    public function getUserInfo($uid) {
+        $where = array(
+            'adminid' => $uid,
+        );
+        return $this->where($where)->find();
+    }
 
     public function insert($data) {
         $data['pwd'] = createHash($data['password']);
