@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<include file="Public:header" />
+<body style="background: url({$background_url})">
+
+<div class="row text-center register-top ">
+    <div class="col-md-12">
+        <h2>
+            <i class="glyphicon glyphicon-leaf green"></i>
+            {:C('SITE_NAME')}
+        </h2>
+        <h4 class="blue">© Apacal</h4>
+    </div>
+</div>
+    <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>   Register Yourself </strong>
+            </div>
+            <div class="panel-body">
+                <form role="form" method="Post" action="{:U('User/add')}">
+                    <div class="form-group input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-cloud"></i></span>
+                        <input type="text" class="form-control" name="adminname" placeholder="Your Name">
+                    </div>
+                    <div class="form-group input-group">
+                        <span class="input-group-addon">@</span>
+                        <input type="text" class="form-control" name="email" placeholder="Your Email">
+                    </div>
+
+                    <div class="form-group input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                        <input type="text" class="form-control" name="website" placeholder="Your Website">
+                    </div>
+
+                    <div class="form-group input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" name="password" class="form-control" placeholder="Enter Password">
+                    </div>
+                    <div class="form-group input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" name="repassword" class="form-control" placeholder="Retype Password">
+                    </div>
+
+                    <button type="submit" class="btn btn-success ">Register Me</button>
+                    <hr>
+                    Already Registered ?  <a href="{:U('Admin/Public/login')}">Login here</a>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

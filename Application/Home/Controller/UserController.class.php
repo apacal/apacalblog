@@ -9,9 +9,34 @@
 namespace Home\Controller;
 
 
+use Admin\Model\AdminModel;
+
 class UserController extends CommonController{
     public function view() {
         $this->success("正在完善！");
     }
 
+    public function register() {
+        $url = "http://area.sinaapp.com/bingImg?daysAgo=";
+        $url .= rand(0, 14);
+        $this->assign('background_url', $url);
+        $this->display();
+
+    }
+
+    public function add() {
+        $model= new AdminModel();
+        if(!($data = $model->create())) {
+            $this->error($model->getError());
+        }
+
+        $uid = $model->insert($data);
+        if (!empty($uid)) {
+            setUserLogin($uid);
+            setUserInfoByAdminLogin($data);
+            $this->success('注册成功！');
+        } else {
+            $this->error("注册失败！");
+        }
+    }
 } 

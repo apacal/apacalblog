@@ -22,7 +22,7 @@ class AdminController extends CommonController {
     }
     
     public function insert() {
-        $model= D('Admin');
+        $model= new AdminModel();
         if(!($data = $model->create())) {
             $this->error($model->getError());
         }
@@ -31,13 +31,15 @@ class AdminController extends CommonController {
             $this->error('用户已经存在!');
         $upload = new UploadModel();
         $image = $upload->uploadImage('Admin', 3, true, 200, 200);
-        if(!$image)
+        if(!$image) {
             $this->error('图片不能为空！');
+        }
         $data['image'] = $image;
-        $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
-        $data['pwd'] = $this->createHash($data['password']);
-        if(!$model->add($data))
+        $data['status'] =  $data['status'] == 'on' ? 1 : 0;
+        $data['isadmin'] =  $data['isadmin'] == 'on' ? 1 : 0;
+        if(!$model->insert($data)) {
             $this->error($model->getError());
+        }
         else
             $this->success('添加管理员成功!', __CONTROLLER__.'/manage');
     }
@@ -50,6 +52,7 @@ class AdminController extends CommonController {
         else
             $this->error($model->getError());
     }
+
     /**
      **/
     public function update() {
@@ -71,23 +74,25 @@ class AdminController extends CommonController {
             $this->error('参数错误！');
         $map['adminid'] = array('neq', $id);
         $map['adminname'] = $data['adminname'];
-        if($model->where($map)->find())
-            $this->error('用户已经存在!');
+
         $upload = new UploadModel();
         $image = $upload->uploadImage('Admin', 3, true, 200, 200);
         if($image) {
             $data['image'] = $image;
         }
-        $data['status'] == 'on' ? $data['status'] = 1 : $data['status'] = 0;
+        $data['status'] =  $data['status'] == 'on' ? 1 : 0;
+        $data['isadmin'] =  $data['isadmin'] == 'on' ? 1 : 0;
         unset($data['createtime']);//unset createtime
         $where['adminid'] = $id;
         if(!empty($data['password'])) {
-            $data['pwd'] = $this->createHash($data['password']);
+            $data['pwd'] = createHash($data['password']);
         }
-        if(!$model->where($where)->save($data))
+        if(!$model->where($where)->save($data)) {
             $this->error($model->getError());
-        else
-            $this->success('更新管理员成功!', __CONTROLLER__.'/manage');
+        } else {
+            var_dump($data);
+            //$this->success('更新管理员成功!', __CONTROLLER__.'/manage');
+        }
     }
 }
 

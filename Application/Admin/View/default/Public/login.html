@@ -12,9 +12,6 @@
 		<link href="__ACE__/css/bootstrap.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="__ACE__/css/font-awesome.min.css" />
 
-		<!--[if IE 7]>
-		  <link rel="stylesheet" href="__ACE__/css/font-awesome-ie7.min.css" />
-		<![endif]-->
 
 		<!-- page specific plugin styles -->
 
@@ -23,6 +20,7 @@
 
 		<link rel="stylesheet" href="__ACE__/css/ace.min.css" />
 		<link rel="stylesheet" href="__ACE__/css/ace-rtl.min.css" />
+        <link rel="stylesheet" href="__CSS__/admin.css" />
 
 		<!--[if lte IE 8]>
 		  <link rel="stylesheet" href="__ACE__/css/ace-ie.min.css" />
@@ -37,7 +35,7 @@
 		<script src="__ACE__/js/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body class="login-layout">
+	<body class="login-layout" style="background-image: url({$background_url})">
 		<div class="main-container">
 			<div class="main-content">
 				<div class="row">
@@ -46,8 +44,7 @@
 							<div class="center">
 								<h1>
 									<i class="icon-leaf green"></i>
-									<span class="red">ApacalBlog</span>
-									<span class="white">管理系统</span>
+									<span class="red">{:C('SITE_NAME')}</span>
 								</h1>
 								<h4 class="blue">&copy; Apacal</h4>
 							</div>
@@ -81,14 +78,19 @@
 														</span>
 													</label>
 													<label class="block clearfix">
-														<span class="input-icon input-icon-right" style=" width: 50%; ">
+														<span class="block input-icon input-icon-right">
 															<input type="text" class="form-control" id="verify" name="verify" placeholder="验证码" />
 															<i class="icon-eye-open"></i>
 														</span>
-                                                        <span class="input-icon input-icon-right" >
-                                                            <img class="img-thumbnail" style="width: 100px; height: 40px; margin-left:10px"  id="verifyImg" src="{:U('Admin/Public/verify')}" onclick="this.src='__MODULE__/Public/verify/?' + Math.random();" alt="点击刷新验证码" />
-                                                        </span>
+
 													</label>
+                                                    <label>
+
+
+                                                        <span class="input-icon input-icon-right" >
+                                                            <img class="img-thumbnail"   id="verifyImg" src="{:U('Admin/Public/verify')}" onclick="this.src='__MODULE__/Public/verify/?' + Math.random();" alt="点击刷新验证码" />
+                                                        </span>
+                                                    </label>
 
 													<div class="space"></div>
 

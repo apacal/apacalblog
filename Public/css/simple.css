@@ -656,3 +656,18 @@ footer a {
     margin-bottom: 40px;
     margin-top: 50px;
 }
+
+
+/**  register */
+
+.register-top {
+    margin-top:50px;
+    margin-bottom:30px;
+    color:#dd5a43!important;
+}
+.green {
+    color:#69aa46!important;
+}
+.blue {
+    color: #478fca!important;
+}

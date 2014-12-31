@@ -24,6 +24,7 @@
                             添加时间
                         </th>
                         <th class="hidden-480">状态</th>
+                        <th class="hidden-480">管理员</th>
 
                         <th>操作</th>
                     </tr>
@@ -53,6 +54,13 @@
                                     <span class="label label-success arrowed">允许</span>
                                 <else />
                                     <span class="label label-info arrowed-right">禁止</span>
+                                </if>
+                            </td>
+                            <td >
+                                <if condition="$vo.isadmin eq 1">
+                                    <span class="label label-success arrowed">管理员</span>
+                                    <else />
+                                    <span class="label label-info arrowed-right">普通用户</span>
                                 </if>
                             </td>
 
