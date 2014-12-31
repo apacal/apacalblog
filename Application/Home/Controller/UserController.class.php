@@ -16,6 +16,16 @@ class UserController extends CommonController{
         $this->success("正在完善！");
     }
 
+    public function index() {
+        $uid = is_login();
+        if ($uid <= 0) {
+            $this->error("想要登陆！");
+        }
+
+        $Admin = new AdminModel();
+
+    }
+
     public function register() {
         $url = "http://area.sinaapp.com/bingImg?daysAgo=";
         $url .= rand(0, 14);
@@ -34,7 +44,7 @@ class UserController extends CommonController{
         if (!empty($uid)) {
             setUserLogin($uid);
             setUserInfoByAdminLogin($data);
-            $this->success('注册成功！');
+            $this->success('注册成功！', U('User/index'));
         } else {
             $this->error("注册失败！");
         }

@@ -90,8 +90,8 @@ class AdminController extends CommonController {
         if(!$model->where($where)->save($data)) {
             $this->error($model->getError());
         } else {
-            var_dump($data);
-            //$this->success('更新管理员成功!', __CONTROLLER__.'/manage');
+            //var_dump($data);
+            $this->success('更新管理员成功!', __CONTROLLER__.'/manage');
         }
     }
 }
