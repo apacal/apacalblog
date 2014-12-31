@@ -1,5 +1,7 @@
 <?php
 return array(
+
+    'SITE_NAME'			=>          'Apacal网络日志',   //网站名字
     'SITE_URL'      =>  'http://apacal.cn',
 
     'USER_INFO'     => 'user_info', // user info session key, include user name,email, website

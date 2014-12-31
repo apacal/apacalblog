@@ -6,11 +6,37 @@
 
 
 
+function checkPasswd($passwd, $hash) {
+    $params = explode(":", $hash);
+    if(count($params) < 2)
+        return false;
+    $salt = $params[1];
+    $passwd = base64_decode($salt) .$passwd .C('SALT');
+    if(hash('sha256', $passwd) == $params[0])
+        return true;
+    else
+        return false;
+}
+
+function createHash($passwd) {
+    $SaltByteSize = 64;
+    $salt = openssl_random_pseudo_bytes($SaltByteSize);
+    $passwd = $salt .$passwd .C('SALT');
+    $passwd = hash('sha256', $passwd);
+    $salt = base64_encode($salt);
+    return $passwd .':' .$salt;
+
+}
+
 function is_login() {
     if(isset($_SESSION[C('ADMIN_AUTH_KEY')])) {
         return $_SESSION[C('ADMIN_AUTH_KEY')];
     }
     return 0;
+}
+
+function setUserLogin($uid) {
+    $_SESSION[C('ADMIN_AUTH_KEY')] = $uid;
 }
 
 function setUserInfoByAdminLogin($info) {

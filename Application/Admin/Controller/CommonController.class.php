@@ -59,20 +59,6 @@ class CommonController extends Controller {
         $this->assign( 'position', $position );
     }
 
-    /**
-     * create a hash
-     * @param $passwd
-     * @return string
-     */
-    protected function createHash($passwd) {
-        $SaltByteSize = 64;
-        $salt = mcrypt_create_iv($SaltByteSize, MCRYPT_DEV_URANDOM);
-        $passwd = $salt .$passwd .C('SALT');
-        $passwd = hash('sha256', $passwd);
-        $salt = base64_encode($salt);
-        return $passwd .':' .$salt;
-        
-    }
 
     /**
      * reset this model's sort

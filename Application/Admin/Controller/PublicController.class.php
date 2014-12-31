@@ -3,35 +3,21 @@ namespace Admin\Controller;
 use Think\Controller;
 class PublicController extends Controller {
     public function _initilize() {
+
     }
     //　登录
     public function login(){
         if (!checkMemcahed() && C('NoCachedDie')) {
             $this->error('can not connect memcahed!');
         }
+
+        $url = "http://area.sinaapp.com/bingImg?daysAgo=";
+        $url .= rand(0, 14);
+        $this->assign('background_url', $url);
+
         $this->display();
     }
-    /* ===========================================================================*/
-    /**
-        * @brief checkPasswd 判断密密码
-        *
-        * @param    $passwd
-        * @param    $hash
-        *
-        * @returns  
-     */
-    /* ===========================================================================*/
-    protected function checkPasswd($passwd, $hash) {
-        $params = explode(":", $hash);
-        if(count($params) < 2)
-            return false;
-        $salt = $params[1];
-        $passwd = base64_decode($salt) .$passwd .C('SALT');
-        if(hash('sha256', $passwd) == $params[0])
-            return true;
-        else
-            return false;
-    }
+
 	public function checkLogin(){
         //$this->checkVerify();
         $username = I('post.username');
@@ -51,14 +37,14 @@ class PublicController extends Controller {
 		if(false === $authInfo) {
 			$this->error('帐号或密码错误！');
 		}else {
-			if(!$this->checkPasswd($password, $authInfo['pwd'])) {
+			if(!checkPasswd($password, $authInfo['pwd'])) {
 				$this->error('账号或密码错误！');
 			}
 			//是否禁用
 			if($authInfo['status'] == 0){
 				$this->error('账号已被管理员禁用！');
 			}
-			$_SESSION[C('ADMIN_AUTH_KEY')] = $authInfo['adminid'];
+            setUserLogin($authInfo['adminid']);
             setUserInfoByAdminLogin($authInfo);
 			//保存登录信息
 			$User = M('Admin');
