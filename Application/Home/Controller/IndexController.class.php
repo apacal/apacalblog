@@ -49,7 +49,9 @@ class IndexController extends CommonController {
             $pageTitle = "NOT RESULTS";
         }
 
-        $this->assign('page_title', $pageTitle);
+        if (isset($pageTitle)) {
+            $this->assign('page_title', $pageTitle);
+        }
 
 
         if ($totalPageCount > $page) {
