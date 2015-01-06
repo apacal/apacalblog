@@ -1,9 +1,8 @@
 <?php
 $config	=	require APP_PATH .'Common/Conf/config.php';
-$config['WEB_URL'] = '';  
+$config['SITE_URL'] = '';
 $home_config =  array(
 
-    'URL_HASH'      =>      '#nav-home', //url 默认描点
     'COMMENT_HASH'      =>      '#comment-post',
     'TMPL_CACHE_ON'                 =>              false,        // 是否开启模板编译缓存,设为false则每次都会重新编译
     'SITE_NAME'			=>          'Apacal网络日志',   //网站名字
@@ -42,6 +41,7 @@ $home_config =  array(
             'date/:cid/:time'           =>      'Article/date',
             'tag/:name'               =>      'Article/tag',
             'user/:id\d'                =>      'User/view',
+            'Verify/index/:time'                =>      'Verify/index',
 
 
 
@@ -53,16 +53,16 @@ $home_config =  array(
 
     /* 模版变量设置 */
 	'TMPL_PARSE_STRING' => array(
-		'__WEB_URL__'			=> $config['WEB_URL'],
-        '__UPLOAD__' 			=> $config['WEB_URL'].'/Uploads',
-		'__PUBLIC__' 			=> $config['WEB_URL'].'/Public',
-		'__CSS__' 				=> $config['WEB_URL'].'/Public/css',
-		'__IMG__' 				=> $config['WEB_URL'].'/Public/images',
-		'__JS__' 				=> $config['WEB_URL'].'/Public/js',
-		'__BS__' 				=> $config['WEB_URL'].'/Public/bootstrap',
-        '__SUMMERNOTE__' 				=> $config['WEB_URL'].'/Public/summernote',
-        '__GOOGLE_CODE__' 				=> $config['WEB_URL'].'/Public/google-code-prettify',
-        '__KALENDAR__' 				=> $config['WEB_URL'].'/Public/kalendar',
+		'__SITE_URL__'			=> $config['SITE_URL'],
+        '__UPLOAD__' 			=> $config['SITE_URL'].'/Uploads',
+		'__PUBLIC__' 			=> $config['SITE_URL'].'/Public',
+		'__CSS__' 				=> $config['SITE_URL'].'/Public/css',
+		'__IMG__' 				=> $config['SITE_URL'].'/Public/images',
+		'__JS__' 				=> $config['SITE_URL'].'/Public/js',
+		'__BS__' 				=> $config['SITE_URL'].'/Public/bootstrap',
+        '__SUMMERNOTE__' 				=> $config['SITE_URL'].'/Public/summernote',
+        '__GOOGLE_CODE__' 				=> $config['SITE_URL'].'/Public/google-code-prettify',
+        '__KALENDAR__' 				=> $config['SITE_URL'].'/Public/kalendar',
 	),
 
     //邮箱配置

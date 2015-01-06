@@ -16,7 +16,7 @@
                         <div class="comment-author">
                             <h4>
                                 <b><notempty name="comment_vo.userUrl">
-                                    <a href="comment_vo.userUrl" target="_blank">
+                                    <a href="{$comment_vo.userUrl}" target="_blank">
                                         {$comment_vo.name}
                                     </a>
                                     <else />
@@ -44,7 +44,7 @@
                                         <div class="comment-author">
                                             <h4>
                                                 <b><notempty name="com_sub_vo.userUrl">
-                                                    <a href="com_sub_vo.userUrl" target="_blank">
+                                                    <a href="{$com_sub_vo.userUrl}" target="_blank">
                                                         {$com_sub_vo.name}
                                                     </a>
                                                     <else />
@@ -73,7 +73,7 @@
                                                         <div class="comment-author">
                                                             <h4>
                                                                 <b><notempty name="com_sub2_vo.userUrl">
-                                                                    <a href="com_sub2_vo.userUrl" target="_blank">
+                                                                    <a href="{$com_sub2_vo.userUrl}" target="_blank">
                                                                         {$com_sub2_vo.name}
                                                                     </a>
                                                                     <else />
@@ -88,7 +88,7 @@
 
                                                                     <span>&nbsp; @ &nbsp;</span>
 
-                                                                    <a href="com_sub2_vo.pUrl" target="_blank">
+                                                                    <a href="{$com_sub2_vo.pUrl}" target="_blank">
                                                                         {$com_sub2_vo.pName}
                                                                     </a>
                                                                     <else />

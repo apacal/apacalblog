@@ -72,15 +72,18 @@
         <h3 class="text-uppercase">META</h3>
 
         <ul class="list-unstyled text-uppercase">
-            <li>
-                <h4>
-                    <empty name="uid">
-                        <a href="{:U('/Admin/Public/login')}" target="_blank">Log in</a>
-                        <else />
-                        <a href="{:U('/Admin/Public/logout')}" target="_blank">Log out</a>
-                    </empty>
-                </h4>
-            </li>
+            <empty name="uid">
+                <li> <h4>
+                    <a href="{:U('/user/login')}" target="_blank">Log in</a>
+                </h4></li>
+                <li> <h4>
+                    <a href="{:U('User/register' .C('URL_HASH'))}" target="_blank">Register</a>
+                </h4></li>
+                <else />
+                <li> <h4>
+                    <a href="{:U('/user/logout')}" target="_blank">Log out</a>
+                </h4></li>
+            </empty>
         </ul>
 
     </div>

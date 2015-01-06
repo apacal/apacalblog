@@ -1,5 +1,5 @@
 ﻿<include file="Public:header" />
-    <form class="form-horizontal" role="form" enctype="multipart/form-data" action="{$actionUrl}" method="post">
+    <form class="form-horizontal" role="form" enctype="multipart/form-data" action="{$action_url}" method="post">
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" > 标题 </label>
             <div class="col-sm-9">
@@ -102,8 +102,8 @@
 
     <script> //初始状态js
         $(document).ready(function(){
-            var status = {$vo.status}; //设置初始状态
-            if (status == 1) { //状态位一
+            var status = "{$vo.status}"; //设置初始状态
+            if (status == "1") { //状态位一
                 document.getElementById("status").checked=true
             }
             //排序值加减按钮

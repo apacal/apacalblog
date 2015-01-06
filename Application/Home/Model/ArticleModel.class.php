@@ -15,12 +15,12 @@ class ArticleModel extends RelationModel {
             'mapping_fields' => 'cname',
             'as_fields' => 'cname',
         ),
-        'Admin' => array(
+        'User' => array(
             'mapping_type' => self::BELONGS_TO,
-            'class_name' => 'Admin',
-            'foreign_key' => 'adminid',
-            'mapping_fields' => 'adminname',
-            'as_fields' => 'adminname',
+            'class_name' => 'User',
+            'foreign_key' => 'uid',
+            'mapping_fields' => 'name',
+            'as_fields' => 'name',
         ),
     );
 
@@ -299,7 +299,7 @@ class ArticleModel extends RelationModel {
             $val['comment_url'] = U('article/' .$val['id'] .C('COMMENT_HASH'));
 
             $val['tags'] = $this->buildTagsByObjectId($val['id']);
-            $val['adminUrl'] = U('user/' .$val['adminid'] .C('URL_HASH'));
+            $val['adminUrl'] = U('user/' .$val['uid'] .C('URL_HASH'));
             $val['cateUrl'] = U('category/' .$val['cid'] .C('URL_HASH'));
 
             if ($isStrstrContent == true) {

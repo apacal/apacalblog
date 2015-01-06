@@ -3,12 +3,18 @@
  * 基础Controller
  **/
 namespace Home\Controller;
+use Admin\Model\UserModel;
 use Home\Model\CategoryModel;
+use Home\Model\LinkModel;
 use Think\Controller;
 use Think\Model;
 
 class CommonController extends Controller {
 
+    protected function setCommentUserInfo() {
+        $commentInfo =  getCommentUserInfo();
+        $this->assign('commentUserInfo', $commentInfo);
+    }
 
     /**
      * empty action redirect to 404
@@ -27,15 +33,13 @@ class CommonController extends Controller {
         if (($uid = is_login()) > 0) {
             $this->assign('uid', $uid);
             $userInfo['url'] = U('user/' .$uid .C('URL_HASH'));
+            $User = new UserModel();
+            $userInfo = $User->getUserInfo($uid);
+            $this->assign('userInfo', $userInfo);
         }
 
-        $userInfo = getUserInfo();
         $this->assign('nav_html',(new CategoryModel())->getNav());
-        $this->assign('link_list', $this->getLink());
-        $this->assign('userInfo', $userInfo);
-        if (isset($userInfo['uid'])) {
-            $this->assign('uid', $userInfo['uid']);
-        }
+        $this->assign('link_list', (new LinkModel())->getLinkList(10));
     }
 
     /**
@@ -49,16 +53,6 @@ class CommonController extends Controller {
         $this->assign('keywords', $keywords.' | '.C('SITE_KEYWORDS'));
         $this->assign('description', $description.' | '.C('SITE_DESCRIPTION'));
     }
-
-    /**
-     * @return array | false;
-     */
-    private function getLink() {
-        $where['status'] = 1;
-        $list = (new Model('Link'))->where($where)->order('sort DESC, createtime DESC')->select();
-        return $list;
-    }
-
 
 
 }

@@ -1,0 +1,32 @@
+        <div class="panel panel-default">
+
+            <div class="panel-heading" role="tab" id="heading-base-info">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse-base-info" aria-expanded="true" aria-controls="collapse-base-info">
+                        <strong>  Change Base Info </strong>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse-base-info" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-base-info">
+                <div class="panel-body">
+                    <form role="form" method="Post" action="{:U('User/saveBaseInfo')}">
+                        <div class="form-group input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-cloud"></i></span>
+                            <input type="text" class="form-control" value="{$vo.name}" name="name" placeholder="Your Name" required="true" />
+                        </div>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">@</span>
+                            <input type="text" class="form-control" value="{$vo.email}" name="email" placeholder="Your Email" required="true" />
+                        </div>
+
+                        <div class="form-group input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                            <input type="text" class="form-control" name="website" placeholder="Your Website" value="{$vo.website}">
+                        </div>
+
+                        <button type="submit" class="btn btn-success pull-right">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+

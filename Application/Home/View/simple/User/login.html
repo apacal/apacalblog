@@ -1,0 +1,40 @@
+<extend name="Public:base" />
+<block name="content">
+<div class="login" style="background-image: url({$background_url}); overflow: hidden;">
+
+    <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>   Login Yourself </strong>
+            </div>
+            <div class="panel-body">
+                <form role="form" method="Post" action="{:U('User/checkPassword')}">
+                    <div class="form-group input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-cloud"></i></span>
+                        <input type="text" class="form-control" name="name" placeholder="Your Name" required="true" />
+                    </div>
+
+                    <div class="form-group input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" name="password" class="form-control" placeholder="Enter Password" required="true" />
+                    </div>
+
+                    <div class="form-group input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
+                        <input type="text" name="verify" class="form-control" placeholder="Verify" required />
+                    </div>
+                    <div class="form-group input-group">
+                        <img class="img-thumbnail"   id="verify-img" src="{:U('Verify/index')}" onclick="this.src='/Verify/index/' + Math.random()" alt="点击刷新验证码" />
+                    </div>
+
+
+                    <button type="submit" class="btn btn-success ">Login Now</button>
+                    <hr>
+                    Already Registered ?  <a href="{:U('Admin/Public/login')}">Login here</a>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+</block>

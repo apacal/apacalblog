@@ -1,3 +1,28 @@
 <extend name="Public:base" />
 <block name="content">
+    <div class="change-user-info" style="background-image: url({$background_url}); overflow: hidden;">
+
+        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <include file="User/base-info" />
+                <include file="User/avatar" />
+                <include file="User/password" />
+            </div>
+        </div>
+    </div>
+
+</block>
+<block name="inner_css">
+</block>
+
+<block name="ext_js">
+</block>
+
+<block name="inner_js">
+
+    <script>
+        $(document).ready(function() {
+        });
+    </script>
+
 </block>

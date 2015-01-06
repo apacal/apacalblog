@@ -1,6 +1,14 @@
 <?php
 return array(
 
+
+    'URL_HASH'      =>      '#nav-home', //url 默认描点
+    'SALT'      => "apacal_blog",       //password 加的特定盐
+
+    'USER_AUTH_KEY'			=>'user_id',// ADMIN认证SESSION标记
+    'COMMENT_USER_INFO'      => 'comment_user_info',
+
+
     'SITE_NAME'			=>          'Apacal网络日志',   //网站名字
     'SITE_URL'      =>  'http://apacal.cn',
 
@@ -14,7 +22,6 @@ return array(
     'OFFLINEMESSAGE'	=>	'本站正在维护中，暂不能访问。<br /> 请稍后再访问本站。',
     'ICP_NUM'			=>	'粤ICP备14021869号',
 
-    'WEB_URL'                       =>              ROOT_URL,
 
     'TMPL_STRIP_SPACE' => true,  // 是否去除模板文件里面的 html 空格与换行
     'TMPL_CACHE_ON' => false,  // 是否开启模板编译缓存 , 设为 false 则每次都会重新编译
@@ -33,7 +40,7 @@ return array(
 
 
 
-    'FORBIDDEN'                     =>              ROOT_URL .'/404',
+    'FORBIDDEN'                     =>              '/404',
     'SERACHTABLE'                   =>              array(         //查询的table
                                                         'Article'
                                                     ),
@@ -50,7 +57,7 @@ return array(
     'RUNTIMESRC'                    =>              APP_PATH.'Runtime/',
     'URL_HTML_SUFFIX'               =>              '',  //网站静态后缀
     'WEBADMIN'                      =>              'Apacal', //网站管理员
-    'UPLOAD'                        =>              ROOT .'/Uploads',
+    'UPLOAD'                        =>              './Uploads',
     'MODULE_ALLOW_LIST'             =>              array('Home','Admin'), //定义模块
     'DEFAULT_MODULE'                =>              'Home', //定义默认模块
     //'VIRE_FILTER'                 =>              array('Behavior\TokenBuildBehavior'), //开启表单令牌
@@ -72,7 +79,8 @@ return array(
     // pdo
     'DB_TYPE'                       =>              'pdo', // 数据库类型
     'DB_USER'                       =>              'root', // 用户名
-    'DB_PWD'                        =>              '@)!$Apacalblog', // 密码
+    //'DB_PWD'                        =>              '@)!$Apacalblog', // 密码
+    'DB_PWD'                        =>              'dev2014', // 密码
     'DB_PORT'                       =>              3306, // 端口
     'DB_PREFIX'		                =>	            'ablg_',//  数据表前缀
     'DB_DSN'                        =>              'mysql:host=localhost;dbname=apacalblog;charset=utf8',
@@ -84,14 +92,14 @@ return array(
 
     // Memcache设置
     'MemCached'     =>   array(
-        'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
-        //'hostname'  =>      '127.0.0.2',
+        //'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
+        'hostname'  =>      '127.0.0.2',
         'port'      =>      '11211',
-        'isSasl'    =>      true,
+        'isSasl'    =>      false,
         'username'   =>      '7e4d0da81a0611e4',
         'passwd'    =>      'Memcache2014'
     ),
-    'NoCachedDie' => true,
+    'NoCachedDie' => false,
 
     //session过期时间
     'SESSION_TTL'       =>          60*60*24,

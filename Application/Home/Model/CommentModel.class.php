@@ -3,7 +3,6 @@
  * 评论模型
  **/
 namespace Home\Model;
-use Admin\Model\AdminModel;
 use Think\Model;
 class CommentModel extends Model {
     //自动完成，必须调用create()方法，才会进行
@@ -167,7 +166,7 @@ class CommentModel extends Model {
      */
     private function getCommentListByWhere($where) {
         $list = $this->where($where)->select();
-        $Admin = new AdminModel();
+        $User = new \Admin\Model\UserModel();
         if(is_array($list)) {
             foreach ($list as &$val) {
                 $parent = $this->where(array('id'=>$val['pid']))->find();
@@ -175,13 +174,13 @@ class CommentModel extends Model {
                     $val['pName'] = $parent['name'];
                     $val['pUid'] = $parent['uid'];
                     if ($parent['uid'] != 0) {
-                        $val['pUrl'] = U('User/index', array('uid' => $parent['uid']));
+                        $val['pUrl'] = U('user/' .$parent['uid'] .C('URL_HASH'));
                     }
                 }
 
                 if (0 != $val['uid']) {
-                    $val['userUrl'] = U('User/index', array('uid'=>$val['uid']));
-                    $val['image'] = $Admin->where(array('adminid'=>$val['uid']))->getField('image');
+                    $val['userUrl'] = U('user/' .$val['uid'] .C('URL_HASH'));
+                    $val['image'] = $User->where(array('uid'=>$val['uid']))->getField('image');
                 }
             }
 

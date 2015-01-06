@@ -4,20 +4,45 @@
  **/
 
 
+/**
+ * set comment user info to session
+ * @param $userInfo
+ */
+function setCommentUserInfo($userInfo) {
+    $_SESSION[C('COMMENT_USER_INFO')] = $userInfo;
+}
 
-
+/**
+ * get comment user info from session
+ * @return array|false
+ */
+function getCommentUserInfo() {
+    return getValueFromSessionByKey(C('COMMENT_USER_INFO'));
+}
+/**
+ * check the password is correct
+ * @param $passwd | user input password
+ * @param $hash | pwd's hash
+ * @return bool
+ */
 function checkPasswd($passwd, $hash) {
     $params = explode(":", $hash);
     if(count($params) < 2)
         return false;
     $salt = $params[1];
     $passwd = base64_decode($salt) .$passwd .C('SALT');
-    if(hash('sha256', $passwd) == $params[0])
+    if(hash('sha256', $passwd) == $params[0]) {
         return true;
-    else
+    } else {
         return false;
+    }
 }
 
+/**
+ * use password to create a hash
+ * @param $passwd
+ * @return string
+ */
 function createHash($passwd) {
     $SaltByteSize = 64;
     $salt = openssl_random_pseudo_bytes($SaltByteSize);
@@ -28,24 +53,43 @@ function createHash($passwd) {
 
 }
 
+/**
+ * check this login user is a admin
+ * @return bool
+ */
+function is_admin() {
+    $userInfo = getUserInfo();
+    if(isset($userInfo['isadmin']) && 1 == $userInfo['isadmin']) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * check user is login, if is login return uid, or return 0
+ * @return int
+ */
 function is_login() {
-    if(isset($_SESSION[C('ADMIN_AUTH_KEY')])) {
-        return $_SESSION[C('ADMIN_AUTH_KEY')];
+    if(isset($_SESSION[C('USER_AUTH_KEY')])) {
+        return $_SESSION[C('USER_AUTH_KEY')];
     }
     return 0;
 }
 
+/**
+ * set User login, set user uid to session
+ * @param $uid
+ */
 function setUserLogin($uid) {
-    $_SESSION[C('ADMIN_AUTH_KEY')] = $uid;
+    $_SESSION[C('USER_AUTH_KEY')] = $uid;
 }
 
-function setUserInfoByAdminLogin($info) {
-    $info['name'] = $info['adminname'];
-    $info['uid'] = $info['adminid'];
-    $_SESSION[C("USER_INFO")] = $info;
-    return true;
-}
-
+/**
+ * set user info to session
+ * @param $info
+ * @return bool
+ */
 function setUserInfo($info) {
     $_SESSION[C("USER_INFO")] = $info;
     return true;

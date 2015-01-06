@@ -1,7 +1,6 @@
 <?php
 // 本类由系统自动生成，仅供测试用途
 namespace Home\Controller;
-use Admin\Model\TermModel;
 use Home\Model\ArticleModel;
 use Home\Model\CommentModel;
 use Think\Controller;
@@ -14,17 +13,7 @@ class ArticleController extends CommonController {
         }
     }
 
-    /**
-     * 获取当前分类的信息
-     * @param $cid
-     **/
-    protected function getCategoryInfo($cid) {
-        $info = M('Category')->where(array('id' => $cid))->find();
-        $admin = M('Admin')->where(array('adminid' => $info['adminid']))->find();
-        $info['adminname'] = $admin['adminname'];
-        $info['adminimage'] = $admin['image'];
-        return $info;
-    }
+
 
     public function view(){
         $id = I('request.id');
@@ -40,7 +29,7 @@ class ArticleController extends CommonController {
         $Article->setIncClickById($id, 'click');
 
         $this->assign('art_vo', $article);
-        $this->assign('post_uid', $article['adminid']);
+        $this->assign('post_uid', $article['uid']);
         $this->assign('recent_article_list',$Article->getRecentArticleListByCategory($article['cid'], $article['id']));
         $this->assign('archives_list', $Article->getArticleListGroupByDateByCategry($article['cid']));
         $this->assign('tags_list', $Article->getTagsByCategory($article['cid']));
@@ -62,6 +51,8 @@ class ArticleController extends CommonController {
 
 
         $this->seo($article['title'], $article['keywords'], $article['description']);
+
+        $this->setCommentUserInfo();
         $this->display();
     }
 

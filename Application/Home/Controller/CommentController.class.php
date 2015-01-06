@@ -16,13 +16,13 @@ class CommentController extends CommonController {
         $data['content'] = $this->stripContent($data['content']);
 
         if(true === $model->insert($data)){
-            if (false === getUserInfo()) {
+            if (is_login() <= 0) {
                 $userInfo = array(
                     'name' => $data['name'],
                     'email' => $data['email'],
                     'website' => $data['website']
                 );
-                setUserInfo($userInfo);
+                setCommentUserInfo($userInfo);
             }
 			$result['code'] = 0;
 		}else{

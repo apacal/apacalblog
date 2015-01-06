@@ -3,6 +3,7 @@
  * 后台Controller基础类
  **/
 namespace Admin\Controller;
+use Admin\Model\MenuModel;
 use Think\Controller;
 class CommonController extends Controller {
     protected $field = '*';
@@ -14,8 +15,8 @@ class CommonController extends Controller {
         $this->display(CONTROLLER_NAME .':manage');
     }
 	public function _initialize(){
-        if (!$_SESSION [C('ADMIN_AUTH_KEY')]) {
-	        redirect(__MODULE__ . C('ADMIN_AUTH_GATEWAY'));
+        if (!$_SESSION [C('USER_AUTH_KEY')] || !is_admin()) {
+	        redirect(U("Home/User/login" .C("URL_HASH")));
         }
         $this->assign('userInfo', getUserInfo());
         $this->initMenu();
@@ -174,7 +175,7 @@ class CommonController extends Controller {
         $menuId = I('request.menuId');
         $model = M(CONTROLLER_NAME);
         if ( false === ($list = $model->field($this->field)->order($this->manageSort)->select())) {
-            $this->error("database error");
+            //$this->error("database error");
         }
         if (is_array($list)) {
             foreach ($list as &$val) {
@@ -248,7 +249,7 @@ class CommonController extends Controller {
      * @return string
      */
     protected  function getManageUrl( $url ) {
-        if ( false === ($menuId = D('Menu')->getManageMenuId($_SESSION['menuId']))) {
+        if ( false === ($menuId = (new MenuModel())->getManageMenuId($_SESSION['menuId']))) {
             $menuId = $_SESSION['menuId'];
         }
         return U($url, array('menuId' => $menuId));

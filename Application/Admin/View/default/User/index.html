@@ -3,14 +3,14 @@
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" > 用ID </label>
             <div class="col-sm-9">
-                <input readonly="true" type="text" value="{$vo.adminid}" placeholder=" 用户ID" name="adminname" class="col-xs-10 col-sm-5" required />
+                <input readonly="true" type="text" value="{$vo.uid}" placeholder=" 用户ID" name="name" class="col-xs-10 col-sm-5" required />
             </div>
         </div>
         <div class="space-4"></div>
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" > 用户名 </label>
             <div class="col-sm-9">
-                <input readonly="true" type="text" value="{$vo.adminname}" placeholder=" 用户名" name="adminname" class="col-xs-10 col-sm-5" required />
+                <input readonly="true" type="text" value="{$vo.name}" placeholder=" 用户名" name="name" class="col-xs-10 col-sm-5" required />
             </div>
         </div>
         <div class="space-4"></div>
@@ -36,10 +36,10 @@
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" > 图片 </label>
             <div class="col-sm-9">
-                    <a href=""><img data-toggle="modal" data-target="#modal-{$vo.adminid}" src="__UPLOAD__{$vo.image}" alt="暂无图片" width="100px" class="img-thumbnail"></a></br>
+                    <a href=""><img data-toggle="modal" data-target="#modal-{$vo.uid}" src="__UPLOAD__{$vo.image}" alt="暂无图片" width="100px" class="img-thumbnail"></a></br>
             </div>
                                 <!-- Modal -->
-                                <div class="modal fade" id="modal-{$vo.adminid}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="modal-{$vo.uid}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                   <div class="modal-dialog">
                                     <div class="modal-content">
                                       <div class="modal-header">
@@ -47,7 +47,7 @@
                                         <h4 class="modal-title" id="myModalLabel">查看图片</h4>
                                       </div>
                                       <div class="modal-body">
-                                            <img data-toggle="modal" data-target="#modal-{$vo.adminid}" src="__UPLOAD__{$vo.image}" alt="暂无图片" class="img-thumbnail">
+                                            <img data-toggle="modal" data-target="#modal-{$vo.uid}" src="__UPLOAD__{$vo.image}" alt="暂无图片" class="img-thumbnail">
                                       </div>
                                       <div class="modal-footer">
                                         <a><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

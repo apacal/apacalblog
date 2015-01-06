@@ -36,13 +36,13 @@
                         <tr>
                             <td class="center">
                                 <label>
-                                    <input type="checkbox" class="ace" name="checkid" value="{$vo.adminid}" />
+                                    <input type="checkbox" class="ace" name="checkid" value="{$vo.uid}" />
                                     <span class="lbl"></span>
                                 </label>
                             </td>
-                            <td>{$vo.adminid}</td>
+                            <td>{$vo.uid}</td>
                             <td>
-                                <a href="__CONTROLLER__/edit/id/{$vo.adminid}">{$vo.adminname}</a>
+                                <a href="__CONTROLLER__/edit/id/{$vo.uid}">{$vo.name}</a>
                             </td>
                             <td>{$vo.description}</td>
                             <td>{$vo.email}</td>
@@ -73,19 +73,19 @@
                                         </span>
                                     </a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="__CONTROLLER__/edit/id/{$vo.adminid}" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                    <a href="__CONTROLLER__/edit/id/{$vo.uid}" class="tooltip-success" data-rel="tooltip" title="Edit">
                                         <span class="green">
                                             <i class="icon-edit bigger-120"></i>
                                         </span>
                                     </a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a data-toggle="modal" data-target="#modal-{$vo.adminid}" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                    <a data-toggle="modal" data-target="#modal-{$vo.uid}" class="tooltip-error" data-rel="tooltip" title="Delete">
                                         <span class="red">
                                             <i class="icon-trash bigger-120"></i>
                                         </span>
                                     </a>
                                     <!-- Modal -->
-                                    <div class="modal fade" id="modal-{$vo.adminid}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="modal-{$vo.uid}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                       <div class="modal-dialog">
                                         <div class="modal-content">
                                           <div class="modal-header">
@@ -93,11 +93,11 @@
                                             <h4 class="modal-title" id="myModalLabel">警告您确定要删除</h4>
                                           </div>
                                           <div class="modal-body">
-                                          {$vo.adminid}----{$vo.adminname}----{$vo.description}
+                                          {$vo.uid}----{$vo.name}----{$vo.description}
                                           </div>
                                           <div class="modal-footer">
                                             <a><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a href="__CONTROLLER__/del/id/{$vo.adminid}"><button type="button" class="btn btn-primary">确定</button></a>
+                                            <a href="__CONTROLLER__/del/id/{$vo.uid}"><button type="button" class="btn btn-primary">确定</button></a>
                                           </div>
                                         </div><!-- /.modal-content -->
                                       </div><!-- /.modal-dialog -->
@@ -131,7 +131,7 @@
 				var oTable1 = $('#sample-table-2').dataTable( {
 				"aoColumns": [
 			      { "bSortable": false },
-			      null,null, null,null, null, null,null,
+			      null,null, null,null, null, null,null,null,
 				  { "bSortable": false }
 				] } );
 				
