@@ -11,10 +11,6 @@ use Think\Model;
 
 class CommonController extends Controller {
 
-    protected function setCommentUserInfo() {
-        $commentInfo =  getCommentUserInfo();
-        $this->assign('commentUserInfo', $commentInfo);
-    }
 
     /**
      * empty action redirect to 404

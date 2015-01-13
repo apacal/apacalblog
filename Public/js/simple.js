@@ -1,11 +1,15 @@
-/**
- * 多级菜单显示效果
- */
 $(document).ready(function(){
+
+    $('pre').attr('class','prettyprint linenums');
+    prettyPrint();
+
     initHash();
 
     initCalendar();
 
+    /**
+     * 多级菜单显示效果
+     */
     $(".dropdown").hover(function(){
         $(this).children("ul.dropdown-menu").css("display", "block");
     });
@@ -16,11 +20,7 @@ $(document).ready(function(){
         var url = $(this).attr("href");
         window.location.href = url;
     });
-    $(function(){
-        $('.crossfade').crossfade({
-            threshold: 0.5
-        });
-    });
+
     $(window).bind('scroll',function(){showBlogInfo()});
 
 });
@@ -110,10 +110,6 @@ function showBlogInfo() {
                 } else {
 					$("#" + divId).html(ajaxStr);
                 }
-                // reflash bg
-                //change_bg_3d('#000000', '#CCCCCC');
-                change_bg_3d('#44b549', '#2d8e31');
-                
 			}
 		});	
  } 

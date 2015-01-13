@@ -21,6 +21,22 @@ class UploadModel{
         C('SHOW_PAGE_TRACE', false);
     }
 
+
+    public function uploadFile($model, $maxSize = 3) {
+        $upload = new \Think\Upload();
+        $save_path = '/'.$model.'/file/';
+        $this->initUploadConfig($upload, $save_path, $maxSize);
+        $upload->exts = array('tar.gz','bz2','zip','doc', 'rar', 'gz', 'tar', 'pdf','jpg','png','gif','jpeg');
+        $this->info = $upload->upload();
+        if(false === $this->info) {
+            $this->error = $upload->getError();
+            return false;
+        }
+        $info = array_pop($this->info);//取出第一个
+        $src = $info['savepath'] .$info['savename'];
+        return $this->genUploadUrl($src);
+    }
+
     /**
      * upload a image to server
      * @param $model
@@ -31,7 +47,7 @@ class UploadModel{
      * @param int $type
      * @return bool|string
      */
-    public function uploadImage($model, $maxSize = 3, $isThumb = true, $maxWidth = 360, $maxHeight = 202, $type=\Think\Image::IMAGE_THUMB_FILLED) {
+    public function uploadImage($model, $maxSize = 3, $isThumb = false, $maxWidth = 360, $maxHeight = 202, $type=\Think\Image::IMAGE_THUMB_FILLED) {
         $upload = new \Think\Upload();
         $save_path = '/'.$model.'/image/';
         $upload->exts = array('jpg', 'gif', 'png', 'jpeg');
@@ -49,7 +65,8 @@ class UploadModel{
     }
 
     private function genUploadUrl($src) {
-        return 'http://' .$_SERVER['SERVER_NAME'] .'/' .C('UPLOADS_DIR_NAME') .$src;
+        //return 'http://' .$_SERVER['SERVER_NAME'] .'/' .C('UPLOADS_DIR_NAME') .$src;
+        return '/' .C('UPLOADS_DIR_NAME') .$src;
 
     }
     private function initUploadConfig($upload, $save_path, $maxSize) {
@@ -63,20 +80,6 @@ class UploadModel{
         $upload->subName = array('date','Ymd');
     }
 
-    public function uploadFile($model, $maxSize = 3) {
-        $upload = new \Think\Upload();
-        $save_path = '/'.$model.'/file/';
-        $this->initUploadConfig($upload, $save_path, $maxSize);
-        $upload->exts = array('tar.gz','bz2','zip','doc', 'rar', 'gz', 'tar', 'pdf','jpg','png','gif','jpeg');
-        $this->info = $upload->upload();
-        if(false === $this->info) {
-            $this->error = $upload->getError();
-            return false;
-        }
-        $info = array_pop($this->info);//取出第一个
-        $src = $info['savepath'] .$info['savename'];
-        return $this->genUploadUrl($src);
-    }
 
     /**
      * 生成缩略图

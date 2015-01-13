@@ -432,6 +432,8 @@ header a:hover{
 }
 
 #comment-post {
+
+    border-top: 4px solid #EEE;
     padding-top: 30px;
 }
 #comment-post .input-group {
@@ -479,7 +481,6 @@ header a:hover{
 .comment-list {
     padding-top: 4%;
     border-top: 1px solid #EEE;
-    border-bottom: 4px solid #EEE;
 }
 
 .comment-author{
@@ -709,7 +710,19 @@ footer a {
     width: 100%;
 }
 
+/** note **/
 
+.media a {
+    color:#555;
+}
+.media a:hover{
+    text-decoration: none;
+    color:#1abc9c;
+}
+
+.reply-action a{
+    color: #1abc9c;
+}
 
 
 @media (max-width: 800px) {

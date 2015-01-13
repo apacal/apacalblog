@@ -1,16 +1,17 @@
 
 <notempty name="comment_list">
-    <div class="comment-title">
-        <h2>{$comment_count} Comments</h2>
-    </div>
+    <notempty name="show_count">
+        <div class="comment-title">
+            <h2>{$comment_count} Comments</h2>
+        </div>
+    </notempty>
 
     <div class="comment-list">
         <ul class="media-list">
             <volist name="comment_list" id="comment_vo">
                 <li class="media" id="comment-{$comment_vo.id}">
                     <a class="media-left" <notempty name="comment_vo.userUrl">href="{$comment_vo.userUrl}"</notempty>>
-                        <img alt="{$comment_vo.name}" src='
-                        <empty name="comment_vo.image">__IMG__/gravatar.png<else />{$comment_vo.image}</empty>' style="width:64px; height: 64px;">
+                        <img alt="{$comment_vo.name}" src='<empty name="comment_vo.image">__IMG__/gravatar.png<else />{$comment_vo.image}</empty>' style="width:64px; height: 64px;">
                     </a>
                     <div class="media-body">
                         <div class="comment-author">
@@ -26,24 +27,24 @@
                                 <eq name="comment_vo.uid" value="$post_uid">&nbsp;&nbsp;(Post Author)&nbsp;&nbsp;</eq>
                             </h4>
                         </div>
-                        <h4><a href="#comment-post" onclick="setCommentPid({$comment_vo.id});" class="reply-click" >{$comment_vo.createtime|date = 'F d, Y', ###} AT {$comment_vo.createtime|date='g:i A', ###}</a></h4>
+                        <h4><a href="#comment-post" onclick="setCommentPidOid({$comment_vo.id}, {$comment_vo.oid});" class="reply-click" >{$comment_vo.createtime|date = 'F d, Y', ###} AT {$comment_vo.createtime|date='g:i A', ###}</a></h4>
                         <div class="comment-content">
                             {$comment_vo.content}
                         </div>
 
-                        <h4 class="reply-action"><a href="#comment-post" class="reply-click" onclick="setCommentPid({$comment_vo.id});">REPLY</a></h4>
+                        <h4 class="reply-action"><a href="#comment-post" class="reply-click" onclick="setCommentPidOid({$comment_vo.id}, {$comment_vo.oid});">REPLY</a></h4>
                         <!------------            sub     ------------------------->
                         <notempty name="comment_vo.sub">
                             <volist name="comment_vo.sub" id="com_sub_vo">
-                                <div class="media" id="comment-{$com_sub_vo}">
+                                <div class="media" id="comment-{$com_sub_vo.id}">
                                     <a class="media-left" <notempty name="com_sub_vo.userUrl">href="{$com_sub_vo.userUrl}"</notempty>>
-                                    <img alt="{$com_sub_vo.name}" src='
-                        <empty name="com_sub_vo.image">__IMG__/gravatar.png<else />{$com_sub_vo.image}</empty>' style="width:64px; height: 64px;">
+                                    <img alt="{$com_sub_vo.name}" src='<empty name="com_sub_vo.image">__IMG__/gravatar.png<else />{$com_sub_vo.image}</empty>' style="width:64px; height: 64px;">
                                     </a>
                                     <div class="media-body">
                                         <div class="comment-author">
                                             <h4>
-                                                <b><notempty name="com_sub_vo.userUrl">
+                                                <b>
+                                                <notempty name="com_sub_vo.userUrl">
                                                     <a href="{$com_sub_vo.userUrl}" target="_blank">
                                                         {$com_sub_vo.name}
                                                     </a>
@@ -54,20 +55,19 @@
                                                 <eq name="com_sub_vo.uid" value="$post_uid">&nbsp;&nbsp;(Post Author)&nbsp;&nbsp;</eq>
                                             </h4>
                                         </div>
-                                        <h4><a href="#comment-post" onclick="setCommentPid({$com_sub_vo.id});" class="reply-click" >{$com_sub_vo.createtime|date = 'F d, Y', ###} AT {$com_sub_vo.createtime|date='g:i A', ###}</a></h4>
+                                        <h4><a href="#comment-post" onclick="setCommentPidOid({$com_sub_vo.id}, {$com_sub_vo.oid});" class="reply-click" >{$com_sub_vo.createtime|date = 'F d, Y', ###} AT {$com_sub_vo.createtime|date='g:i A', ###}</a></h4>
                                         <div class="comment-content">
                                             {$com_sub_vo.content}
                                         </div>
 
-                                        <h4 class="reply-action"><a href="#comment-post" class="reply-click" onclick="setCommentPid({$com_sub_vo.id});">REPLY</a></h4>
+                                        <h4 class="reply-action"><a href="#comment-post" class="reply-click" onclick="setCommentPidOid({$com_sub_vo.id}, {$com_sub_vo.oid});">REPLY</a></h4>
 
                                         <!------------------------------ sub2 ------------------------------->
                                         <notempty name="com_sub_vo.sub2">
                                             <volist name="com_sub_vo.sub2" id="com_sub2_vo">
                                                 <div class="media" id="comment-{$com_sub2_vo.id}">
                                                     <a class="media-left" <notempty name="com_sub2_vo.userUrl">href="{$com_sub2_vo.userUrl}"</notempty>>
-                                                    <img alt="{$com_sub2_vo.name}" src='
-                        <empty name="com_sub2_vo.image">__IMG__/gravatar.png<else />{$com_sub2_vo.image}</empty>' style="width:64px; height: 64px;">
+                                                    <img alt="{$com_sub2_vo.name}" src='<empty name="com_sub2_vo.image">__IMG__/gravatar.png<else />{$com_sub2_vo.image}</empty>' style="width:64px; height: 64px;">
                                                     </a>
                                                     <div class="media-body">
                                                         <div class="comment-author">
@@ -98,12 +98,12 @@
                                                                 <eq name="com_sub2_vo.pUid" value="$post_uid">&nbsp;&nbsp;(Post Author)&nbsp;&nbsp;</eq>
                                                             </h4>
                                                         </div>
-                                                        <h4><a href="#comment-post" onclick="setCommentPid({$com_sub2_vo.id});" class="reply-click" >{$com_sub2_vo.createtime|date = 'F d, Y', ###} AT {$com_sub2_vo.createtime|date='g:i A', ###}</a></h4>
+                                                        <h4><a href="#comment-post" onclick="setCommentPidOid({$com_sub2_vo.id}, {$com_sub2_vo.oid});" class="reply-click" >{$com_sub2_vo.createtime|date = 'F d, Y', ###} AT {$com_sub2_vo.createtime|date='g:i A', ###}</a></h4>
                                                         <div class="comment-content">
                                                             {$com_sub2_vo.content}
                                                         </div>
 
-                                                        <h4 class="reply-action"><a href="#comment-post" class="reply-click" onclick="setCommentPid({$com_sub2_vo.id});">REPLY</a></h4>
+                                                        <h4 class="reply-action"><a href="#comment-post" class="reply-click" onclick="setCommentPidOid({$com_sub2_vo.id}, {$com_sub2_vo.oid});">REPLY</a></h4>
 
                                                     </div>
                                                  </div>
@@ -123,3 +123,5 @@
         </ul>
     </div>
 </notempty>
+
+

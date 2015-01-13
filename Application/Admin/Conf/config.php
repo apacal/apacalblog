@@ -8,7 +8,6 @@ $admin_config	= array(
 
     'URL_MODEL'					=>2, 				// 如果你的环境不支持PATHINFO 请设置为3
 
-    'UPLOADS_DIR_NAME'           =>  'Uploads',   // upload dir name
 
     /* 模版变量设置 */
 	'TMPL_PARSE_STRING' => array(

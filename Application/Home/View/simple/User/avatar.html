@@ -1,31 +1,122 @@
-        <div class="panel panel-default">
+<div class="panel panel-default">
 
-            <div class="panel-heading" role="tab" id="heading-avatar">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse-avatar" aria-expanded="true" aria-controls="collapseOne">
-                        <strong>  Change Avatar </strong>
-                    </a>
-                </h4>
+    <div class="panel-heading" role="tab" id="heading-avatar">
+        <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-avatar" aria-expanded="true" aria-controls="collapseOne">
+                <strong>  Change Avatar </strong>
+            </a>
+        </h4>
+    </div>
+    <div id="collapse-avatar" class="panel-collapse collapse " role="tabpanel" aria-labelledby="heading-avatar">
+        <div class="panel-body">
+            <div class="page-header">
+                <h3>请先上传头像 <small>再裁剪</small></h3>
             </div>
-            <div id="collapse-avatar" class="panel-collapse collapse " role="tabpanel" aria-labelledby="heading-avatar">
-                <div class="panel-body">
-                    <form role="form" method="Post" action="{:U('User/saveBaseInfo')}">
-                        <div class="form-group input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-cloud"></i></span>
-                            <input type="text" class="form-control" value="{$vo.name}" name="name" placeholder="Your Name">
-                        </div>
-                        <div class="form-group input-group">
-                            <span class="input-group-addon">@</span>
-                            <input type="text" class="form-control" value="{$vo.email}" name="email" placeholder="Your Email">
-                        </div>
-
-                        <div class="form-group input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                            <input type="text" class="form-control" name="website" placeholder="Your Website" value="{$vo.website}">
-                        </div>
-
-                        <button type="submit" class="btn btn-success pull-right">Save</button>
-                    </form>
+            <div id="fileinput">
+                <div class="form-group">
+                    <input id="input-avatar" name="avatar" type="file" multiple=true data-upload-url="{:U('User/uploadAvatar')}"  data-max-file-count="1">
                 </div>
             </div>
+            <hr >
+            <div class="jcrop" style="display: none">
+                <div class="page-header">
+                    <h3>请剪切头衔 <small>再保存</small></h3>
+                </div>
+                <img id="avatar-img" src="">
+                <form role="form" method="Post" action="{:U('User/saveAvatar')}" onsubmit="return checkCoords()">
+                    <input type="hidden" id="x" name="x" />
+                    <input type="hidden" id="y" name="y" />
+                    <input type="hidden" id="w" name="w" />
+                    <input type="hidden" id="h" name="h" />
+                    <input type="hidden" id="image" name="image" />
+
+
+                    <button type="submit" class="btn btn-success pull-right">Save</button>
+                </form>
+            </div>
+
         </div>
+    </div>
+</div>
+
+<block name="avatar_ext">
+    <link rel="stylesheet" href="__FILEINPUT__/css/fileinput.css">
+    <script src="__FILEINPUT__/js/fileinput.js"></script>
+    <link rel="stylesheet" href="__JCROP__/css/jquery.Jcrop.css">
+    <script src="__JCROP__/js/jquery.Jcrop.js"></script>
+</block>
+
+<script>
+    function updateCoords(c)
+    {
+        $('#x').val(c.x);
+        $('#y').val(c.y);
+        $('#w').val(c.w);
+        $('#h').val(c.h);
+    };
+
+    function checkCoords()
+    {
+        if (parseInt($('#w').val())) return true;
+        alert('Please select a crop region then press submit.');
+        return false;
+    };
+
+
+    $(document).ready(function() {
+
+
+
+        $('#input-image').on('fileuploaded', function(event, data, previewId, index) {
+            var form = data.form, files = data.files, extra = data.extra,
+                response = data.response, reader = data.reader;
+            console.log('File uploaded triggered');
+        });
+
+
+
+
+        $('#input-avatar').on('fileuploaded', function(event, data, previewId, index) {
+            var jsonData = data.response
+            if (jsonData.code == '0') {
+                $(".jcrop").css("display", "block");
+                $("#avatar-img").attr("src", jsonData.data);
+                //$("#input-avatar").fileinput("clear");
+                $("#image").val(jsonData.data);
+                $('#avatar-img').Jcrop({
+                    //allowSelect: false,
+                    aspectRatio: 1,
+                    setSelect: [30,30,100,100],
+                    onSelect: updateCoords
+                });
+            }
+
+            console.log('File uploaded triggered');
+            console.log(data.response);
+        });
+
+        $("#input-avatar").fileinput({
+
+        <notempty name="vo.image">
+
+            initialPreview: [
+                '<img src="{$vo.image}" class="file-preview-image">'
+            ],
+            initialPreviewConfig: [
+            {caption: "Now Avatar"},
+            ],
+            overwriteInitial: true,
+
+        </notempty>
+
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: " Browse",
+            browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
+            showCaption: false
+
+
+         });
+
+    });
+</script>

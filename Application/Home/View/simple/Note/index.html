@@ -1,22 +1,43 @@
 
 <extend name="Public:base" />
 <block name="content">
-<div class="container marketing thumbnail note" >
-        <div style="background-color:white;padding:40px 40px; ">
+<div class="container marketing note" >
+
+    <div class="col-md-8 col-sm-8 col-xs-12 left">
+        <notempty name="page_title">
+            <div class="page-title">
+                <h4 class="text-uppercase">
+                    {$page_title}
+                </h4>
+            </div>
+        </notempty>
+    </div>
+    <div class="col-md-8 col-sm-8 col-xs-12 left">
         <volist name="list" id="vo">
             <div class="media" >
-                <a class="pull-left" href="{:U('admin/'.$vo['adminid'])}">
-                    <img class="media-object" style="height:64px;width:64px;" src="{$vo.image}" alt="...">
+                <a class="media-left" href="{$vo.userUrl}" target="_blank">
+                    <img src="{$vo.image}" style="width:64px;height:64px;" alt="Not Image">
                 </a>
                 <div class="media-body">
-                    <h4 class="media-heading">{$vo.content}</h4>
-                    <span class="pull-right">
-                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="{$vo.time|date='Y-m-d H:i:s', ###}">{$vo.time|date='F d, Y', ###}</button>
-                    </span>
+                    <h4>
+                        <b><a href="{$vo.userUrl}" class="text-uppercase" target="_blank">{$vo.name}</a></b>
+                        &nbsp;&nbsp;&nbsp;
+
+                        <a href="#comment-post" onclick="setCommentPidOid(0, {$vo.id});" class="reply-click" >{$vo.createtime|date = 'F d, Y', ###} AT {$vo.createtime|date='g:i A', ###}</a>
+                    </h4>
+                    <div class="comment-content">
+                        {$vo.content}
+                    </div>
+
+                    <h4 class="reply-action"><a href="#comment-post" class="reply-click" onclick="setCommentPidOid(0, {$vo.id});">REPLY</a></h4>
+                    <?php echo W('Comment/index',array($cid, $vo['id'], false)); ?>
+
+
                 </div>
             </div>
-            <div style="height:20px"></div>
         </volist>
-        </div>
+        <include file="Comment:post" />
+    </div>
+    <include file="Public:right" />
 </div>
 </block>

@@ -67,7 +67,7 @@ class CommentModel extends Model {
         $Category = new CategoryModel();
         foreach($list as &$val) {
             if(0 != $val['uid']) {
-                $val['userUrl'] = U('user/' .$val['uid']);
+                $val['userUrl'] = U('user/' .$val['uid'] .C("URL_HASH"));
             }
             $extend = $Category->getExtendInfoByCategoryIdAndObjectId($val['cid'], $val['oid']);
             if(false !== $extend) {

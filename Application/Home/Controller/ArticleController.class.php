@@ -44,15 +44,11 @@ class ArticleController extends CommonController {
         // 评论
         $Comment = new CommentModel();
         $this->assign('recent_comment_list', $Comment->getRecentCommentListByCategory($article['cid'], $article['id'], 8));
-        $commentList = $Comment->getCommentListByCidAndOid($article['cid'], $article['id']);
-        $this->assign('comment_list', $commentList);
-        $this->assign('comment_count', $Comment->getCommentCount($article['cid'], $article['id']));
 
 
 
         $this->seo($article['title'], $article['keywords'], $article['description']);
 
-        $this->setCommentUserInfo();
         $this->display();
     }
 

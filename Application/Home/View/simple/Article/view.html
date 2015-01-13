@@ -41,8 +41,7 @@
 
             </article>
             <div class="entry-comment">
-
-                <include file="Comment/index" />
+                <?php echo W('Comment/index',array($art_vo['cid'], $art_vo['id'])); ?>
                 <include file="Comment/post" />
             </div>
         </div>

@@ -1,12 +1,17 @@
-<link rel="stylesheet" href="__SUMMERNOTE__/font-awesome.min.css" />
-<link href="__SUMMERNOTE__/summernote.css" rel="stylesheet">
-<script src="__SUMMERNOTE__/summernote.js"></script>
+<link rel="stylesheet" href="__SUMMERNOTE__/dist/font-awesome.min.css" />
+<link href="__SUMMERNOTE__/dist/summernote.css" rel="stylesheet">
+<script src="__SUMMERNOTE__/dist/summernote.js"></script>
+<script src="__SUMMERNOTE__/plugin/summernote-ext-fontstyle.js"></script>
+
+
 
 
 <div id="comment-post">
     <h2 id="reply-title" class="comment-reply-title">
         Leave a Reply
     </h2>
+    <input id="comment-pid" type="hidden" value="0">
+    <input id="comment-oid" type="hidden" value="0">
     <notempty name="uid">
     <p class="logged-in-as">
         Logged in as
@@ -15,7 +20,6 @@
     </p>
 
 
-    <input id="comment-pid" type="hidden" value="0">
     <input id="comment-name" type="hidden" class="form-control" placeholder="Username" value="{$commentUserInfo.name}">
     <input id="comment-email" type="hidden" class="form-control" placeholder="User Email" value="{$commentUserInfo.email}">
     <input id="comment-website" type="hidden" class="form-control" placeholder="Website" value="{$commentUserInfo.website}">
@@ -25,7 +29,6 @@
             <span class="required">*</span>,
             You could <a href="{:U('User/login' .C('URL_HASH'))}">login</a>
     </p>
-    <input id="comment-pid" type="hidden" value="0">
     <div class="input-group input-group-lg">
         <span class="input-group-addon">User Name&nbsp;*</span>
         <input id="comment-name" type="text" class="form-control" placeholder="Username" value="{$commentUserInfo.name}">
@@ -64,12 +67,15 @@
         var pid = getInputVal('pid', true);
         var userWebsite = getInputVal('website', false);
         var content = $('#summernote').code();
-        ajaxPostComment(userName, userEmail, userWebsite, content, pid);
+        var oid = getInputVal("oid", true);
+        ajaxPostComment(userName, userEmail, userWebsite, content, pid, oid);
 
     }
 
-    function setCommentPid(pid) {
+    function setCommentPidOid(pid, oid) {
         $('#comment-pid').val(pid);
+        $('#comment-oid').val(oid);
+
     }
 
 
@@ -77,7 +83,9 @@
         var val = $("#comment-" + subInputId).val();
         if (requied === true) {
             if (val == '') {
-                $(inputId).focus();
+                showError(subInputId + ' can not empty!')
+                $("#comment-" + subInputId).focus();
+                exit();
             }
         }
         return val;
@@ -90,11 +98,10 @@
         $('#show-error').html(html);
     }
 
-    function ajaxPostComment(name, email, website, content, pid) {
+    function ajaxPostComment(name, email, website, content, pid, oid) {
         var uid = "{$uid}";
         var url = "{:U('Comment/add')}";
-        var oid = "{$art_vo.id}";
-        var cid = "{$art_vo.cid}";
+        var cid = "{$cid}";
         $.post(url, {
                 pid: pid,
                 oid: oid,
@@ -129,8 +136,8 @@
         toolbar: [
             //[groupname, [button list]]
             ['style', ['style']],
-            ['format', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['Lato']],
+            ['format', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+            ['fontsize', ['fontsize']],
             ['color', ['color']],
             ['para', ['ul', 'ol', 'paragraph']],
             ['insert', ['table', 'hr']],
