@@ -1,6 +1,7 @@
 <?php
 return array(
 
+    'UPLOADS_DIR_NAME'           =>  'Uploads',   // upload dir name
 
     'URL_HASH'      =>      '#nav-home', //url 默认描点
     'SALT'      => "apacal_blog",       //password 加的特定盐

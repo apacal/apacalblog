@@ -299,7 +299,7 @@ class ArticleModel extends RelationModel {
             $val['comment_url'] = U('article/' .$val['id'] .C('COMMENT_HASH'));
 
             $val['tags'] = $this->buildTagsByObjectId($val['id']);
-            $val['adminUrl'] = U('user/' .$val['uid'] .C('URL_HASH'));
+            $val['userUrl'] = U('user/' .$val['uid'] .C('URL_HASH'));
             $val['cateUrl'] = U('category/' .$val['cid'] .C('URL_HASH'));
 
             if ($isStrstrContent == true) {

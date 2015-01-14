@@ -63,6 +63,9 @@ $home_config =  array(
         '__SUMMERNOTE__' 				=> $config['SITE_URL'].'/Public/summernote',
         '__GOOGLE_CODE__' 				=> $config['SITE_URL'].'/Public/google-code-prettify',
         '__KALENDAR__' 				=> $config['SITE_URL'].'/Public/kalendar',
+        '__JCROP__'                 => $config['SITE_URL'].'/Public/Jcrop',
+        '__FILEINPUT__'                 => $config['SITE_URL'].'/Public/bootstrap-fileinput',
+
 	),
 
     //邮箱配置

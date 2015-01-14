@@ -7,14 +7,26 @@
  */
 
 namespace Home\Model;
+use Admin\Model\UserModel;
 use Think\Model;
 
 class NoteModel extends Model {
-    public function getNoteList() {
+
+    public function getNoteList($cid) {
         $tagNoteList = cacheTag(NoteList);
         if (false === ($list = getCache($tagNoteList))) {
-            $sql = "select id, ablg_note.createtime as time,content,adminname,image from ablg_note left join ablg_admin on ablg_note.adminid=ablg_admin.adminid order by time desc";
-            $list = $this->query($sql);
+            $User = new UserModel();
+            $list = $this->order('createtime desc')->select();
+            foreach ($list as &$val) {
+                $userInfo = $User->getUserInfo($val['uid']);
+                if (is_array($userInfo)) {
+                    $val['name'] = $userInfo['name'];
+                    $val['image'] = $userInfo['image'];
+                    $val['userUrl'] = U('user/' .$val['uid'] .C('URL_HASH'));
+                }
+
+            }
+
 
             setCache($tagNoteList, $list, C('NOTE_TTL'));
         }

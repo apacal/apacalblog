@@ -22,6 +22,7 @@ class IndexController extends CommonController {
         }
         $this->assign('page_title',$pageTitle);
         $this->assign('article_list', $articleList);
+
         $this->assign('recent_comment_list', (new CommentModel())->getRecentCommentListByCategory($cid, 0, 8));
         $this->assign('recent_article_list', $articleModel->getRecentArticleListByCategory($cid));
         $this->assign('archives_list', $articleModel->getArticleListGroupByDateByCategry($cid));

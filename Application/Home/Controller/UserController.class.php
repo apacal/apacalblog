@@ -9,14 +9,73 @@
 namespace Home\Controller;
 
 
+use Admin\Model\UploadModel;
 use Admin\Model\UserModel;
-use Home\Model\WallpapersModel;
+use Think\Image;
 use Think\Model;
 use Think\Verify;
 
 class UserController extends CommonController{
     public function view() {
-        $this->success("正在完善！");
+        $uid = I('get.id');
+        if (empty($uid) || !is_numeric($uid)) {
+            $this->error("参数错误 !");
+        }
+        $User = new UserModel();
+        $userInfo = $User->getUserInfo($uid);
+        if (empty($userInfo)) {
+            $this->error("没有该用户!");
+        }
+        $this->initBackgroundUrl();
+
+        $this->assign('vo', $userInfo);
+        $this->display();
+    }
+
+    public function saveAvatar() {
+        $uid = $this->checkLogin();
+        $file = $this->cropAvatar();
+        $User = new UserModel();
+        $data = array(
+            'image' => $file,
+        );
+        if ($User->update($uid, $data)) {
+            $this->success("update avatar success!");
+        } else {
+            $this->error("updata avatar fail!");
+        }
+
+    }
+    private  function cropAvatar() {
+        $Image = new Image();
+        $file = I('post.image');
+        if (!empty($file)) {
+            $file = '.' .$file;
+        } else {
+            $this->error("文件不存在!");
+        }
+        $Image->open($file);
+        $Image->crop( I('post.w'), I('post.h'),I('post.x'), I('post.y'), 150, 150);
+        $Image->save($file);
+        return trim($file, '.');
+    }
+
+    public function uploadAvatar() {
+        $Upload = new UploadModel();
+        $avatar = $Upload->uploadImage('Avatar');
+        if (empty($avatar)) {
+            $data = array(
+                'error' => $Upload->getError(),
+                'code' => 1,
+            );
+        } else {
+            $data = array(
+                'data' => $avatar,
+                'code' => 0,
+            );
+        }
+        $this->jsonReturn($data);
+
     }
 
 
@@ -180,6 +239,7 @@ class UserController extends CommonController{
 
             setUserLogin($authInfo['uid']);
             setUserInfo($authInfo);
+            setCommentUserInfo($authInfo);
             //保存登录信息
             $ip = get_client_ip();
             $time = time();
@@ -199,8 +259,7 @@ class UserController extends CommonController{
      * init login,register and so on page background image url
      */
     private function initBackgroundUrl() {
-        $url = (new WallpapersModel())->getWallpapersUrl();
-        $this->assign('background_url', $url);
+        $this->assign('background_url', "http://wallpapers.apacal.cn/cgi/");
     }
 
     /**

@@ -1,0 +1,25 @@
+<extend name="Public:base" />
+<block name="content">
+    <div class="change-user-info" style="background-image: url({$background_url}); overflow: hidden;">
+
+        <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="page-header">
+                        <h1>{$vo.name} <small>User Info</small> </h1>
+                    </div>
+                    <h2>{$vo.name} <small>User Name</small></h2>
+                    <h2><a href="mailto:{$vo.eamil}">{$vo.email}</a> <small>Email</small></h2>
+                    <empty name="vo.website">
+                        <h2>Empty <small>Website</small></h2>
+                        <else />
+                        <h2><a href="{$vo.website}" target="_blank">{$vo.website}</a> <small>Website</small></h2>
+                    </empty>
+                    <h2><img class="img-thumbnail" src="{$vo.image}" style="width:150px; height:150px;"> <small>Avatar</small></h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</block>
