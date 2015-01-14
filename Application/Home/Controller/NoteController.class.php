@@ -5,9 +5,12 @@ use Home\Model\CommentModel;
 use Home\Model\NoteModel;
 use Think\Controller;
 class NoteController extends CommonController {
-    
-    public function index() {
-        $cid = I('get.cid');
+
+    public function view() {
+        // the cid is node controller
+        $this->index(9);
+    }
+    public function index($cid) {
         if (empty($cid) || !is_numeric($cid)) {
             $this->error("参数错误！");
         }
@@ -20,7 +23,7 @@ class NoteController extends CommonController {
         $this->assign('list', $list);
         $this->initRightWidget(0);
         $this->seo('闲言杂语', NULL, NULL, NULL);
-        $this->display();
+        $this->display("Note:index");
     }
 
     private function initRightWidget($cid) {

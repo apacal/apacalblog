@@ -16,7 +16,6 @@ class NoteModel extends Model {
         $tagNoteList = cacheTag(NoteList);
         if (false === ($list = getCache($tagNoteList))) {
             $User = new UserModel();
-            $Comment = new CommentModel();
             $list = $this->order('createtime desc')->select();
             foreach ($list as &$val) {
                 $userInfo = $User->getUserInfo($val['uid']);
