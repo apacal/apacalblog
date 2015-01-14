@@ -65,6 +65,7 @@ $home_config =  array(
         '__KALENDAR__' 				=> $config['SITE_URL'].'/Public/kalendar',
         '__JCROP__'                 => $config['SITE_URL'].'/Public/Jcrop',
         '__FILEINPUT__'                 => $config['SITE_URL'].'/Public/bootstrap-fileinput',
+        '__CODEMIRROR__'                 => $config['SITE_URL'].'/Public/CodeMirror',
 
 	),
 

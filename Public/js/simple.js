@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
-    $('pre').attr('class','prettyprint linenums');
-    prettyPrint();
+    initCodeMirror();
+
 
     initHash();
 
@@ -25,8 +25,33 @@ $(document).ready(function(){
 
 });
 
-function initCalendar() {
+function initCodeMirror() {
+    $("pre").each(function() {
+        var $this = $(this),
+            $code = $this.html();
 
+        $this.empty();
+
+        CodeMirror(this, {
+            value: $code,
+            mode: 'clike',
+            lineNumbers: !$this.is('.inline'),
+            theme: "eclipse",
+            readOnly: false
+        });
+    });
+}
+
+function initCalendar() {
+    var options = {
+        title:"Apacal.cn",
+        events: [],
+        firstDayOfWeek: "Monday",
+        showDays: true,
+        url: "http://apacal.cn",
+        color: "black"
+    };
+    $("#calendar").kalendar(options);
 }
 
 function initHash() {
