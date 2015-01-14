@@ -79,8 +79,8 @@ return array(
     // pdo
     'DB_TYPE'                       =>              'pdo', // 数据库类型
     'DB_USER'                       =>              'root', // 用户名
-    //'DB_PWD'                        =>              '@)!$Apacalblog', // 密码
-    'DB_PWD'                        =>              'dev2014', // 密码
+    'DB_PWD'                        =>              '@)!$Apacalblog', // 密码
+    //'DB_PWD'                        =>              'dev2014', // 密码
     'DB_PORT'                       =>              3306, // 端口
     'DB_PREFIX'		                =>	            'ablg_',//  数据表前缀
     'DB_DSN'                        =>              'mysql:host=localhost;dbname=apacalblog;charset=utf8',
@@ -92,10 +92,10 @@ return array(
 
     // Memcache设置
     'MemCached'     =>   array(
-        //'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
-        'hostname'  =>      '127.0.0.2',
+        'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
+        //'hostname'  =>      '127.0.0.2',
         'port'      =>      '11211',
-        'isSasl'    =>      false,
+        'isSasl'    =>      true,
         'username'   =>      '7e4d0da81a0611e4',
         'passwd'    =>      'Memcache2014'
     ),
