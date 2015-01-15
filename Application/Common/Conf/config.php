@@ -6,7 +6,7 @@ return array(
     'URL_HASH'      =>      '#nav-home', //url 默认描点
     'SALT'      => "apacal_blog",       //password 加的特定盐
 
-    'USER_AUTH_KEY'			=>'user_id',// ADMIN认证SESSION标记
+    'USER_AUTH_KEY'			=>'user_id',// User认证SESSION标记
     'COMMENT_USER_INFO'      => 'comment_user_info',
 
 
@@ -74,7 +74,7 @@ return array(
     'TOKEN_RESET'                   =>              true,  //令牌验证出错后是否重置令牌 默认为true
 
 
-    'DEFAULT_THEME'                 =>              'default',// 设置默认的模板主题
+    'DEFAULT_THEME'                 =>              'simple',// 设置默认的模板主题
 
 
     // pdo
@@ -112,6 +112,26 @@ return array(
 
 
     'THUMB_PREFIX'      =>          'ablg_',  //缩略图的前缀
+
+    /* 模版变量设置 */
+    'TMPL_PARSE_STRING' => array(
+        '__SITE_URL__'			=> SITE_URL,
+        '__UPLOAD__' 			=> SITE_URL .'/Uploads',
+        '__PUBLIC__' 			=> SITE_URL .'/Public',
+        '__CSS__' 				=> SITE_URL.'/Public/css',
+        '__IMG__' 				=> SITE_URL.'/Public/images',
+        '__JS__' 				=> SITE_URL.'/Public/js',
+        '__BS__' 				=> SITE_URL.'/Public/bootstrap',
+        '__SUMMERNOTE__' 				=> SITE_URL.'/Public/summernote',
+        '__GOOGLE_CODE__' 				=> SITE_URL.'/Public/google-code-prettify',
+        '__KALENDAR__' 				=> SITE_URL.'/Public/kalendar',
+        '__JCROP__'                 => SITE_URL.'/Public/Jcrop',
+        '__FILEINPUT__'                 => SITE_URL.'/Public/bootstrap-fileinput',
+        '__CODEMIRROR__'                 => SITE_URL.'/Public/CodeMirror',
+        '__BS_UI__'                 => SITE_URL.'/Public/jquery-ui-bootstrap',
+        '__JSTREE__'                 => SITE_URL.'/Public/jstree-bootstrap-theme',
+
+    ),
 
 
    

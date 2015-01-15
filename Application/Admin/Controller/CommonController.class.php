@@ -18,8 +18,6 @@ class CommonController extends Controller {
         if (!$_SESSION [C('USER_AUTH_KEY')] || !is_admin()) {
 	        redirect(U("Home/User/login" .C("URL_HASH")));
         }
-        $this->assign('userInfo', getUserInfo());
-        $this->initMenu();
     }
 
     /**
@@ -37,28 +35,6 @@ class CommonController extends Controller {
         $this->assign('categoryTree', $result);
     }
 
-    /**
-     * init menu and menu position
-     */
-    private function initMenu() {
-        $model = D( 'Menu' );
-        $currId = I( 'get.menuId' );
-        if ( empty( $currId ) || !is_numeric($currId) ) {
-            $currId = isset($_SESSION['menuId']) ? $_SESSION['menuId'] : 1;
-        } else {
-            $_SESSION['menuId'] = $currId;
-        }
-
-
-        $menu = $model->getMenu( $currId );
-        $this->assign('menu', $menu);
-
-        $thisMenu = $model->getMenuById( $currId );
-        $this->assign( 'thisMenu', $thisMenu );
-
-        $position = $model->getPosition( $currId );
-        $this->assign( 'position', $position );
-    }
 
 
     /**

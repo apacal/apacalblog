@@ -1,7 +1,8 @@
 <?php
-$config	=	require APP_PATH .'Common/Conf/config.php';
-$config['SITE_URL'] = '';
-$home_config =  array(
+//$config	=	require APP_PATH .'Common/Conf/config.php';
+//SITE_URL = '';
+//$home_config =
+    return array(
 
     'COMMENT_HASH'      =>      '#comment-post',
     'TMPL_CACHE_ON'                 =>              false,        // 是否开启模板编译缓存,设为false则每次都会重新编译
@@ -51,23 +52,6 @@ $home_config =  array(
             'aboutme/my'                      =>      'Index/aboutme',
     ),
 
-    /* 模版变量设置 */
-	'TMPL_PARSE_STRING' => array(
-		'__SITE_URL__'			=> $config['SITE_URL'],
-        '__UPLOAD__' 			=> $config['SITE_URL'].'/Uploads',
-		'__PUBLIC__' 			=> $config['SITE_URL'].'/Public',
-		'__CSS__' 				=> $config['SITE_URL'].'/Public/css',
-		'__IMG__' 				=> $config['SITE_URL'].'/Public/images',
-		'__JS__' 				=> $config['SITE_URL'].'/Public/js',
-		'__BS__' 				=> $config['SITE_URL'].'/Public/bootstrap',
-        '__SUMMERNOTE__' 				=> $config['SITE_URL'].'/Public/summernote',
-        '__GOOGLE_CODE__' 				=> $config['SITE_URL'].'/Public/google-code-prettify',
-        '__KALENDAR__' 				=> $config['SITE_URL'].'/Public/kalendar',
-        '__JCROP__'                 => $config['SITE_URL'].'/Public/Jcrop',
-        '__FILEINPUT__'                 => $config['SITE_URL'].'/Public/bootstrap-fileinput',
-        '__CODEMIRROR__'                 => $config['SITE_URL'].'/Public/CodeMirror',
-
-	),
 
     //邮箱配置
 	'SMTP_SERVER' =>'smtp.126.com',					//邮件服务器
@@ -81,4 +65,4 @@ $home_config =  array(
 
 	
 );
-return array_merge($config,$home_config);
+//return array_merge($config,$home_config);

@@ -1,0 +1,47 @@
+<header class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand " href="{:C('SITE_URL')}">{:C('SITE_NAME')}</a>
+        </div>
+        <nav class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <volist name="first_menu" id="nav_id">
+                    <li id="nav-{$nav_id.id}">
+
+                        <a href="{$nav_id.menuUrl}">{$nav_id.name}</a>
+                    </li>
+                </volist>
+            </ul>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle text-uppercase" data-toggle="dropdown">
+                            <notempty name="user_info.image">
+                                <img class="img-circle nav-bar-avatar" src="{$user_info.image}">
+                            </notempty>
+                            {$user_info.name} <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./index.html">Default Bootstrap Theme (Non LESS'd)</a></li>
+                            <li><a href="theme/united/index.html">United Theme via Bootswatch (LESS'd)</a></li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="{:U('/Home/User/Logout')}">
+                                    <i class="glyphicon glyphicon-log-out"></i>
+                                    Log Out
+
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
