@@ -5,16 +5,17 @@
 namespace Admin\Controller;
 use Think\Controller;
 class NoteController extends CommonController {
-    protected $manageSort = "createtime DESC";
-    public function _atfer_insert() {
+    protected $unManageField = array("updatetime",'uid');
 
-        deleteCache(cacheTag(NoteList));
+    protected function setExtManageData(&$val) {
+        parent::setExtManageData($val);
+        $subLen = 40;
+        $val['content'] = strip_tags($val['content']);
+        $len = mb_strlen($val['content'],'utf8');
+        $val['content'] = mb_substr($val['content'], 0, $subLen, 'utf8');
+        if ($len > $subLen) {
+            $val['content'] .= " ......";
+        }
     }
-
-    public function _atfer_update() {
-
-        deleteCache(cacheTag(NoteList));
-    }
-
 
 }

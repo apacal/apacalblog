@@ -4,16 +4,14 @@
  **/
 namespace Admin\Controller;
 use Admin\Model\ArticleModel;
+use Admin\Model\CategoryModel;
 use Admin\Model\TermModel;
 use Admin\Model\UploadModel;
 use Think\Controller;
 class ArticleController extends CommonController {
 
-    public function _before_add() {
-        parent::_before_add();
-        $this->setAllCategoryTree();
-        $this->initTags();
-    }
+    protected $unManageField = array("updatetime", "content", "keywords", "image");
+
 
     private function initTags() {
         $model = new TermModel();
@@ -29,39 +27,9 @@ class ArticleController extends CommonController {
         $this->assign('tags', $tags);
         $systemTags = $model->getTermsByTaxonomy(CONTROLLER_NAME);
         $this->assign('system_tags', $systemTags);
-        $this->setAllCategoryTree();
-    }
-
-    public function _before_edit() {
-        $this->initTags();
-    }
-
-    /**
-     * 管理界面
-     **/
-    public function manage() {
-        $model = M('Article');
-        $cid = I('request.cid');
-        $menuId = I('request.menuId');
-
-        if(!empty($cid)) {
-            $list = $model->field('content', true)->where(array('cid' => $cid))->order('updatetime DESC')->select();
-        }else{
-            $list = $model->field('content', true)->order('updatetime DESC')->select();
-        }
-        foreach($list as &$val) {
-            $val['url'] = $this->getEditUrl( $val, $menuId );
-            $val['cateUrl'] = $this->getManageUrlByCateId( $val['cid'], $menuId );
-            $where['id'] = $val['cid'];
-            $val['cname'] = M('Category')->where($where)->getField('cname');
-        }
-        $this->assign('list', $list);
     }
 
 
-    private function getManageUrlByCateId( $cid, $menuId ) {
-        return U(CONTROLLER_NAME .'/manage', array('cid' => $cid, 'menuId' => $menuId));
-    }
 
 
     public function uploadImage() {
@@ -77,59 +45,6 @@ class ArticleController extends CommonController {
         $this->jsonReturn($file, $upload->getError());
     }
 
-    protected function jsonReturn($msg, $error) {
-        $data = array();
-        if(false !== $msg) {
-            $data['msg'] = $msg;
-            $data['code'] = 0;
-        } else {
-            $data['code'] = -1;
-            $data['msg'] = $error;
-        }
-        die(json_encode($data));
-    }
-
-
-    /**
-     * 添加博客
-     **/
-    public function insert() {
-        $model= new ArticleModel();
-        if(!($data = $model->create())) {
-            $this->error($model->getError());
-        }
-        $this->initPostData($data);
-        if(false === ($id = $model->add($data))) {
-            $this->error($model->getError());
-        } else {
-            $this->saveTags($id);
-            $this->success('添加博文成功!', $this->getManageUrl(__CONTROLLER__.'/manage'));
-        }
-    }
-
-    /**
-     * 更新博客
-     **/
-    public function update() {
-        $model= new ArticleModel();
-        if(!($data = $model->create())) {
-            $this->error($model->getError());
-        }
-        $id = I('request.id');
-        if(empty($id) || !is_numeric($id)) {
-            $this->error('参数错误！');
-        }
-        $this->initPostData($data);
-
-        $where['id'] = $id;
-        unset($data['createtime']);//unset createtime
-        if(!$model->where($where)->save($data)) {
-            $this->error($model->getError());
-        } else {
-            $this->saveTags($id);
-            $this->success( '更新博文成功!', $this->getManageUrl(CONTROLLER_NAME .'/manage') );
-        }
-    }
 
     protected function saveTags($id) {
         $terms = new TermModel();
@@ -141,18 +56,5 @@ class ArticleController extends CommonController {
 
     }
 
-    protected function initPostData(&$data) {
-        $upload = new UploadModel();
-        $image = $upload->uploadImage('Article');
-        if($image != false){
-            $data['image'] = $image;
-        }
-        $data['status'] = $data['status'] == 'on' ? 1 : 0;
-        $data['content'] = $_REQUEST['content'];
-        if(empty($data['source'])){
-            $data['source'] = $data['source_url'] =0;
-        }
-
-    }
 }
 

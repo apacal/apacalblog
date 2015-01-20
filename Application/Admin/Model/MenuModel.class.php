@@ -6,6 +6,11 @@ class MenuModel extends CommonModel{
 
     );
 
+    /**
+     * get menu data on nav-bar
+     * @return mixed | false | null
+     * @author apacal
+     */
     public function getFirstMenu() {
         $map = array(
             'pid'   => 0,
@@ -20,9 +25,16 @@ class MenuModel extends CommonModel{
         return $list;
     }
 
+    /**
+     * get sub menu on this id
+     * @param $pid
+     * @return mixed
+     * @author apacal
+     */
     public function getSubMenu($pid) {
         $map = array(
             'pid' => $pid,
+            'status' => 1,
         );
         $list = $this->where($map)->field("name, icon, url, id")->order("sort desc, id desc")->select();
 
@@ -31,7 +43,7 @@ class MenuModel extends CommonModel{
                 $val['text'] = $val['name'];
                 if (!empty($val['url'])) {
                     $val['a_attr'] = array(
-                        'href' => U($val['url']),
+                        'onclick' => "addTab('" .$val['name'] ."', '" .U($val['url']) ."');",
                     );
                 }
                 $sub = $this->getSubMenu($val['id']);

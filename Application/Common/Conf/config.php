@@ -123,13 +123,14 @@ return array(
         '__JS__' 				=> SITE_URL.'/Public/js',
         '__BS__' 				=> SITE_URL.'/Public/bootstrap',
         '__SUMMERNOTE__' 				=> SITE_URL.'/Public/summernote',
-        '__GOOGLE_CODE__' 				=> SITE_URL.'/Public/google-code-prettify',
         '__KALENDAR__' 				=> SITE_URL.'/Public/kalendar',
         '__JCROP__'                 => SITE_URL.'/Public/Jcrop',
         '__FILEINPUT__'                 => SITE_URL.'/Public/bootstrap-fileinput',
         '__CODEMIRROR__'                 => SITE_URL.'/Public/CodeMirror',
-        '__BS_UI__'                 => SITE_URL.'/Public/jquery-ui-bootstrap',
         '__JSTREE__'                 => SITE_URL.'/Public/jstree-bootstrap-theme',
+        '__SWEETALERT__'                 => SITE_URL.'/Public/sweetalert',
+        '__BS_TABLES__'                 => SITE_URL.'/Public/bootstrap-table',
+        '__BS_SWITCH__'                 => SITE_URL.'/Public/bootstrap-switch',
 
     ),
 

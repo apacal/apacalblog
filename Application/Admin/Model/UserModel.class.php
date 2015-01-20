@@ -9,9 +9,7 @@ class UserModel extends CommonModel {
         array('repassword','password','确认密码不正确',Model::MODEL_BOTH,'confirm'), // 验证确认密码是否和密码一致
     );
 
-    protected function checkbox(&$status) {
-        $status = $status == 'on' ? 1 : 0;
-    }
+
 
 
     public function checkUserExit($uid, $name) {
@@ -41,6 +39,13 @@ class UserModel extends CommonModel {
             'uid' => $uid,
         );
         return $this->where($where)->find();
+    }
+
+    public function getUserName($uid) {
+        $where = array(
+            'uid' => $uid
+        );
+        return $this->where($where)->getField('name');
     }
 
     public function insert($data) {

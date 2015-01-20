@@ -1,10 +1,60 @@
-#login-box {
-    background-color: #333333;
-    opacity:0.95;
-    
+body {
+    font-family: 'Lato', sans-serif;
+    padding-top: 50px;
 }
-#login-box .widget-body,  #login-box .widget-main{
+.text-lowercase {
+    text-transform: lowercase;
 }
-.login-container {
-    margin-top: 50px;
+.text-uppercase {
+    text-transform: uppercase;
 }
+
+.nav-bar-avatar {
+    width: 18px;
+    height: 18px;
+}
+
+#slide-bar {
+    margin-left: -225px;
+    left: 225px;
+    width: 225px;
+    position: fixed;
+    top: 50px;
+    height: 100%;
+    border: 1px solid #ccc;
+    border-width: 0 1px 0 0;
+    overflow-y: auto;
+    float: left;
+}
+.container-table {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.main-container-content {
+    margin-left: 225px;
+}
+
+.main-edit {
+    margin-top: 15px;
+    margin-bottom: 50px;
+    overflow: hidden;
+}
+.edit-header {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.publish .panel-body span {
+    width: 100%;
+}
+
+#custom-toolbar {
+    display: none;
+}
+.bootstrap-table #custom-toolbar {
+    display: block;
+}
+
+
+
+

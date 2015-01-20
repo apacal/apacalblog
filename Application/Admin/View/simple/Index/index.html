@@ -1,1 +1,61 @@
 <extend name="Public:base" />
+
+
+<block name="content">
+    <div class="main-container-content">
+
+
+    <ul class="nav nav-tabs" id="page-tab" role="tablist">
+    </ul>
+    <div class="tab-content" id="tab-content">
+    </div>
+    </div>
+</block>
+
+
+<block name="inner_js">
+    <script>
+
+        /**
+         * add a tab
+         */
+        function addTab(tabName, url, multiple) {
+            if (multiple != undefined && multiple  == true) {
+                if (window.tabCount) {
+                    tabName += '-' + window.tabCount;
+                    window.tabCount++;
+
+                } else {
+                    window.tabCount = 1;
+                }
+            }
+
+            var tabListHead = '<li role="presentation"><a href="#page-' + tabName + '" role="tab" data-toggle="tab">' + tabName +
+                '&nbsp;&nbsp;<button class="close" title="Remove this page" type="button">×</button>'
+                + '</a></li>';
+            // tab is not exit
+            if (!($("#page-" + tabName).length)) {
+                $("#page-tab").append(
+                    tabListHead
+                );
+                var tabContent = '<div class="tab-pane" id="page-' + tabName + '"></div>';
+                $('#tab-content').append(tabContent);
+            }
+            refreshAsyncDataToDiv(url, "page-" + tabName);
+            $('#page-tab a[href="#page-' + tabName + '"]').tab('show');
+
+        }
+
+        /**
+         * Remove a Tab
+         */
+        $('#page-tab').on('click', ' li a .close', function() {
+            var tabId = $(this).parents('li').children('a').attr('href');
+            $(this).parents('li').remove('li');
+            $(tabId).remove();
+            $('#page-tab a:first').tab('show');
+        });
+
+
+    </script>
+</block>

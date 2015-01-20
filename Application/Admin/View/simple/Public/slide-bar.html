@@ -4,7 +4,7 @@
 <div id="slide-bar" >
 </div>
 <script>
-    $(function() {
+    $(document).ready(function(){
         $('#slide-bar').jstree({
             "plugins" : [ "wholerow"],
             'core': {
@@ -15,6 +15,5 @@
                 },
             }
         });
-        $("#slide-bar").jstree("open_all");
     });
 </script>

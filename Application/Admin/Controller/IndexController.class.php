@@ -4,7 +4,9 @@ namespace Admin\Controller;
 use Admin\Model\MenuModel;
 use Think\Controller;
 class IndexController extends CommonController {
+
     public function index($id = 0){
+        $this->assign("delCacheUrl", U("System/delCache"));
         $Menu = new MenuModel();
         $menu = $Menu->getFirstMenu();
         if (0 == $id) {

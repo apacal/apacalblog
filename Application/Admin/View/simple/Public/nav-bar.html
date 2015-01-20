@@ -19,6 +19,7 @@
             </ul>
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
+                    <li> <a href="#" onclick="delCache();"><span class="glyphicon glyphicon-trash"></span>Del Cache</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle text-uppercase" data-toggle="dropdown">
                             <notempty name="user_info.image">
@@ -44,4 +45,38 @@
         </nav>
     </div>
 </header>
+
+
+<script>
+
+    /**
+     * del cache file
+     */
+    function delCache() {
+        swal({
+            title: "Are you sure?",
+            text: "You will delete all cache file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+            },
+            function() {
+                var url = "{$delCacheUrl}";
+                $.get(url, function (data, status) {
+                    if (status == "success") {
+                        data = JSON.parse(data);
+                        if (data.code == '0') {
+                            swal("Deleted!", "Your cache file has been deleted.", "success");
+                            return true;
+                        }
+                    }
+                    sweetAlert("Oops...", "Something went wrong!", "error");
+
+                });
+            }
+        );
+    }
+</script>
 

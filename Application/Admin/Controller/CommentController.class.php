@@ -5,5 +5,4 @@
 namespace Admin\Controller;
 use Think\Controller;
 class CommentController extends CommonController {
-    protected $manageSort = "id desc";
 }

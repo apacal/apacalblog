@@ -5,10 +5,14 @@
 namespace Admin\Model;
 use Think\Model;
 class CommonModel extends Model {
+    protected $_validate = array(
+        //array('status', 'require', '描述必须!'),
+    );
+
     protected $_auto = array( //自动完成
         array('createtime', 'time', self::MODEL_INSERT, 'function'),
         array('updatetime', 'time', self::MODEL_BOTH, 'function'),
-        array('adminid', 'getAdminId', self::MODEL_BOTH, 'callback'),
+        array('uid', 'getAdminId', self::MODEL_BOTH, 'callback'),
     );
 
     /**
@@ -16,20 +20,10 @@ class CommonModel extends Model {
      * @return int
      */
     protected function getAdminId() {
-        if(isset($_SESSION['adminid'])) {
-            return $_SESSION['adminid'];
-        } else {
-            return false;
-        }
+        return is_login();
     }
 
-    protected $_validate = array(
-        array('description', 'require', '描述必须!'),
-    );
 
-    protected $order = 'updatetime desc';
-
-    protected $where = array();
 
 
     /**
@@ -48,10 +42,10 @@ class CommonModel extends Model {
         }
 
         if (empty($limit)) {
-            $list = $this->where($where)->order($order)->slecet();
+            $list = $this->where($where)->order($order)->select();
         } else {
 
-            $list = $this->where($where)->order($order)->limit($limit)->slecet();
+            $list = $this->where($where)->order($order)->limit($limit)->select();
         }
 
         return $list;
