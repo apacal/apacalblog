@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
-    initCodeMirror();
+    //initCodeMirror();
+    initPrettyPrint();
 
 
     initHash();
@@ -25,19 +26,32 @@ $(document).ready(function(){
 
 });
 
+function initPrettyPrint() {
+    $("pre").each(function() {
+        $(this).addClass("prettyprint");
+        $(this).addClass("linenums");
+    });
+    prettyPrint();
+}
+
 function initCodeMirror() {
     $("pre").each(function() {
-        var $this = $(this),
-            $code = $this.html();
+        var code = $(this).html();
+        $(this).empty();
 
-        $this.empty();
+        code = code.replace(/&gt;/g, '>');
+        code = code.replace(/&lt;/g, '<');
 
         CodeMirror(this, {
-            value: $code,
+            value: code,
             mode: 'clike',
-            lineNumbers: !$this.is('.inline'),
-            theme: "eclipse",
-            readOnly: false
+            lineNumbers: true,
+            theme: "monokai",
+            styleActiveLine: true,
+            matchBrackets: true,
+            //theme: "eclipse",
+            readOnly: false,
+            height: '20px'
         });
     });
 }

@@ -12,6 +12,9 @@ class CategoryModel extends CommonModel {
 
 
     );
+
+
+
     public function getCategoryName($cid) {
         $where = array(
             'id' => $cid
@@ -19,29 +22,27 @@ class CategoryModel extends CommonModel {
         return $this->where($where)->getField('cname');
     }
 
+    public function getCateTreeData($pid) {
+        $map = array(
+            'pid' => $pid,
+            'status' => 1,
+        );
+        $list = $this->where($map)->field("cname, id")->order("sort desc, id desc")->select();
 
-    public function getAllCategory() {
-        $map['pid'] = 0;
-        if ( $list = $this->where($map)->order('sort DESC')->select() ) {
-            return $this->getCategorySub( $list );
-        } else {
-            return false;
-        }
-
-    }
-    private function getCategorySub( $list ) {
-        $allCategory = array();
-        foreach($list as $val) {
-            $allCategory[] = $val;
-            $map['pid'] = $val['id'];
-            $sub = $this->where($map)->order("sort DESC")->select();
-            if (!empty($sub) && is_array($sub)) {
-                $sub = $this->getCategorySub($sub);
-                foreach($sub as $value) {
-                    $allCategory[] = $value;
+        if (!empty($list)) {
+            foreach($list as &$val) {
+                $val['text'] = $val['cname'];
+                $val['a_attr'] = array(
+                    'onclick' => "addValueToInput('" .$val['id'] ."');",
+                );
+                $sub = $this->getCateTreeData($val['id']);
+                if (!empty($sub)) {
+                    $val['children'] = $sub;
                 }
             }
         }
-        return $allCategory;
+
+        return $list;
     }
+
 }

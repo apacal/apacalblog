@@ -13,6 +13,7 @@ class CommonController extends Controller {
 
     protected $unManageField = array("updatetime");
     protected $controllerExtName = CONTROLLER_NAME;
+    protected $editPage = 'Public/edit';
 
     public function  _initialize() {
         if (!is_login()) {
@@ -159,6 +160,7 @@ class CommonController extends Controller {
         $this->setManageFields();
         $this->assign('delUrl', U(CONTROLLER_NAME .'/delete'));
         $this->assign('statusUrl', U(CONTROLLER_NAME .'/setStatus'));
+        $this->assign('time', time());
         $this->display("Public:manageTable");
     }
 
@@ -182,7 +184,7 @@ class CommonController extends Controller {
         $this->unsetEditData($data);
         $this->assign('data', $data);
 
-        $this->display('Public/edit');
+        $this->display($this->editPage);
 
     }
 
@@ -198,7 +200,7 @@ class CommonController extends Controller {
         }
         $this->unsetEditData($data);
         $this->assign('data', $data);
-        $this->display('Public/edit');
+        $this->display($this->editPage);
 
     }
 
@@ -214,12 +216,14 @@ class CommonController extends Controller {
             $data = $Model->create($_POST, MODEL::MODEL_INSERT);
             unset($data[$pk]);
             $result = $Model->add($data);
+            $id = $result;
 
         } else {
             $data = $Model->create($_POST, MODEL::MODEL_UPDATE);
             $map = array(
-                $pk => $data[$pk]
+                $pk => I('post.' .$pk)
             );
+            $id = $map[$pk];
             unset($data[$pk]);
             $result = $Model->where($map)->save($data);
         }
@@ -230,6 +234,7 @@ class CommonController extends Controller {
                 'code' => 0,
                 'data' => '',
             );
+            $this->extSave($id);
         } else {
             $ret = array(
                 'code' => 1,
@@ -257,6 +262,8 @@ class CommonController extends Controller {
         $this->assign('time', time());
         $this->assign('title', $this->controllerExtName .$type);
         $this->assign('addTabName', $this->controllerExtName .'Add');
+        $this->assign("treeDataUrl", U($controllerName .'/treeJson'));
+        $this->assign("createPwdUrl", U( 'User/createPwd'));
     }
 
     /**
@@ -288,6 +295,10 @@ class CommonController extends Controller {
         if (isset($val['uid'])) {
             $val['uid'] = (new UserModel())->getUserName($val['uid']);
         }
+    }
+
+    protected function extSave($id) {
+
     }
 
 

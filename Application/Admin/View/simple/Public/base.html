@@ -42,7 +42,6 @@
         var navId = "#{$active_nav}";
         $(navId).addClass("active");
         // 到底部
-        /*
          $('a.scrollToBottom').click(function(){
          $('html, body').animate({scrollTop: $(document).height()}, 'slow');
          return false;
@@ -52,11 +51,12 @@
          $('html, body').animate({scrollTop:0}, 'slow');
          return false;
          });
-         */
     </script>
 </block>
 <block name="ext">
-    <include file="Admin@simple/Public/icon" />
+    <include file="Admin@simple/Modal/icon-modal" />
+    <include file="Admin@simple/Modal/tree-modal" />
+    <include file="Admin@simple/Modal/pwd-modal" />
 
 </block>
 

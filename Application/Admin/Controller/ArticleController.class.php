@@ -11,6 +11,15 @@ use Think\Controller;
 class ArticleController extends CommonController {
 
     protected $unManageField = array("updatetime", "content", "keywords", "image");
+    protected $editPage = 'Article/edit';
+
+
+    public function _before_add() {
+        $this->initTags();
+    }
+    public function _before_edit() {
+        $this->initTags();
+    }
 
 
     private function initTags() {
@@ -23,34 +32,25 @@ class ArticleController extends CommonController {
             }
             $tags = json_encode($new);
 
+        } else {
+            $tags = '';
         }
         $this->assign('tags', $tags);
         $systemTags = $model->getTermsByTaxonomy(CONTROLLER_NAME);
         $this->assign('system_tags', $systemTags);
     }
 
-
-
-
-    public function uploadImage() {
-        $upload = new UploadModel();
-        $image = $upload->uploadImage('Article', 3, true, 750, 420);
-
-        $this->jsonReturn($image, $upload->getError());
+    protected function extSave($id) {
+        $this->saveTags($id);
     }
-
-    public function upload() {
-        $upload = new UploadModel();
-        $file = $upload->uploadFile('Article', 12);
-        $this->jsonReturn($file, $upload->getError());
-    }
-
 
     protected function saveTags($id) {
         $terms = new TermModel();
         $tags = json_decode($_REQUEST['tags']);
-        if (is_array($tags)) {
-            $terms->saveTerms(CONTROLLER_NAME, $id, $tags);
+        if (is_array($tags) && !empty($tags)) {
+            $terms->saveTerms(CONTROLLlsslsER_NAME, $id, $tags);
+        } else {
+            $terms->deleteRelation($id);
         }
 
 

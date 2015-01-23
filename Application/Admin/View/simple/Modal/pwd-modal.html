@@ -1,0 +1,36 @@
+<div class="modal fade" id="modal-pwd" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="tree-title">Create Pwd</h4>
+            </div>
+            <div class="modal-body" style="overflow:hidden">
+                <form class="form-horizontal" role="form" id="pwd-form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Password</label>
+                        <div class="col-sm-10 col-xs-10">
+                            <input type="password" class="form-control" name="password" placeholder="Password" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Retype Password</label>
+                        <div class="col-sm-10 col-xs-10">
+                            <input type="password" class="form-control" name="repassword" placeholder="Retype Password" required="true" >
+                        </div>
+                    </div>
+                </form>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">&nbsp;</label>
+                        <div class="col-sm-10">
+                            <button class="btn btn-default" onclick="createPwd();">Create </button>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

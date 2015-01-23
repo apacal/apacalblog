@@ -55,6 +55,25 @@ body {
     display: block;
 }
 
+.editor {
+    padding-top: 10px;
+}
+
+/** tag **/
+.system-tags-show, .selected-tags {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.selected-tags i:hover{
+    color:#CC0033;
+}
+.system-tags-show button {
+    margin-bottom: 5px;
+}
+.selected-tag {
+    margin-bottom: 5px;
+}
+
 
 
 

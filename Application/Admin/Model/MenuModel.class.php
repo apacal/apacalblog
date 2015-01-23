@@ -57,5 +57,29 @@ class MenuModel extends CommonModel{
         return $list;
     }
 
+    public function getMenuTreeData($pid) {
+        $map = array(
+            'pid' => $pid,
+            'status' => 1,
+        );
+        $list = $this->where($map)->field("name, icon, id")->order("sort desc, id desc")->select();
+
+        if (!empty($list)) {
+            foreach($list as &$val) {
+                $val['text'] = $val['name'];
+                $val['a_attr'] = array(
+                    'onclick' => "addValueToInput('" .$val['id'] ."');",
+                );
+                $sub = $this->getMenuTreeData($val['id']);
+                if (!empty($sub)) {
+                    $val['children'] = $sub;
+                    unset($val['icon']);
+                }
+            }
+        }
+
+        return $list;
+    }
+
 }
 

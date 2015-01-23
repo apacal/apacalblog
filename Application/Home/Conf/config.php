@@ -21,19 +21,17 @@
                 ),
     'SEARCH_COL'         =>     array(
                     'title',
-                    'description',
                     'content',
                 ),
     'SEARCH_SET_COL'         =>     array(
                     'title',
-                    'description',
                 ),
     'URL_HTML_SUFFIX'   =>          'html',  //网站静态后缀
     'EVERY_PAGE_NUM'  =>          10,  //每次加载的文章的数目
 	'URL_MODEL'         =>          2,           //服务器开启Rewrite模块时，可去除URL中的index.php 参数模式1,2,3
 	
 	'DB_LIKE_FIELDS'		=> 'title|remark|content',	//搜索Like匹配字段
-    'URL_ROUTER_ON'         => true, 
+    'URL_ROUTER_ON'         => true,
     'URL_ROUTE_RULES'       => array(
 
             // article/id => Article/view/id/$id

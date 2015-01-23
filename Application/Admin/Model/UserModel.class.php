@@ -6,7 +6,6 @@ class UserModel extends CommonModel {
         array('name','require','名字必须！'),
         array('email','require','邮箱必须！'),
         array('name','','帐号名称已经存在！',Model::EXISTS_VALIDATE,'unique',Model::MODEL_INSERT),
-        array('repassword','password','确认密码不正确',Model::MODEL_BOTH,'confirm'), // 验证确认密码是否和密码一致
     );
 
 

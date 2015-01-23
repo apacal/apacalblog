@@ -1,0 +1,66 @@
+<extend name="Public:edit" />
+
+<block name="ext_edit">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="heading-tag-{$time}">
+            <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-tag-{$time}" aria-expanded="false" aria-controls="collapse-tag-{$time}">
+                    Tags
+                    <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                </a>
+            </h4>
+        </div>
+        <div id="collapse-tag-{$time}" class="panel-collapse in collapse" role="tabpanel" aria-labelledby="heading-tag-{$time}">
+            <div class="panel-body ">
+                <div class="form-group">
+                    <label class="col-sm-2 col-xs-2 control-label">Tag</label>
+                    <div class="col-sm-10 col-xs-10">
+                        <div class="input-group">
+                            <input id="tags-save-{$time}" type="hidden" value='{$tags}' name="tags"  >
+                            <input id="tags-input-{$time}" type="text" class="form-control" placeholder="Enter Tag Name" >
+
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" onclick="addTag('tags-input-{$time}', 'tags-save-{$time}', 'tags-show-{$time}')">Add</button>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="tags-show-{$time}" class="selected-tags"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="heading-system-tag-{$time}">
+            <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-system-tag-{$time}" aria-expanded="false" aria-controls="collapse-tag-{$time}">
+                    Used Tags <small>select used tags</small>
+                    <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                </a>
+            </h4>
+        </div>
+        <div id="collapse-system-tag-{$time}" class="panel-collapse in collapse" role="tabpanel" aria-labelledby="heading-system-tag-{$time}">
+            <div class="panel-body ">
+
+                <div id="system-tags-{$time}" class="system-tags-show">
+                    <volist name="system_tags" id="tag_vo">
+                        <button type="button" style="margin-right: 10px" class="btn btn-xs btn-info system-tag text-uppercase" onclick="addTagByName('{$tag_vo.name}', 'tags-save-{$time}','tags-show-{$time}')">{$tag_vo.name}
+                        </button>
+                    </volist>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        $(document).ready(function() {
+            initTagsHtml("tags-save-{$time}","tags-show-{$time}");
+        });
+    </script>
+</block>

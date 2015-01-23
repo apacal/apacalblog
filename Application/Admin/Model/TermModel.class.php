@@ -36,8 +36,15 @@ class TermModel {
             $where = array(
                 'term_taxonomy_id' => array('in', $taxonomyIdsForRelation)
             );
-            $ret = (new Model('TermRelationships'))->where($where)->getField('object_id');
-            return $ret;
+            $ret = (new Model('TermRelationships'))->where($where)->field('object_id')->select();
+            $ids = array();
+            if (is_array($ret)) {
+                foreach($ret as $val) {
+                    $ids[] = $val['object_id'];
+                }
+
+            }
+            return $ids;
         }
     }
     /**
@@ -103,6 +110,7 @@ class TermModel {
         }
         return null;
     }
+
     /**
      * @param $controller | str
      * @param $objectId | int
@@ -124,14 +132,24 @@ class TermModel {
     }
 
     /**
+     * delete relation by object id
+     * @param $object_id
+     */
+    public function deleteRelation($object_id) {
+        $relationships = new Model('TermRelationships');
+        $relationships->where(array('object_id'=>$object_id))->delete();
+    }
+    /**
      * @param $objectId | int
      * @param $taxonomyIdArray | array
      */
     private function saveTermRelationships($objectId, $taxonomyIdArray) {
         $relationships = new Model('TermRelationships');
+        $this->deleteRelation($objectId);
         if (!is_array($taxonomyIdArray)) {
             $relationships->rollback();
         }
+
         foreach($taxonomyIdArray as $val) {
             $data = array(
                 'object_id' => $objectId,

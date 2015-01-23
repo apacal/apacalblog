@@ -42,19 +42,6 @@ return array(
 
 
     'FORBIDDEN'                     =>              '/404',
-    'SERACHTABLE'                   =>              array(         //查询的table
-                                                        'Article'
-                                                    ),
-    'SEARCHCOL'                     =>              array(           //like的字段
-                                                        'title',
-                                                        'keywords',
-                                                        'description',
-                                                        'content'
-                                                    ),
-    'SEARCHSETCOL'                  =>              array(       //标记的字段
-                                                        'title',
-                                                        'description',
-                                                    ),
     'RUNTIMESRC'                    =>              APP_PATH.'Runtime/',
     'URL_HTML_SUFFIX'               =>              '',  //网站静态后缀
     'WEBADMIN'                      =>              'Apacal', //网站管理员
@@ -131,6 +118,8 @@ return array(
         '__SWEETALERT__'                 => SITE_URL.'/Public/sweetalert',
         '__BS_TABLES__'                 => SITE_URL.'/Public/bootstrap-table',
         '__BS_SWITCH__'                 => SITE_URL.'/Public/bootstrap-switch',
+        '__CKEDITOR__'                 => SITE_URL.'/Public/ckeditor',
+        '__GOOGLE_CODE__'                 => SITE_URL.'/Public/google-code-prettify',
 
     ),
 

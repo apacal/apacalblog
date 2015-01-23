@@ -27,5 +27,32 @@ class UserController extends CommonController {
 
         unset($data['createtime'], $data['updatetime'], $data['loginip'],$data['logintime']);
     }
+
+    public function createPwd($password, $repassword) {
+        $ret = array(
+            'code' => 0,
+            'data' => '',
+        );
+
+        if (empty($password)) {
+            $ret['code'] = 1;
+            $ret['data'] = "password can't not be empty!";
+            $this->jsonReturn($ret);
+        }
+
+        if ($password !== $repassword) {
+            $ret['code'] = 1;
+            $ret['data'] = 'retype password is not correct!';
+            $this->jsonReturn($ret);
+        }
+
+        $ret['data'] = createHash($password);
+        $this->jsonReturn($ret);
+
+
+
+
+
+    }
 }
 
