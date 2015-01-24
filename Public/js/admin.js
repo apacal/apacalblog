@@ -268,6 +268,10 @@ function showAuthRulesTree(inputId, url) {
 };
 function saveRulesToInput() {
     var checked_ids = $("#js-rules-tree").jstree("get_checked",null,true)
+    var ids = new Array();
+    checked_ids.each(function () {
+        console.log(this);
+    });
     console.log(checked_ids);
     $("#" + window.inputId).val(JSON.stringify(checked_ids));
     $('#js-rules-tree').jstree('destroy');

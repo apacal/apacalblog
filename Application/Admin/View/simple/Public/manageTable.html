@@ -51,7 +51,7 @@
 
         $("#bs-table-{$time}").bind("all.bs.table", initSwitch);
         $("#bs-table-{$time}").bind("load-success.bs.table",function() {
-            var customToolbar = $(this).find(".bars");
+            var customToolbar = $(this).parents(".bootstrap-table").find(".bars");
             //console.log(customToolbar);
             $(customToolbar).html(
             '<div class="btn-group"> <button class="btn btn-default" onclick="deleteRows(this);"> Delete </button> <button class="btn btn-default" onclick="statusDisable(this);"> Disable </button> <button class="btn btn-default " onclick="statusEnable(this);"> Enable </button> </div>'

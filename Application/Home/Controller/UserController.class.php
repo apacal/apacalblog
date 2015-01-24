@@ -160,7 +160,7 @@ class UserController extends CommonController{
      */
     public function logout() {
         $this->destroyUserLogin();
-        $this->success("退出成功！", U('User/login' .C('URL_HASH')));
+        $this->success("退出成功！", U('User/login' .C('URL_HASH')), 4);
     }
 
     /**
@@ -249,7 +249,7 @@ class UserController extends CommonController{
             $data['loginip'] = $ip;
             $User->save($data);
 
-            $this->success('登录成功！', U('User/index' .C('URL_HASH')));
+            $this->success('登录成功！', U('User/index' .C('URL_HASH')), 4);
 
 
         }
