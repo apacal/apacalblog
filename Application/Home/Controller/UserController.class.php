@@ -219,11 +219,7 @@ class UserController extends CommonController{
 
 
         $User = new UserModel();
-        $where = array(
-            'name' => $name,
-        );
-
-        $authInfo = $User->where($where)->find();
+        $authInfo = $User->getUserInfoByName($name);
 
         //使用用户名、密码和状态的方式进行认证
         if(false === $authInfo) {
@@ -238,6 +234,7 @@ class UserController extends CommonController{
             }
 
             setUserLogin($authInfo['uid']);
+
             setUserInfo($authInfo);
             setCommentUserInfo($authInfo);
             //保存登录信息
@@ -248,6 +245,7 @@ class UserController extends CommonController{
             $data['logintime'] = $time;
             $data['loginip'] = $ip;
             $User->save($data);
+
 
             $this->success('登录成功！', U('User/index' .C('URL_HASH')), 4);
 

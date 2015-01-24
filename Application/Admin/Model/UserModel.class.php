@@ -10,6 +10,19 @@ class UserModel extends CommonModel {
 
 
 
+    public function getUserInfoByName($name) {
+        $where = array(
+            'name' => $name
+        );
+
+        $userInfo = $this->where($where)->find();
+        if (is_array($userInfo)) {
+            if( (new AuthGroupAccessModel())->getUserGroupByUid($userInfo['uid']) > 0) {
+              $userInfo['isGroup'] = 1;
+            }
+        }
+        return $userInfo;
+    }
 
     public function checkUserExit($uid, $name) {
         $exitUid = $this->where(array('name' => $name))->getField('uid');

@@ -26,5 +26,9 @@ class AuthGroupAccessModel extends Model{
         }
     }
 
+    public function getUserGroupByUid($uid) {
+        return $this->where(array('uid'=>$uid))->count();
+    }
+
 
 } 
