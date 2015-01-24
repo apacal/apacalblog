@@ -42,7 +42,7 @@ class ArticleController extends CommonController {
         $terms = new TermModel();
         $tags = json_decode($_REQUEST['tags']);
         if (is_array($tags) && !empty($tags)) {
-            $terms->saveTerms(CONTROLLlsslsER_NAME, $id, $tags);
+            $terms->saveTerms(CONTROLLER_NAME, $id, $tags);
         } else {
             $terms->deleteRelation($id);
         }

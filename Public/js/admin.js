@@ -648,15 +648,18 @@ function initTagsHtml(saveId, showId) {
  * @returns {string}
  */
 function getTagHtml(tag) {
-    var html = '<span><i class="glyphicon glyphicon-remove"  onclick="removeTag(this, \'tags-save-{$time}\');"></i><button type="button" style="margin-right: 10px" class="btn btn-xs btn-info selected-tag text-uppercase">' + tag
+    var html = '<span><i class="glyphicon glyphicon-remove"  onclick="removeTag(this);"></i><button type="button" style="margin-right: 10px" class="btn btn-xs btn-info selected-tag text-uppercase">' + tag
         + '</button></span>';
     return html;
 }
 
-function removeTag(iconDom, saveId) {
+function removeTag(iconDom) {
     var tag = $(iconDom).nextAll('button').text();
-    console.log(tag);
-    var tagArray = JSON.parse($('#' + saveId).val());
+    //console.log(iconDom);
+    var saveDom = $(iconDom).parent().parent().parent().prev().find("[type='hidden']");
+
+    console.log(saveDom);
+    var tagArray = JSON.parse($(saveDom).val());
     var index = include(tagArray,tag);
     console.log(index);
     console.log(tagArray);
@@ -668,7 +671,7 @@ function removeTag(iconDom, saveId) {
         tagArray.splice(index, 1);
         console.log(tagArray);
 
-        $('#' + saveId).val(JSON.stringify(tagArray));
+        $(saveDom).val(JSON.stringify(tagArray));
     }
     $(iconDom).parent('span').remove();
 
