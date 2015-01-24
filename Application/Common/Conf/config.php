@@ -6,11 +6,7 @@ return array(
     'URL_HASH'      =>      '#nav-home', //url 默认描点
     'SALT'      => "apacal_blog",       //password 加的特定盐
 
-<<<<<<< HEAD
-    'USER_AUTH_KEY'			=>'user_id',// ADMIN认证SESSION标记
-=======
     'USER_AUTH_KEY'			=>'user_id',// User认证SESSION标记
->>>>>>> origin/master
     'COMMENT_USER_INFO'      => 'comment_user_info',
 
 
@@ -46,22 +42,6 @@ return array(
 
 
     'FORBIDDEN'                     =>              '/404',
-<<<<<<< HEAD
-    'SERACHTABLE'                   =>              array(         //查询的table
-                                                        'Article'
-                                                    ),
-    'SEARCHCOL'                     =>              array(           //like的字段
-                                                        'title',
-                                                        'keywords',
-                                                        'description',
-                                                        'content'
-                                                    ),
-    'SEARCHSETCOL'                  =>              array(       //标记的字段
-                                                        'title',
-                                                        'description',
-                                                    ),
-=======
->>>>>>> origin/master
     'RUNTIMESRC'                    =>              APP_PATH.'Runtime/',
     'URL_HTML_SUFFIX'               =>              '',  //网站静态后缀
     'WEBADMIN'                      =>              'Apacal', //网站管理员
@@ -81,23 +61,14 @@ return array(
     'TOKEN_RESET'                   =>              true,  //令牌验证出错后是否重置令牌 默认为true
 
 
-<<<<<<< HEAD
-    'DEFAULT_THEME'                 =>              'default',// 设置默认的模板主题
-=======
     'DEFAULT_THEME'                 =>              'simple',// 设置默认的模板主题
->>>>>>> origin/master
 
 
     // pdo
     'DB_TYPE'                       =>              'pdo', // 数据库类型
     'DB_USER'                       =>              'root', // 用户名
-<<<<<<< HEAD
     'DB_PWD'                        =>              '@)!$Apacalblog', // 密码
     //'DB_PWD'                        =>              'dev2014', // 密码
-=======
-    //'DB_PWD'                        =>              '@)!$Apacalblog', // 密码
-    'DB_PWD'                        =>              'dev2014', // 密码
->>>>>>> origin/master
     'DB_PORT'                       =>              3306, // 端口
     'DB_PREFIX'		                =>	            'ablg_',//  数据表前缀
     'DB_DSN'                        =>              'mysql:host=localhost;dbname=apacalblog;charset=utf8',
@@ -109,17 +80,10 @@ return array(
 
     // Memcache设置
     'MemCached'     =>   array(
-<<<<<<< HEAD
         'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
         //'hostname'  =>      '127.0.0.2',
         'port'      =>      '11211',
         'isSasl'    =>      true,
-=======
-        //'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
-        'hostname'  =>      '127.0.0.2',
-        'port'      =>      '11211',
-        'isSasl'    =>      false,
->>>>>>> origin/master
         'username'   =>      '7e4d0da81a0611e4',
         'passwd'    =>      'Memcache2014'
     ),
@@ -136,8 +100,6 @@ return array(
 
     'THUMB_PREFIX'      =>          'ablg_',  //缩略图的前缀
 
-<<<<<<< HEAD
-=======
     /* 模版变量设置 */
     'TMPL_PARSE_STRING' => array(
         '__SITE_URL__'			=> SITE_URL,
@@ -161,7 +123,6 @@ return array(
 
     ),
 
->>>>>>> origin/master
 
    
 	

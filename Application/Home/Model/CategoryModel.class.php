@@ -4,15 +4,6 @@ use Think\Model;
 use Think\Model\RelationModel;
 class CategoryModel extends RelationModel {
 
-    protected $_link = array(
-        'Model' => array(
-            'mapping_type' => self::BELONGS_TO,
-            'class_name' => 'Model',
-            'foreign_key' => 'mid',
-            'mapping_fields' => 'mcontroller, model',
-            'as_fields' => 'mcontroller,model',
-        ),
-    );
 
     /**
      * @param $cid
@@ -20,11 +11,16 @@ class CategoryModel extends RelationModel {
      * @return array | array('cate' => $cata, 'data' => $data)
      */
     public function getExtendInfoByCategoryIdAndObjectId($cid, $oid) {
-        $cate = $this->where(array('id'=>$cid))->relation(true)->find();
+        $cate = $this->where(array('id'=>$cid))->find();
         if (empty($cate)) {
             return false;
         }
-        $origin = (new Model($cate['model']))->where(array('id'=>$oid, 'cid' => $cid))->field('title')->find();
+        $modelName = explode('/', $cate['url'])[0];
+        if ($modelName == 'Note' || empty($modelName)) {
+            $origin = false;
+        } else {
+            $origin = (new Model($modelName))->where(array('id'=>$oid, 'cid' => $cid))->field('title')->find();
+        }
         if(empty($origin)) {
             $origin = false;
         }
@@ -41,7 +37,7 @@ class CategoryModel extends RelationModel {
             return $url;
         }
         $url = $this->where(array('id' => $cid))->getField('url');
-        if (false == strpos(".html", $url)) {
+        if (strpos($url, ".html") === false) {
             $url = U($url, array('cid' => $cid));
         }
 
@@ -58,7 +54,7 @@ class CategoryModel extends RelationModel {
         //if (false === ($html = getCache($tagNav))) {
             $where['status'] = 1;
             $where['pid'] = 0;
-            $list = $this->where($where)->order('sort DESC')->relation(true)->select();
+            $list = $this->where($where)->order('sort DESC')->select();
             $this->getSubNav($list);
 
             if (false !== ($html = $this->getNavHtml($list, 1))) {
@@ -159,7 +155,7 @@ class CategoryModel extends RelationModel {
             $where['status'] = 1;
             $where['pid'] = $value['id'];
             $value['url'] = U('category/'.$value['id'] .C('URL_HASH'));
-            if(($subNav = $this->where($where)->order('sort DESC')->relation(true)->select())) {
+            if(($subNav = $this->where($where)->order('sort DESC')->select())) {
                 $value['subNav'] = $subNav;
                 $this->getSubNav($value['subNav']);
             }

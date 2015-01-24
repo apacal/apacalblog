@@ -76,8 +76,9 @@ class CommentModel extends Model {
                 } else {
                     $val['title'] = $extend['origin']['title'];
                 }
-                $val['url'] = U($extend['cate']['mcontroller'] .'/view#comment-' .$val['id'], array('id' => $val['oid']));
+                $val['url'] = U($extend['cate']['url'] .'#comment-' .$val['id'], array('id' => $val['oid']));
             }
+
 
 
         }
