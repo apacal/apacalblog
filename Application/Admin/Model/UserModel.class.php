@@ -57,5 +57,24 @@ class UserModel extends CommonModel {
     }
 
 
+    public function getUserTreeData() {
+        $map = array(
+            'status' => 1,
+        );
+        $list = $this->where($map)->field("name, uid")->select();
+
+        if (!empty($list)) {
+            foreach($list as &$val) {
+                $val['text'] = $val['name'];
+                $val['a_attr'] = array(
+                    'onclick' => "addValueToInput('" .$val['uid'] ."');",
+                );
+            }
+        }
+
+        return $list;
+    }
+
+
 }
 

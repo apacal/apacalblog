@@ -1,12 +1,6 @@
 <?php
-/**
- * Article控制器
- **/
 namespace Admin\Controller;
-use Admin\Model\ArticleModel;
-use Admin\Model\CategoryModel;
 use Admin\Model\TermModel;
-use Admin\Model\UploadModel;
 use Think\Controller;
 class ArticleController extends CommonController {
 

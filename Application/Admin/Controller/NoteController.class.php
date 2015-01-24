@@ -1,7 +1,4 @@
 <?php
-/**
- *  闲言杂语控制器
- **/
 namespace Admin\Controller;
 use Think\Controller;
 class NoteController extends CommonController {

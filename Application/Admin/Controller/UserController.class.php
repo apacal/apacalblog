@@ -1,8 +1,6 @@
 <?php
-/**
- * Admin控制器
- **/
 namespace Admin\Controller;
+use Admin\Model\UserModel;
 use Think\Controller;
 use Think\Model;
 
@@ -49,10 +47,21 @@ class UserController extends CommonController {
         $ret['data'] = createHash($password);
         $this->jsonReturn($ret);
 
+    }
+
+    /**
+     * don't assign uid to name(in parents)
+     * @param &$val
+     */
+    protected function setExtManageData(&$val) {}
 
 
-
+    public function treeJson() {
+        $Model = new UserModel();
+        $treeData = $Model->getUserTreeData();
+        echo(json_encode($treeData));
 
     }
+
 }
 

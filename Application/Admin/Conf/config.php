@@ -1,6 +1,6 @@
 <?php
 return array(
-    'SITE_NAME'                 => 'ApacalBlog-后台',
+    'SITE_NAME'                 => 'ApacalBlog-CMS',
     'SITE_URL'                  => 'http://apacal.cn/Admin',
     'URL_MODEL'					=>2, 				// 如果你的环境不支持PATHINFO 请设置为3
 

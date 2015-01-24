@@ -1,7 +1,4 @@
 <?php
-/**
- * 删除controller
- */
 namespace Admin\Controller;
 use Think\Controller;
 class SystemController extends CommonController {

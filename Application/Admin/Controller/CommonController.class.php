@@ -3,6 +3,7 @@
  * 后台Controller基础类
  **/
 namespace Admin\Controller;
+use Admin\Model\AuthModel;
 use Admin\Model\CategoryModel;
 use Admin\Model\UserModel;
 use Think\Controller;
@@ -17,13 +18,20 @@ class CommonController extends Controller {
 
     public function  _initialize() {
         if (!is_login()) {
-            //$this->error("please login !", U("Home/User/login"));
+            $this->sendNotAuth("not login");
         }
         if (!is_admin()) {
-            //$this->error("you aren't admin!", U("Home/User/login"));
+            $this->sendNotAuth("not admin");
+        }
+        if ((new AuthModel())->checkAuth(CONTROLLER_NAME .'/' .ACTION_NAME, is_login()) === false ) {
+            $this->sendNotAuth(CONTROLLER_NAME .'/' .ACTION_NAME);
         }
     }
 
+    protected function sendNotAuth($msg) {
+        header("HTTP/1.0 401 You Have Not This Auth [" .$msg .']');
+        exit(401);
+    }
     public function delete() {
         $Model = new Model(CONTROLLER_NAME);
         $pk = $Model->getPk();
@@ -215,11 +223,13 @@ class CommonController extends Controller {
         if (empty($_REQUEST[$pk])) {
             $data = $Model->create($_POST, MODEL::MODEL_INSERT);
             unset($data[$pk]);
+            $this->proSaveData($data);
             $result = $Model->add($data);
             $id = $result;
 
         } else {
             $data = $Model->create($_POST, MODEL::MODEL_UPDATE);
+            $this->proSaveData($data);
             $map = array(
                 $pk => I('post.' .$pk)
             );
@@ -229,7 +239,7 @@ class CommonController extends Controller {
         }
 
 
-        if ($result) {
+        if ($result !== false) {
             $ret = array(
                 'code' => 0,
                 'data' => '',
@@ -249,6 +259,10 @@ class CommonController extends Controller {
 
     }
 
+    protected function proSaveData(&$data) {
+
+    }
+
     /**
      * assign some var to edit page
      * @param $pk
@@ -263,6 +277,9 @@ class CommonController extends Controller {
         $this->assign('title', $this->controllerExtName .$type);
         $this->assign('addTabName', $this->controllerExtName .'Add');
         $this->assign("treeDataUrl", U($controllerName .'/treeJson'));
+        $this->assign("treeUidUrl", U('User/treeJson'));
+        $this->assign("treeGroupIdUrl", U('AuthGroup/treeJson'));
+        $this->assign("treeAuthRulesUrl", U('AuthRule/treeJson', array('id'=>$_REQUEST['id'])));
         $this->assign("createPwdUrl", U( 'User/createPwd'));
     }
 

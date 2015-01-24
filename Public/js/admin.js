@@ -1,4 +1,13 @@
 $(document).ready(function () {
+    /**
+     * Remove a Tab
+     */
+    $('#page-tab').on('click', ' li a .close', function() {
+        var tabId = $(this).parent('a').attr('href');
+        $(this).parent('a').parent('li').remove();
+        $(tabId).remove();
+        $('#page-tab a:first').tab('show');
+    });
 
 });
 
@@ -17,13 +26,54 @@ function error(msg) {
     sweetAlert("Oops...", msg, "error");
 }
 
+/**
+ * add a tab
+ */
+function addTab(tabName, url, multiple) {
+    window.addTabName = tabName;
+    if (multiple != undefined && multiple  == true) {
+        if (window.tabCount) {
+            tabName += '-' + window.tabCount;
+            window.tabCount++;
 
+        } else {
+            window.tabCount = 1;
+        }
+    }
+
+    var tabListHead = '<li role="presentation"><a href="#page-' + tabName + '" role="tab" data-toggle="tab">' + tabName +
+        '&nbsp;&nbsp;<button class="close" title="Remove this page" type="button">×</button>'
+        + '</a></li>';
+    // tab is not exit
+    if (!($("#page-" + tabName).length)) {
+        $("#page-tab").append(
+            tabListHead
+        );
+        var tabContent = '<div class="tab-pane" id="page-' + tabName + '"></div>';
+        $('#tab-content').append(tabContent);
+    }
+    refreshAsyncDataToDiv(url, "page-" + tabName);
+    $('#page-tab a[href="#page-' + tabName + '"]').tab('show');
+
+}
+
+
+function removeTabByTabName(tabName) {
+    //console.log(tabName);
+    $("#page-tab").find("[href='#" + tabName + "']").parent('li').remove();
+    //console.log(liDom);
+    //$(linkDom).parent('li').remove();
+    $("#" + tabName).remove();
+    $('#page-tab a:first').tab('show');
+
+}
 
 function refreshAsyncDataToDiv(url, divId) {
     $.ajax({
         url: url,
         type: 'get',
         error: function(XMLHttpRequest, textStatus, errorThrown){
+            removeTabByTabName(divId);
             sweetAlert( "Server Status: " + XMLHttpRequest.status, XMLHttpRequest.statusText, "error");
         },
         success: function(data,status){
@@ -165,13 +215,65 @@ function showTree(inputId, url) {
 
 
             } else {
-                $("#modal-tree").modal('hidden');
+                $("#modal-tree").modal('hide');
                 error("Server Statue: " + status);
             }
         }
     });
 };
 
+
+/**
+ * show tree in edit page
+ * @param inputId
+ * @param url
+ */
+function showAuthRulesTree(inputId, url) {
+    window.inputId = inputId;
+
+    $('#js-rules-tree').jstree('destroy');
+
+
+
+    $.ajax({
+        url: url,
+        type: 'get',
+        error: function(XMLHttpRequest, textStatus, errorThrown){
+            sweetAlert( "Server Status: " + XMLHttpRequest.status, XMLHttpRequest.statusText, "error");
+
+        },
+        success: function(data,status){
+            if (status == 'success') {
+                data = JSON.parse(data);
+                $('#js-rules-tree').jstree({
+                    "plugins" : ["checkbox"],
+                    'core': {
+                        'data': data
+                        ,
+                        'themes': {
+                            'name': 'proton',
+                            'responsive': true
+                        }
+                    }
+                });
+                $("#modal-tree-rules").modal('show');
+
+
+            } else {
+                $("#modal-tree-rules").modal('hide');
+                error("Server Statue: " + status);
+            }
+        }
+    });
+};
+function saveRulesToInput() {
+    var checked_ids = $("#js-rules-tree").jstree("get_checked",null,true)
+    console.log(checked_ids);
+    $("#" + window.inputId).val(JSON.stringify(checked_ids));
+    $('#js-rules-tree').jstree('destroy');
+    $("#modal-tree-rules").modal('hide');
+
+}
 
 /**
  * manage table formatter operate

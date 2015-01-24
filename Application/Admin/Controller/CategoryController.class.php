@@ -1,7 +1,4 @@
 <?php
-/**
- * 栏目控制器
- **/
 namespace Admin\Controller;
 use Admin\Model\CategoryModel;
 use Think\Controller;

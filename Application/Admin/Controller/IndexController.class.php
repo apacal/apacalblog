@@ -4,16 +4,15 @@ namespace Admin\Controller;
 use Admin\Model\MenuModel;
 use Think\Controller;
 class IndexController extends CommonController {
+    public function demo() {
+        $this->error("fffffff");
+    }
 
     public function index($id = 0){
         $this->assign("delCacheUrl", U("System/delCache"));
         $Menu = new MenuModel();
         $menu = $Menu->getFirstMenu();
-        if (0 == $id) {
-            $this->assign("active_nav", "nav-".$menu[0]['id']);
-
-
-        } else {
+        if (0 != $id) {
             $this->assign("active_nav", "nav-$id");
         }
         $this->assign("user_info", getUserInfo());

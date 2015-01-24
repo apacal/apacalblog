@@ -39,8 +39,13 @@
 </div>
 <block name="js">
     <script type="text/javascript">
-        var navId = "#{$active_nav}";
-        $(navId).addClass("active");
+        var navId = "{$active_nav}";
+        console.log(navId);
+        if (navId == '') {
+            $("#nav-home").addClass('active');
+        } else {
+            $('#' + navId).addClass("active");
+        }
         // 到底部
          $('a.scrollToBottom').click(function(){
          $('html, body').animate({scrollTop: $(document).height()}, 'slow');
@@ -56,6 +61,7 @@
 <block name="ext">
     <include file="Admin@simple/Modal/icon-modal" />
     <include file="Admin@simple/Modal/tree-modal" />
+    <include file="Admin@simple/Modal/tree-auth-rules-modal" />
     <include file="Admin@simple/Modal/pwd-modal" />
 
 </block>

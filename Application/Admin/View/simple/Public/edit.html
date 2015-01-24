@@ -64,7 +64,47 @@
                                         </div>
                                         </div>
                                     </case>
+                                    <case value="rules" break="1">
+                                        <div class="col-sm-10 col-xs-10">
+                                            <div class="input-group">
+                                                <input id="auth_rules-input-{$time}" name="{$field}" type="text" class="form-control" placeholder="Enter {$field}" value='{$vo}'  >
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="showAuthRulesTree('auth_rules-input-{$time}', '{$treeAuthRulesUrl}')">Select Auth Rules!</button>
+                                        </span>
+                                            </div>
+                                        </div>
+                                    </case>
 
+                                    <case value="group_id" break="1">
+                                        <div class="col-sm-10 col-xs-10">
+                                            <div class="input-group">
+                                                <input id="group_id-input-{$time}" name="{$field}" type="text" class="form-control" placeholder="Enter {$field}" value="{$vo}"  >
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="showTree('group_id-input-{$time}', '{$treeGroupIdUrl}')">Select Group Id!</button>
+                                        </span>
+                                            </div>
+                                        </div>
+                                    </case>
+                                    <case value="uid" break="1">
+                                        <neq name="field" value="$pk">
+                                            <div class="col-sm-10 col-xs-10">
+                                                <div class="input-group">
+                                                    <input id="uid-input-{$time}" name="{$field}" type="text" class="form-control" placeholder="Enter {$field}" value="{$vo}"  >
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="showTree('uid-input-{$time}', '{$treeUidUrl}')">Select uid!</button>
+                                        </span>
+                                                </div>
+                                            </div>
+                                            <else />
+                                                <div class="col-sm-10 col-xs-10">
+                                                <input type="text" name="{$field}" class="form-control" value="{$vo}"
+                                                readonly="true"
+                                                placeholder="Don't Enter"
+                                                >
+                                                </div>
+
+                                        </neq>
+                                    </case>
 
                                     <default />
                                         <div class="col-sm-10 col-xs-10">
