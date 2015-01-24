@@ -175,7 +175,7 @@ class TermModel {
                 $data[] = $termTaxonomy;
             } else {
                 $taxonomyModel->where(array('taxonomy'=>$taxonomy, 'term_id'=>$val))->setInc('count');
-                $data[] = $termTaxonomy['term_taxonomy_id'];
+                $data[] = $termTaxonomy;
             }
 
         }
@@ -197,7 +197,7 @@ class TermModel {
                 $term = $termModel->add(array('name' => $val, 'slug' => $val));
                 $data[] = $term;
             } else {
-                $data[] = $term['term_id'];
+                $data[] = $term;
             }
         }
         return $data;
