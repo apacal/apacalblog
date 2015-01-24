@@ -6,13 +6,23 @@ class UserModel extends CommonModel {
         array('name','require','名字必须！'),
         array('email','require','邮箱必须！'),
         array('name','','帐号名称已经存在！',Model::EXISTS_VALIDATE,'unique',Model::MODEL_INSERT),
-        array('repassword','password','确认密码不正确',Model::MODEL_BOTH,'confirm'), // 验证确认密码是否和密码一致
     );
 
-    protected function checkbox(&$status) {
-        $status = $status == 'on' ? 1 : 0;
-    }
 
+
+    public function getUserInfoByName($name) {
+        $where = array(
+            'name' => $name
+        );
+
+        $userInfo = $this->where($where)->find();
+        if (is_array($userInfo)) {
+            if( (new AuthGroupAccessModel())->getUserGroupByUid($userInfo['uid']) > 0) {
+              $userInfo['isGroup'] = 1;
+            }
+        }
+        return $userInfo;
+    }
 
     public function checkUserExit($uid, $name) {
         $exitUid = $this->where(array('name' => $name))->getField('uid');
@@ -43,6 +53,13 @@ class UserModel extends CommonModel {
         return $this->where($where)->find();
     }
 
+    public function getUserName($uid) {
+        $where = array(
+            'uid' => $uid
+        );
+        return $this->where($where)->getField('name');
+    }
+
     public function insert($data) {
         if (($uid = $this->add($data)) === false) {
             return false;
@@ -50,6 +67,25 @@ class UserModel extends CommonModel {
             return $uid;
         }
 
+    }
+
+
+    public function getUserTreeData() {
+        $map = array(
+            'status' => 1,
+        );
+        $list = $this->where($map)->field("name, uid")->select();
+
+        if (!empty($list)) {
+            foreach($list as &$val) {
+                $val['text'] = $val['name'];
+                $val['a_attr'] = array(
+                    'onclick' => "addValueToInput('" .$val['uid'] ."');",
+                );
+            }
+        }
+
+        return $list;
     }
 
 

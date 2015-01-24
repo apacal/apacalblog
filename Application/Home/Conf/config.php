@@ -1,7 +1,8 @@
 <?php
-$config	=	require APP_PATH .'Common/Conf/config.php';
-$config['SITE_URL'] = '';
-$home_config =  array(
+//$config	=	require APP_PATH .'Common/Conf/config.php';
+//SITE_URL = '';
+//$home_config =
+    return array(
 
     'COMMENT_HASH'      =>      '#comment-post',
     'TMPL_CACHE_ON'                 =>              false,        // 是否开启模板编译缓存,设为false则每次都会重新编译
@@ -20,19 +21,17 @@ $home_config =  array(
                 ),
     'SEARCH_COL'         =>     array(
                     'title',
-                    'description',
                     'content',
                 ),
     'SEARCH_SET_COL'         =>     array(
                     'title',
-                    'description',
                 ),
     'URL_HTML_SUFFIX'   =>          'html',  //网站静态后缀
     'EVERY_PAGE_NUM'  =>          10,  //每次加载的文章的数目
 	'URL_MODEL'         =>          2,           //服务器开启Rewrite模块时，可去除URL中的index.php 参数模式1,2,3
 	
 	'DB_LIKE_FIELDS'		=> 'title|remark|content',	//搜索Like匹配字段
-    'URL_ROUTER_ON'         => true, 
+    'URL_ROUTER_ON'         => true,
     'URL_ROUTE_RULES'       => array(
 
             // article/id => Article/view/id/$id
@@ -51,22 +50,6 @@ $home_config =  array(
             'aboutme/my'                      =>      'Index/aboutme',
     ),
 
-    /* 模版变量设置 */
-	'TMPL_PARSE_STRING' => array(
-		'__SITE_URL__'			=> $config['SITE_URL'],
-        '__UPLOAD__' 			=> $config['SITE_URL'].'/Uploads',
-		'__PUBLIC__' 			=> $config['SITE_URL'].'/Public',
-		'__CSS__' 				=> $config['SITE_URL'].'/Public/css',
-		'__IMG__' 				=> $config['SITE_URL'].'/Public/images',
-		'__JS__' 				=> $config['SITE_URL'].'/Public/js',
-		'__BS__' 				=> $config['SITE_URL'].'/Public/bootstrap',
-        '__SUMMERNOTE__' 				=> $config['SITE_URL'].'/Public/summernote',
-        '__GOOGLE_CODE__' 				=> $config['SITE_URL'].'/Public/google-code-prettify',
-        '__KALENDAR__' 				=> $config['SITE_URL'].'/Public/kalendar',
-        '__JCROP__'                 => $config['SITE_URL'].'/Public/Jcrop',
-        '__FILEINPUT__'                 => $config['SITE_URL'].'/Public/bootstrap-fileinput',
-
-	),
 
     //邮箱配置
 	'SMTP_SERVER' =>'smtp.126.com',					//邮件服务器
@@ -80,4 +63,4 @@ $home_config =  array(
 
 	
 );
-return array_merge($config,$home_config);
+//return array_merge($config,$home_config);

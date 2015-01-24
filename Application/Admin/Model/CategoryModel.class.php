@@ -7,7 +7,6 @@ use Think\Model;
 class CategoryModel extends CommonModel {
     protected $_validate = array(
         array('title','require','标题必须！'),
-        array('description','require','描述必须！'),
         array('sort','require','排序值必须！'),
         array('image','require','图片必须！'),
 
@@ -15,28 +14,35 @@ class CategoryModel extends CommonModel {
     );
 
 
-    public function getAllCategory() {
-        $map['pid'] = 0;
-        if ( $list = $this->where($map)->order('sort DESC')->select() ) {
-            return $this->getCategorySub( $list );
-        } else {
-            return false;
-        }
 
+    public function getCategoryName($cid) {
+        $where = array(
+            'id' => $cid
+        );
+        return $this->where($where)->getField('cname');
     }
-    private function getCategorySub( $list ) {
-        $allCategory = array();
-        foreach($list as $val) {
-            $allCategory[] = $val;
-            $map['pid'] = $val['id'];
-            $sub = $this->where($map)->order("sort DESC")->select();
-            if (!empty($sub) && is_array($sub)) {
-                $sub = $this->getCategorySub($sub);
-                foreach($sub as $value) {
-                    $allCategory[] = $value;
+
+    public function getCateTreeData($pid) {
+        $map = array(
+            'pid' => $pid,
+            'status' => 1,
+        );
+        $list = $this->where($map)->field("cname, id")->order("sort desc, id desc")->select();
+
+        if (!empty($list)) {
+            foreach($list as &$val) {
+                $val['text'] = $val['cname'];
+                $val['a_attr'] = array(
+                    'onclick' => "addValueToInput('" .$val['id'] ."');",
+                );
+                $sub = $this->getCateTreeData($val['id']);
+                if (!empty($sub)) {
+                    $val['children'] = $sub;
                 }
             }
         }
-        return $allCategory;
+
+        return $list;
     }
+
 }

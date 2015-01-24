@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<block name="header">
+    <include file="Admin@simple/Public/header" />
+</block>
+
+<body>
+<block name="nav-bar">
+    <include file="Admin@simple/Public/nav-bar" />
+</block>
+
+<div class="main">
+
+        <block name="slide-bar">
+            <include file="Admin@simple/Public/slide-bar" />
+        </block>
+
+
+        <block name="content">
+
+        </block>
+
+    <block name="ext_js">
+
+    </block>
+
+    <block name="inner_css">
+
+    </block>
+
+
+    <block name="inner_js">
+
+    </block>
+
+    <block name="footer">
+        <include file="Admin@simple/Public/footer" />
+    </block>
+</div>
+<block name="js">
+    <script type="text/javascript">
+        var navId = "{$active_nav}";
+        console.log(navId);
+        if (navId == '') {
+            $("#nav-home").addClass('active');
+        } else {
+            $('#' + navId).addClass("active");
+        }
+        // 到底部
+         $('a.scrollToBottom').click(function(){
+         $('html, body').animate({scrollTop: $(document).height()}, 'slow');
+         return false;
+         });
+         // 到顶部
+         $('a.scrollToTop').click(function(){
+         $('html, body').animate({scrollTop:0}, 'slow');
+         return false;
+         });
+    </script>
+</block>
+<block name="ext">
+    <include file="Admin@simple/Modal/icon-modal" />
+    <include file="Admin@simple/Modal/tree-modal" />
+    <include file="Admin@simple/Modal/tree-auth-rules-modal" />
+    <include file="Admin@simple/Modal/pwd-modal" />
+
+</block>
+
+</body>
+</html>

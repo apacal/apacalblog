@@ -13,6 +13,12 @@ body {
     background: #ffffff;
 }
 
+p {
+
+    font-weight: normal;
+    font-size: 18px;
+}
+
 a {
     color: #1abc9c;
 }
@@ -32,6 +38,12 @@ a:hover {
     position: relative;
 
 }
+
+.CodeMirror {
+    border: 1px solid #eee;
+    height: auto;
+}
+
 
 /* article list */
 article {

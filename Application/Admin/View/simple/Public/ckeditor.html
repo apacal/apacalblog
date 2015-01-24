@@ -1,0 +1,31 @@
+<div class="col-sm-12 col-xs-12 editor">
+    <textarea name="content" id="editor-{$time}" rows="10" cols="70">
+        {$vo}
+    </textarea>
+
+</div>
+
+<script>
+
+    $(document).ready(function() {
+        CKEDITOR.config.image_previewText = CKEDITOR.tools.repeat( '___ ', 100 );
+
+        CKEDITOR.replace( 'editor-{$time}', {
+            filebrowserBrowseUrl : '/plugin/ckfinder/ckfinder.html',
+            filebrowserImageBrowseUrl : '/plugin/ckfinder/ckfinder.html?Type=Images',
+            filebrowserFlashBrowseUrl : '/plugin/ckfinder/ckfinder.html?Type=Flash',
+            filebrowserUploadUrl : '/plugin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+            filebrowserImageUploadUrl : '/plugin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+            filebrowserFlashUploadUrl : '/plugin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash'
+        }).on( 'change', function( evt ) {
+            //console.log(evt.editor.getData());
+            // getData() returns CKEditor's HTML content.
+            $('#editor-{$time}').html(evt.editor.getData());
+        });
+
+
+        // scroll to top
+        $('html, body').animate({scrollTop:0}, 'slow');
+
+    });
+</script>

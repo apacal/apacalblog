@@ -59,7 +59,7 @@ function createHash($passwd) {
  */
 function is_admin() {
     $userInfo = getUserInfo();
-    if(isset($userInfo['isadmin']) && 1 == $userInfo['isadmin']) {
+    if(isset($userInfo['isGroup']) && 1 == $userInfo['isGroup']) {
         return true;
     } else {
         return false;

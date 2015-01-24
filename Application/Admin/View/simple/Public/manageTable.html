@@ -1,0 +1,66 @@
+<!-- link bootstrap table  -->
+
+
+<div class="container-table" delUrl="{$delUrl}" statusUrl="{$statusUrl}" >
+
+<table class="bootstrap-table" data-toggle="table" id="bs-table-{$time}" data-url="{$data_json_url}" data-cache="false"
+
+
+       data-show-columns="true" data-id-field="id"
+       data-click-to-select="false"
+       data-show-refresh="true"
+       data-show-toggle="true"
+       data-search="true"
+       data-pagination="true" data-page-list="[5, 10, 20, 50, 100, 200]"
+       data-toolbar=""
+    >
+    <thead>
+        <tr>
+            <th data-field="pk" data-checkbox="true"></th>
+
+            <th data-field="pk" data-formatter="operateFormatter" data-events="operateEvents"
+                data-halign="center" data-align="center"
+                >Operate</th>
+
+            <volist name="manage_fields" id="fields_vo">
+
+                <th data-field="{$fields_vo.field}" data-sortable="true"
+                    data-halign="center" data-align="center"
+                <eq name="fields_vo.field" value="status">
+                    data-formatter="statusFormatter"
+                </eq>
+
+                <eq name="fields_vo.field" value="icon">
+                    data-formatter="iconFormatter"
+                </eq>
+
+                    >
+                    {$fields_vo.name}
+
+                </th>
+            </volist>
+        </tr>
+    </thead>
+</table>
+</div>
+
+<script>
+
+    $(document).ready(function() {
+        $("#bs-table-{$time}").bootstrapTable();
+
+        $("#bs-table-{$time}").bind("all.bs.table", initSwitch);
+        $("#bs-table-{$time}").bind("load-success.bs.table",function() {
+            var customToolbar = $(this).parents(".bootstrap-table").find(".bars");
+            //console.log(customToolbar);
+            $(customToolbar).html(
+            '<div class="btn-group"> <button class="btn btn-default" onclick="deleteRows(this);"> Delete </button> <button class="btn btn-default" onclick="statusDisable(this);"> Disable </button> <button class="btn btn-default " onclick="statusEnable(this);"> Enable </button> </div>'
+            )
+        });
+    });
+
+
+
+
+
+</script>

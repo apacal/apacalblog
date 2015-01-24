@@ -88,6 +88,7 @@ class ArticleController extends CommonController {
 
         $articleList = $articleModel->getArticleListByTag($name);
 
+
         if(empty($articleList)) {
             $this->error('没有该' .$name .'!');
         }

@@ -1,0 +1,177 @@
+<div class="main-edit">
+    <form class="form-horizontal" role="form" id="form-{$time}" action="{$formAction}" method="post">
+        <div class="col-sm-8 col-xs-12 col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="edit-header">{$title}&nbsp;&nbsp;
+                        <small> <a href="#" onclick="addTab('{$addTabName}', '{$addUrl}', true);" >Add New</a> </small>
+                    </span>
+                </div>
+                <div class="panel-body">
+
+                        <foreach name="data" item="vo" key="field" >
+
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 col-xs-2 control-label">{$field}</label>
+
+                                <switch name="field">
+                                    <case value="image" break="1">
+                                        <div class="col-sm-10 col-xs-10">
+                                            <div class="input-group">
+                                                <input id="image-input-{$time}" name="{$field}" type="text" class="form-control" placeholder="Enter {$field}" value="{$vo}"  >
+
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="BrowseServer('image-input-{$time}')">Select Image!</button>
+                                        </span>
+                                            </div>
+                                        </div>
+                                    </case>
+                                    <case value="content" break="1">
+                                        <include file="Public/ckeditor" />
+                                    </case>
+                                    <case value="pwd" break="1">
+                                        <div class="col-sm-10 col-xs-10">
+                                        <div class="input-group">
+                                            <input id="pwd-input-{$time}" name="{$field}" type="text" class="form-control" placeholder="Enter {$field}" value="{$vo}"  >
+
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#modal-pwd" onclick="saveCreatePwdInfo('pwd-input-{$time}', '{$createPwdUrl}')">Create Pwd!</button>
+                                        </span>
+                                        </div>
+                                        </div>
+                                    </case>
+                                    <case value="icon" break="1">
+                                        <div class="col-sm-10 col-xs-10">
+                                        <div class="input-group">
+                                            <input id="icon-input-{$time}" name="{$field}" type="text" class="form-control" placeholder="Enter {$field}" value="{$vo}"  >
+
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#modal-icon" onclick="saveIconId('icon-input-{$time}')">Select Icon!</button>
+                                        </span>
+                                        </div>
+                                        </div>
+                                    </case>
+
+                                    <case value="pid" break="1">
+                                        <div class="col-sm-10 col-xs-10">
+                                        <div class="input-group">
+                                            <input id="pid-input-{$time}" name="{$field}" type="text" class="form-control" placeholder="Enter {$field}" value="{$vo}"  >
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="showTree('pid-input-{$time}', '{$treeDataUrl}')">Select Pid!</button>
+                                        </span>
+                                        </div>
+                                        </div>
+                                    </case>
+                                    <case value="rules" break="1">
+                                        <div class="col-sm-10 col-xs-10">
+                                            <div class="input-group">
+                                                <input id="auth_rules-input-{$time}" name="{$field}" type="text" class="form-control" placeholder="Enter {$field}" value='{$vo}'  >
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="showAuthRulesTree('auth_rules-input-{$time}', '{$treeAuthRulesUrl}')">Select Auth Rules!</button>
+                                        </span>
+                                            </div>
+                                        </div>
+                                    </case>
+
+                                    <case value="group_id" break="1">
+                                        <div class="col-sm-10 col-xs-10">
+                                            <div class="input-group">
+                                                <input id="group_id-input-{$time}" name="{$field}" type="text" class="form-control" placeholder="Enter {$field}" value="{$vo}"  >
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="showTree('group_id-input-{$time}', '{$treeGroupIdUrl}')">Select Group Id!</button>
+                                        </span>
+                                            </div>
+                                        </div>
+                                    </case>
+                                    <case value="uid" break="1">
+                                        <neq name="field" value="$pk">
+                                            <div class="col-sm-10 col-xs-10">
+                                                <div class="input-group">
+                                                    <input id="uid-input-{$time}" name="{$field}" type="text" class="form-control" placeholder="Enter {$field}" value="{$vo}"  >
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" onclick="showTree('uid-input-{$time}', '{$treeUidUrl}')">Select uid!</button>
+                                        </span>
+                                                </div>
+                                            </div>
+                                            <else />
+                                                <div class="col-sm-10 col-xs-10">
+                                                <input type="text" name="{$field}" class="form-control" value="{$vo}"
+                                                readonly="true"
+                                                placeholder="Don't Enter"
+                                                >
+                                                </div>
+
+                                        </neq>
+                                    </case>
+
+                                    <default />
+                                        <div class="col-sm-10 col-xs-10">
+                                        <input type="text" name="{$field}" class="form-control" value="{$vo}"
+                                        <eq name="field" value="$pk">
+                                            readonly="true"
+                                            placeholder="Don't Enter"
+                                            <else />
+                                            placeholder="Enter {$field}"
+                                        </eq>
+
+                                        >
+                                        </div>
+
+                                </switch>
+                            </div>
+
+
+
+                        </foreach>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-xs-12 col-md-4 ext_edit">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading-{$time}">
+                    <h4 class="panel-title">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse-{$time}" aria-expanded="false" aria-controls="collapse-{$time}">
+                            Publish
+                            <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse-{$time}" class="panel-collapse in collapse" role="tabpanel" aria-labelledby="heading-{$time}">
+                    <div class="panel-body ">
+                        <notempty name="ext.createtime">
+                            <h5><i class="glyphicon glyphicon-time"></i>
+                                &nbsp;&nbsp;Created on: <b>{$ext.createtime|date="F j, Y",###}</b>
+                            </h5>
+                        </notempty>
+                        <notempty name="ext.updatetime">
+                            <h5><i class="glyphicon glyphicon-time"></i>
+                                &nbsp;&nbsp;Updated on: <b>{$ext.updatetime|date="F j, Y",###}</b>
+                            </h5>
+
+                        </notempty>
+
+                        <button type="button" class="btn btn-primary" onclick="ajaxPublish('form-{$time}','{$treeDataUrl}');">Publish</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <block name="ext_edit">
+
+            </block>
+
+        </div>
+    </form>
+
+
+</div>
+
+
+
+
+<script>
+
+</script>
