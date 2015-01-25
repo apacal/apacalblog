@@ -23,7 +23,7 @@ class LinkModel extends Model{
             'status' => 1,
         );
         $list = $this->where($where)->limit($limit)->order("sort DESC, createtime desc")->select();
-        setCache($tag, $limit, LINK_TTL);
+        setCache($tag, $list, LINK_TTL);
         return $list;
     }
 
