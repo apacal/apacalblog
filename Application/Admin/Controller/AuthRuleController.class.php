@@ -17,7 +17,6 @@ class AuthRuleController extends CommonController {
     public function setStatus() {
         header("HTTP/1.0 404 These data don't have status!");
     }
-
     public function treeJson() {
 
         $groupId = $_REQUEST['id'];

@@ -21,4 +21,10 @@ class CategoryController extends CommonController {
         echo(json_encode($treeData));
 
     }
+    public function treeCidJson() {
+        $Model = new CategoryModel();
+        $treeData = $Model->getCateTreeData(0);
+        echo(json_encode($treeData));
+
+    }
 }
