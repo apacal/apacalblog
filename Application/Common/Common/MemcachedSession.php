@@ -7,6 +7,7 @@
  */
 //引入MemcachedManager
 require_once dirname(__FILE__) ."/MemcachedManager.php";
+session_start();
 
 class MemcachedSession implements SessionHandlerInterface {
 
