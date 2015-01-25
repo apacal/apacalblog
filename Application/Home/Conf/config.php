@@ -5,7 +5,7 @@
     return array(
 
     'COMMENT_HASH'      =>      '#comment-post',
-    'TMPL_CACHE_ON'                 =>              false,        // 是否开启模板编译缓存,设为false则每次都会重新编译
+    'TMPL_CACHE_ON'                 =>              true,        // 是否开启模板编译缓存,设为false则每次都会重新编译
     'SITE_NAME'			=>          'Apacal网络日志',   //网站名字
     'SITE_NAME_BAR'     =>          '激情 程序 奋斗',
     'SITE_KEYWORDS'		=>  'zhongqingzhu 钟庆柱 Apacal Apacal网络日志 apacalblog Apacal Apacal个人博客 激情 奋斗 技术的乐趣、快乐',
@@ -13,7 +13,7 @@
 
     'DEFAULT_THEME' => 'simple',
 
-    'SHOW_PAGE_TRACE'               =>              true,
+    'SHOW_PAGE_TRACE'               =>              false,
     'PAGE_TRACE_SAVE'               =>              false,
 
     'SEARCH_TABLE'       =>     array(
