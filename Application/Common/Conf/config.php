@@ -4,7 +4,7 @@ define('SEARCH_TTL', 24*60*60);
 define('COMMENT_TTL', 5*60);
 define('ARTICLE_TTL', 24*60*60);
 define('NOTE_TTL', 24*60*60);
-define('CATEGORY_TTL', 12*24*60*60);
+define('CATEGORY_TTL', 24*60*60);
 define('LINK_TTL', 24*60*60);
 define('USED_MEMCACHED', true);
 

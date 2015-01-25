@@ -10,19 +10,73 @@ namespace Home\Controller;
 
 
 use Think\Controller;
-use Think\Verify;
 
 class VerifyController extends Controller{
 
     public function index() {
-        $config =    array(
-            'fontSize'    =>    80,    // 验证码字体大小
-            'length'      =>    4,     // 验证码位数
-            'useNoise'    =>    false, // 关闭验证码杂点
-               //'useImgBg'    =>    true, //开启验证码背景图片功能 随机使用 ThinkPHP/Library/Think/Verify/bgs 目录下面的图片
+        $len = 5;
+        $str = "ABCDEFGHIJKLNMPQRSTUVWXYZ123456789";
+
+        $im = imagecreatetruecolor ( 70, 20 );
+        $bgc = imagecolorallocate($im, 255, 255, 255);
+        $bgtxt = imagecolorallocate($im, 220, 220, 220);
+
+        //随机调色板
+        $colors = array(
+            imagecolorallocate($im, 255, 0, 0),
+            imagecolorallocate($im, 0, 200, 0),
+            imagecolorallocate($im, 0, 0, 255),
+            imagecolorallocate($im, 0, 0, 0),
+            imagecolorallocate($im, 255, 128, 0),
+            imagecolorallocate($im, 255, 208, 0),
+            imagecolorallocate($im, 98, 186, 245),
         );
-        $Verify =     new Verify($config);
-        $Verify->entry();
+
+        //填充背景色
+        imagefill($im, 0, 0, $bgc);
+
+        //随机获取数字
+        $verify = "";
+        while (strlen($verify) < $len) {
+            $i = strlen($verify);
+            $random = $str[rand(0, strlen($str))];
+            $verify .= $random;
+
+            //绘制背景文字
+            imagestring($im, 6, ($i*10)+3, rand(0,6), $random, $bgtxt);
+            //绘制主文字信息
+            imagestring($im, 6, ($i*10)+3, rand(0,6), $random, $colors[rand(0, count($colors)-1)]);
+        }
+
+        //添加随机杂色
+        for($i=0; $i<100; $i++) {
+            $color = imagecolorallocate($im, rand(50,220), rand(50,220), rand(50,220));
+            imagesetpixel($im, rand(0,70), rand(0,20), $color);
+        }
+
+        //将验证码存入$_SESSION中
+        $_SESSION["verify"] = $verify;
+        $_SESSION['verify_time'] = time();
+
+        //输出图片并释放缓存
+        header('Content-type: image/png');
+        imagepng($im);
+        imagedestroy($im);
     }
+
+    static public function check($code) {
+
+        if ((time() - $_SESSION['verify_time']) > 10*60) {
+            return false;
+        }
+        if($_SESSION["verify"] === $code) {
+            $_SESSION['verify'] = '';
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 
 } 

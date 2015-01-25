@@ -263,11 +263,9 @@ class UserController extends CommonController{
      * check verify is valid, the input name must be verify
      */
     protected function checkVerify() {
-        $verify = new Verify();
-        $code = I('post.verify');
-        $id = '';
-        if(!($verify->check($code, $id)))
-            $this->error("verify is incorrect!");
+        if(false === VerifyController::check($_REQUEST['verify'])) {
+            $this->error("verify incorrect!");
+        }
     }
 
     /**
