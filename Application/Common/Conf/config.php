@@ -34,15 +34,15 @@ return array(
 
 
     'TMPL_STRIP_SPACE' => true,  // 是否去除模板文件里面的 html 空格与换行
-    'TMPL_CACHE_ON' => false,  // 是否开启模板编译缓存 , 设为 false 则每次都会重新编译
+    'TMPL_CACHE_ON' => true,  // 是否开启模板编译缓存 , 设为 false 则每次都会重新编译
 
     // normal trace not in debug=on
-    'SHOW_PAGE_TRACE'               =>              true,
+    'SHOW_PAGE_TRACE'               =>              false,
     'PAGE_TRACE_SAVE'               =>              false,
 
     // normal debug info
     'SHOW_ERROR_MSG'                =>              false,    // 显示错误信息
-    'ERROR_MESSAGE'                 =>              '发生错误！',
+    'ERROR_MESSAGE'                 =>              'some error！',
 
     'TMPL_CACHE_TIME'               =>              0, // 模板缓存有效期 0 为永久，(以数字为值，单位:秒)
     'URL_CASE_INSENSITIVE'          =>              false,  // URL区分大小写
@@ -89,19 +89,14 @@ return array(
 
     // Memcache设置
     'MemCached'     =>   array(
-<<<<<<< HEAD
         'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
         //'hostname'  =>      '127.0.0.2',
-=======
-        //'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
-        'hostname'  =>      '127.0.0.1',
->>>>>>> origin/master
         'port'      =>      '11211',
         'isSasl'    =>      true,
         'username'   =>      '7e4d0da81a0611e4',
         'passwd'    =>      'Memcache2014'
     ),
-    'NoCachedDie' => true,
+    'NoCachedDie' => false,
 
 
 
