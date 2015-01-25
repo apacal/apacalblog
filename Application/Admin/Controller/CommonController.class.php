@@ -277,6 +277,7 @@ class CommonController extends Controller {
         $this->assign('title', $this->controllerExtName .$type);
         $this->assign('addTabName', $this->controllerExtName .'Add');
         $this->assign("treeDataUrl", U($controllerName .'/treeJson'));
+        $this->assign("treeCidDataUrl", U('Category/treeCidJson'));
         $this->assign("treeUidUrl", U('User/treeJson'));
         $this->assign("treeGroupIdUrl", U('AuthGroup/treeJson'));
         $this->assign("treeAuthRulesUrl", U('AuthRule/treeJson', array('id'=>$_REQUEST['id'])));
