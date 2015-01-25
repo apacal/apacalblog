@@ -20,6 +20,23 @@ class SystemController extends CommonController {
         }
         $this->jsonReturn($ret);
     }
+    public function delMemcache(){
+        if (false === memFlush()) {
+
+            $ret = array(
+                'code' => 1,
+                'data' => 'delete memcache fail'
+            );
+        } else {
+
+            $ret = array(
+                'code' => 0,
+                'data' => 'success'
+            );
+        }
+        $this->jsonReturn($ret);
+
+    }
 
     /**
      * call system rm -fr

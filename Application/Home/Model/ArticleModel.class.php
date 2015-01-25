@@ -26,9 +26,29 @@ class ArticleModel extends RelationModel {
 
 
     public function getListByWhere($where) {
-        return $this->getArticleListByWhere($where);
+        $tag = cacheTag( __METHOD__, md5($where));
+        if (false !== ($list = getCache($tag))) {
+            return $list;
+        }
+
+        if (isset($where['cid']) && is_numeric($where['cid'])) {
+            $where['cid'] = array('in',(new CategoryModel())->getThisCategoryChildren($where['cid']));
+        }
+        $list = $this->where($where)->relation(true)->select();
+        if (empty($list)) {
+            return false;
+        }
+        $this->getExtendInfoForArticle($list, true, false);
+
+        setCache($tag, $list, ARTICLE_TTL);
+        return $list;
     }
+
     public function getArticleListByTag($name) {
+        $tag = cacheTag(__METHOD__, $name);
+        if (false !== ($list = getCache($tag))) {
+            return $list;
+        }
         $Term = new TermModel();
         $objectIds = $Term->getObjectIdsByTaxonomyAndTag('Article',$name);
         if (empty($objectIds)) {
@@ -38,20 +58,16 @@ class ArticleModel extends RelationModel {
             'id' => array('in', $objectIds),
             'status' => 1,
         );
-        return $this->getArticleListByWhere($where);
-    }
-    public function getArticleListByWhere($where) {
-        if (isset($where['cid']) && is_numeric($where['cid'])) {
-            $where['cid'] = array('in',(new CategoryModel())->getThisCategoryChildren($where['cid']));
-        }
-        $list = $this->where($where)->relation(true)->select();
-        if (empty($list)) {
-            return false;
-        }
-        $this->getExtendInfoForArticle($list, true, false);
+        $list = $this->getListByWhere($where);
+        setCache($tag, $list, ARTICLE_TTL);
         return $list;
     }
+
     public function getTagsByCategory($cid = 0) {
+        $tag = cacheTag(__METHOD__, $cid);
+        if (false !== ($list = getCache($tag))) {
+            return $list;
+        }
         if ($cid != 0) {
             $where['cid'] = array('in', (new CategoryModel())->getThisCategoryChildren($cid));
         }
@@ -64,6 +80,7 @@ class ArticleModel extends RelationModel {
             }
             $tags = (new TermModel())->getTermsByObjectIdAndTaxonomy('Article', $objectIds);
             $this->buildTagsUrl($tags);
+            setCache($tag, $tags, ARTICLE_TTL);
             return $tags;
         } else {
             return null;
@@ -73,6 +90,10 @@ class ArticleModel extends RelationModel {
     }
 
     public function getTotalPageCountByCategory($cid = 0, $everyPageNum = 0) {
+        $tag = cacheTag(__METHOD__, $cid, $everyPageNum);
+        if (false !== ($totalPage = getCache($tag))) {
+            return $totalPage;
+        }
         if (empty($everyPageNum)) {
             $everyPageNum = C('EVERY_PAGE_NUM');
         }
@@ -86,9 +107,11 @@ class ArticleModel extends RelationModel {
         }
         $count = $this->where($where)->count();
         $totalPage = (int)(($count + $everyPageNum) / $everyPageNum);
+        setCache($tag, $totalPage, ARTICLE_TTL);
         return $totalPage;
 
     }
+
     /**
      * @param int $cid when cid = 0 means the all article not care about the cid
      * @param int $limit
@@ -97,32 +120,31 @@ class ArticleModel extends RelationModel {
      * @return array|bool
      */
     public function getArticleListByCategory($cid = 0 ,$limit = 0, $page = 0, $everyPageNum = 0) {
-        $tagArticleList = cacheTag(ArticleList, $cid, $page);
-        if (false === ($list = getCache($tagArticleList))) {
-            if (empty($everyPageNum)) {
-                $everyPageNum = C('EVERY_PAGE_NUM');
-            }
-            if (empty($limit)) {
-                $limit = $everyPageNum;
-            }
-            $where = array();
-            if($cid !=0) {
-                $where['cid'] = array('in', (new CategoryModel())->getThisCategoryChildren($cid));
-            }
-            $where['status'] = 1;
-            if ($page <= 1) {
-                $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->limit($limit)->select();
-            } else {
-                $first = ($page - 1) * $everyPageNum;
-                $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->limit($first, $everyPageNum)->select();
-            }
-
-            $this->getExtendInfoForArticle($list, true, true);
-
-            setCache($tagArticleList, $list, C('ARTICLE_TTL'));
-
-
+        $tagArticleList = cacheTag(__METHOD__, $cid, $limit, $page, $everyPageNum);
+        if (false !== ($list = getCache($tagArticleList))) {
+            return $list;
         }
+        if (empty($everyPageNum)) {
+            $everyPageNum = C('EVERY_PAGE_NUM');
+        }
+        if (empty($limit)) {
+            $limit = $everyPageNum;
+        }
+        $where = array();
+        if($cid !=0) {
+            $where['cid'] = array('in', (new CategoryModel())->getThisCategoryChildren($cid));
+        }
+        $where['status'] = 1;
+        if ($page <= 1) {
+            $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->limit($limit)->select();
+        } else {
+            $first = ($page - 1) * $everyPageNum;
+            $list = $this->where($where)->order('sort DESC, createtime DESC')->relation(true)->limit($first, $everyPageNum)->select();
+        }
+
+        $this->getExtendInfoForArticle($list, true, true);
+
+        setCache($tagArticleList, $list, ARTICLE_TTL);
         return $list;
     }
 
@@ -134,7 +156,7 @@ class ArticleModel extends RelationModel {
      * @return false | array
      */
     public function getArticleById($id) {
-        $tagArticle = cacheTag(OneArticle, $id);
+        $tagArticle = cacheTag(__METHOD__, $id);
         if (false === ($article = getCache($tagArticle))) {
             $where['id'] = $id;
             $where['status'] = 1;
@@ -143,7 +165,7 @@ class ArticleModel extends RelationModel {
                 return false;
 
             $this->getExtendInfoForArticle($article);
-            setCache($tagArticle, $article, C('ARTICLE_TTL'));
+            setCache($tagArticle, $article, ARTICLE_TTL);
 
         }
         return $article;
@@ -155,8 +177,8 @@ class ArticleModel extends RelationModel {
      * @return bool | array
      */
     public function getArticleListGroupByDateByCategry($cid = 0) {
-        $tagDateArticel = cacheTag(ArticleCountGroupByDate,$cid);
-        if (false === ($list = getCache($tagDateArticel))) {
+        $tag = cacheTag(__METHOD__,$cid);
+        if (false === ($list = getCache($tag))) {
 
             if ($cid == 0) { //全部文章
                 $cidCondition = "";
@@ -174,34 +196,34 @@ class ArticleModel extends RelationModel {
                 $value['url'] = U('date/'.$value['cid'] .'/' .$value['title'] .C('URL_HASH'));
             }
 
-            setCache($tagDateArticel, $list, C('ARTICLE_TTL'));
+            setCache($tag, $list, ARTICLE_TTL);
         }
         return $list;
     }
 
     public function getNextArticleByCategory($cid, $createtime) {
-        $tagNextArticle = cacheTag(NextArticle, $cid, $createtime);
+        $tagNextArticle = cacheTag(__METHOD__, $cid, $createtime);
         if (false === ($next = getCache($tagNextArticle))) {
             $where['cid'] = $cid;
             $where['status'] = 1;
             $where['createtime'] = array('gt', $createtime);
             $next = $this->where($where)->relation(true)->order('createtime DESC')->field('content', true)->find();
 
-            setCache($tagNextArticle, $next, C('ARTICLE_TTL'));
+            setCache($tagNextArticle, $next, ARTICLE_TTL);
 
         }
         return $next;
     }
 
     public function getPrevArticleByCategory($cid, $createtime) {
-        $tagPrevArticle = cacheTag(PrevArticle, $cid, $createtime);
+        $tagPrevArticle = cacheTag(__METHOD__, $cid, $createtime);
         if (false === ($next = getCache($tagPrevArticle))) {
             $where['cid'] = $cid;
             $where['status'] = 1;
             $where['createtime'] = array('lt', $createtime);
             $next = $this->where($where)->relation(true)->order('createtime DESC')->field('content', true)->find();
 
-            setCache($tagPrevArticle, $next, C('ARTICLE_TTL'));
+            setCache($tagPrevArticle, $next, ARTICLE_TTL);
 
         }
         return $next;
@@ -217,7 +239,7 @@ class ArticleModel extends RelationModel {
      * @return array|false
      */
     public  function getRecentArticleListByCategory($cid = 0, $notId = 0, $limit = 5, $order='id DESC, sort DESC') {
-        $tagNewlyArticleList = cacheTag(RecentArticleList, $cid);
+        $tagNewlyArticleList = cacheTag(__METHOD__, $cid);
         if (false === ($list = getCache($tagNewlyArticleList))) {
             $where = array();
             if(!empty($notId)) {
@@ -235,7 +257,7 @@ class ArticleModel extends RelationModel {
                 }
             }
 
-            setCache($tagNewlyArticleList, $list, C('ARTICLE_TTL'));
+            setCache($tagNewlyArticleList, $list, ARTICLE_TTL);
         }
         return $list;
     }
@@ -246,14 +268,15 @@ class ArticleModel extends RelationModel {
      * @return int | false
      */
     public  function getArticleCountByCategory($cid = 0) {
-        $tagArticleCount = cacheTag($cid);
+        $tagArticleCount = cacheTag(__METHOD__, $cid);
         if (false === ($count = getCache($tagArticleCount))) {
             $where['status'] = 1;
-            if($cid != 0)
-                $where['cid'] = array('in', D('Category')->getThisCategoryChildren($cid)); //得到属于$cid的所有栏目的id
-            $count = M('Article')->where($where)->count();
+            if($cid != 0) {
+                $where['cid'] = array('in', (new CategoryModel())->getThisCategoryChildren($cid)); //得到属于$cid的所有栏目的id
+            }
+            $count = (new ArticleModel())->where($where)->count();
 
-            setCache($tagArticleCount, $count, C('ARTICLE_TTL'));
+            setCache($tagArticleCount, $count, ARTICLE_TTL);
         }
         return $count;
     }

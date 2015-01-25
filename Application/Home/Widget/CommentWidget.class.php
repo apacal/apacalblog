@@ -16,7 +16,6 @@ class CommentWidget extends Controller {
             $this->assign('comment_count', $Comment->getCommentCount($cid, $oid));
         }
         $this->assign("comment_list", $commentList);
-        $this->assign('commentUserInfo', getCommentUserInfo());
         $this->assign("cid", $cid);
         $this->display("Comment:index");
     }

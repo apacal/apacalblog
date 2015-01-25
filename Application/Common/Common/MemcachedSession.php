@@ -29,7 +29,7 @@ class MemcachedSession implements SessionHandlerInterface {
 
     public function write($id, $data)
     {
-        return MemcachedManager::getInstance()->set($id, $data, C('SESSION_TTL') ? C('SESSION_TTL') : 60*60) ? true : false;
+        return MemcachedManager::getInstance()->set($id, $data, SESSION_TTL ? SESSION_TTL : 60*60) ? true : false;
         //return MemcachedManager::getInstance()->set($id, $data, 60*60*24) ? true : false;
     }
 
@@ -41,7 +41,6 @@ class MemcachedSession implements SessionHandlerInterface {
     public function gc($maxlifetime)
     {
         // don not need to flush session, memcached has ttl
-
 
         return true;
     }

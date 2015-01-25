@@ -14,11 +14,17 @@ use Think\Model;
 class LinkModel extends Model{
 
     public function getLinkList($limit = 10) {
+        $tag = cacheTag(__METHOD__, $limit);
+        if (false !== ($list = getCache($tag))) {
+            return $list;
+        }
 
         $where = array(
             'status' => 1,
         );
-        return $this->where($where)->limit($limit)->order("sort DESC, createtime desc")->select();
+        $list = $this->where($where)->limit($limit)->order("sort DESC, createtime desc")->select();
+        setCache($tag, $limit, LINK_TTL);
+        return $list;
     }
 
 } 
