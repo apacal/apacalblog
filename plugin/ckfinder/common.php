@@ -6,10 +6,8 @@
  * Time: 下午4:23
  */
 
-define("SITE_URL", "http://apacal.cn");
 // 定义应用目录
 define('APP_PATH','./Application/');
-session_start();
 
 static $config;
 $config = require($_SERVER['DOCUMENT_ROOT'] .'/Application/Common/Conf/config.php');
@@ -29,4 +27,3 @@ function C($key, $val = '') {
         return true;
     }
 }
-

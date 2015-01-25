@@ -8,6 +8,8 @@ define('CATEGORY_TTL', 24*60*60);
 define('LINK_TTL', 24*60*60);
 define('USED_MEMCACHED', true);
 
+
+
 return array(
 
     'UPLOADS_DIR_NAME'           =>  'Uploads',   // upload dir name
@@ -105,25 +107,25 @@ return array(
 
     /* 模版变量设置 */
     'TMPL_PARSE_STRING' => array(
-        '__SITE_URL__'			=> SITE_URL,
-        '__UPLOAD__' 			=> SITE_URL .'/Uploads',
-        '__PUBLIC__' 			=> SITE_URL .'/Public',
-        '__CSS__' 				=> SITE_URL.'/Public/css',
-        '__IMG__' 				=> SITE_URL.'/Public/images',
-        '__JS__' 				=> SITE_URL.'/Public/js',
-        '__BS__' 				=> SITE_URL.'/Public/bootstrap',
-        '__SUMMERNOTE__' 				=> SITE_URL.'/Public/summernote',
-        '__KALENDAR__' 				=> SITE_URL.'/Public/kalendar',
-        '__JCROP__'                 => SITE_URL.'/Public/Jcrop',
-        '__FILEINPUT__'                 => SITE_URL.'/Public/bootstrap-fileinput',
-        '__CODEMIRROR__'                 => SITE_URL.'/Public/CodeMirror',
-        '__JSTREE__'                 => SITE_URL.'/Public/jstree-bootstrap-theme',
-        '__SWEETALERT__'                 => SITE_URL.'/Public/sweetalert',
-        '__BS_TABLES__'                 => SITE_URL.'/Public/bootstrap-table',
-        '__BS_SWITCH__'                 => SITE_URL.'/Public/bootstrap-switch',
-        '__CKEDITOR__'                 => SITE_URL.'/Public/ckeditor',
-        '__CKEDITOR_BASIC__'                 => SITE_URL.'/Public/ckeditor-basic',
-        '__GOOGLE_CODE__'                 => SITE_URL.'/Public/google-code-prettify',
+        '__SITE_URL__'			=> 'http://apacal.cn',
+        '__UPLOAD__' 			=> '/Uploads',
+        '__PUBLIC__' 			=> '/Public',
+        '__CSS__' 				=> '/Public/css',
+        '__IMG__' 				=> '/Public/images',
+        '__JS__' 				=> '/Public/js',
+        '__BS__' 				=> '/Public/bootstrap',
+        '__SUMMERNOTE__' 				=> '/Public/summernote',
+        '__KALENDAR__' 				=> '/Public/kalendar',
+        '__JCROP__'                 => '/Public/Jcrop',
+        '__FILEINPUT__'                 => '/Public/bootstrap-fileinput',
+        '__CODEMIRROR__'                 => '/Public/CodeMirror',
+        '__JSTREE__'                 => '/Public/jstree-bootstrap-theme',
+        '__SWEETALERT__'                 => '/Public/sweetalert',
+        '__BS_TABLES__'                 => '/Public/bootstrap-table',
+        '__BS_SWITCH__'                 => '/Public/bootstrap-switch',
+        '__CKEDITOR__'                 => '/Public/ckeditor',
+        '__CKEDITOR_BASIC__'                 => '/Public/ckeditor-basic',
+        '__GOOGLE_CODE__'                 => '/Public/google-code-prettify',
 
     ),
 
