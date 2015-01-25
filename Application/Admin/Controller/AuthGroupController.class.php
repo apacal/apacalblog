@@ -13,6 +13,9 @@ use Admin\Model\AuthGroupModel;
 
 class AuthGroupController extends CommonController {
 
+    public function setStatus() {
+        header("HTTP/1.0 404 These data don't have status!");
+    }
     public function setExtManageData(&$val) {
         parent::setExtManageData($val);
         $rules = json_decode($val['rules']);

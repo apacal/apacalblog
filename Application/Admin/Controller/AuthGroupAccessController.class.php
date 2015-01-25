@@ -12,6 +12,10 @@ namespace Admin\Controller;
 use Admin\Model\AuthGroupModel;
 
 class AuthGroupAccessController extends CommonController {
+    public function setStatus() {
+        header("HTTP/1.0 404 These data don't have status!");
+    }
+
 
     protected function initEditAssign($pk, $controllerName, $type='Edit') {
         parent::initEditAssign('', $controllerName, $type);
