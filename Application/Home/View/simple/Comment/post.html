@@ -1,7 +1,4 @@
-<link rel="stylesheet" href="__SUMMERNOTE__/dist/font-awesome.min.css" />
-<link href="__SUMMERNOTE__/dist/summernote.css" rel="stylesheet">
-<script src="__SUMMERNOTE__/dist/summernote.js"></script>
-<script src="__SUMMERNOTE__/plugin/summernote-ext-fontstyle.js"></script>
+<script src="__CKEDITOR_BASIC__/ckeditor.js"></script>
 
 
 
@@ -11,7 +8,7 @@
         Leave a Reply
     </h2>
     <input id="comment-pid" type="hidden" value="0">
-    <input id="comment-oid" type="hidden" value="0">
+    <input id="comment-oid" type="hidden" value="{$oid}">
     <notempty name="uid">
     <p class="logged-in-as">
         Logged in as
@@ -46,8 +43,8 @@
 
     </notempty>
 
-    <div id="summernote">Hello</div>
 
+    <textarea id="postcontent"> </textarea>
     <div class="comment-not-allowed-tags">
         You can't use these HTML tags and attributes: <code>&lt;a href="" title=""&gt;  &lt; script &gt;</code>
     </div>
@@ -61,14 +58,28 @@
     <div id="show-error"></div>
 </div>
 <script>
+    $(document).ready(function () {
+        CKEDITOR.replace( 'postcontent');
+    });
     function postComment() {
         var userName = getInputVal('name', true);
         var userEmail = getInputVal('email', true);
         var pid = getInputVal('pid', true);
         var userWebsite = getInputVal('website', false);
-        var content = $('#summernote').code();
+        var content = CKEDITOR.instances.postcontent.getData();
+        if (content == '') {
+
+            showError('content can not empty!')
+            return ;
+        }
+        //console.log(content);
         var oid = getInputVal("oid", true);
-        ajaxPostComment(userName, userEmail, userWebsite, content, pid, oid);
+        console.log(window.getInputValError);
+        if (window.getInputValError  == undefined || window.getInputValError == false) {
+
+            ajaxPostComment(userName, userEmail, userWebsite, content, pid, oid);
+            window.getInputValError = false;
+        }
 
     }
 
@@ -85,7 +96,7 @@
             if (val == '') {
                 showError(subInputId + ' can not empty!')
                 $("#comment-" + subInputId).focus();
-                exit();
+                window.getInputValError = true;
             }
         }
         return val;
@@ -94,7 +105,7 @@
     function showError(msg) {
         var html = '<div class="alert alert-warning alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button> <strong>';
 
-        html += '评论失败！</strong> 信息为：' + msg + ' . </div>';
+        html += 'Add Comment Fail！</strong> message：' + msg + ' . </div>';
         $('#show-error').html(html);
     }
 
@@ -127,23 +138,6 @@
 
     }
 
-    $('#summernote').summernote({
-        height: 300,                 // set editor height
-
-        minHeight: null,             // set minimum height of editor
-        maxHeight: null,             // set maximum height of editor
-        focus: false,    // set focus to editable area after initializing summernote
-        toolbar: [
-            //[groupname, [button list]]
-            ['style', ['style']],
-            ['format', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['table', 'hr']],
-            ['height', ['height']],
-        ]
-    });
 </script>
 
 

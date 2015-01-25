@@ -13,7 +13,7 @@ use Think\Model;
 class NoteModel extends Model {
 
     public function getNoteList($cid) {
-        $tagNoteList = cacheTag(NoteList);
+        $tagNoteList = cacheTag(__METHOD__, $cid);
         if (false === ($list = getCache($tagNoteList))) {
             $User = new UserModel();
             $list = $this->order('createtime desc')->select();
@@ -28,7 +28,7 @@ class NoteModel extends Model {
             }
 
 
-            setCache($tagNoteList, $list, C('NOTE_TTL'));
+            setCache($tagNoteList, $list, NOTE_TTL);
         }
 
         return $list;

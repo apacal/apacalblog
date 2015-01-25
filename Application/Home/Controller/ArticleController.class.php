@@ -49,6 +49,11 @@ class ArticleController extends CommonController {
 
         $this->seo($article['title'], $article['keywords'], $article['description']);
 
+
+        $this->assign('commentUserInfo', getCommentUserInfo());
+        $this->assign('oid', $article['id']);
+        $this->assign("cid", $article['cid']);
+
         $this->display();
     }
 
@@ -69,7 +74,7 @@ class ArticleController extends CommonController {
             'cid' => $cid,
             'createtime' => array('between', array($startTime,$endTime)),
         );
-        $articleList = $articleModel->getArticleListByWhere($where);
+        $articleList = $articleModel->getListByWhere($where);
         if (empty($articleList)) {
             $this->error("没有该归档！");
         }

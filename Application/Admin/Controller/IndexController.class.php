@@ -7,6 +7,7 @@ class IndexController extends CommonController {
 
     public function index($id = 0){
         $this->assign("delCacheUrl", U("System/delCache"));
+        $this->assign("delMemcacheUrl", U("System/delMemcache"));
         $Menu = new MenuModel();
         $menu = $Menu->getFirstMenu();
         if (0 != $id) {

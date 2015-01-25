@@ -11,6 +11,10 @@ namespace Home\Model;
 
 class SearchModel {
     public function getSearchList($content) {
+        $tag = cacheTag(__METHOD__, $content);
+        if (false !== ($list = getCache($tag))) {
+            return $list;
+        }
         $searchTable = C('SEARCH_TABLE'); //需要查询的表
         $searchCol = C('SEARCH_COL');
         $searchSetCol = C('SEARCH_SET_COL');
@@ -38,6 +42,7 @@ class SearchModel {
                 $val[$value] = str_replace($content, $replace, $val[$value]);
             }
         }
+        setCache($tag, $result, SEARCH_TTL);
         return $result;
     }
 

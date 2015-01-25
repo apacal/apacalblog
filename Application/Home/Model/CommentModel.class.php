@@ -30,20 +30,25 @@ class CommentModel extends Model {
      * @return array|false
      */
     public function getCommentCount($cid, $oid) {
-        $tagCommentCount = cacheTag(CommentCount, $oid, $cid);
+        $tagCommentCount = cacheTag(__METHOD__, $oid, $cid);
         if (false === ($commentCount = getCache($tagCommentCount))) {
             $where['status'] = 1;
             $where['oid'] = $oid;
             $where['cid'] = $cid;
             $commentCount = $this->where($where)->count();
 
-            setCache($tagCommentCount, $commentCount, C('COMMENT_TTL'));
+            setCache($tagCommentCount, $commentCount, COMMENT_TTL);
         }
         return $commentCount;
     
     }
 
     public function getRecentCommentListByCategory($cid = 0,$oid = 0, $limit = 5) {
+        $tag = cacheTag(__METHOD__, $cid, $oid, $limit);
+        if (false !== ($list = getCache($tag))) {
+            return $list;
+        }
+
         $where = array(
             'status' => 1,
         );
@@ -83,6 +88,7 @@ class CommentModel extends Model {
 
         }
 
+        setCache($tag, $list, COMMENT_TTL);
         return $list;
     }
 
@@ -93,6 +99,10 @@ class CommentModel extends Model {
      * @return array|false|mixed|null
      */
     public function getCommentListByCidAndOid($cid, $oid) {
+        $tag = cacheTag(__METHOD__, $cid, $oid);
+        if (false !== ($list = getCache($tag))) {
+            return $list;
+        }
         $where = array(
             'status' => 1,
             'cid' => $cid,
@@ -101,26 +111,26 @@ class CommentModel extends Model {
         );
         $list = $this->getCommentListByWhere($where);
 
-        if(!is_array($list)) {
-            return false;
-        }
+        if(is_array($list)) {
+            foreach($list as &$val) {
+                $where['pid'] = $val['id'];
+                $subList = $this->getCommentListByWhere($where);
 
-        foreach($list as &$val) {
-            $where['pid'] = $val['id'];
-            $subList = $this->getCommentListByWhere($where);
-
-            if(is_array($subList)) {
-                foreach($subList as &$value) {
-                    $where['pid'] = $value['id'];
-                    $sub2List = $this->getCommentSub2AllList($where);
-                    if(!empty($sub2List)) {
-                        $value['sub2'] = $sub2List;
+                if(is_array($subList)) {
+                    foreach($subList as &$value) {
+                        $where['pid'] = $value['id'];
+                        $sub2List = $this->getCommentSub2AllList($where);
+                        if(!empty($sub2List)) {
+                            $value['sub2'] = $sub2List;
+                        }
                     }
+                    $val['sub'] = $subList;
                 }
-                $val['sub'] = $subList;
             }
         }
 
+
+        setCache($tag, $list, COMMENT_TTL);
         return $list;
 
 

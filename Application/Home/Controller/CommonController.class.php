@@ -25,6 +25,7 @@ class CommonController extends Controller {
     }
 
     function _initialize(){
+        $this->seo('','','');
         $userInfo = getUserInfo();
         if (($uid = is_login()) > 0) {
             $this->assign('uid', $uid);

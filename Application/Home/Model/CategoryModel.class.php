@@ -11,6 +11,10 @@ class CategoryModel extends RelationModel {
      * @return array | array('cate' => $cata, 'data' => $data)
      */
     public function getExtendInfoByCategoryIdAndObjectId($cid, $oid) {
+        $tag = cacheTag(__METHOD__, $cid, $oid);
+        if (false !== ($data = getCache($tag))) {
+            return $data;
+        }
         $cate = $this->where(array('id'=>$cid))->find();
         if (empty($cate)) {
             return false;
@@ -24,7 +28,9 @@ class CategoryModel extends RelationModel {
         if(empty($origin)) {
             $origin = false;
         }
-        return array('origin' => $origin, 'cate' => $cate);
+        $data = array('origin' => $origin, 'cate' => $cate);
+        setCache($tag, $data, CATEGORY_TTL);
+        return $data;
     }
 
     /**
@@ -32,7 +38,7 @@ class CategoryModel extends RelationModel {
      * @return array|false
      */
     public function getRedirectUrlByCategory($cid, $page) {
-        $tag = cacheTag(ControllerNameByCategory, $cid);
+        $tag = cacheTag(__METHOD__, $cid, $page);
         if (false !== ($url = getCache($tag))) {
             return $url;
         }
@@ -41,7 +47,7 @@ class CategoryModel extends RelationModel {
             $url = U($url, array('cid' => $cid));
         }
 
-        setCache($tag, $url, C('CATEGORY_TTL'));
+        setCache($tag, $url, CATEGORY_TTL);
         return $url;
     }
 
@@ -50,22 +56,46 @@ class CategoryModel extends RelationModel {
      * @return array|false
      */
     public function getNav() {
-        $tagNav = cacheTag(Nav);
-        //if (false === ($html = getCache($tagNav))) {
-            $where['status'] = 1;
-            $where['pid'] = 0;
-            $list = $this->where($where)->order('sort DESC')->select();
-            $this->getSubNav($list);
-
-            if (false !== ($html = $this->getNavHtml($list, 1))) {
-                setCache($tagNav, $html, C('CATEGORY_TTL'));
-            } else {
-                return false;
-            }
-
-        //} else {
+        $tagNav = cacheTag(__METHOD__);
+        if (false !== ($html = getCache($tagNav))) {
             return $html;
-        //}
+        }
+        $where['status'] = 1;
+        $where['pid'] = 0;
+        $list = $this->where($where)->order('sort DESC')->select();
+        $this->getSubNav($list);
+
+        if (false !== ($html = $this->getNavHtml($list, 1))) {
+            setCache($tagNav, $html, CATEGORY_TTL);
+            return $html;
+        } else {
+            return false;
+        }
+
+    }
+    /**
+     * @param $id
+     * @return array | false
+     */
+    public function getThisCategoryChildren($id) {
+        $tagChildren = cacheTag(__METHOD__, $id);
+        if (false === ($list = getCache($tagChildren))) {
+            $result = array();
+            $result[] = $id; //将当前的cid压入
+            $where['status'] = 1;
+            $where['pid'] = $id;
+            $list = $this->where($where)->getField('id', true);
+            $result = array_merge((array)$result, (array)$list);
+
+            $list = array();
+            // 处理查询结果
+            foreach ($result as $value)
+                $list[] = (int)$value;
+            //print_r($list);
+
+            setCache($tagChildren, $list, CATEGORY_TTL);
+        }
+        return $list;
     }
 
     private function getNavHtml($list, $isFirst) {
@@ -122,30 +152,6 @@ class CategoryModel extends RelationModel {
 
     }
 
-    /**
-     * @param $id
-     * @return array | false
-     */
-    public function getThisCategoryChildren($id) {
-        $tagChildren = cacheTag(ThisCategoryChildren, $id);
-        if (false === ($list = getCache($tagChildren))) {
-            $result = array();
-            $result[] = $id; //将当前的cid压入
-            $where['status'] = 1;
-            $where['pid'] = $id;
-            $list = $this->where($where)->getField('id', true);
-            $result = array_merge((array)$result, (array)$list);
-
-            $list = array();
-            // 处理查询结果
-            foreach ($result as $value)
-                $list[] = (int)$value;
-            //print_r($list);
-
-            setCache($tagChildren, $list, C("CATEGORY_TTL"));
-        }
-        return $list;
-    }
 
     /**
      * @param &$list

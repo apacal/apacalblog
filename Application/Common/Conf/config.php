@@ -1,4 +1,13 @@
 <?php
+define('SESSION_TTL', 12*24*60*60);
+define('SEARCH_TTL', 24*60*60);
+define('COMMENT_TTL', 5*60);
+define('ARTICLE_TTL', 24*60*60);
+define('NOTE_TTL', 24*60*60);
+define('CATEGORY_TTL', 12*24*60*60);
+define('LINK_TTL', 24*60*60);
+define('USED_MEMCACHED', true);
+
 return array(
 
     'UPLOADS_DIR_NAME'           =>  'Uploads',   // upload dir name
@@ -80,21 +89,20 @@ return array(
 
     // Memcache设置
     'MemCached'     =>   array(
+<<<<<<< HEAD
         'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
         //'hostname'  =>      '127.0.0.2',
+=======
+        //'hostname'  =>      '7e4d0da81a0611e4.m.cnhzalicm10pub001.ocs.aliyuncs.com',
+        'hostname'  =>      '127.0.0.1',
+>>>>>>> origin/master
         'port'      =>      '11211',
         'isSasl'    =>      true,
         'username'   =>      '7e4d0da81a0611e4',
         'passwd'    =>      'Memcache2014'
     ),
-    'NoCachedDie' => false,
+    'NoCachedDie' => true,
 
-    //session过期时间
-    'SESSION_TTL'       =>          60*60*24,
-    'ARTICLE_TTL'       =>          60*60*24,
-    'NOTE_TTL'          =>          60*60*24,
-    'CATEGORY_TTL'      =>          60*60*24*30,
-    'COMMENT_TTL'       =>          60*19,
 
 
 
@@ -119,6 +127,7 @@ return array(
         '__BS_TABLES__'                 => SITE_URL.'/Public/bootstrap-table',
         '__BS_SWITCH__'                 => SITE_URL.'/Public/bootstrap-switch',
         '__CKEDITOR__'                 => SITE_URL.'/Public/ckeditor',
+        '__CKEDITOR_BASIC__'                 => SITE_URL.'/Public/ckeditor-basic',
         '__GOOGLE_CODE__'                 => SITE_URL.'/Public/google-code-prettify',
 
     ),

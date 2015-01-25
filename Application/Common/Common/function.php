@@ -161,6 +161,10 @@ function checkMemcahed() {
  * @return bool|array
  */
 function getCache($key) {
+    if (USED_MEMCACHED !== true) {
+        return false;
+    }
+
     if(false === $data = \mem()->get($key)) {
         return false;
     } else {
@@ -183,23 +187,11 @@ function deleteCache($key) {
     return \mem()->delete($key);
 }
 
+function memFlush() {
+    return \mem()->flush();
+}
 
-define("OneArticle", 0);
-define("RecentArticleList", 1);
-define("RandArticleList", 2);
-define("ArticleCount", 3);
-define("ArticleCountGroupByDate", 4);
-define("ArticleList", 5);
-define("PrevArticle", 6);
-define("NextArticle", 16);
-define("ControllerNameByCategory", 7);
-define("Position", 8);
-define("Nav", 9);
-define("HotArticleList", 10);
-define("ThisCategoryChildren", 11);
-define("CommentCount", 12);
 
-define("NoteList", 14);
 
 function cacheTag() {
     $args = func_get_args();
