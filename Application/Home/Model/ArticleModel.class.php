@@ -26,7 +26,7 @@ class ArticleModel extends RelationModel {
 
 
     public function getListByWhere($where) {
-        $tag = cacheTag( __METHOD__, md5($where));
+        $tag = cacheTag( __METHOD__, md5(json_encode($where)));
         if (false !== ($list = getCache($tag))) {
             return $list;
         }

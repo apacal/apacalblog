@@ -25,6 +25,7 @@
                 ),
     'SEARCH_SET_COL'         =>     array(
                     'title',
+                    'content',
                 ),
     'URL_HTML_SUFFIX'   =>          'html',  //网站静态后缀
     'EVERY_PAGE_NUM'  =>          10,  //每次加载的文章的数目
