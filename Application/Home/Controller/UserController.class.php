@@ -19,12 +19,12 @@ class UserController extends CommonController{
     public function view() {
         $uid = I('get.id');
         if (empty($uid) || !is_numeric($uid)) {
-            $this->error("参数错误 !");
+            $this->error("param error !");
         }
         $User = new UserModel();
         $userInfo = $User->getUserInfo($uid);
         if (empty($userInfo)) {
-            $this->error("没有该用户!");
+            $this->error("use not exist!");
         }
         $this->initBackgroundUrl();
 
@@ -52,7 +52,7 @@ class UserController extends CommonController{
         if (!empty($file)) {
             $file = '.' .$file;
         } else {
-            $this->error("文件不存在!");
+            $this->error("file not exist!");
         }
         $Image->open($file);
         $Image->crop( I('post.w'), I('post.h'),I('post.x'), I('post.y'), 150, 150);
@@ -122,13 +122,13 @@ class UserController extends CommonController{
         $data = $User->create(I('post'), Model::MODEL_UPDATE);
 
         if ($User->checkUserExit($uid, $data['name']) === true) {
-            $this->error("用户已经存在!");
+            $this->error("use have exist!");
         }
 
         if (false === $User->update($uid, $data))  {
-            $this->error("更新失败!");
+            $this->error("update fail!");
         } else {
-            $this->success("更新成功！", U('User/index' .C('URL_HASH')));
+            $this->success("update success！", U('User/index' .C('URL_HASH')));
         }
 
 
@@ -160,7 +160,7 @@ class UserController extends CommonController{
      */
     public function logout() {
         $this->destroyUserLogin();
-        $this->success("退出成功！", U('User/login' .C('URL_HASH')), 4);
+        $this->success("logout success！", U('User/login' .C('URL_HASH')), 2);
     }
 
     /**
@@ -194,9 +194,9 @@ class UserController extends CommonController{
         if (!empty($uid)) {
             setUserLogin($uid);
             setUserInfo($data);
-            $this->success('注册成功！', U('User/index' .C('URL_HASH')));
+            $this->success('register success！', U('User/index' .C('URL_HASH')));
         } else {
-            $this->error("注册失败！");
+            $this->error("register error！");
         }
     }
 
@@ -204,17 +204,16 @@ class UserController extends CommonController{
      * check user password is correct and set user login info
      */
     public function checkPassword(){
-        //$this->checkVerify();
+        $this->checkVerify();
         if (is_login() > 0) {
-            $this->error("已经登陆！");
+            $this->error("you have been login！");
         }
-        //$this->checkVerify();
         $name = I('post.name');
         $password = I('post.password');
         if(empty($name)) {
-            $this->error('请填写用户名！');
+            $this->error('losing name！');
         }elseif(empty($password)){
-            $this->error('请填写密码！');
+            $this->error('losing password！');
         }
 
 
@@ -223,14 +222,14 @@ class UserController extends CommonController{
 
         //使用用户名、密码和状态的方式进行认证
         if(false === $authInfo) {
-            $this->error('用户不存在！');
+            $this->error('use not exist！');
         } else {
 
             if(!checkPasswd($password, $authInfo['pwd'])) {
-                $this->error('账号或密码错误！');
+                $this->error('password or username incorrect');
             }
             if($authInfo['status'] == 0){
-                $this->error('账号已被管理员禁用！');
+                $this->error('user have been forbidden！');
             }
 
             setUserLogin($authInfo['uid']);
@@ -247,7 +246,7 @@ class UserController extends CommonController{
             $User->save($data);
 
 
-            $this->success('登录成功！', U('User/index' .C('URL_HASH')), 4);
+            $this->success('login success！', U('User/index' .C('URL_HASH')), 2);
 
 
         }
@@ -268,7 +267,7 @@ class UserController extends CommonController{
         $code = I('post.verify');
         $id = '';
         if(!($verify->check($code, $id)))
-            $this->error("验证码错误!");
+            $this->error("verify is incorrect!");
     }
 
     /**
@@ -280,7 +279,7 @@ class UserController extends CommonController{
         if ($uid > 0) {
             return $uid;
         } else {
-            $this->error("需要登陆!", U('User/login'));
+            $this->error("You need to login!", U('User/login'), 2);
             return false;
         }
     }
