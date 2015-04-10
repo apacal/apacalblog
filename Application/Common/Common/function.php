@@ -200,6 +200,8 @@ function cacheTag() {
         $tag .= $val .'_';
     }
     $tag = trim($tag, '_');
+
+    $tag = C('MemCached')['unique'] .$tag;
     return $tag;
 }
 
