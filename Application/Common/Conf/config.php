@@ -96,7 +96,8 @@ return array(
         'port'      =>      '11211',
         'isSasl'    =>      true,
         'username'   =>      '7e4d0da81a0611e4',
-        'passwd'    =>      'Memcache2014'
+        'passwd'    =>      'Memcache2014',
+        'unique' => 'apacal'
     ),
     'NoCachedDie' => true,
 

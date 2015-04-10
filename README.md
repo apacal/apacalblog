@@ -20,4 +20,12 @@
 * @date 2014-04-12
 */
 
-ApacalBlog是apacal开发的个人博客，使用thinkphp框架，boostrap框架。
+apacalblog cms是一个简单的cms，欢迎使用。
+##Home page
+<http://cms.apacal.cn>
+##install
+<http://apacal.cn/article/89.html#nav-home>
+##demo
+<http://demo.apacal.cn>
+User Name:demo
+Password:demo
