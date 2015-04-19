@@ -220,26 +220,49 @@ class CommonController extends Controller {
         $Model = D(CONTROLLER_NAME);
         $pk = $Model->getPk();
 
+        // insert new
         if (empty($_REQUEST[$pk])) {
-            $data = $Model->create($_POST, MODEL::MODEL_INSERT);
-            unset($data[$pk]);
-            $this->proSaveData($data);
-            $result = $Model->add($data);
-            $id = $result;
+            if ( !($data = $Model->create($_REQUEST, MODEL::MODEL_INSERT))) {
 
+                $ret = array(
+                    'code' => 1,
+                    'data' => $Model->getError()
+                );
+
+                $this->jsonReturn($ret);
+                exit(0);
+
+            } else {
+                unset($data[$pk]);
+                $this->proSaveData($data);
+                $result = $Model->insert($data);
+                $id = $result;
+            }
+
+        // update
         } else {
-            $data = $Model->create($_POST, MODEL::MODEL_UPDATE);
-            $this->proSaveData($data);
-            $map = array(
-                $pk => I('post.' .$pk)
-            );
-            $id = $map[$pk];
-            unset($data[$pk]);
-            $result = $Model->where($map)->save($data);
+            if (!($data = $Model->create($_REQUEST, MODEL::MODEL_UPDATE))) {
+
+                $ret = array(
+                    'code' => 1,
+                    'data' => $Model->getError()
+                );
+
+                $this->jsonReturn($ret);
+                exit(0);
+            } else {
+                $this->proSaveData($data);
+                $map = array(
+                    $pk => I('post.' .$pk)
+                );
+                $id = $map[$pk];
+                unset($data[$pk]);
+                $result = $Model->update($map, $data);
+            }
         }
 
 
-        if ($result !== false) {
+        if ($result !== false && is_numeric($id)) {
             $ret = array(
                 'code' => 0,
                 'data' => '',
@@ -248,11 +271,8 @@ class CommonController extends Controller {
         } else {
             $ret = array(
                 'code' => 1,
-                'data' => $Model->getError()
+                'data' => $result
             );
-            if (empty($ret['data'])) {
-                $ret['data'] = $Model->getDbError();
-            }
         }
 
         $this->jsonReturn($ret);

@@ -51,6 +51,28 @@ class CommonModel extends Model {
         return $list;
     }
 
+    public function insert($data) {
+        if (($id = $this->add($data))) {
+            return $id;
+        } else {
+            return $this->getError() .' | ' .$this->getDbError();
+        }
+    }
+
+    public function update($where, $data) {
+
+        if ($this->where($where)->save($data) === false) {
+
+            return $this->getError() .' | ' .$this->getDbError();
+
+        } else {
+
+            return true;
+        }
+
+    }
+
+
 
 
 

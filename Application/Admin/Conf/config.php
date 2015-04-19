@@ -8,5 +8,7 @@ return array(
     'SESSION_TTL'   =>  60*60*24*7,
     'NoCachedDie' => false,
 
+    'SHOW_ERROR_MSG'                =>              true,    // 显示错误信息
+
 
 );

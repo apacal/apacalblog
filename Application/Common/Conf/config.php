@@ -99,7 +99,7 @@ return array(
         'passwd'    =>      'Memcache2014',
         'unique' => 'apacal'
     ),
-    'NoCachedDie' => true,
+    'NoCachedDie' => false,
 
 
 
@@ -127,6 +127,7 @@ return array(
         '__CKEDITOR__'                 => '/Public/ckeditor',
         '__CKEDITOR_BASIC__'                 => '/Public/ckeditor-basic',
         '__GOOGLE_CODE__'                 => '/Public/google-code-prettify',
+        '__BS_GALLERY__'                 => '/Public/bootstrap-gallery',
 
     ),
 

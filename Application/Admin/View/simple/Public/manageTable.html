@@ -18,7 +18,12 @@
         <tr>
             <th data-field="pk" data-checkbox="true"></th>
 
-            <th data-field="pk" data-formatter="operateFormatter" data-events="operateEvents"
+            <th data-field="pk"
+                <empty name="is_gallery">
+                    data-formatter="operateFormatter" data-events="operateEvents"
+                    <else />
+                    data-formatter="operateFormatterInGallery" data-events="operateEventsInGallery"
+                </empty>
                 data-halign="center" data-align="center"
                 >Operate</th>
 
@@ -32,6 +37,10 @@
 
                 <eq name="fields_vo.field" value="icon">
                     data-formatter="iconFormatter"
+                </eq>
+
+                <eq name="fields_vo.field" value="image">
+                    data-formatter="imageFormatter"
                 </eq>
 
                     >

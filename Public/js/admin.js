@@ -320,6 +320,53 @@ window.operateEvents = {
 
 
 /**
+ * manage table formatter operate in gallery
+ * @param value
+ * @param row
+ * @param index
+ * @returns {string}
+ */
+function operateFormatterInGallery(value, row, index) {
+    return [
+        '<a class="edit ml10" href="javascript:void(0)" title="Edit">',
+        '<i class="glyphicon glyphicon-edit"></i>',
+        '</a>',
+        '&nbsp;&nbsp;&nbsp;',
+        '<a class="edit_items ml10" href="javascript:void(0)" title="EditItems">',
+        '<i class="glyphicon glyphicon-picture"></i>',
+        '</a>',
+        '&nbsp;&nbsp;&nbsp;',
+        '<a class="remove ml10" href="javascript:void(0)" title="Remove">',
+        '<i class="glyphicon glyphicon-trash"></i>',
+        '</a>'
+    ].join('');
+}
+
+/**
+ * manage table in operate action
+ * @type {{click .edit: Function, click .remove: Function}}
+ */
+window.operateEventsInGallery = {
+    'click .edit': function (e, value, row, index) {
+        addTab(row.editTab + '-' + row.pkey, row.editUrl);
+        //console.log(value, row, index);
+    },
+    'click .edit_items': function (e, value, row, index) {
+        addTab(row.editItemsTab + '-' + row.pkey, row.editItemsUrl);
+        //console.log(value, row, index);
+    },
+    'click .remove': function (e, value, row, index) {
+        window.bsTableDom =  $(this).parents(".bootstrap-table");
+
+        var data = {
+            'id': row.pkey
+        };
+        ajaxChangeRows(row.delUrl, data, "delete row that pk is " + row.pkey + " success!");
+
+    }
+};
+
+/**
  * refresh bs-table data by switch dom
  * @param dom
  */
@@ -399,6 +446,24 @@ function initSwitch() {
  */
 function iconFormatter(value, row) {
     return '<span class="' + value + '"></span>';
+}
+
+
+/**
+ * formatter image in manage table
+ * @param value
+ * @param row
+ * @returns {string}
+ */
+function imageFormatter(value, row) {
+    if (value == undefined || value == null) {
+
+        return '<img style="max-width:50px" alt="404" src="' +  '">';
+
+    } else {
+
+        return '<img style="max-width:50px" alt="404" src="' + value + '">';
+    }
 }
 
 /**
