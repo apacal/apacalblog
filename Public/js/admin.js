@@ -456,9 +456,10 @@ function iconFormatter(value, row) {
  * @returns {string}
  */
 function imageFormatter(value, row) {
-    if (value == undefined || value == null) {
+    //console.log(value);
+    if (value == undefined || value == null || value == '') {
 
-        return '<img style="max-width:50px" alt="404" src="' +  '">';
+        return '<img style="max-width:50px" alt="404" src="">';
 
     } else {
 
@@ -527,10 +528,7 @@ function ajaxChangeRows(url, data, success) {
         url: url,
         type: 'post',
         data: data,
-        error: function(XMLHttpRequest, textStatus, errorThrown){
-            sweetAlert( "Server Status: " + XMLHttpRequest.status, XMLHttpRequest.statusText, "error");
-
-        },
+        error: httpError,
         success: function(data,status){
             if (status == 'success') {
                 data = JSON.parse(data);
@@ -560,9 +558,7 @@ function createPwd() {
         url: window.pwdUrl,
         data: data,
         type: 'post',
-        error: function(XMLHttpRequest, textStatus, errorThrown){
-            sweetAlert( "Server Status: " + XMLHttpRequest.status, XMLHttpRequest.statusText, "error");
-        },
+        error: httpError,
         success: function(data,status){
             if (status != 'success') {
                 error(status);
@@ -740,4 +736,14 @@ function removeTag(iconDom) {
     }
     $(iconDom).parent('span').remove();
 
+}
+
+/**
+ * alert error when http request happen
+ * @param XMLHttpRequest
+ * @param textStatus
+ * @param errorThrown
+ */
+function httpError(XMLHttpRequest, textStatus, errorThrown) {
+    sweetAlert("Server Status: " + XMLHttpRequest.status, XMLHttpRequest.statusText, "error");
 }

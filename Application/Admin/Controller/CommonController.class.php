@@ -17,10 +17,11 @@ class CommonController extends Controller {
     protected $editPage = 'Public/edit';
 
     public function  _initialize() {
-        if (!is_login()) {
+        $id = is_login();
+        if (is_login() == 0) {
             $this->sendNotAuth("not login");
         }
-        if (!is_admin()) {
+        if (is_admin() === false) {
             $this->sendNotAuth("not admin");
         }
         if ((new AuthModel())->checkAuth(CONTROLLER_NAME .'/' .ACTION_NAME, is_login()) === false ) {
@@ -55,6 +56,10 @@ class CommonController extends Controller {
             if(empty($ret['data'])) {
                 $ret['data'] = $Model->getDbError();
             }
+        } else {
+            $ret['data'] = array(
+                'id' => $_REQUEST['id']
+            );
         }
 
         $this->jsonReturn($ret);
@@ -265,7 +270,9 @@ class CommonController extends Controller {
         if ($result !== false && is_numeric($id)) {
             $ret = array(
                 'code' => 0,
-                'data' => '',
+                'data' => array(
+                    'id' => $id
+                )
             );
             $this->extSave($id);
         } else {
@@ -324,9 +331,7 @@ class CommonController extends Controller {
     }
 
     protected function setExtManageData(&$val) {
-        if (isset($val['image'])) {
-            $val['image'] = '<img style="width:40px;height:40px" src="' .$val['image'] .'"></img>';
-        }
+
         if (isset($val['cid'])) {
             $val['cid'] = (new CategoryModel())->getCategoryName($val['cid']);
         }

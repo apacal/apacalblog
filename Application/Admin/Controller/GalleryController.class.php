@@ -9,56 +9,34 @@
 namespace Admin\Controller;
 
 
+
 use Admin\Model\GalleryItemsModel;
 
 class GalleryController extends CommonController {
 
     public function _initialize() {
+        parent::_initialize();
         $this->assign("is_gallery", true);
     }
 
 
     public function editItems($gallery_id = 0) {
+        $Model = new GalleryItemsModel();
 
-        $list = array(
-        );
-        $data = array(
-            'url' => U('Gallery/view'),
-            'title' => "this test title",
-            'image' => "/Uploads/Avatar/image/20150113/54b50954c9750.png"
-        );
-        for ($i = 1; $i < 10; $i++) {
-            $data['id'] = $i;
-            $list[] = $data;
+        if (empty($gallery_id) || !is_numeric($gallery_id)) {
+            $this->sendNotAuth("less argv!");
         }
+
+        $where = array(
+            'gallery_id' => $gallery_id,
+        );
+        $list = $Model->getList($where, "sort DESC");
+
         $this->assign('gallery', $list);
-        $this->assign("gallery_id", 10);
+        $this->assign("gallery_id", $gallery_id);
         $this->display();
     }
 
-    public function saveGalleryItem($gallery_id, $image, $title) {
-        $ret = array(
-            'code' => 0,
-        );
-        if (empty($gallery_id) || empty($image) || empty($title)) {
-            $ret['code'] = 1;
-            $ret['data'] = 'less some argv!';
-        } else {
-            $GalleryItem = new GalleryItemsModel();
-            $data = $GalleryItem->create($_REQUEST);
-            if ($GalleryItem->add($data)) {
-
-            }
-
-        }
-
-        $this->jsonReturn($ret);
-
-    }
-
-    public function delGalleryItem() {
-
-    }
 
     protected function setExtManageData(&$val) {
         $val['editItemsTab'] = 'GalleryItems';

@@ -5,7 +5,7 @@
     <div class="gallery container">
         <volist name="gallery" id="vo">
             <div class="thumbnail" title="{$vo.title}" href="{$vo.url}" data-gallery>
-                <img src="{$vo.image}" href="{$vo.url}" alt="{$vo.title}" onclick="window.location.replace('{$vo.url}');">
+                <img src="{$vo.image}" href="{$vo.url}" alt="{$vo.title}" onclick="window.open('{$vo.url}', '_self');">
 
                 <div class="caption">
                     <h3><a href="{$vo.url}">{$vo.title}</a></h3>

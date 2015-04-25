@@ -10,40 +10,41 @@ namespace Home\Controller;
 
 
 
+use Home\Model\CategoryModel;
+use Home\Model\GalleryItemsModel;
+use Home\Model\GalleryModel;
+
 class GalleryController extends CommentController {
 
     public function index($cid = 0) {
 
-
-        $list = array(
-        );
-        $data = array(
-            'url' => U('Gallery/view'),
-            'title' => "this test title",
-            'image' => "/Uploads/Avatar/image/20150113/54b50954c9750.png"
-        );
-        for ($i = 0; $i < 10; $i++) {
-            $list[] = $data;
+        if ($cid == 0) {
+            $where = array(
+                'status' => 1,
+            );
+        } else {
+            $where = array(
+                'status' => 1,
+                'cid' => array('in', (new CategoryModel())->getThisCategoryChildren($cid))
+            );
         }
+        $list = (new GalleryModel())->getListByWhere($where);
+
         $this->assign('gallery', $list);
         $this->display();
 
     }
 
-    public function view($id = 0) {
+    public function view($id = 0, $title = '') {
 
-        $list = array(
+        $where = array(
+            'status' => 1,
+            'gallery_id' => $id,
         );
-        $data = array(
-            'url' => U('Gallery/view'),
-            'title' => "this test title",
-            'image' => "/Uploads/Avatar/image/20150113/54b50954c9750.png"
-        );
-        for ($i = 0; $i < 10; $i++) {
-            $list[] = $data;
-        }
+        $list = (new GalleryItemsModel())->getListByWhere($where);
+
         $this->assign('gallery', $list);
-        $this->assign("page_title", "gallery title");
+        $this->assign("page_title", $title);
         $this->display();
     }
 
