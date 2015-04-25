@@ -320,6 +320,53 @@ window.operateEvents = {
 
 
 /**
+ * manage table formatter operate in gallery
+ * @param value
+ * @param row
+ * @param index
+ * @returns {string}
+ */
+function operateFormatterInGallery(value, row, index) {
+    return [
+        '<a class="edit ml10" href="javascript:void(0)" title="Edit">',
+        '<i class="glyphicon glyphicon-edit"></i>',
+        '</a>',
+        '&nbsp;&nbsp;&nbsp;',
+        '<a class="edit_items ml10" href="javascript:void(0)" title="EditItems">',
+        '<i class="glyphicon glyphicon-picture"></i>',
+        '</a>',
+        '&nbsp;&nbsp;&nbsp;',
+        '<a class="remove ml10" href="javascript:void(0)" title="Remove">',
+        '<i class="glyphicon glyphicon-trash"></i>',
+        '</a>'
+    ].join('');
+}
+
+/**
+ * manage table in operate action
+ * @type {{click .edit: Function, click .remove: Function}}
+ */
+window.operateEventsInGallery = {
+    'click .edit': function (e, value, row, index) {
+        addTab(row.editTab + '-' + row.pkey, row.editUrl);
+        //console.log(value, row, index);
+    },
+    'click .edit_items': function (e, value, row, index) {
+        addTab(row.editItemsTab + '-' + row.pkey, row.editItemsUrl);
+        //console.log(value, row, index);
+    },
+    'click .remove': function (e, value, row, index) {
+        window.bsTableDom =  $(this).parents(".bootstrap-table");
+
+        var data = {
+            'id': row.pkey
+        };
+        ajaxChangeRows(row.delUrl, data, "delete row that pk is " + row.pkey + " success!");
+
+    }
+};
+
+/**
  * refresh bs-table data by switch dom
  * @param dom
  */
@@ -401,6 +448,25 @@ function iconFormatter(value, row) {
     return '<span class="' + value + '"></span>';
 }
 
+
+/**
+ * formatter image in manage table
+ * @param value
+ * @param row
+ * @returns {string}
+ */
+function imageFormatter(value, row) {
+    //console.log(value);
+    if (value == undefined || value == null || value == '') {
+
+        return '<img style="max-width:50px" alt="404" src="">';
+
+    } else {
+
+        return '<img style="max-width:50px" alt="404" src="' + value + '">';
+    }
+}
+
 /**
  * status formatter
  * @param value
@@ -462,10 +528,7 @@ function ajaxChangeRows(url, data, success) {
         url: url,
         type: 'post',
         data: data,
-        error: function(XMLHttpRequest, textStatus, errorThrown){
-            sweetAlert( "Server Status: " + XMLHttpRequest.status, XMLHttpRequest.statusText, "error");
-
-        },
+        error: httpError,
         success: function(data,status){
             if (status == 'success') {
                 data = JSON.parse(data);
@@ -495,9 +558,7 @@ function createPwd() {
         url: window.pwdUrl,
         data: data,
         type: 'post',
-        error: function(XMLHttpRequest, textStatus, errorThrown){
-            sweetAlert( "Server Status: " + XMLHttpRequest.status, XMLHttpRequest.statusText, "error");
-        },
+        error: httpError,
         success: function(data,status){
             if (status != 'success') {
                 error(status);
@@ -675,4 +736,14 @@ function removeTag(iconDom) {
     }
     $(iconDom).parent('span').remove();
 
+}
+
+/**
+ * alert error when http request happen
+ * @param XMLHttpRequest
+ * @param textStatus
+ * @param errorThrown
+ */
+function httpError(XMLHttpRequest, textStatus, errorThrown) {
+    sweetAlert("Server Status: " + XMLHttpRequest.status, XMLHttpRequest.statusText, "error");
 }

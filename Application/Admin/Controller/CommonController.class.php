@@ -17,10 +17,11 @@ class CommonController extends Controller {
     protected $editPage = 'Public/edit';
 
     public function  _initialize() {
-        if (!is_login()) {
+        $id = is_login();
+        if (is_login() == 0) {
             $this->sendNotAuth("not login");
         }
-        if (!is_admin()) {
+        if (is_admin() === false) {
             $this->sendNotAuth("not admin");
         }
         if ((new AuthModel())->checkAuth(CONTROLLER_NAME .'/' .ACTION_NAME, is_login()) === false ) {
@@ -55,6 +56,10 @@ class CommonController extends Controller {
             if(empty($ret['data'])) {
                 $ret['data'] = $Model->getDbError();
             }
+        } else {
+            $ret['data'] = array(
+                'id' => $_REQUEST['id']
+            );
         }
 
         $this->jsonReturn($ret);
@@ -220,39 +225,61 @@ class CommonController extends Controller {
         $Model = D(CONTROLLER_NAME);
         $pk = $Model->getPk();
 
+        // insert new
         if (empty($_REQUEST[$pk])) {
-            $data = $Model->create($_POST, MODEL::MODEL_INSERT);
-            unset($data[$pk]);
-            $this->proSaveData($data);
-            $result = $Model->add($data);
-            $id = $result;
+            if ( !($data = $Model->create($_REQUEST, MODEL::MODEL_INSERT))) {
 
+                $ret = array(
+                    'code' => 1,
+                    'data' => $Model->getError()
+                );
+
+                $this->jsonReturn($ret);
+                exit(0);
+
+            } else {
+                unset($data[$pk]);
+                $this->proSaveData($data);
+                $result = $Model->insert($data);
+                $id = $result;
+            }
+
+        // update
         } else {
-            $data = $Model->create($_POST, MODEL::MODEL_UPDATE);
-            $this->proSaveData($data);
-            $map = array(
-                $pk => I('post.' .$pk)
-            );
-            $id = $map[$pk];
-            unset($data[$pk]);
-            $result = $Model->where($map)->save($data);
+            if (!($data = $Model->create($_REQUEST, MODEL::MODEL_UPDATE))) {
+
+                $ret = array(
+                    'code' => 1,
+                    'data' => $Model->getError()
+                );
+
+                $this->jsonReturn($ret);
+                exit(0);
+            } else {
+                $this->proSaveData($data);
+                $map = array(
+                    $pk => I('post.' .$pk)
+                );
+                $id = $map[$pk];
+                unset($data[$pk]);
+                $result = $Model->update($map, $data);
+            }
         }
 
 
-        if ($result !== false) {
+        if ($result !== false && is_numeric($id)) {
             $ret = array(
                 'code' => 0,
-                'data' => '',
+                'data' => array(
+                    'id' => $id
+                )
             );
             $this->extSave($id);
         } else {
             $ret = array(
                 'code' => 1,
-                'data' => $Model->getError()
+                'data' => $result
             );
-            if (empty($ret['data'])) {
-                $ret['data'] = $Model->getDbError();
-            }
         }
 
         $this->jsonReturn($ret);
@@ -304,9 +331,7 @@ class CommonController extends Controller {
     }
 
     protected function setExtManageData(&$val) {
-        if (isset($val['image'])) {
-            $val['image'] = '<img style="width:40px;height:40px" src="' .$val['image'] .'"></img>';
-        }
+
         if (isset($val['cid'])) {
             $val['cid'] = (new CategoryModel())->getCategoryName($val['cid']);
         }

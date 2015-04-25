@@ -10,12 +10,4 @@ class ArticleModel extends CommonModel {
         array('keyword','require','关键字必须！'),
     );
 
-    public function delCache($cid = 0, $id = 0) {
-        $tag = cacheTag(ArticleList, $cid, 0); // article page
-        deleteCache($tag);
-        $tag = cacheTag(ArticleList, 0, 0); // home page
-        deleteCache($tag);
-        $tag = cacheTag(OneArticle, $id);
-        deleteCache($tag);
-    }
 }

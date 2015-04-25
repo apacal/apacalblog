@@ -737,7 +737,71 @@ footer a {
 }
 
 
+/* gallery */
+
+.gallery .thumbnail {
+    /*
+    max-height: 360px;
+    */
+    max-width: 330px;
+    height: auto;
+    float: left;
+    margin-right: 30px;
+    margin-top:20px;
+}
+
+.gallery {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.gallery .thumbnail:hover {
+    border-color: #0099ff;
+}
+
+.gallery h3 a  {
+    color:#000000;
+}
+
+.gallery .thumbnail {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.gallery .thumbnail img{
+    margin:auto;
+    max-width: 300px;
+    max-height: 250px;
+    overflow: hidden;
+
+}
+.gallery .thumbnail h3{
+    margin-top: 0px;
+    text-align: center;
+}
+
+@media (min-width: 1366px) {
+    .modal-right {
+        height:104%;
+        position: fixed;
+        top: -2%;
+        right: -24%;
+        width: 28%;
+        display: none;
+    }
+    .modal-left {
+        display: none;
+        height:80%;
+        position: fixed;
+        top: 10%;
+        left: -24%;
+        width: 28%;
+
+    }
+}
 @media (max-width: 800px) {
+
     #nav-right {
         float: left;
         width: 100%;

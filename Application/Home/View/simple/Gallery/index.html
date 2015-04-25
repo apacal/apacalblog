@@ -1,0 +1,29 @@
+<extend name="Public:base" />
+
+
+<block name="content">
+    <div class="gallery container">
+        <volist name="gallery" id="vo">
+            <div class="thumbnail" title="{$vo.title}" href="{$vo.url}" data-gallery>
+                <img src="{$vo.image}" href="{$vo.url}" alt="{$vo.title}" onclick="window.open('{$vo.url}', '_self');">
+
+                <div class="caption">
+                    <h3><a href="{$vo.url}">{$vo.title}</a></h3>
+                </div>
+            </div>
+        </volist>
+
+            <!--
+            <a href="__IMG__/bg1.jpg" title="Banana" data-gallery>
+                <img src="__IMG__/bg1.jpg" alt="Banana">
+            </a>
+            <a href="__IMG__/bg1.jpg" title="Banana" data-gallery>
+                <img src="__IMG__/bg1.jpg" alt="Banana">
+            </a>
+            -->
+        </div>
+
+    </div>
+
+
+</block>
