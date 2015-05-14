@@ -9,11 +9,12 @@
 namespace Admin\Model;
 
 
-use Think\Model;
 
-class AuthGroupModel extends Model {
+class AuthGroupModel extends CommonModel {
+
     public function getGroupName($id) {
         return $this->where(array('id'=>$id))->getField('name');
+
     }
 
     public function getGroupIdsByRuleId($ruleId){

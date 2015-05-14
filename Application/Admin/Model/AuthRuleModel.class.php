@@ -9,9 +9,8 @@
 namespace Admin\Model;
 
 
-use Think\Model;
 
-class AuthRuleModel extends Model {
+class AuthRuleModel extends CommonModel {
     public function getRuleId($rule) {
         $id = $this->where(array('rule'=>$rule))->getField('id');
         if (empty($id)) {

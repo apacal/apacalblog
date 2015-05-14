@@ -8,6 +8,10 @@ class UserModel extends CommonModel {
         array('name','','帐号名称已经存在！',Model::EXISTS_VALIDATE,'unique',Model::MODEL_INSERT),
     );
 
+    protected $_auto = array( //自动完成
+        array('createtime', 'time', self::MODEL_INSERT, 'function'),
+        array('updatetime', 'time', self::MODEL_BOTH, 'function'),
+    );
 
 
     public function getUserInfoByName($name) {
@@ -17,9 +21,7 @@ class UserModel extends CommonModel {
 
         $userInfo = $this->where($where)->find();
         if (is_array($userInfo)) {
-            if( (new AuthGroupAccessModel())->getUserGroupByUid($userInfo['uid']) > 0) {
-              $userInfo['isGroup'] = 1;
-            }
+              $userInfo['isGroup'] =  (new AuthGroupAccessModel())->getUserGroupByUid($userInfo['uid']);
         }
         return $userInfo;
     }
@@ -33,14 +35,6 @@ class UserModel extends CommonModel {
         }
     }
 
-
-    public function update($uid, $data) {
-        $where = array(
-            'uid' => $uid,
-        );
-
-        return $this->where($where)->save($data);
-    }
 
     /**
      * @param $uid
