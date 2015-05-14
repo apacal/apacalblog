@@ -9,7 +9,7 @@
 
 
 body {
-    font-family: 'Lato', sans-serif;
+    font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", "Tahoma", "Hiragino Sans GB", 'STHeiti', "Microsoft YaHei";
     background: #ffffff;
 }
 
@@ -323,7 +323,7 @@ header a:hover{
     background: #FFF;
     border: 1px solid #DDD;
     border-right: none;
-    font-family: 'Lato', sans-serif;
+    /*font-family: 'Lato', sans-serif;*/
     border-radius: 3px 0 0 3px;
     -moz-border-radius: 3px 0 0 3px;
     -webkit-border-radius: 3px 0 0 3px;
@@ -348,7 +348,7 @@ header a:hover{
     color: #FFF;
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-family: 'Lato', sans-serif;
+    /*font-family: 'Lato', sans-serif;*/
     border-radius: 0 3px 3px 0;
     -moz-border-radius: 0 3px 3px 0;
     -webkit-border-radius: 0 3px 3px 0;

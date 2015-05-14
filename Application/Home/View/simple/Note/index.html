@@ -3,7 +3,7 @@
 <block name="content">
 <div class="container marketing note" >
 
-    <div class="col-md-8 col-sm-8 col-xs-12 left">
+    <div class="col-md-12 col-sm-12 col-xs-12 left">
         <notempty name="page_title">
             <div class="page-title">
                 <h4 class="text-uppercase">
@@ -12,7 +12,7 @@
             </div>
         </notempty>
     </div>
-    <div class="col-md-8 col-sm-8 col-xs-12 left">
+    <div class="col-md-12 col-sm-12 col-xs-12 left">
         <volist name="list" id="vo">
             <div class="media" >
                 <a class="media-left" href="{$vo.userUrl}" target="_blank">
@@ -38,6 +38,5 @@
         </volist>
         <include file="Comment:post" />
     </div>
-    <include file="Public:right" />
 </div>
 </block>
