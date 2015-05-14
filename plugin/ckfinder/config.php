@@ -109,8 +109,8 @@ Set the maximum size of uploaded images. If an uploaded image is larger, it
 gets scaled down proportionally. Set to 0 to disable this feature.
 */
 $config['Images'] = Array(
-		'maxWidth' => 1600,
-		'maxHeight' => 1200,
+		'maxWidth' => 8600,
+		'maxHeight' => 5200,
 		'quality' => 80);
 
 /*
@@ -209,7 +209,7 @@ $config['ResourceType'][] = Array(
 		'name' => 'Images',
 		'url' => $baseUrl . 'images',
 		'directory' => $baseDir . 'images',
-		'maxSize' => 0,
+		'maxSize' => '12M',
 		'allowedExtensions' => 'bmp,gif,jpeg,jpg,png',
 		'deniedExtensions' => '');
 

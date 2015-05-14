@@ -780,6 +780,12 @@ footer a {
     margin-top: 0px;
     text-align: center;
 }
+.modal-right {
+    display: none;
+}
+.modal-left{
+    display: none;
+}
 
 @media (min-width: 1366px) {
     .modal-right {
