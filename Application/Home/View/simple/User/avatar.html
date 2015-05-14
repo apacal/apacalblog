@@ -47,6 +47,10 @@
 </block>
 
 <script>
+    /**
+     * update crop x,y,w,h value to form
+     * @param c
+     */
     function updateCoords(c)
     {
         $('#x').val(c.x);
@@ -55,6 +59,10 @@
         $('#h').val(c.h);
     };
 
+    /**
+     * check crop is correct
+     * @returns {boolean}
+     */
     function checkCoords()
     {
         if (parseInt($('#w').val())) return true;
@@ -66,7 +74,9 @@
     $(document).ready(function() {
 
 
-
+        /**
+         * 绑定点击上传图片按钮时弹出选择图片窗口并进行图片的上传.
+         * /
         $('#input-image').on('fileuploaded', function(event, data, previewId, index) {
             var form = data.form, files = data.files, extra = data.extra,
                 response = data.response, reader = data.reader;
@@ -76,6 +86,9 @@
 
 
 
+        /**
+         * 绑定当图片上传成功时，初始化话Crop插件
+         * /
         $('#input-avatar').on('fileuploaded', function(event, data, previewId, index) {
             var jsonData = data.response
             if (jsonData.code == '0') {
@@ -95,6 +108,10 @@
             console.log(data.response);
         });
 
+
+        /**
+         * init file upload plugin
+         */
         $("#input-avatar").fileinput({
 
         <notempty name="vo.image">

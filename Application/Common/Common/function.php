@@ -180,6 +180,9 @@ function getCache($key) {
  * @return bool
  */
 function setCache($key, $data, $expiration ) {
+    if (USED_MEMCACHED !== true) {
+        return false;
+    }
     return \mem()->set($key, $data, $expiration );
 }
 

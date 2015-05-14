@@ -11,7 +11,7 @@ namespace Admin\Model;
 
 use Think\Model;
 
-class AuthGroupAccessModel extends Model{
+class AuthGroupAccessModel extends CommonModel{
     public function checkUserInGroups($uid, $groupIds) {
         $where = array(
             'uid' => $uid,

@@ -9,7 +9,7 @@
 namespace Admin\Model;
 
 
-class AuthModel {
+class AuthModel extends CommonModel {
     public function checkAuth($rule, $uid) {
         if (false === ($ruleId = (new AuthRuleModel())->getruleId($rule))) {
             return true;

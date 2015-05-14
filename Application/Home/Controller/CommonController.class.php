@@ -16,8 +16,8 @@ class CommonController extends Controller {
      * empty action redirect to 404
      */
     public function _empty() {
-        var_dump(CONTROLLER_NAME);
-        //redirect(C('FORBIDDEN'));
+        //var_dump(CONTROLLER_NAME);
+        redirect(C('FORBIDDEN'));
     }
 
     protected function jsonReturn($data) {
