@@ -67,6 +67,9 @@ class IndexController extends CommonController {
         $this->assign('archives_list', $articleModel->getArticleListGroupByDateByCategry($cid));
         $this->assign('tags_list', $articleModel->getTagsByCategory($cid));
         $this->seo('首页', NULL, NULL, NULL);
+        if ($cid == 0) {
+            $this->assign('index', 1);
+        }
         $this->display('Index:index');
     }
 

@@ -68,23 +68,4 @@
     </div>
     </notempty>
 
-    <div class="widget meta">
-        <h3 class="text-uppercase">META</h3>
-
-        <ul class="list-unstyled text-uppercase">
-            <empty name="uid">
-                <li> <h4>
-                    <a href="{:U('/user/login')}" target="_blank">Log in</a>
-                </h4></li>
-                <li> <h4>
-                    <a href="{:U('User/register' .C('URL_HASH'))}" target="_blank">Register</a>
-                </h4></li>
-                <else />
-                <li> <h4>
-                    <a href="{:U('/user/logout')}" target="_blank">Log out</a>
-                </h4></li>
-            </empty>
-        </ul>
-
-    </div>
 </div>
