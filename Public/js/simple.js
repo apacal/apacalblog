@@ -77,7 +77,7 @@ function initHash() {
 
 var opacity = 1;
 var prev = 0;
-var topSize = 15;
+var topSize = 30;
 
 function showBlogInfo() {
 
@@ -100,7 +100,7 @@ function showBlogInfo() {
     }
     if (curr == 0) {
         opacity = 1;
-        topSize = 15;
+        topSize = 30;
     }
 
     //console.log("opacity: " + opacity);
@@ -114,7 +114,7 @@ function showBlogInfo() {
         $("#header-info").css("top", topSize + "%");
     } else {
         opacity = 0;
-        topSize = 40;
+        topSize = 60;
 
     }
     window.topSize = topSize;

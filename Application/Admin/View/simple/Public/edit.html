@@ -115,6 +115,20 @@
 
                                         </neq>
                                     </case>
+                                    <case value="status" break="1">
+                                        <div class="col-sm-10 col-xs-10">
+                                            <select class="form-control" name="{$field}">
+
+                                                <eq name="vo" value="0">
+                                                    <option value="0">Off</option>
+                                                    <option value="1">On</option>
+                                                <else />
+                                                    <option value="1">On</option>
+                                                    <option value="0">Off</option>
+                                                </eq>
+                                            </select>
+                                        </div>
+                                    </case>
 
                                     <default />
                                         <div class="col-sm-10 col-xs-10">

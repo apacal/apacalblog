@@ -15,16 +15,17 @@ class CommonController extends Controller {
     protected $unManageField = array("updatetime");
     protected $controllerExtName = CONTROLLER_NAME;
     protected $editPage = 'Public/edit';
+    protected $order = 'id desc';
 
     public function  _initialize() {
-        $id = is_login();
-        if (is_login() == 0) {
+        $uid = is_login();
+        if ($uid == 0) {
             $this->sendNotAuth("not login");
         }
         if (is_admin() === false) {
             $this->sendNotAuth("not admin");
         }
-        if ((new AuthModel())->checkAuth(CONTROLLER_NAME .'/' .ACTION_NAME, is_login()) === false ) {
+        if ((new AuthModel())->checkAuth(CONTROLLER_NAME .'/' .ACTION_NAME, $uid) === false ) {
             $this->sendNotAuth(CONTROLLER_NAME .'/' .ACTION_NAME);
         }
     }
@@ -148,7 +149,7 @@ class CommonController extends Controller {
     public function manageJsonData() {
         $controllerName = CONTROLLER_NAME;
         $Model = new Model($controllerName);
-        $list = $Model->field($this->unManageField, true)->select();
+        $list = $Model->field($this->unManageField, true)->order($this->order)->select();
         $pk = $Model->getPk();
         foreach ($list as &$val) {
             $val['statusUrl'] = U($controllerName .'/setStatus');
@@ -316,6 +317,15 @@ class CommonController extends Controller {
      * @param &$data
      */
     protected function unsetEditData(&$data) {
+        if (isset($data['status']) && empty($data['status'])) {
+            $data['status'] = 1;
+        }
+        if (isset($data['sort']) && empty($data['sort'])) {
+            $data['sort'] = 0;
+        }
+        if (isset($data['click']) && empty($data['click'])) {
+            $data['click'] = 1;
+        }
         $ext = array(
         );
         if (isset($data['createtime'])) {

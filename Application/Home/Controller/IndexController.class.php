@@ -1,6 +1,7 @@
 <?php
 namespace Home\Controller;
 use Home\Model\ArticleModel;
+use Home\Model\BookModel;
 use Home\Model\CommentModel;
 use Home\Model\SearchModel;
 use Think\Controller;
@@ -74,6 +75,9 @@ class IndexController extends CommonController {
     }
 
     public function book() {
+        $list = (new BookModel())->getList();
+        //var_dump($list);
+        $this->assign('list', $list);
         $this->seo('书籍', NULL, NULL, NULL);
         $this->display();
     }

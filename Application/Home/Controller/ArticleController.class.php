@@ -30,9 +30,6 @@ class ArticleController extends CommonController {
 
         $this->assign('art_vo', $article);
         $this->assign('post_uid', $article['uid']);
-        $this->assign('recent_article_list',$Article->getRecentArticleListByCategory($article['cid'], $article['id']));
-        $this->assign('archives_list', $Article->getArticleListGroupByDateByCategry($article['cid']));
-        $this->assign('tags_list', $Article->getTagsByCategory($article['cid']));
 
         // readNext
         $next = $Article->getNextArticleByCategory($article['cid'], $article['createtime']);
@@ -47,7 +44,7 @@ class ArticleController extends CommonController {
 
 
 
-        $this->seo($article['title'], $article['keywords'], $article['description']);
+        $this->seo($article['title'], $article['keywords'], '');
 
 
         $this->assign('commentUserInfo', getCommentUserInfo());

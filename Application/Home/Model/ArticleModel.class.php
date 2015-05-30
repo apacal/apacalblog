@@ -208,6 +208,9 @@ class ArticleModel extends RelationModel {
             $where['status'] = 1;
             $where['createtime'] = array('gt', $createtime);
             $next = $this->where($where)->relation(true)->order('createtime DESC')->field('content', true)->find();
+            if (is_array($next)) {
+                $next['url'] = U('article/' .$next['id']);
+            }
 
             setCache($tagNextArticle, $next, ARTICLE_TTL);
 
@@ -217,16 +220,19 @@ class ArticleModel extends RelationModel {
 
     public function getPrevArticleByCategory($cid, $createtime) {
         $tagPrevArticle = cacheTag(__METHOD__, $cid, $createtime);
-        if (false === ($next = getCache($tagPrevArticle))) {
+        if (false === ($prev = getCache($tagPrevArticle))) {
             $where['cid'] = $cid;
             $where['status'] = 1;
             $where['createtime'] = array('lt', $createtime);
-            $next = $this->where($where)->relation(true)->order('createtime DESC')->field('content', true)->find();
+            $prev = $this->where($where)->relation(true)->order('createtime DESC')->field('content', true)->find();
+            if (is_array($prev)) {
+                $prev['url'] = U('article/' .$prev['id']);
+            }
 
-            setCache($tagPrevArticle, $next, ARTICLE_TTL);
+            setCache($tagPrevArticle, $prev, ARTICLE_TTL);
 
         }
-        return $next;
+        return $prev;
     }
 
 

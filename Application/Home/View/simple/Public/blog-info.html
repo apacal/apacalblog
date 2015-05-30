@@ -1,6 +1,6 @@
-<div class="wrapper banner crossfade"data-crossfade-start="__IMG__/bg.jpg" data-crossfade-end="__IMG__/bg1.jpg" style="height: 362px">
-    <img src="__IMG__/bg1.jpg" style="width:100%;height: 100%;">
-    <div class="carousel-caption" id="header-info" style="top:15%">
+<div class="wrapper banner crossfade"data-crossfade-start="__IMG__/bg1.jpg" data-crossfade-end="__IMG__/bg2.jpg">
+    <img src="__IMG__/bg2.jpg" style="width:100%;height: 100%;">
+    <div class="carousel-caption" id="header-info" style="top:30%">
         <div class="blog-info" style="opacity: 1;">
             <h1 class="blog-title">
                 <a href="http://apacal.cn" title="Keep It Simple, Stupid — open our mind" rel="home">Keep It Simple, Stupid</a>
@@ -9,3 +9,10 @@
         </div> <!-- /blog-info -->
     </div>
 </div>
+<script src="__CROSSFADE__/crossfade.jquery.js"></script>
+<script>
+
+    $(document).ready(function(){
+        $('.crossfade').crossfade('__IMG__/bg1.jpg','__IMG__/bg2.jpg', 0.7);
+    });
+</script>

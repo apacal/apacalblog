@@ -6,7 +6,7 @@
         window.onload = function() {
             var oTable = document.getElementById("myTab");
             for (var i = 0; i < oTable.rows.length; i++) {
-                oTable.rows[i].cells[0].innerHTML = (i + 1);
+                oTable.rows[i].cells[0].innerHTML = (oTable.rows.length - i);
                 if (i % 2 == 0)    //偶数行
                     oTable.rows[i].className = "warning";
                 else
@@ -30,7 +30,15 @@
               </tr>
             </thead>
             <tbody id="myTab">
-                <include file="Index/mybook" />
+                <volist name="list" id="vo">
+
+                    <tr>
+                        <td></td>
+                        <td>{$vo.name}</td>
+                        <td>{$vo.time}</td>
+                        <td>{$vo.content}</td>
+                    </tr>
+                </volist>
             </tbody>
         </table>
 
