@@ -5,6 +5,7 @@ use Think\Controller;
 use Think\Model;
 
 class UserController extends CommonController {
+    protected $order = 'uid desc';
 
     protected $unManageField = array("updatetime", "pwd",'logintime');
     /**

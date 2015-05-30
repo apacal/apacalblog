@@ -6,6 +6,7 @@ define('ARTICLE_TTL', 24*60*60);
 define('NOTE_TTL', 24*60*60);
 define('CATEGORY_TTL', 24*60*60);
 define('LINK_TTL', 24*60*60);
+define('BOOK_TTL', 24*60*60);
 define('USED_MEMCACHED', true);
 
 
@@ -128,6 +129,7 @@ return array(
         '__CKEDITOR_BASIC__'                 => '/Public/ckeditor-basic',
         '__GOOGLE_CODE__'                 => '/Public/google-code-prettify',
         '__BS_GALLERY__'                 => '/Public/bootstrap-gallery',
+        '__CROSSFADE__'                 => '/Public/crossfade/dist',
 
     ),
 

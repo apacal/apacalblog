@@ -9,8 +9,11 @@
         </div>
         <nav class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
+                <li>
+                    <a href="/" target="_blank">HOME</a>
+                </li>
                 <li id="nav-home">
-                    <a href="{:C('SITE_URL')}">{:C('SITE_NAME')}</a>
+                    <a href="{:U('/Admin/Index/index')}">{:C('SITE_NAME')}</a>
                 </li>
                 <volist name="first_menu" id="nav_id">
                     <li id="nav-{$nav_id.id}">
@@ -21,8 +24,8 @@
             </ul>
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
-                    <li> <a href="#" onclick="delCache();"><span class="glyphicon glyphicon-trash"></span>Del Cache</a></li>
-                    <li> <a href="#" onclick="delMemcache();"><span class="glyphicon glyphicon-trash"></span>Del Memcache</a></li>
+                    <li> <a href="#" onclick="delCache();"><span class="glyphicon glyphicon-trash"></span>DelFileCache</a></li>
+                    <li> <a href="#" onclick="delMemcache();"><span class="glyphicon glyphicon-trash"></span>DelMemcache</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle text-uppercase" data-toggle="dropdown">
                             <notempty name="user_info.image">

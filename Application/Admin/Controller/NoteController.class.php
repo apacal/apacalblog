@@ -4,6 +4,16 @@ use Think\Controller;
 class NoteController extends CommonController {
     protected $unManageField = array("updatetime",'uid');
 
+    protected function unsetEditData(&$data) {
+        parent::unsetEditData($data);
+        if (isset($data['pid']) && empty($data['pid'])) {
+            $data['pid'] = 0;
+        }
+        if (isset($data['cid']) && empty($data['cid'])) {
+            $data['cid'] = 9;
+        }
+    }
+
     protected function setExtManageData(&$val) {
         parent::setExtManageData($val);
         $subLen = 40;

@@ -6,7 +6,9 @@
 
     <body>
         <block name="blog-info">
-            <include file="Home@simple/Public/blog-info" />
+            <notempty name="index">
+                <include file="Home@simple/Public/blog-info" />
+            </notempty>
         </block>
 
         <div id="main">
