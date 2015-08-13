@@ -5,12 +5,16 @@ use Home\Model\ArticleModel;
 use Home\Model\CommentModel;
 use Think\Controller;
 class ArticleController extends CommonController {
-    public function index($cid = 0, $page = 0){
-        if (!empty($page)) {
+    public function index($cid = 0, $page = 0, $id = 0){
+        // 如果有id则是view article
+        if ($id > 0) {
+            $this->redirect("article/$id");
+        } else if (!empty($page)) {
             R('Index/index', array('cid' => $cid, 'page' => $page));
         }else{
             R('Index/index', array('cid' => $cid));
         }
+
     }
 
 
