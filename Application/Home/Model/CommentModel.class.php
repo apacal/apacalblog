@@ -84,7 +84,8 @@ class CommentModel extends Model {
                 if ($extend['cate']['url'][0] == '/') {
                     $val['url'] = $extend['cate']['url'];
                 } else {
-                    $val['url'] = U($extend['cate']['url'] .'#comment-' .$val['id'], array('id' => $val['oid'], 'cid' => $val['cid']));
+                    $val['url'] = U($extend['cate']['url'] , array('id' => $val['oid'], 'cid' => $val['cid']));
+                    $val['url'] .= '#comment-' .$val['id'];
                 }
             }
 
