@@ -1,5 +1,6 @@
 
-#apacalblog is a simple cms, is based on ThinkPHP framwork.
+#apacalblog
+apacalblog is a simple cms, is based on ThinkPHP framwork
 
 ##Home page
 [cms.apacal.cn](http://cms.apacal.cn)
