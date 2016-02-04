@@ -130,6 +130,7 @@ return array(
         '__GOOGLE_CODE__'                 => '/Public/google-code-prettify',
         '__BS_GALLERY__'                 => '/Public/bootstrap-gallery',
         '__CROSSFADE__'                 => '/Public/crossfade/dist',
+        '__MARKDOWN__'                  => '/Public/bootstrap-markdown',
 
     ),
 
