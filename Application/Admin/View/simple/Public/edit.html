@@ -11,10 +11,13 @@
 
                         <foreach name="data" item="vo" key="field" >
 
+                            
 
 
                             <div class="form-group">
-                                <label class="col-sm-2 col-xs-2 control-label">{$field}</label>
+                                <neq name="field" value="content">
+                                    <label class="col-sm-2 col-xs-2 control-label">{$field}</label>
+                                </neq>
 
                                 <switch name="field">
                                     <case value="image" break="1">
