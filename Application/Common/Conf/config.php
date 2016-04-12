@@ -116,22 +116,16 @@ return array(
         '__IMG__' 				=> '/Public/images',
         '__JS__' 				=> '/Public/js',
         '__BS__' 				=> '/Public/bootstrap',
-        '__SUMMERNOTE__' 				=> '/Public/summernote',
         '__KALENDAR__' 				=> '/Public/kalendar',
         '__JCROP__'                 => '/Public/Jcrop',
         '__FILEINPUT__'                 => '/Public/bootstrap-fileinput',
-        '__CODEMIRROR__'                 => '/Public/CodeMirror',
         '__JSTREE__'                 => '/Public/jstree-bootstrap-theme',
         '__SWEETALERT__'                 => '/Public/sweetalert',
         '__BS_TABLES__'                 => '/Public/bootstrap-table',
         '__BS_SWITCH__'                 => '/Public/bootstrap-switch',
-        '__CKEDITOR__'                 => '/Public/ckeditor',
-        '__CKEDITOR_BASIC__'                 => '/Public/ckeditor-basic',
-        '__GOOGLE_CODE__'                 => '/Public/google-code-prettify',
         '__BS_GALLERY__'                 => '/Public/bootstrap-gallery',
         '__CROSSFADE__'                 => '/Public/crossfade/dist',
         '__MARKDOWN__'                  => '/Public/simplemde-markdown-editor',
-
     ),
 
 

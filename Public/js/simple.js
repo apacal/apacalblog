@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     //initCodeMirror();
-    initPrettyPrint();
+    initMarkdownContent();
 
 
     initHash();
@@ -26,35 +26,40 @@ $(document).ready(function(){
 
 });
 
-function initPrettyPrint() {
-    $("pre").each(function() {
-        $(this).addClass("prettyprint");
-        $(this).addClass("linenums");
+function initMarkdownContent() {
+
+
+    var converter = new SimpleMDE({
+        element: document.getElementById("markdown-textarea"),
+        autofocus: true,
+        hideIcons: ["fullscreen", "side-by-side"],
+        renderingConfig: {
+            singleLineBreaks: false,
+            codeSyntaxHighlighting: true,
+        },
+        parsingConfig: {
+            allowAtxHeaderWithoutSpace: true,
+            strikethrough: true,
+            underscoresBreakWords: true,
+        },
     });
-    prettyPrint();
+    $(".entry-content").each(function() {
+        parseMarkdown(converter, this);
+    });
+    $(".comment-content").each(function() {
+        parseMarkdown(converter, this);
+    });
+
 }
 
-function initCodeMirror() {
-    $("pre").each(function() {
-        var code = $(this).html();
-        $(this).empty();
+function parseMarkdown(converter, preview) {
+    var html = $(preview).html();
+    var renderHtml = converter.options.previewRender(html);
+    $(preview).html(renderHtml);
 
-        code = code.replace(/&gt;/g, '>');
-        code = code.replace(/&lt;/g, '<');
-
-        CodeMirror(this, {
-            value: code,
-            mode: 'clike',
-            lineNumbers: true,
-            theme: "monokai",
-            styleActiveLine: true,
-            matchBrackets: true,
-            //theme: "eclipse",
-            readOnly: false,
-            height: '20px'
-        });
-    });
 }
+
+
 
 function initCalendar() {
     var options = {

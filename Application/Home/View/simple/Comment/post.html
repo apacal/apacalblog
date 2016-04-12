@@ -1,7 +1,3 @@
-<link rel="stylesheet" href="__SUMMERNOTE__/dist/font-awesome.min.css" />
-<link href="__SUMMERNOTE__/dist/summernote.css" rel="stylesheet">
-<script src="__SUMMERNOTE__/dist/summernote.js"></script>
-<script src="__SUMMERNOTE__/plugin/summernote-ext-fontstyle.js"></script>
 
 
 
@@ -61,23 +57,23 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('#postcontent').summernote({
-            height: 300,                 // set editor height
-
-            minHeight: null,             // set minimum height of editor
-            maxHeight: null,             // set maximum height of editor
-            focus: false,    // set focus to editable area after initializing summernote
-            toolbar: [
-                //[groupname, [button list]]
-                ['style', ['style']],
-                ['format', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['table', 'hr']],
-                ['height', ['height']],
-            ]
-        });
+//        $('#postcontent').summernote({
+//            height: 300,                 // set editor height
+//
+//            minHeight: null,             // set minimum height of editor
+//            maxHeight: null,             // set maximum height of editor
+//            focus: false,    // set focus to editable area after initializing summernote
+//            toolbar: [
+//                //[groupname, [button list]]
+//                ['style', ['style']],
+//                ['format', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+//                ['fontsize', ['fontsize']],
+//                ['color', ['color']],
+//                ['para', ['ul', 'ol', 'paragraph']],
+//                ['insert', ['table', 'hr']],
+//                ['height', ['height']],
+//            ]
+//        });
     });
     function postComment() {
         var userName = getInputVal('name', true);

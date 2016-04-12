@@ -59,9 +59,7 @@ function addTab(tabName, url, multiple) {
 
 
 function removeTabByTabName(tabName) {
-    //console.log(tabName);
     $("#page-tab").find("[href='#" + tabName + "']").parent('li').remove();
-    //console.log(liDom);
     //$(linkDom).parent('li').remove();
     $("#" + tabName).remove();
     $('#page-tab a:first').tab('show');
@@ -89,7 +87,6 @@ function refreshAsyncDataToDiv(url, divId) {
 function ajaxPublish(formId) {
     var action = $("#" + formId).attr('action');
     var data = $("#" + formId).serialize();
-    console.log(data);
     $.ajax({
         url: action,
         data: data,
@@ -101,7 +98,6 @@ function ajaxPublish(formId) {
             if (status != 'success') {
                 error(status);
             } else {
-                console.log(data);
                 data = JSON.parse(data);
                 if (data.code != '0') {
                     error(data.data);
@@ -268,7 +264,6 @@ function showAuthRulesTree(inputId, url) {
 };
 function saveRulesToInput() {
     var checked_ids = $("#js-rules-tree").jstree("get_checked",null,true)
-    console.log(checked_ids);
     $("#" + window.inputId).val(JSON.stringify(checked_ids));
     $('#js-rules-tree').jstree('destroy');
     $("#modal-tree-rules").modal('hide');
@@ -301,7 +296,6 @@ function operateFormatter(value, row, index) {
 window.operateEvents = {
     'click .edit': function (e, value, row, index) {
         addTab(row.editTab + '-' + row.pkey, row.editUrl);
-        //console.log(value, row, index);
     },
     'click .remove': function (e, value, row, index) {
         window.bsTableDom =  $(this).parents(".bootstrap-table");
@@ -345,11 +339,9 @@ function operateFormatterInGallery(value, row, index) {
 window.operateEventsInGallery = {
     'click .edit': function (e, value, row, index) {
         addTab(row.editTab + '-' + row.pkey, row.editUrl);
-        //console.log(value, row, index);
     },
     'click .edit_items': function (e, value, row, index) {
         addTab(row.editItemsTab + '-' + row.pkey, row.editItemsUrl);
-        //console.log(value, row, index);
     },
     'click .remove': function (e, value, row, index) {
         window.bsTableDom =  $(this).parents(".bootstrap-table");
@@ -394,7 +386,6 @@ function setStatus(event, state, dom) {
             'status' : state
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
-            //console.log(!window.switchState);
             refreshTableData(window.switchDom);
 
 
@@ -452,7 +443,6 @@ function iconFormatter(value, row) {
  * @returns {string}
  */
 function imageFormatter(value, row) {
-    //console.log(value);
     if (value == undefined || value == null || value == '') {
 
         return '<img style="max-width:50px" alt="404" src="">';
@@ -488,8 +478,6 @@ function getSelectIds(dom) {
     $(dom).find("input:checkbox[name=btSelectItem]:checked").each(function () {
         ids.push($(this).val());
     });
-    //console.log(ids);
-    //console.log(ids.length);
     return {
         ids: JSON.stringify(ids),
         len: ids.length
@@ -518,7 +506,6 @@ function deleteRows(dom) {
  * @param success
  */
 function ajaxChangeRows(url, data, success) {
-    //console.log("url: " + url);
 
     $.ajax({
         url: url,
@@ -604,7 +591,6 @@ function statusEnable(dom) {
  */
 function BrowseServer(imageInputId) {
     window.imageInputId = imageInputId;
-    //console.log(window.imageInputId);
     // You can use the "CKFinder" class to render CKFinder in a page:
     //var finder = new CKFinder();
     //CKFinder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
@@ -647,16 +633,13 @@ function addTag(addId, saveId, showId) {
 }
 
 function addTagByName(tag, saveId, showId) {
-    //console.log(tag);
     var tagJson = $("#" + saveId).val();
-    //console.log(tagJson);
     if (tagJson == '') {
         var tagArray = new Array();
     } else {
         var tagArray = JSON.parse(tagJson);
     }
 
-    //console.log(tagArray);
     if (include(tagArray, tag) < -1) {
         tagArray.push(tag);
         $("#" + showId).append(getTagHtml(tag));
@@ -682,14 +665,10 @@ function include(arr, obj) {
  * @param arr
  */
 function initTagsHtml(saveId, showId) {
-    console.log(saveId);
-    console.log(showId);
     var tagsJson = $("#" + saveId).val();
-    console.log(tagsJson);
     if (tagsJson == '') {
         return true;
     }
-    console.log(tagsJson);
     var arr = JSON.parse($("#" + saveId).val());
     var html = "";
     for(var i=0; i<arr.length; i++) {
@@ -712,21 +691,15 @@ function getTagHtml(tag) {
 
 function removeTag(iconDom) {
     var tag = $(iconDom).nextAll('button').text();
-    //console.log(iconDom);
     var saveDom = $(iconDom).parent().parent().parent().prev().find("[type='hidden']");
 
-    console.log(saveDom);
     var tagArray = JSON.parse($(saveDom).val());
     var index = include(tagArray,tag);
-    console.log(index);
-    console.log(tagArray);
     if (index < -1) {
         return true;
     }
-    console.log(tagArray);
     if (index > -1) {
         tagArray.splice(index, 1);
-        console.log(tagArray);
 
         $(saveDom).val(JSON.stringify(tagArray));
     }
