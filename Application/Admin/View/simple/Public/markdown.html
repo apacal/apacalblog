@@ -1,0 +1,21 @@
+<textarea class="col-sm-12 col-xs-12" id="editor-{$time}" name="content"> {$vo} </textarea>
+
+
+<script>
+
+    $(document).ready(function() {
+        var simplemde = new SimpleMDE({
+            element: document.getElementById("editor-{$time}"),
+            autofocus: true,
+            hideIcons: ["fullscreen", "side-by-side"],
+            renderingConfig: {
+                singleLineBreaks: false,
+                codeSyntaxHighlighting: true,
+            },
+        });
+        simplemde.codemirror.on("change", function(){
+            $("#editor-{$time}").val(simplemde.value());
+        });
+
+    });
+</script>
