@@ -42,10 +42,10 @@
     </notempty>
 
 
-    <textarea id="postcontent"> </textarea>
-    <div class="comment-not-allowed-tags">
-        You can't use these HTML tags and attributes: <code>&lt;a href="" title=""&gt;  &lt; script &gt;</code>
+    <div>
+        <textarea id="postcontent" name="postcontent"> </textarea>
     </div>
+
     <div class="comment-submit">
         <button type="button" onclick="postComment();" class="btn btn-default btn-lg">
             Post Submit
@@ -57,30 +57,25 @@
 </div>
 <script>
     $(document).ready(function () {
-//        $('#postcontent').summernote({
-//            height: 300,                 // set editor height
-//
-//            minHeight: null,             // set minimum height of editor
-//            maxHeight: null,             // set maximum height of editor
-//            focus: false,    // set focus to editable area after initializing summernote
-//            toolbar: [
-//                //[groupname, [button list]]
-//                ['style', ['style']],
-//                ['format', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
-//                ['fontsize', ['fontsize']],
-//                ['color', ['color']],
-//                ['para', ['ul', 'ol', 'paragraph']],
-//                ['insert', ['table', 'hr']],
-//                ['height', ['height']],
-//            ]
-//        });
+        var simplemde = new SimpleMDE({
+            element: document.getElementById("postcontent"),
+            autofocus: true,
+            hideIcons: ["fullscreen", "side-by-side"],
+            renderingConfig: {
+                singleLineBreaks: false,
+                codeSyntaxHighlighting: true,
+            },
+        });
+        simplemde.codemirror.on("change", function(){
+            $("#postcontent").val(simplemde.value());
+        });
     });
     function postComment() {
         var userName = getInputVal('name', true);
         var userEmail = getInputVal('email', true);
         var pid = getInputVal('pid', true);
         var userWebsite = getInputVal('website', false);
-        var content = $("#postcontent").code();
+        var content = $("#postcontent").val();
         if (content == '') {
 
             showError('content can not empty!')

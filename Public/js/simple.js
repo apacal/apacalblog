@@ -28,7 +28,6 @@ $(document).ready(function(){
 
 function initMarkdownContent() {
 
-
     var converter = new SimpleMDE({
         element: document.getElementById("markdown-textarea"),
         autofocus: true,
@@ -49,6 +48,7 @@ function initMarkdownContent() {
     $(".comment-content").each(function() {
         parseMarkdown(converter, this);
     });
+    converter = null;
 
 }
 

@@ -10,8 +10,8 @@
 
 body {
     font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", "Tahoma", "Hiragino Sans GB", 'STHeiti', "Microsoft YaHei";
-    /*background: #ffffff;*/
-    background :url("../images/retina_dust.png");
+    background: #ffffff;
+    /*background :url("../images/retina_dust.png");*/
 }
 
 #myTab p {
