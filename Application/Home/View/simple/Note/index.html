@@ -25,7 +25,7 @@
 
                         <a href="#comment-post" onclick="setCommentPidOid(0, {$vo.id});" class="reply-click" >{$vo.createtime|date = 'F d, Y', ###} AT {$vo.createtime|date='g:i A', ###}</a>
                     </h4>
-                    <div class="comment-content">{$vo.content}</div>
+                    <div class="comment-content"><textarea hidden="hidden">{$vo.content}</textarea></div>
 
                     <h4 class="reply-action"><a href="#comment-post" class="reply-click" onclick="setCommentPidOid(0, {$vo.id});">REPLY</a></h4>
                     <?php echo W('Comment/index',array($cid, $vo['id'], false)); ?>

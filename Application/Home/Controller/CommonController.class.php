@@ -45,7 +45,7 @@ class CommonController extends Controller {
      * @param $description
      */
     public function seo($title,$keywords,$description){
-        $title = C('SITE_NAME'). " | $title";
+        $title = $title . " | " .C('SITE_NAME');
         $this->assign('title',$title);
         $this->assign('keywords', $keywords.' | '.C('SITE_KEYWORDS'));
         $this->assign('description', $description.' | '.C('SITE_DESCRIPTION'));

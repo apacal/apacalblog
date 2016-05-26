@@ -330,13 +330,6 @@ class ArticleModel extends RelationModel {
             $val['tags'] = $this->buildTagsByObjectId($val['id']);
             $val['userUrl'] = U('user/' .$val['uid'] .C('URL_HASH'));
             $val['cateUrl'] = U('category/' .$val['cid'] .C('URL_HASH'));
-
-            if ($isStrstrContent == true) {
-                $str = strstr($val['content'], "<hr>", true);
-                if (!empty($str)) {
-                    $val['content'] = $str;
-                }
-            }
         }
 
         // restore not to array

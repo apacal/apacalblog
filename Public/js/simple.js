@@ -53,10 +53,9 @@ function initMarkdownContent() {
 }
 
 function parseMarkdown(converter, preview) {
-    var html = $(preview).html();
-    var renderHtml = converter.options.previewRender(html);
-    $(preview).html(renderHtml);
-
+    var html = $(preview).find("textarea").val();
+    var renderHtml = converter.options.previewRender(html, preview);
+    preview.innerHTML = renderHtml;
 }
 
 

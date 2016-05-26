@@ -28,7 +28,7 @@
                             </h4>
                         </div>
                         <h4><a href="#comment-post" onclick="setCommentPidOid({$comment_vo.id}, {$comment_vo.oid});" class="reply-click" >{$comment_vo.createtime|date = 'F d, Y', ###} AT {$comment_vo.createtime|date='g:i A', ###}</a></h4>
-                        <div class="comment-content">{$comment_vo.content}</div>
+                        <div class="comment-content"><textarea hidden="hidden">{$comment_vo.content}</textarea></div>
 
                         <h4 class="reply-action"><a href="#comment-post" class="reply-click" onclick="setCommentPidOid({$comment_vo.id}, {$comment_vo.oid});">REPLY</a></h4>
                         <!------------            sub     ------------------------->
@@ -54,7 +54,7 @@
                                             </h4>
                                         </div>
                                         <h4><a href="#comment-post" onclick="setCommentPidOid({$com_sub_vo.id}, {$com_sub_vo.oid});" class="reply-click" >{$com_sub_vo.createtime|date = 'F d, Y', ###} AT {$com_sub_vo.createtime|date='g:i A', ###}</a></h4>
-                                        <div class="comment-content">{$com_sub_vo.content}</div>
+                                        <div class="comment-content"><textarea hidden="hidden">{$com_sub_vo.content}</textarea></div>
 
                                         <h4 class="reply-action"><a href="#comment-post" class="reply-click" onclick="setCommentPidOid({$com_sub_vo.id}, {$com_sub_vo.oid});">REPLY</a></h4>
 
@@ -95,7 +95,7 @@
                                                             </h4>
                                                         </div>
                                                         <h4><a href="#comment-post" onclick="setCommentPidOid({$com_sub2_vo.id}, {$com_sub2_vo.oid});" class="reply-click" >{$com_sub2_vo.createtime|date = 'F d, Y', ###} AT {$com_sub2_vo.createtime|date='g:i A', ###}</a></h4>
-                                                        <div class="comment-content">{$com_sub2_vo.content}</div>
+                                                        <div class="comment-content"><textarea hidden="hidden">{$com_sub2_vo.content}</textarea></div>
 
                                                         <h4 class="reply-action"><a href="#comment-post" class="reply-click" onclick="setCommentPidOid({$com_sub2_vo.id}, {$com_sub2_vo.oid});">REPLY</a></h4>
 
